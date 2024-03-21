@@ -1,0 +1,41 @@
+.contact-container {
+  background-image: url(../../assets/34781.jpg);;
+  background-position: center ;
+  background-attachment:scroll;
+  background-repeat: no-repeat;
+  background-size:cover;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.contact-content {
+  flex-wrap: wrap;
+  flex-basis: 200;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 30px;
+}
+.contact-content div {
+  background: #000;
+  color: white;
+  padding: 1rem 6rem;
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+@media screen and (min-device-width: 300px)and(max-device-width:450px){
+    
+    .contact-container {
+        width: 100%;
+        background-position:center ;
+        background-attachment:scroll;
+        background-repeat:no-repeat;
+        background-size:contain;
+
+    }
+
+}

@@ -1,0 +1,36 @@
+.UserMenu {
+  background: #000;
+  color: #fff;
+  flex-wrap: wrap;
+}
+
+.UserMenu ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  margin: 1.5em 0;
+  border-top: 2px solid white;
+}
+
+.UserMenu ul li h2 {
+  background: #000;
+  border-top: 1px solid white;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  font-size: 3vh;
+  list-style: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 780px) {
+  .UserMenu h1 {
+    font-size: 3vh !important;
+  }
+  .UserMenu ul li h2 {
+    font-size: 2vh !important;
+  }
+}

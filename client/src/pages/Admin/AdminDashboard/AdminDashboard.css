@@ -1,0 +1,109 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-poppins);
+}
+
+.admin-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5% 5%;
+}
+
+.admin-container-content {
+  max-width: 1536px;
+  margin: auto;
+  padding: 0 1rem;
+  height: auto;
+}
+
+.admin-container-content .row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex: auto;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.admin-container-content .row .col-1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: hsl(0, 0%, 0%);
+  border-top: 20px solid #ffffff;
+  max-width: 400px;
+  height: auto;
+  border-radius: 10px;
+  color: #ffffff;
+  text-align: center;
+  letter-spacing: 0.06510416666666667vw;
+  padding: 2rem;
+}
+
+.admin-container-content .row .col-2 {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+  font-size: large;
+  background: white;
+  width: 55vw;
+  height: auto;
+  padding: 1.875rem;
+}
+.admin-container-content .row .col-2 h2 {
+  font-size: 1vh 1vw;
+}
+
+@media screen and (max-width: 1385px) {
+  .admin-container-content .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .admin-container-content .row .col-1 {
+    width: 100%;
+    margin-right: 2rem;
+    font-size: 3.3829499323410013vh 1.6276041666666667vw;
+  }
+
+  .admin-container-content .row .col-2 {
+    overflow: auto;
+    width: 100%;
+  }
+}
+
+/* Mobile view */
+@media screen and (max-width: 768px) {
+  .admin-container-content .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .admin-container-content .row .col-1 {
+    width: 100%;
+    margin-right: 2rem;
+    font-size: 2.8vh 0.8vw;
+  }
+
+  .admin-container-content .row .col-2 {
+    overflow: scroll;
+    width: 100%;
+    margin-right: 2rem;
+    font-size: 2vh 0.5vw;
+  }
+}

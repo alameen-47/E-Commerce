@@ -1,0 +1,345 @@
+.rawad-mall_navbar a {
+  text-decoration: none;
+  color: white;
+}
+.rawad-mall_navbar {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 4rem;
+  flex-direction: row;
+  background: #000;
+}
+
+.rawad-mall_navbar-links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 90px;
+}
+
+.rawad-mall_navbar-links_logo {
+  display: flex;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.rawad-mall_navbar-links img {
+  display: flex;
+  top: 20px;
+  width: 100px;
+  height: 20px;
+}
+
+.rawad-mall_navbar-links_container {
+  display: flex;
+  flex-direction: row;
+}
+
+.rawad-mall_navbar-links_container a:hover {
+  color: rgb(104, 101, 101);
+}
+
+.rawad-mall_navbar-links_container p {
+  color: #fff;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 25px;
+  text-transform: capitalize;
+  margin: 0 1rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 10;
+  color: white !important;
+}
+.dropdown img .dropdown-menu {
+  display: inline-block;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+}
+.dropdown h4 .dropdown-menu {
+  display: inline-block;
+  padding: 10px;
+
+  cursor: pointer;
+  text-align: center;
+}
+.dropdown-menu:hover {
+  background: #000;
+}
+.dropdown-items {
+  position: absolute;
+  display: none;
+  text-align: center;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background: rgb(0, 0, 0);
+  color: #ffffff;
+  z-index: 1;
+  padding: 10px;
+  box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-items .dropdown-items-1 {
+  border-bottom: solid 1px rgb(255, 255, 255);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.dropdown-items-1 img {
+  position: relative;
+  height: auto;
+  top: 20px;
+}
+
+.dropdown:hover .dropdown-items {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  border: none;
+  gap: 10px;
+}
+.dropdown-items div:hover {
+  background: rgba(69, 68, 68, 0.503);
+}
+
+.dropdown1 {
+  position: relative;
+  display: block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: #000;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: flex;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #000000;
+}
+
+.dropdown1:hover .dropdown-content {
+  display: block;
+}
+
+.rawad-mall_navbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  color: #fff;
+}
+.logout-icon {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.rawad-mall_navbar-icons img {
+  color: #f1f1f1;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  max-width: 25.887px;
+  height: 25.91px;
+  flex-shrink: 0;
+}
+
+.rawad-mall_navbar-icons img:hover {
+  transform: scale(1.1) rotate(-2deg);
+}
+
+.cart-count {
+  border-radius: 50%;
+  background-color: red;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px;
+  position: relative;
+  padding: 0 5px;
+  min-width: 15px;
+  height: 16px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  bottom: 30px;
+  right: -15px;
+  color: white;
+  font-weight: bold;
+}
+.cart-icon img {
+  width: 25.91px !important;
+  display: flex;
+  margin-right: 5px;
+  position: relative;
+  top: 10px;
+}
+.search-box {
+  position: relative;
+  top: 18px;
+  left: 100px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  background: #000;
+  height: 40px;
+  border-radius: 40px;
+  padding: 10px;
+}
+
+.search-btn {
+  float: right;
+  width: 40px;
+  height: 40px;
+  border-style: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.search-text {
+  border: none;
+  background: none;
+  outline: none;
+  float: right;
+  color: white;
+  font-size: 16px;
+  line-height: 40px;
+  width: 100px;
+}
+.rawad_mall__navbar-menu {
+  display: none;
+  margin-left: 1rem;
+}
+
+.rawad-mall_navbar-menu svg {
+  display: none;
+  cursor: pointer;
+}
+
+.rawad-mall_navbar-menu_container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
+  list-style: none;
+  text-align: end;
+  background: var(--color-footer);
+  color: white;
+  padding: 2rem;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  margin-top: 2rem;
+  min-width: 210px;
+  border-radius: 5px;
+  box-shadow: 0 0 5 rgba(249, 249, 249, 0.2);
+}
+
+.rawad-mall_navbar-menu_container p {
+  display: none;
+  margin-bottom: 7.5rem;
+}
+
+.rawad-mall__navbar-menu_container-links-icons {
+  display: none;
+}
+
+@media screen and (max-device-width: 1050px) {
+  .rawad_mall__navbar-menu {
+    display: block;
+  }
+
+  .rawad-mall_navbar-links_container {
+    display: none;
+    justify-content: center;
+  }
+
+  .rawad-mall__navbar-menu_container-links-icons {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-device-width: 575px) and (max-device-width: 750px) {
+  .rawad-mall_navbar {
+    padding: 2rem 4rem;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    gap: -5px;
+    flex-shrink: 0;
+  }
+
+  .rawad-mall_navbar-icons {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+}
+
+@media screen and (min-device-width: 300px) and (max-device-width: 575px) {
+  .rawad-mall_navbar {
+    width: 575px;
+    padding: 2rem 2rem;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    gap: -5px;
+    flex-shrink: 0;
+  }
+
+  .rawad-mall_navbar-icons {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 16px;
+  }
+  .search-box {
+    margin-left: 8px;
+  }
+  .rawad-mall_navbar-menu_container {
+    top: 20px;
+  }
+
+  .rawad-mall__navbar-menu_container-links-icons {
+    display: block;
+  }
+}
+@media screen and (max-device-width: 300px) {
+  .rawad-mall_navbar {
+    padding: 1.4rem 1.6rem;
+    width: 300px;
+  }
+  .rawad-mall_navbar-icons {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .search-box {
+    display: flex;
+    margin-left: 8px;
+  }
+}
+@media screen and (max-device-width: 200px) {
+  .rawad-mall_navbar {
+    padding: 1.4rem 1.6rem;
+    max-width: 300px;
+  }
+}

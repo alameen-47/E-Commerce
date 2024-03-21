@@ -1,0 +1,39 @@
+.AdminMenu {
+  background: #000;
+  color: #fff;
+  flex-wrap: wrap;
+}
+
+.AdminMenu ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  margin: 1.5em 0;
+  border-top: 2px solid white;
+}
+.AdminMenu h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+.AdminMenu ul li h2 {
+  background: #000;
+  border-top: 1px solid white;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  font-size: 3vh;
+  list-style: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 780px) {
+  .AdminMenu h1 {
+    font-size: 3vh !important;
+  }
+  .AdminMenu ul li h2 {
+    font-size: 2vh !important;
+  }
+}

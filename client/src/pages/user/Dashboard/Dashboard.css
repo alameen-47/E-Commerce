@@ -1,0 +1,111 @@
+/*  
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: var(--font-poppins);
+  }
+  
+  .user-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5% 5%;
+  }
+  
+  .user-container-content {
+    max-width: 1536px;
+    margin: auto;
+    padding: 0 1rem;
+    height: auto;
+  }
+  
+  .user-container-content .row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex: auto;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .user-container-content .row .col-1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: hsl(0, 0%, 0%);
+    border-top: 20px solid #ffffff;
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
+    color: #ffffff;
+    text-align: center;
+    letter-spacing: 0.06510416666666667vw;
+    padding: 2rem;
+  }
+  
+  .user-container-content .row .col-2 {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    background: white;
+    width: 55vw;
+    height: auto;
+    padding: 1.875rem;
+  }
+  .user-container-content .row .col-2 h2 {
+    font-size: 1vh 1vw;
+  }
+  
+  @media screen and (max-width: 1385px) {
+    .user-container-content .row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+  
+    .user-container-content .row .col-1 {
+      width: 100%;
+      margin-right: 2rem;
+      font-size: 3.3829499323410013vh 1.6276041666666667vw;
+    }
+  
+    .user-container-content .row .col-2 {
+      overflow: auto;
+      width: 100%;
+    }
+  }
+  
+  /* Mobile view 
+  @media screen and (max-width: 768px) {
+    .user-container-content .row {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .user-container-content .row .col-1 {
+      width: 100%;
+      margin-right: 2rem;
+      font-size: 2.8vh 0.8vw;
+    }
+  
+    .user-container-content .row .col-2 {
+      overflow: scroll;
+      width: 100%;
+      margin-right: 2rem;
+      font-size: 2vh 0.5vw;
+    }
+  }
+
+   */
