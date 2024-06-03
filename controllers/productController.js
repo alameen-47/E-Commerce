@@ -1,13 +1,33 @@
 import productModel from "../models/productModel.js";
 import categoryModel from "../models/categoryModel.js";
+import braintree from "braintree";
+import orderModel from "../models/orderModel.js";
 import fs from "fs";
 import slugify from "slugify";
-import { populate } from "dotenv";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+//Payment Gateway
+var gateway = new braintree.BraintreeGateway({
+  environment: braintree.Environment.Sandbox,
+  merchantId: process.env.BRAINTREE_MERCHANT_ID,
+  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
+  privateKey: process.env.BRAINTREE_PRIVATE_KEY,
+});
 
 export const createProductController = async (req, res) => {
   try {
-    const { name, slug, description, price, category, quantity, shipping } =
-      req.fields;
+    const {
+      name,
+      slug,
+      description,
+      price,
+      category,
+      offer,
+      quantity,
+      shipping,
+    } = req.fields;
     const { image } = req.files;
     //validations
     switch (true) {
@@ -23,6 +43,8 @@ export const createProductController = async (req, res) => {
         return res.status(500).send({ error: "Category is Required" });
       case !quantity:
         return res.status(500).send({ error: "Quantity is Required" });
+      case !offer:
+        return res.status(500).send({ error: "Offer is Required" });
       case image && image.size > 1000000:
         return res
           .status(500)
@@ -30,13 +52,17 @@ export const createProductController = async (req, res) => {
     }
     const products = new productModel({
       ...req.fields,
+      offer,
       slug: slugify(name),
     });
+
     if (image) {
       products.image.data = fs.readFileSync(image.path);
       products.image.contentType = image.type;
     }
+
     await products.save();
+
     res.status(201).send({
       success: true,
       message: "Product Created Successfully",
@@ -59,7 +85,6 @@ export const getProductController = async (req, res) => {
       .find({})
       .populate("category")
       .select("-image")
-      .limit(12)
       .sort({ createdAt: -1 });
     res.status(200).send({
       success: true,
@@ -82,7 +107,7 @@ export const getSingleProductController = async (req, res) => {
   try {
     const product = await productModel
       .findOne({ slug: req.params.slug })
-      .select("-photo")
+      .select("-image")
       .populate("category");
     res.status(200).send({
       success: true,
@@ -138,8 +163,17 @@ export const deleteProductController = async (req, res) => {
 //updateProductController
 export const updateProductController = async (req, res) => {
   try {
-    const { name, slug, description, price, category, quantity, shipping } =
-      req.fields;
+    const {
+      name,
+      slug,
+      description,
+      price,
+      category,
+      quantity,
+      shipping,
+      offer,
+    } = req.fields;
+
     const { image } = req.files;
     //validations
     switch (true) {
@@ -160,9 +194,15 @@ export const updateProductController = async (req, res) => {
           .status(500)
           .send({ error: "Image is Required and should be less than 1mb " });
     }
+    // Calculate discount price
+    const discountPrice = Math.floor(price - (price * offer) / 100);
     const products = await productModel.findByIdAndUpdate(
       req.params.pid,
-      { ...req.fields, slug: slugify(name) },
+      {
+        ...req.fields,
+        discountPrice,
+        slug: slugify(name),
+      },
       { new: true }
     );
     if (image) {
@@ -223,10 +263,113 @@ export const productCountController = async (req, res) => {
     });
   }
 };
+//get Furnitures products controller
+export const furnituresController = async (req, res) => {
+  try {
+    const products = await productModel
+      .find({ category: "65c54345caab9f1ffb0e02bc" })
+      .populate("category")
+      .select("-image")
+      .limit(8)
+      .sort({ createdAt: -1 });
+    const link = "/category/furnitures";
+
+    res.status(200).send({
+      success: true,
+      message: "All Furniture Products",
+      products,
+      link,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in Fetching Furniture Products",
+      error,
+    });
+  }
+};
+//get Electronics products controller
+export const electronicsController = async (req, res) => {
+  try {
+    const products = await productModel
+      .find({ category: "65c5437ccaab9f1ffb0e02c3" })
+      .populate("category")
+      .select("-image")
+      .limit(16)
+      .sort({ createdAt: -1 });
+    const link = "/category/electronics";
+
+    res.status(200).send({
+      success: true,
+      message: "All Electronics Products",
+      products,
+      link,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in Fetching Electronics Products",
+      error,
+    });
+  }
+};
+
+//get Footwear products controller
+export const footwearController = async (req, res) => {
+  try {
+    const gentsFootwearCategoryId = "65ce10c3a1d1490e0f5f49e5";
+    const ladiesFootwearCategoryId = "65ce10dba1d1490e0f5f49ec";
+    const kidsFootwearCategoryId = "66565632942e27fc00f4022c";
+
+    const products = await productModel
+      .find({
+        category: {
+          $in: [
+            gentsFootwearCategoryId,
+            ladiesFootwearCategoryId,
+            kidsFootwearCategoryId,
+          ],
+        },
+      })
+      .populate("category")
+      .select("-image")
+      .sort({ createdAt: -1 });
+    const link = "/category/footwear";
+
+    const gentsFootwear = products.filter(
+      (product) => product.category._id.toString() === gentsFootwearCategoryId
+    );
+    const ladiesFootwear = products.filter(
+      (product) => product.category._id.toString() === ladiesFootwearCategoryId
+    );
+    const kidsFootwear = products.filter(
+      (product) => product.category._id.toString() === kidsFootwearCategoryId
+    );
+
+    res.status(200).send({
+      success: true,
+      message: "All Footwear Products",
+      gentsFootwear,
+      ladiesFootwear,
+      kidsFootwear,
+      link,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in Fetching Footwear Products",
+      error,
+    });
+  }
+};
+
 //product list based on page
 export const productListController = async (req, res) => {
   try {
-    const perPage = 8;
+    const perPage = 10;
     const page = req.params.page ? req.params.page : 1;
     const products = await productModel
       .find({})
@@ -276,7 +419,7 @@ export const relatedProductsController = async (req, res) => {
         category: cid,
         _id: { $ne: pid },
       })
-      .select("-photo")
+      .select("-image")
       .limit(4)
       .populate("category");
     res.status(200).send({
@@ -300,6 +443,7 @@ export const productCategoryController = async (req, res) => {
     const products = await productModel.find({ category }).populate("category");
     res.status(200).send({
       success: true,
+
       category,
       products,
     });
@@ -312,27 +456,50 @@ export const productCategoryController = async (req, res) => {
   }
 };
 
-//get Furnitures products controller
-export const Furnitures = async (req, res) => {
+//Payment gateway API
+//token
+export const braintreeTokenController = async (req, res) => {
   try {
-    const products = await productModel
-      .find({})
-      .populate("category")
-      .select("-image")
-      .limit(8)
-      .sort({ createdAt: -1 });
-    res.status(200).send({
-      success: true,
-      totalCount: products.length,
-      message: "All Products",
-      products,
+    gateway.clientToken.generate({}, function (err, response) {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.send(response);
+      }
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Error in Fetching Products ",
-      error: error.message,
+  }
+};
+
+//payments
+export const braintreePaymentsController = async (req, res) => {
+  try {
+    const { cart, nonce } = req.body;
+    let total = 0;
+    cart.map((i) => {
+      total += i.price * i.quantity;
     });
+    let newTransaction = gateway.transaction.sale(
+      {
+        amount: total,
+        paymentMethodNonce: nonce,
+        options: { submitForSettlement: true },
+      },
+      function (error, result) {
+        if (result) {
+          const order = new orderModel({
+            products: cart,
+            payment: result,
+            buyer: req.user._id,
+          }).save();
+          res.json({ ok: true, order });
+        } else {
+          res.status(500).send(error);
+        }
+      }
+    );
+  } catch (error) {
+    console.log(error);
   }
 };

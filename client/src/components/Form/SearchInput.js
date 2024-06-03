@@ -21,18 +21,25 @@ const SearchInput = () => {
   return (
     <div>
       <form className="d-flex" role="search" onSubmit={handleSubmit}>
-        <div className=" flex">
+        <div className=" flex  bg-white  px-2 rounded-lg">
           <input
-            className="bg-black w-36"
+            className=" focus:outline-none bg-white lg:w-72 sm:w-24 sm:text-xs md:lg:xl:text-base text-black "
             type="search"
             placeholder="Search Products"
             aria-label="Search"
             value={values.keyword}
             onChange={(e) => setValues({ ...values, keyword: e.target.value })}
           ></input>
-          <button className="btn btn-outline-success" type="submit">
-            <div className="">
-              <img src={search} alt="" />
+          <button
+            className=" rounded-md hover:!bg-black btn border-none bg-black invert  "
+            type="submit"
+          >
+            <div>
+              <img
+                className="lg:xl:w-6 lg:xl:h-screen  sm:w-[1rem] sm:h-[1.5rem] "
+                src={search}
+                alt=""
+              />
             </div>
           </button>
         </div>

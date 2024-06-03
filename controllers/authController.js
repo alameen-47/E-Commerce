@@ -1,5 +1,6 @@
 import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import userModel from "../models/userModel.js";
+import orderModel from "../models/orderModel.js";
 import JWT from "jsonwebtoken";
 export const registerController = async (req, res) => {
   try {
@@ -170,9 +171,7 @@ export const updateProfileController = async (req, res) => {
         error: "Password is required and length should be 6 character",
       });
     }
-    const hashedPassword = (password
-      ? await hashPassword(password)
-      : undefined);
+    const hashedPassword = password ? await hashPassword(password) : undefined;
     const updatedUser = await userModel.findByIdAndUpdate(
       req.user._id,
       {
@@ -194,6 +193,64 @@ export const updateProfileController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Failed to Update Profile",
+      error,
+    });
+  }
+};
+
+//orders
+export const getOrdersController = async (req, res) => {
+  try {
+    const orders = await orderModel
+      .find({ buyer: req.user._id })
+      .populate("products", "-image")
+      .populate("buyer", "name");
+    res.json(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Failed to Get Orders",
+      error,
+    });
+  }
+};
+
+//admin all-orders
+export const getAllOrdersController = async (req, res) => {
+  try {
+    const orders = await orderModel
+      .find({})
+      .populate("products", "-image")
+      .populate("buyer", "name")
+      .sort({});
+    res.json(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error While Geting Orders",
+      error,
+    });
+  }
+};
+
+//order status
+export const orderStatusController = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { status } = req.body;
+    let orders = await orderModel.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+    res.json(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while updating order status",
       error,
     });
   }

@@ -24,6 +24,7 @@ const Signin = () => {
       });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
+        toast.success("Signed in Succesfully");
         setAuth({
           ...auth,
           user: res.data.user,

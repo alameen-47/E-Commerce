@@ -14,7 +14,10 @@ a {
 body,
 html {
   font-family: var(--font-poppins);
+  background-color: #e2e8f0;
+  color: black;
 }
+
 
 @tailwind base;
 @tailwind components;

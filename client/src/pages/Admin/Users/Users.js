@@ -6,21 +6,19 @@ import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
 const Users = () => {
   return (
     <Layout>
-    <>
-      <div className="admin-users-container">
-        <div className="admin-users-container-content">
-          <div className="row">
-            <div className="col-1">
-              <AdminMenu />
-            </div>
-            <div className="col-2">
-              <h1>All Users</h1>
-            </div>
+      <>
+        <div className=" flex lg:flex-row sm:flex-col lg:gap-10 sm:gap-0 ">
+          <div className="">
+            <AdminMenu />
+          </div>
+          <div className="">
+            <h1 className="lg:text-3xl lg:font-extrabold  sm:text-xl sm:font-bold">
+              All Users
+            </h1>
           </div>
         </div>
-      </div>
-    </>
-  </Layout>
+      </>
+    </Layout>
   );
 };
 

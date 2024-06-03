@@ -8,11 +8,11 @@ const Dashboard = () => {
   const [auth] = useAuth();
   return (
     <Layout title={"Dashboard - Rawad Mall"}>
-      <div class="bg-white flex  lg:flex-row sm:flex-col rounded shadow-lg  px-4 md:p-8 mb-6">
+      <div class="bg-slate-200 flex  lg:flex-row sm:flex-col rounded shadow-lg  px-4 md:p-8 mb-6">
         <UserMenu />
-        <div class="bg-white w-screen shadow rounded-lg border">
+        <div class="bg-slate-200 lg:w-screen shadow rounded-lg border">
           <div class="px-4 py-5 sm:px-6">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <h3 class="sm:text-lg lg:text-2xl leading-6 font-medium text-gray-900">
               User Profile
             </h3>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">

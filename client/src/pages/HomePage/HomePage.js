@@ -1,20 +1,52 @@
 import React from "react";
-import "./HomePage.css";
 import Layout from "../../components/Layout/Layout";
-import { useAuth } from "../../context/auth";
 import Slideshow from "./Slideshow";
-import GreetingCard from "./Furnitures";
+import CategoryListAnimation from "./CategoryListAnimation";
+import Furnitures from "./Furnitures";
+import CategorySlider from "./CategorySlider";
+import Electronics from "./Electronics";
+import Footwear from "./Footwear";
+import Features from "./Features";
 
+import ProductsList from "./ProductsList";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import OffersTop from "./OFFERS/TOPOFFERS/OffersTop";
+import ElecOffers from "./OFFERS/ELECOFFERS/ElecOffers";
+import { Link } from "react-router-dom";
 const HomePage = () => {
-  const [auth, setAuth] = useAuth();
-
   return (
     <Layout title={"RAWAD-MALL-Everything you Need!"}>
-      <div className="flex  justify-center items-center h-screen bg-[#1111]  ">
-        <div className=" h-screen w-[100dvw]">
-          <Slideshow />
+      <div className="flex justify-center items-center align-middle text-center min-h-screen bg-slate-200 w-full overflow-x-hidden ">
+        <div className=" w-screen max-w-full ">
+          <Slideshow className="bg-gradient-to-b from-current to-transparent" />
           <br></br>
-          <GreetingCard />
+          <OffersTop />
+          <br></br>
+          <CategoryListAnimation direction="left" />
+          <br></br>
+          <Electronics />
+          <br></br>
+          <Furnitures />
+          <br></br>
+          <CategorySlider />
+          <br></br>
+          <ProductsList start={0} end={14} />
+          <br></br>
+          <Footwear />
+          <br></br>
+          <ElecOffers />
+          <br></br>
+          <ProductsList start={14} end={28} />
+          <p className="hover:text-gray-800 hover:bg-[#fff] shadow-2xl shadow-gray-500 cursor-pointer flex text-center  justify-center align-middle items-center hover:scale-105 text-white bg-black p-2 w-fit rounded-lg m-auto">
+            <span className="font-semibold">
+              <Link to={"/allproducts"}>
+                Click here to Explore More Products
+              </Link>
+            </span>
+          </p>
+          <br></br>
+          <Features />
         </div>
       </div>
     </Layout>

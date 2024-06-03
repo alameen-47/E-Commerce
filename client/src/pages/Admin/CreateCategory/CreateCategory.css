@@ -14,7 +14,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 5% 5%;
 }
 
 .admin-createCategory-container-content {
@@ -33,7 +32,7 @@ body {
   margin-bottom: 2rem;
 }
 
-.admin-createCategory-container-content .row .col-1 {
+.admin-createCategory-container-content .row .col- {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -86,7 +85,7 @@ body {
 }
 
 /* Mobile view */
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .admin-createCategory-container-content .row {
     flex-direction: column;
     align-items: center;
@@ -104,7 +103,7 @@ body {
     margin-right: 2rem;
     font-size: 2vh 0.5vw;
   }
-}
+} */
 
 /*Table Styles*/
 .table {
@@ -156,7 +155,6 @@ body {
 .fl-table thead th {
   box-shadow: 1px 1px 1px 1px #c9c9c9;
   cursor: pointer;
-  
 }
 
 .fl-table thead th:nth-child(odd) {
@@ -169,7 +167,7 @@ body {
 
 /* Responsive */
 
-@media (max-width: 767px) {
+/* @media (max-width: 767x) {
   .fl-table {
     display: block;
     width: 100%;
@@ -234,4 +232,4 @@ body {
     display: block;
     text-align: center;
   }
-}
+} */

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage.js";
 import About from "./pages/About/About.js";
 import Contact from "./pages/Contact/Contact.js";
@@ -25,10 +25,20 @@ import ProductDetails from "./pages/ProductDetails.js";
 import Categories from "./pages/Categories.js";
 import ProductCategory from "./pages/ProductCategory.js";
 import CartPage from "./pages/CartPage.js";
+import AdminOrders from "./pages/Admin/AdminOrders.js";
+import LanguageWrapper from "./components/LanguageWrapper/index.jsx";
+
+import i18n from "./i18n/index.js";
+import { Suspense } from "react";
+import { Toaster } from "react-hot-toast";
+
 function App() {
   return (
     <>
       <Routes>
+        <Route path="/!/" element={<Navigate to="/en" replace />} />
+        <Route path="/:lang" element={<LanguageWrapper />} />
+        <Route path=" /*/" element={<Navigate to="/en" replace />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:slug" element={<ProductDetails />} />
         <Route path="/categories" element={<Categories />} />
@@ -47,6 +57,7 @@ function App() {
           <Route path="admin/product/:slug" element={<UpdateProduct />} />
           <Route path="admin/products" element={<Products />} />
           <Route path="admin/users" element={<Users />} />
+          <Route path="admin/orders" element={<AdminOrders />} />
         </Route>
         <Route path="register" element={<Register />} />
         <Route path="/signin" element={<Signin />} />
@@ -57,6 +68,7 @@ function App() {
         <Route path="/policy" element={<Policy />} />
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
+      <Toaster />
     </>
   );
 }

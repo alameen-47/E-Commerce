@@ -4,6 +4,7 @@ import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import { Link } from "react-router-dom";
 const Categories = () => {
+
   // const categories = useCategory();
   const [categories, setCategories] = useState([]);
 
@@ -26,35 +27,35 @@ const Categories = () => {
   return (
     <Layout title={"All Categories"}>
       <section className="">
-        <div className="py-10  sm:py-16 block lg:py-24 relative bg-opacity-50  z-40  ">
-          <div className="relative mx-auto h-full px-4 pb-20   md:pb-10 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8">
-            <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 relative">
-              <div className="max-w-xl mx-auto text-center">
-                <div className="inline-flex px-4 py-1.5 mx-auto rounded-full  ">
-                  <p className="text-4xl font-semibold tracking-widest text-g uppercase">
+        <div className="py-10 px-6 sm:py-16 block lg:py-24 relative bg-opacity-50    ">
+          <div className=" mx-auto h-full  pb-20   md:pb-10  ">
+            <div className="px-0 mx-auto  relative">
+              <div className=" mx-auto text-center">
+                <div className="inline-flex px-4 py-1.5 mx-auto rounded-full">
+                  <p className="lg:text-4xl sm:text-2xl font-semibold tracking-widest text-g uppercase">
                     CATEGORIES:
                   </p>
                 </div>
-                <p className="mt-4 text-base leading-relaxed text-gray-600 group-hover:text-white">
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint. Velit officia consequat duis enim velit mollit..
+                <p className="lg:mt-4 sm:text-sm lg:text-base leading-relaxed text-gray-600 group-hover:text-white">
+                  "Unlocking the spectrum of consumer desires: Exploring the
+                  Categories of Rawad Mall Products."
                 </p>
               </div>
-              <div className="grid grid-cols-1 gap-2 mt-12 sm:grid-cols-3 lg:mt-20   ">
+              <div className="grid lg:grid-cols-5 gap-2 mt-12 sm:grid-cols-3 lg:mt-20">
                 {categories?.map((ct) => (
-                  <Link to={`/category/${ct.slug}`}
-                    
-                    className="transition-all  duration-1000 bg-white hover:bg-black  hover:shadow-xl m-2 p-4 relative z-40 group  "
+                  <Link
+                    to={`/category/${ct.slug}`}
+                    className="transition-all  duration-1000 bg-slate-200 hover:bg-black  hover:shadow-xl m-2 p-4 relative z-40 group  "
                   >
                     <>
-                      <div className=" absolute  bg-black top-0 left-0 w-24 h-1 z-30  transition-all duration-200   group-hover:bg-white group-hover:w-1/2  "></div>
-                      <div className="py-2 px-9 relative  ">
+                      <div className=" absolute  bg-black top-0 left-0 w-24 h-1 z-30  transition-all duration-200   group-hover:bg-slate-200 group-hover:w-1/2  "></div>
+                      <div className="lg:py-2  relative  ">
                         <img
-                          className="w-16 h-16  group-hover:invert !important"
+                          className="lg:w-16 lg:h-16 sm:w-14 sm:h-14   group-hover:invert !important"
                           src={`/api/v1/category/categories-icons/${ct?._id}`}
                           alt={ct.name}
                         ></img>
-                        <h3 className="mt-8 text-lg font-semibold text-black group-hover:text-white ">
+                        <h3 className="mt-8 lg:text-lg font-semibold text-black group-hover:text-white text-center ">
                           {ct?.name}
                         </h3>
                         <p className="mt-4 text-base text-gray-600 group-hover:text-white  "></p>

@@ -15,6 +15,7 @@ const CreateCategory = () => {
   const [selected, setSelected] = useState(null);
   const [updatedName, setUpdatedName] = useState("");
   const [icons, setIcons] = useState("");
+  const [images, setImages] = useState("");
   const navigate = useNavigate();
 
   //handle form
@@ -24,6 +25,7 @@ const CreateCategory = () => {
       const categoryData = new FormData();
       categoryData.append("name", name);
       categoryData.append("icons", icons);
+      categoryData.append("images", images);
 
       const { data } = await axios.post(
         "/api/v1/category/create-category",
@@ -98,126 +100,177 @@ const CreateCategory = () => {
 
   return (
     <Layout title={"Admin Dashboard-Create category "}>
-      <div className="admin-createCategory-container">
-        <div className="admin-createCategory-container-content">
-          <div className="row">
-            <div className="col-1">
-              <AdminMenu />
-            </div>
-            <div className="col-2">
-              <h1>Manage Category</h1>
-              <div style={{ padding: "30px" }}>
-                <CategoryForm
-                  handleSubmit={handleSubmit}
-                  value={name}
-                  setValue={setName}
+      <div className=" flex lg:flex-row sm:flex-col lg:gap-10 sm:gap-0 ">
+        {/* Menu */}
+        <div className="">
+          <AdminMenu />
+        </div>
+        {/* Content */}
+        <div className="lg:w-screen sm:left-0 sm:w-screen sm:overflow-hidden !important ">
+          <h1 className="lg:text-3xl lg:font-extrabold  sm:text-xl sm:font-bold">
+            Manage Category
+          </h1>
+          <div style={{ padding: "30px" }}>
+            <CategoryForm
+              handleSubmit={handleSubmit}
+              value={name}
+              setValue={setName}
+            />
+          </div>
+          <div className="flex justify-center mb-2">
+            <label
+              style={{
+                width: "50%",
+
+                border: "1px Solid Black",
+                padding: "0.2em",
+                backgroundColor: " rgb(206, 205, 200)",
+                cursor: "pointer",
+                display: "flex",
+                justifyContent: "center",
+                bottom: "10px",
+              }}
+            >
+              {icons ? icons.name : "Upload icons"}
+              <input
+                type="file"
+                name="icons"
+                accept="icons/*"
+                onChange={(e) => setIcons(e.target.files[0])}
+                hidden
+              />
+            </label>
+          </div>
+          <div style={{}}>
+            {icons && (
+              <div style={{ textAlign: "center" }}>
+                <img
+                  className="w-16 md:w-32 lg:w-48 inline m-4"
+                  src={URL.createObjectURL(icons)}
+                  alt="Category_icons"
+                  width="50%"
+                  height="auto"
+                  margin=".2rem"
                 />
               </div>
-              <div style={{ justifyContent: "center" }}>
-                <label
-                  style={{
-                    border: "1px Solid Black",
-                    padding: "0.2em",
-                    backgroundColor: " rgb(206, 205, 200)",
-                    cursor: "pointer",
-                    display: "flex",
-                    justifyContent: "center",
-                    bottom: "10px",
-                  }}
-                >
-                  {icons ? icons.name : "Upload icons"}
-                  <input
-                    type="file"
-                    name="icons"
-                    accept="icons/*"
-                    onChange={(e) => setIcons(e.target.files[0])}
-                    hidden
-                  />
-                </label>
-              </div>
-              <div style={{}}>
-                {icons && (
-                  <div style={{ textAlign: "center" }}>
-                    <img
-                      className="w-16 md:w-32 lg:w-48 inline m-4"
-                      src={URL.createObjectURL(icons)}
-                      alt="Category_icons"
-                      width="50%"
-                      height="auto"
-                      margin=".2rem"
-                    />
-                  </div>
-                )}
-              </div>
-              <div className="table">
-                <div class="table-wrapper">
-                  <table className="fl-table">
-                    <thead>
-                      <tr className="">
-                        <th>Name</th>
-                        <th className="bg-gray-200 ">Icons</th>
-                        <th className="bg-black text-white ">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {categories?.map((c) => (
-                        <>
-                          <tr>
-                            <td key={c._id}>{c.name}</td>
-                            <td>
-                              <img
-                                src={`/api/v1/category/categories-icons/${c._id}`}
-                                style={{
-                                  transform:
-                                    "translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)",
-                                }}
-                                className="w-14 card1img aspect-square text-[#000000] group-hover:bg-gray-200 text-5xl rounded-s p-2 transition-all duration-300 group-hover:transition-all group-hover:duration-300 group-hover:-translate-y-2  mx-auto"
-                                alt=""
-                              ></img>
-                            </td>
-                            <td>
-                              <button
-                                className="btn-btn-primary"
-                                onClick={() => {
-                                  setVisible(true);
-                                  setUpdatedName(c.name);
-                                  setSelected(c);
-                                }}
-                              >
-                                Edit
-                              </button>
-                              <button
-                                className="btn-btn-primary"
-                                style={{ color: "red", marginLeft: "1em" }}
-                                onClick={() => {
-                                  handleDelete(c._id);
-                                }}
-                              >
-                                Delete
-                              </button>
-                            </td>
-                          </tr>
-                        </>
-                      ))}
-                    </tbody>
-                    <tbody></tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <Modal
-              onCancel={() => setVisible(false)}
-              footer={null}
-              visible={visible}
+            )}
+          </div>
+          <div className="flex justify-center mb-2">
+            <label
+              style={{
+                width: "50%",
+                border: "1px Solid Black",
+                padding: "0.2em",
+                backgroundColor: " rgb(206, 205, 200)",
+                cursor: "pointer",
+                display: "flex",
+                justifyContent: "center",
+                bottom: "10px",
+              }}
             >
-              <CategoryForm
-                value={updatedName}
-                setValue={setUpdatedName}
-                handleSubmit={handleUpdate}
+              {images ? images.name : "Upload images"}
+              <input
+                type="file"
+                name="images"
+                accept="images/*"
+                onChange={(e) => setImages(e.target.files[0])}
+                hidden
               />
-            </Modal>
+            </label>
+          </div>
+          <div style={{}}>
+            {images && (
+              <div style={{ textAlign: "center" }}>
+                <img
+                  className="w-16 md:w-32 lg:w-48 inline m-4"
+                  src={URL.createObjectURL(images)}
+                  alt="Category_images"
+                  width="50%"
+                  height="auto"
+                  margin=".2rem"
+                />
+              </div>
+            )}
+          </div>
+          <div className=" overflow-scroll h-[50vh] s:w-full">
+            <div class="table-wrapper">
+              <table className="fl-table">
+                <thead>
+                  <tr className="">
+                    <th>Name</th>
+                    <th className="bg-gray-200 ">Icons</th>
+                    <th className="bg-gray-200 ">Images</th>
+                    <th className="bg-black text-white ">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {categories?.map((c) => (
+                    <>
+                      <tr>
+                        <td key={c._id}>{c.name}</td>
+                        <td>
+                          <img
+                            src={`/api/v1/category/categories-icons/${c._id}`}
+                            style={{
+                              transform:
+                                "translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)",
+                            }}
+                            className="w-14 card1img aspect-square text-[#000000] group-hover:bg-gray-200 text-5xl rounded-s p-2 transition-all duration-300 group-hover:transition-all group-hover:duration-300 group-hover:-translate-y-2  mx-auto"
+                            alt=""
+                          ></img>
+                        </td>
+                        <td>
+                          <img
+                            src={`/api/v1/category/categories-images/${c._id}`}
+                            style={{
+                              transform:
+                                "translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)",
+                            }}
+                            className="w-14 card1img aspect-square text-[#000000] group-hover:bg-gray-200 text-5xl rounded-s p-2 transition-all duration-300 group-hover:transition-all group-hover:duration-300 group-hover:-translate-y-2  mx-auto"
+                            alt=""
+                          ></img>
+                        </td>
+                        <td>
+                          <button
+                            className="btn-btn-primary"
+                            onClick={() => {
+                              setVisible(true);
+                              setUpdatedName(c.name);
+                              setSelected(c);
+                            }}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className="btn-btn-primary"
+                            style={{ color: "red", marginLeft: "1em" }}
+                            onClick={() => {
+                              handleDelete(c._id);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    </>
+                  ))}
+                </tbody>
+                <tbody></tbody>
+              </table>
+            </div>
           </div>
         </div>
+        <Modal
+          onCancel={() => setVisible(false)}
+          footer={null}
+          visible={visible}
+        >
+          <CategoryForm
+            value={updatedName}
+            setValue={setUpdatedName}
+            handleSubmit={handleUpdate}
+          />
+        </Modal>
       </div>
     </Layout>
   );

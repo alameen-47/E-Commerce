@@ -191,7 +191,7 @@ const UpdateProduct = () => {
 
                   <label className="relative block mt-5">
                     <input
-                      className=" placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                      className=" placeholder:text-slate-400 block bg-slate-200 w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                       type="text"
                       value={name}
                       placeholder="Write a Name for Product"
@@ -200,7 +200,7 @@ const UpdateProduct = () => {
                   </label>
                   <label className=" . relative block mt-5">
                     <textarea
-                      className=" placeholder:text-slate-400  placeholder:t-2 block bg-white w-full h-40 flex 	 border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                      className=" placeholder:text-slate-400  placeholder:t-2 block bg-slate-200 w-full h-40 flex 	 border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                       type="text"
                       value={description}
                       placeholder="Write a Description"
@@ -209,7 +209,7 @@ const UpdateProduct = () => {
                   </label>
                   <label className="relative block mt-5">
                     <input
-                      className=" placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                      className=" placeholder:text-slate-400 block bg-slate-200 w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                       type="number"
                       value={price}
                       placeholder="Write a Price"
@@ -218,7 +218,7 @@ const UpdateProduct = () => {
                   </label>
                   <label className="relative block mt-5">
                     <input
-                      className=" placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                      className=" placeholder:text-slate-400 block bg-slate-200 w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                       type="number"
                       value={quantity}
                       placeholder="Write the Quantity"

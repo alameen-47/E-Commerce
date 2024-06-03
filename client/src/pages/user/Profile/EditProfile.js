@@ -51,13 +51,13 @@ const Profile = () => {
   };
   return (
     <Layout title={"Your Profile"}>
-      <div class="bg-white flex  lg:flex-row sm:flex-col rounded shadow-lg  px-4 md:p-8 mb-6">
+      <div class="bg-slate-200 flex  lg:flex-row sm:flex-col rounded shadow-lg  px-4 md:p-8 mb-6">
         <UserMenu />
-        <div class="bg-white w-screen shadow rounded-lg border">
+        <div class="bg-slate-200 lg:w-screen shadow rounded-lg border">
           <div class="lg:col-span-2 px-4 py-5 sm:px-6">
             <form onSubmit={handleSubmit}>
               <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
-                <p className="text-lg">Update Personal Details.</p>
+              <p className="sm:text-lg lg:text-2xl">Update Personal Details.</p>
                 <div class="md:col-span-5">
                   <label for="full_name">Full Name</label>
                   <input

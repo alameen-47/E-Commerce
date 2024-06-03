@@ -6,6 +6,7 @@ export const createCategoryController = async (req, res) => {
   try {
     const { name } = req.fields;
     const { icons } = req.files;
+    const { images } = req.files;
     switch (true) {
       case !name:
         return res.status(401).send({ error: "Category Name is Required" });
@@ -27,6 +28,10 @@ export const createCategoryController = async (req, res) => {
     if (icons) {
       category.icons.data = fs.readFileSync(icons.path);
       category.icons.contentType = icons.type;
+    }
+    if (images) {
+      category.images.data = fs.readFileSync(images.path);
+      category.images.contentType = images.type;
     }
     await category.save();
     res.status(201).send({
@@ -50,14 +55,19 @@ export const updateCategoryController = async (req, res) => {
     const { name } = req.body;
     const { id } = req.params;
     const { icons } = req.files;
+    const { images } = req.files;
     const category = await categoryModel.findByIdAndUpdate(
       id,
-      { name, slug: slugify(name), icons },
+      { name, slug: slugify(name), icons, images },
       { new: true }
     );
     if (icons) {
       products.icons.data = fs.readFileSync(icons.path);
       products.icons.contentType = icons.type;
+    }
+    if (images) {
+      products.images.data = fs.readFileSync(images.path);
+      products.images.contentType = images.type;
     }
     res.status(200).send({
       success: true,
@@ -106,7 +116,26 @@ export const categoryIconsController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error in Fetching Product icons",
+      message: "Error in Fetching Category icons",
+      error,
+    });
+  }
+};
+//category images controller
+export const categoryImagesController = async (req, res) => {
+  try {
+    const category = await categoryModel
+      .findById(req.params.id)
+      .select("images");
+    if (category.images.data) {
+      res.set("Content-type", category.images.contentType);
+      return res.status(200).send(category.images.data);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in Fetching Category images",
       error,
     });
   }

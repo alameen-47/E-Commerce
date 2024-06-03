@@ -4,6 +4,7 @@ import { isAdmin, requireSignIn } from "../middlewares/authmiddleware.js";
 import {
   categoryController,
   categoryIconsController,
+  categoryImagesController,
   createCategoryController,
   deleteCategoryController,
   singleCategoryController,
@@ -53,4 +54,8 @@ router.delete(
 );
 //get icons
 router.get("/categories-icons/:id", categoryIconsController);
+//get Images
+router.get("/categories-Images/:id", categoryImagesController);
+// //get image
+// router.get("/categories-image/:id", categoryImageController);
 export default router;

@@ -5,7 +5,7 @@ module.exports = {
     screens: {
       sm: "375px",
 
-      md: "425px",
+      md: "585px",
 
       lg: "768px",
 
@@ -14,7 +14,17 @@ module.exports = {
       "2xl": "1440px",
       "3xl": "1540px",
     },
+
     extend: {},
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          "base-100": "#E2E8F0",
+        },
+      },
+    ],
+  },
 };

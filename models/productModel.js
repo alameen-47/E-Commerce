@@ -19,14 +19,25 @@ const productSchema = new mongoose.Schema(
       required: true,
       minlength: 1,
     },
+    offer: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 100,
+      default: 0,
+    },
     category: {
       type: mongoose.ObjectId,
       ref: "Category",
       require: true,
     },
-    quantity: {
+    discountPrice: {
       type: Number,
-      default: 0,
+      require: true,
+    },
+    quanntity: {
+      type: Number,
+      default: 1,
       require: true,
     },
     image: {
