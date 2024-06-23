@@ -1,0 +1,111 @@
+{
+  "common": {
+    "Search": "Maghanap",
+    "Contact Us": "Makipag-ugnay sa Amin",
+    "Login": "Mag-login",
+    "Register": "Magrehistro",
+    "Profile": "Profile",
+    "Logout": "Mag-logout",
+    "ADD TO CART": "IDAGDAG SA CART",
+    "No Products Found": "Walang Natagpuang Mga Produkto",
+    "RAWAD MALL": "RAWAD MALL",
+    "All Categories": "Lahat ng Kategorya"
+  },
+  "home": {
+    "Home": "Bahay",
+    "Welcome": "Maligayang Pagdating",
+    "ELECTRONICS": "ELECTRONICS",
+    "Discover Our Electronics Appliances": "Tuklasin ang aming mga Kagamitan sa Elektroniko",
+    "FURNITURES": "MUWEBLES",
+    "The Right Furniture can make any space feel like a vacation": "Ang Tamang Muwebles ay maaaring gawing parang bakasyon ang anumang espasyo",
+    "We offer a wide range of furniture for your home, from sofas and chairs to dining tables and desks. Our furniture is made with the highest quality materials and designed by experienced craftsmen who are passionate about creating pieces that will last for years to come. Whether you're looking for something classic or trendy and modern, we have everything you need to create the perfect living room, bedroom, office or outdoor space. Browse our collection below to find the perfect piece for your home today!": "Nag-aalok kami ng malawak na hanay ng mga muwebles para sa iyong tahanan, mula sa mga sofa at upuan hanggang sa mga hapag-kainan at mga mesa. Ang aming mga muwebles ay gawa sa pinakamataas na kalidad ng mga materyales at dinisenyo ng mga bihasang manggagawa na masigasig sa paglikha ng mga piraso na tatagal ng maraming taon. Kung naghahanap ka ng isang bagay na klasiko o makabago at moderno, mayroon kaming lahat ng kailangan mo upang lumikha ng perpektong sala, silid-tulugan, opisina o panlabas na espasyo. I-browse ang aming koleksyon sa ibaba upang mahanap ang perpektong piraso para sa iyong tahanan ngayon!",
+    "Shop Electronics": "Mamili ng Electronics",
+    "Shop Furniture's": "Mamili ng Muwebles",
+    "Click here to Explore More Products": "Mag-click dito upang Tuklasin ang Higit pang Mga Produkto",
+    "IF YOU WONDER": "KUNG IKAW AY NAGTATAKA",
+    "Why Choose Us": "Bakit Pumili sa Amin",
+    "Verified Products": "Mga Na-verify na Produkto",
+    "Elevate your confidence with our verified products, Quality assurance you can rely on.": "Itaguyod ang iyong kumpiyansa sa aming mga na-verify na produkto, pagtiyak ng kalidad na maaari mong asahan.",
+    "Best Value": "Pinakamahusay na Halaga",
+    "Unlock unbeatable value with our best price guarantee, Shop smart, save big, and indulge guilt-free.": "I-unlock ang walang kapantay na halaga sa aming pinakamahusay na garantiya ng presyo, mamili ng matalino, magtipid ng malaki, at magsaya nang walang pagkakasala.",
+    "Top pick": "Nangungunang Pumili",
+    "Embrace excellence, make the best choice today, Elevate your selection, redefine your way.": "Yakapin ang kahusayan, gawin ang pinakamahusay na pagpili ngayon, itaas ang iyong pagpili, muling tukuyin ang iyong paraan.",
+    "24/7 Support": "24/7 na Suporta",
+    "Always here, day or night, for your needs, Expert assistance, whenever you seek.": "Laging narito, araw o gabi, para sa iyong mga pangangailangan, Ekspertong tulong, kailanman mo kailangan.",
+    "BEST QUALITY AND BEST PRICES ON EVERY PAIR": "PINAKAMAHUSAY NA KALIDAD AT PINAKAMAHUSAY NA PRESYO SA BAWAT PARES"
+  },
+  "allProducts": {
+    "Filter Products": "Salain ang Mga Produkto",
+    "Filter By Category": "Salain Ayon sa Kategorya",
+    "Filter By Price": "Salain Ayon sa Presyo",
+    "Reset Filters": "I-reset ang Mga Filter",
+    "Loading...": "Naglo-load...",
+    "Loadmore": "Mag-load pa"
+  },
+  "header": {
+    "Home": "Bahay",
+    "Products": "Mga Produkto",
+    "About Us": "Tungkol sa Amin",
+    "Contact Us": "Makipag-ugnay sa Amin",
+    "Categories": "Mga Kategorya"
+  },
+  "footer": {
+    "Rawad Mall, Al Sulaymi": "Rawad Mall, Al Sulaymi",
+    "Visit Our Store": "Bisitahin ang Aming Tindahan",
+    "USEFUL LINKS": "MGA KAPAKIPAKINABANG NA LINK",
+    "Home": "Bahay",
+    "Products": "Mga Produkto",
+    "About Us": "Tungkol sa Amin",
+    "Contact Us": "Makipag-ugnay sa Amin",
+    "Categories": "Mga Kategorya",
+    "PRODUCTS": "MGA PRODUKTO",
+    "Furnitures": "Muwebles",
+    "Electronics": "Electronics",
+    "Toys": "Mga Laruan",
+    "STAY IN TOUCH": "Manatiling Nakaugnay",
+    "Checkout our social media": "Suriin ang aming social media"
+  },
+  "about": {
+    "RAWAD MAll": "RAWAD MALL",
+    "At RAWAD MAll, all that you see is hand-picked and 100% true – sourced straight from the best brands and their approved affiliates from KSA and over the world, only for you. We present to you the most up to date – it’s in-season and on-incline; if it’s on the racks, it’s on the web. Also, it’s nowest – have it delivered ASAP to you, from a store close to you, when you use our Phygital services. It’s New and Now Barely a year from launch, RAWAD MAll is already in the Top 20, and one of the fastest-growing, e-commerce companies in the country. Offering flexibility in the way you shop, RAWAD MAll is a first-of-its-kind Phygital marketplace that serves more than one million customers.": "Sa RAWAD MAll, lahat ng nakikita mo ay pinili nang mano-mano at 100% tunay – direktang nakuha mula sa mga pinakamahusay na tatak at kanilang mga naaprubahang kaanib mula sa KSA at buong mundo, para lamang sa iyo. Ipinapakita namin sa iyo ang pinakabagong – ito ay nasa panahon at nasa trend; kung ito ay nasa mga racks, ito ay nasa web. Gayundin, ito ang pinaka-bago – ipina-deliver ito sa iyo sa lalong madaling panahon, mula sa isang tindahan na malapit sa iyo, kapag ginamit mo ang aming mga Phygital na serbisyo. Ito ay Bago at Ngayon Mahigit isang taon mula nang ilunsad, ang RAWAD MAll ay isa na sa Nangungunang 20, at isa sa pinakamabilis na lumalagong, mga kumpanya ng e-commerce sa bansa. Nag-aalok ng kakayahang umangkop sa paraan ng iyong pamimili, ang RAWAD MAll ay isang uri ng una sa mga Phygital marketplace na nagsisilbi sa higit sa isang milyong mga customer."
+  },
+  "contact": {
+    "CONTACT US": "MAKIPAG-UGNAY SA AMIN",
+    "Any queries and info about product": "Anumang mga katanungan at impormasyon tungkol sa produkto",
+    "feel free to contact at any time": "huwag mag-atubiling makipag-ugnay anumang oras"
+  },
+  "account": {
+    "MY ACCOUNT": "Aking Account",
+    "Profile": "Profile",
+    "Edit Profile": "I-edit ang Profile",
+    "Orders": "Mga Order",
+    "Logout": "Mag-logout",
+    "User Profile": "Profile ng User",
+    "Full name": "Buong Pangalan",
+    "Email address": "Email Address",
+    "Phone number": "Numero ng Telepono",
+    "Address": "Address",
+    "Full Address": "Buong Address",
+    "Your Orders": "Iyong Mga Order"
+  },
+  "cart": {
+    "Shopping Cart": "Cart ng Pamimili",
+    "PRODUCT DETAILS": "Detalye ng Produkto",
+    "Cart is Empty": "Walang laman ang Cart",
+    "QUANTITY": "Dami",
+    "PRICE": "Presyo",
+    "TOTAL": "Kabuuan",
+    "Order Summary": "Buod ng Order",
+    "ITEMS": "Mga Item",
+    "SAR": "SAR",
+    "SHIPPING": "Pagpapadala",
+    "Standard shipping": "Standard Shipping Charge",
+    "Enter your delivery address": "Ilagay ang iyong delivery address",
+    "UPDATE ADDRESS": "I-update ang Address",
+    "TOTAL COST": "Kabuuang Gastos",
+    "REMOVE": "Alisin",
+    "Please Login to Checkout": "Mangyaring Mag-login upang Mag-checkout",
+    "Processing ....": "Pinoproseso ....",
+    "Make Payment": "Magbayad"
+  }
+}

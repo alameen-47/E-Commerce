@@ -7,9 +7,12 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import DropIn from "braintree-web-drop-in-react";
 import Orders from "./user/Orders/Orders";
+import MapComponent from "../components/MapComponent";
+import { t } from "i18next";
 
 const CartPage = () => {
   const storedCart = JSON.parse(localStorage.getItem("CART")) || [];
+
   const [cart, setCart] = useState(storedCart);
   const [iqty, setIqty] = useState();
   const [auth, setAuth] = useAuth();
@@ -41,9 +44,9 @@ const CartPage = () => {
       });
 
       setLoading(false);
-      localStorage.removeItem("CART");
       toast.success(`Your order has been placed successfully`);
       setCart([]);
+      localStorage.removeItem("CART");
       navigate("/dashboard/user/orders");
     } catch (error) {
       console.log(error);
@@ -79,7 +82,6 @@ const CartPage = () => {
         totalcheckout += item.price * item.units + 10;
       });
       return totalcheckout.toLocaleString("en-us", "ar-sa", {
-        style: "currency",
         currency: "SAR",
       });
     } catch (error) {
@@ -119,13 +121,15 @@ const CartPage = () => {
         <div className="flex flex-col md:flex-row shadow-md my-10">
           <div className="w-full md:w-3/4 bg-slate-200 px-10 py-10">
             <div className="flex justify-between border-b pb-8">
-              <h1 className="font-semibold text-2xl">Shopping Cart</h1>
+              <h1 className="font-semibold text-2xl">
+                {t("cart.Shopping Cart")}
+              </h1>
               <h2 className="font-semibold text-2xl">
                 {cart?.length
                   ? `${cart.length} Items ${
                       auth?.token ? "" : ", Please login to Checkout"
                     }`
-                  : "Cart is Empty"}
+                  : t("cart.Cart is Empty")}
               </h2>
             </div>
             <div className="divider h-6 px-4"></div>
@@ -133,16 +137,16 @@ const CartPage = () => {
             <div className="flex flex-col mt-10 mb-5">
               <div className="flex justify-between border-b-2 pb-3">
                 <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5 overflow-auto">
-                  Product Details
+                  {t("cart.PRODUCT DETAILS")}
                 </h3>
                 <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">
-                  Quantity
+                  {t("cart.QUANTITY")}
                 </h3>
                 <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">
-                  Price
+                  {t("cart.PRICE")}
                 </h3>
                 <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">
-                  Total
+                  {t("cart.TOTAL")}
                 </h3>
               </div>
 
@@ -173,7 +177,7 @@ const CartPage = () => {
                         className="font-semibold box-border cursor-pointer text-red-500 hover:text-red-700 text-xs"
                         onClick={() => removeCartItem(units._id)}
                       >
-                        Remove
+                        {t("cart.REMOVE")}
                       </p>
                       <div className="divider h-6 px-18"></div>
                     </div>
@@ -221,24 +225,26 @@ const CartPage = () => {
           </div>
           <div id="summary" className="w-full md:w-1/4 px-8 py-10">
             <h1 className="font-semibold text-2xl border-b pb-8">
-              Order Summary
+              {t("cart.Order Summary")}
             </h1>
 
             <div className="divider  h-6 px-4"></div>
             <div className="flex justify-between mt-10 mb-5">
               <span className="font-semibold text-sm uppercase">
-                Items {cart?.length}
+                {t("cart.ITEMS")} {cart?.length}
               </span>
               <span className="font-semibold text-sm">
-                SAR: {totalcheckoutPrice()}/-
+                {t("cart.SAR")}: {totalcheckoutPrice() - 10}/-
               </span>
             </div>
             <div>
               <label className="font-medium inline-block mb-3 text-sm uppercase">
-                Shipping
+                {t("cart.SHIPPING")}
               </label>
               <select className="block p-2 text-gray-600 w-full text-sm">
-                <option>Standard shipping - SAR:10.00</option>
+                <option>
+                  {t("cart.Standard shipping")} - {t("cart.SAR")}:10.00
+                </option>
               </select>
             </div>
             {auth?.user?.address ? (
@@ -252,11 +258,12 @@ const CartPage = () => {
                   />
                   <h3 className="p-2 text-sm w-full">{auth.user?.address}</h3>
                 </div>
+
                 <button
                   onClick={() => navigate("/dashboard/user/edit-profile")}
                   className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase"
                 >
-                  Update Address
+                  {t("cart.UPDATE ADDRESS")}
                 </button>
               </>
             ) : (
@@ -266,7 +273,7 @@ const CartPage = () => {
                     onClick={() => navigate("/dashboard/user/profile")}
                     className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase"
                   >
-                    Update Address
+                    {t("cart.Update Address")}
                   </button>
                 ) : (
                   <button
@@ -277,15 +284,17 @@ const CartPage = () => {
                       })
                     }
                   >
-                    Please Login to Checkout
+                    {t("cart.Please Login to Checkout")}
                   </button>
                 )}
               </>
             )}
             <div className="border-t mt-8">
               <div className="flex font-semibold justify-between py-6 text-sm uppercase">
-                <span>Total cost</span>
-                <span>SAR: {totalcheckoutPrice()}/-</span>
+                <span>{t("cart.TOTAL COST")}</span>
+                <span>
+                  {t("cart.SAR")}: {totalcheckoutPrice()}/-
+                </span>
               </div>
 
               <div>
@@ -308,7 +317,9 @@ const CartPage = () => {
                       onClick={handlePayments.bind(this)}
                       disabled={loading || !instance || !auth?.user?.address}
                     >
-                      {loading ? "Processing ...." : "Make Payment"}
+                      {loading
+                        ? t("cart.Processing ....")
+                        : t("cart.Make Payment")}
                     </button>
                   </>
                 )}

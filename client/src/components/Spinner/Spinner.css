@@ -1,46 +1,56 @@
-/* HTML: <div class="loader"></div> */
-/* HTML: <div class="loader"></div> */
+/* Spinner.css */
 .spinner-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  margin: auto;
-  color: #fff;
-  font-size: 14px;
-  width: 100%;
-  height: 100vh;
-  background-color: rgb(0, 0, 0);
-  z-index: 99999;
+  height: 100vh; /* Full height of the viewport */
 }
-.loader {
-  width: 80px;
+
+.spinner {
+  --size: 30px;
+  --first: #b9c0c8;
+  --second: #000000;
+  animation: spin 3s linear infinite;
+  position: relative;
   aspect-ratio: 1;
-  border: 10px solid #0000;
-  padding: 5px;
-  box-sizing: border-box;
-  background: radial-gradient(farthest-side, #fff 98%, #0000) 0 0/20px 20px
-      no-repeat,
-    conic-gradient(from 90deg at 10px 10px, #0000 90deg, #fff 0) content-box,
-    conic-gradient(from -90deg at 40px 40px, #0000 90deg, #fff 0) content-box,
-    #000;
-  filter: blur(4px) contrast(10);
-  animation: l11 3s infinite;
+  top: 20px; /* Adjust as necessary */
 }
-@keyframes l11 {
+
+.spinner::before,
+.spinner::after {
+  content: "";
+  width: var(--size);
+  height: var(--size);
+  border: 4px solid var(--first);
+  border-top: 4px solid var(--second);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: spinRing 1.5s ease-out infinite;
+  box-shadow: 0 0 10px var(--first);
+}
+
+.spinner::before {
+  filter: blur(10px);
+}
+
+@keyframes spinRing {
   0% {
-    background-position: 0 0;
-  }
-  25% {
-    background-position: 100% 0;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  75% {
-    background-position: 0% 100%;
+    transform: translate(-50%, -50%) rotate(0deg);
   }
   100% {
-    background-position: 0% 0;
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

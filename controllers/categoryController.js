@@ -140,6 +140,25 @@ export const categoryImagesController = async (req, res) => {
     });
   }
 };
+//category images controller
+export const categoryBannersController = async (req, res) => {
+  try {
+    const category = await categoryModel
+      .findById(req.params.id)
+      .select("banners");
+    if (category.banners.data) {
+      res.set("Content-type", category.banners.contentType);
+      return res.status(200).send(category.banners.data);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in Fetching Category Banners",
+      error,
+    });
+  }
+};
 //single category
 export const singleCategoryController = async (req, res) => {
   try {

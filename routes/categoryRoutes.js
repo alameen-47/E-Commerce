@@ -2,6 +2,7 @@ import express from "express";
 import { isAdmin, requireSignIn } from "../middlewares/authmiddleware.js";
 // import CreateCategory from "../client/src/pages/Admin/CreateCategory/CreateCategory.js";
 import {
+  categoryBannersController,
   categoryController,
   categoryIconsController,
   categoryImagesController,
@@ -45,17 +46,12 @@ router.delete(
   deleteCategoryController
 );
 
-//delete category
-router.delete(
-  "/delete-category/:id",
-  requireSignIn,
-  isAdmin,
-  deleteCategoryController
-);
 //get icons
 router.get("/categories-icons/:id", categoryIconsController);
 //get Images
 router.get("/categories-Images/:id", categoryImagesController);
+//get Banners
+router.get("/categories-banners/:id", categoryBannersController);
 // //get image
 // router.get("/categories-image/:id", categoryImageController);
 export default router;

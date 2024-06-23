@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cart.js";
 import { toast } from "react-hot-toast";
+import { t } from "i18next";
 
 const ProductDetails = () => {
   const params = useParams();
@@ -13,8 +14,8 @@ const ProductDetails = () => {
   const [product, setProduct] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [products, setProducts] = useState([]);
-
   const navigate = useNavigate();
+  
   const addToCart = (item) => {
     const updatedCart = [...cart, ...item];
     setCart(updatedCart);
@@ -102,7 +103,7 @@ const ProductDetails = () => {
             type="button"
             data-ripple-light="true"
           >
-            Add To Cart
+            {t("common.ADD TO CART")}
           </button>
         </div>
       </div>
@@ -161,7 +162,7 @@ const ProductDetails = () => {
                     }}
                     className="text-white lg:inline-flex items-center gap-3 group-hover:bg-slate-200 group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer py-2 px-2 text-xs font-semibold rounded-full "
                   >
-                    ADD TO CART
+                    {t("common.ADD TO CART")}
                   </button>
                 </div>
               </div>

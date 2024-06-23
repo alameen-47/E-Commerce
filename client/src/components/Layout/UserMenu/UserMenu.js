@@ -3,6 +3,10 @@ import { React, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../../../context/auth";
+import { RiDashboardFill, RiLogoutBoxFill } from "react-icons/ri";
+import { FaUser, FaUserPen } from "react-icons/fa6";
+import { CgPlayListSearch } from "react-icons/cg";
+import { t } from "i18next";
 
 const UserMenu = () => {
   const [auth, setAuth] = useAuth();
@@ -51,63 +55,84 @@ const UserMenu = () => {
           </svg>
         )}
       </div>
-      <div className={`${open ? "hidden" : "block    left-0 h-[40%] w-auto"}`}>
-        <div class="grid lg:block   gap-y-2 text-sm grid-cols-1 lg:grid-cols-2">
+      <div
+        className={`${
+          open ? "hidden" : "block    left-0 h-[40%] w-auto bg-slate-700"
+        }`}
+      >
+        <div class="grid lg:block   gap-y-2 text-sm grid-cols-1 lg:grid-cols-2  ">
           <div className="lg:h-screen  flex flex-row bg-gray-100">
-            <div className="flex flex-col lg:w-56 sm:w-screen bg-slate-200 rounded-sm overflow-hidden">
-              <div className="flex items-center justify-center h-20 shadow-md">
-                <h1 className="lg:text-3xl sm:text-2xl uppercase text-black font-bold">
-                  Dashboard
-                </h1>
+            <div className="flex flex-col lg:w-56 sm:w-screen  rounded-sm overflow-hidden bg-slate-300 shadow-2xl shadow-slate-700 ">
+              <div className="flex items-center justify-center align-middle  h-20 shadow-md text-center gap-1">
+                <RiDashboardFill size={25} />
+                <span className="lg:text-2xl sm:text-2xl text-lg uppercase text-black font-bold text-center bottom-0 pb-0 mb-0 ">
+                  {t("account.MY ACCOUNT")}
+                </span>
               </div>
               <ul className="flex flex-col py-4">
                 <li>
-                  <li className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
+                  <li className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-600 hover:text-gray-800">
+                    <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-700">
                       <i className="bx bx-home" />
                     </span>
-                    <span className="sm:text-sm lg:text-lg font-medium">
+                    <span className="sm:text-sm lg:text-lg font-medium ">
                       <NavLink to="/dashboard/user">
-                        <h2>Profile</h2>
+                        <div className="flex items-center justify-center align-middle text-center gap-1 font-semibold ">
+                          <FaUser size={17} />
+                          <span>{t("account.Profile")}</span>
+                        </div>
                       </NavLink>
                     </span>
                   </li>
                 </li>
                 <hr className="my-2 border-separate dark:border-gray-400" />
                 <li>
-                  <li className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
+                  <li className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-600 hover:text-gray-800">
+                    <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-700">
                       <i className="bx bx-log-out" />
                     </span>
                     <span className="sm:text-sm lg:text-lg font-medium">
                       <NavLink to="/dashboard/user/edit-profile">
-                        Edit Profile
+                        <div className="flex items-center justify-center align-middle text-center gap-1 font-semibold ">
+                          <FaUserPen size={19} />
+                          <span>{t("account.Edit Profile")}</span>
+                        </div>
                       </NavLink>
                     </span>
                   </li>
                 </li>
                 <hr className="my-2 border-separate dark:border-gray-400" />
                 <li>
-                  <li className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
+                  <li className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200  text-gray-600 hover:text-gray-800">
+                    <span className="inline-flex items-center justify-center h-12 w-12 text-lg  text-gray-700">
                       <i className="bx bx-log-out" />
                     </span>
                     <span className="sm:text-sm lg:text-lg font-medium">
-                      <NavLink to="/dashboard/user/orders">Orders</NavLink>
+                      <NavLink to="/dashboard/user/orders">
+                        <div className="flex items-center justify-start align-middle text-center gap-1 font-semibold ">
+                          <CgPlayListSearch size={26} />
+                          <span className="mr-8">{t("account.Orders")}</span>
+                        </div>
+                      </NavLink>
                     </span>
                   </li>
                 </li>
                 <hr className="my-2 border-separate dark:border-gray-400" />
                 <li>
-                  <li className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
+                  <li className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-600 hover:text-gray-800">
+                    <span className="inline-flex items-center justify-center h-12 w-12 text-lg  text-gray-700">
                       <i className="bx bx-log-out" />
                     </span>
                     <button
                       onClick={handleLogout}
                       className="sm:text-sm lg:text-lg font-medium"
                     >
-                      <NavLink to="/signin">Logout</NavLink>
+                      <NavLink to="/signin">
+                        <div className="flex items-center justify-center align-middle text-center gap-1 font-semibold ">
+                          <RiLogoutBoxFill />
+                          <span>{t("account.Logout")}</span>
+                        </div>
+                      </NavLink>
                     </button>
                   </li>
                 </li>

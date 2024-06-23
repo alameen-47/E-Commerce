@@ -14,10 +14,11 @@ import "react-loading-skeleton/dist/skeleton.css";
 import OffersTop from "./OFFERS/TOPOFFERS/OffersTop";
 import ElecOffers from "./OFFERS/ELECOFFERS/ElecOffers";
 import { Link } from "react-router-dom";
+import { t } from "i18next";
 const HomePage = () => {
   return (
     <Layout title={"RAWAD-MALL-Everything you Need!"}>
-      <div className="flex justify-center items-center align-middle text-center min-h-screen bg-slate-200 w-full overflow-x-hidden ">
+      <div className="flex justify-center items-center align-middle  min-h-screen bg-slate-200 w-full overflow-x-hidden ">
         <div className=" w-screen max-w-full ">
           <Slideshow className="bg-gradient-to-b from-current to-transparent" />
           <br></br>
@@ -41,7 +42,7 @@ const HomePage = () => {
           <p className="hover:text-gray-800 hover:bg-[#fff] shadow-2xl shadow-gray-500 cursor-pointer flex text-center  justify-center align-middle items-center hover:scale-105 text-white bg-black p-2 w-fit rounded-lg m-auto">
             <span className="font-semibold">
               <Link to={"/allproducts"}>
-                Click here to Explore More Products
+                {t("home.Click here to Explore More Products")}
               </Link>
             </span>
           </p>

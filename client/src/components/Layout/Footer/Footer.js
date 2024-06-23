@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import logo from "../../../assets/icons/RAWAD MALL logo.png";
 import fb from "../../../assets/icons/icons8-facebook-50 (1).png";
@@ -7,7 +7,37 @@ import yt from "../../../assets/icons/icons8-youtube-50.png";
 import twitterX from "../../../assets/icons/icons8-twitterx-50 (1).png";
 import wp from "../../../assets/icons/icons8-whatsapp-50.png";
 import { Link } from "react-router-dom";
+import MapComponent from "../../MapComponent";
+import { t } from "i18next";
 const Footer = () => {
+  const [locations, setLocations] = useState([
+    {
+      id: 2,
+      latitude: 26.293761005976013,
+      longitude: 41.36367807952973,
+      name: t("common.RAWAD MALL"),
+    },
+    {
+      id: 1,
+      latitude: 26.295750914238287,
+      longitude: 41.35964185639376,
+      name: t("common.RAWAD MALL"),
+    },
+  ]);
+
+  const handleSelectLocation = (newLocation) => {
+    setLocations((prevLocations) =>
+      prevLocations.map((location) =>
+        location.id === newLocation.id
+          ? {
+              ...location,
+              latitude: newLocation.lat,
+              longitude: newLocation.lng,
+            }
+          : location
+      )
+    );
+  };
   return (
     <footer className="footer w-full flex flex-col justify-center items-center p-4 divide-y dark:bg-black dark:text-gray-100 2xl:flex 2xl:flex-col 2xl:items-center ">
       <div className=" flex flex-row flex-wrap justify-center  lg:gap-7 xl:gap-28 md:flex-auto  sm:gap-8 sm:h-94 sm:flex ">
@@ -20,7 +50,7 @@ const Footer = () => {
             />
             <ul className="space-y-1 text-xs">
               <li>
-                <p>Rawad Mall, Al Sulaymi</p>
+                <p>{t("footer.Rawad Mall, Al Sulaymi")}</p>
               </li>
               <li>
                 <p>+966 546 236 589</p>
@@ -29,52 +59,52 @@ const Footer = () => {
                 <p>info@rawadmall.com</p>
               </li>
               <li>
-                <p>Visit Our Store</p>
+                <p>{t("footer.Visit Our Store")}</p>
               </li>
             </ul>
           </div>
         </div>
         <div className="mb-6">
           <h3 className="text-lg font-bold tracking-wider uppercase dark:text-gray-50">
-            Useful links
+            {t("footer.USEFUL LINKS")}
           </h3>
           <ul className="space-y-1">
             <li>
-              <Link to={""}>Home</Link>
+              <Link to={""}>{t("footer.Home")}</Link>
             </li>
             <li>
-              <Link to={""}>Products</Link>
+              <Link to={""}>{t("footer.Products")}</Link>
             </li>
             <li>
-              <Link to={""}>Categories</Link>
+              <Link to={""}>{t("footer.Categories")}</Link>
             </li>
             <li>
-              <Link to={""}>Contact Us</Link>
+              <Link to={""}>{t("footer.Contact Us")}</Link>
             </li>
           </ul>
         </div>
         <div className="mb-6">
           <h3 className="text-lg font-bold tracking-wider uppercase dark:text-gray-50">
-            Products
+            {t("footer.Products")}
           </h3>
           <ul className="space-y-1">
             <li>
-              <Link to={""}>Furnitures</Link>
+              <Link to={""}>{t("footer.Furnitures")}</Link>
             </li>
             <li>
-              <Link to={""}>Electronics</Link>
+              <Link to={""}>{t("footer.Electronics")}</Link>
             </li>
             <li>
-              <Link to={""}>Carpets</Link>
+              <Link to={""}>{t("footer.Toys")}</Link>
             </li>
           </ul>
         </div>
         <div>
           <div className="text-lg font-bold uppercase dark:text-gray-50 mb-2">
-            Stay in Touch
+            {t("footer.STAY IN TOUCH")}
             <br />
             <span className="lowercase font-normal text-xs">
-              Checkout our social media
+              {t("footer.Checkout our social media")}
             </span>
           </div>
           <div className="flex justify-start space-x-3">
@@ -115,6 +145,16 @@ const Footer = () => {
             </Link>
           </div>
         </div>
+
+        {/* <MapComponent
+          onSelectLocation={handleLocationSelect}
+          latitude={26.295750914238287}
+          longitude={41.35964185639376}
+        /> */}
+        <MapComponent
+          onSelectLocation={handleSelectLocation}
+          locations={locations}
+        />
       </div>
 
       <div className="py-6 text-sm text-center dark:text-gray-400">

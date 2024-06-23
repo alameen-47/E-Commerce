@@ -215,7 +215,35 @@ export const getOrdersController = async (req, res) => {
     });
   }
 };
+//cancel order
+export const cancelOrderController = async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    const order = await orderModel.findByIdAndDelete(id);
+    // const order = await orderModel.findById(id);
+    if (!order) {
+      return res.status(404).send({
+        success: false,
+        message: "Order not found",
+      });
+    }
+    
+
+    // await orderModel.findByIdAndDelete(id);
+    res.status(200).send({
+      success: true,
+      message: "Order Cancelled Succesfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error While Cancelling Order",
+      error,
+    });
+  }
+};
 //admin all-orders
 export const getAllOrdersController = async (req, res) => {
   try {

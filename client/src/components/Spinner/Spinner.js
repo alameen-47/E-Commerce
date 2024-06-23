@@ -10,20 +10,22 @@ const Spinner = ({ path = "login" }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCount(count - 1);
-    }, 1000);
-    count === 0 &&
+    }, 1000); // 1 second intervals
+    if (count === 0) {
       navigate(`/${path}`, {
         state: location.pathname,
       });
+    }
     return () => clearInterval(interval);
   }, [count, navigate, location, path]);
+
   return (
-    <>
-      <div className="spinner-container">
-        <h2>Redirecting to you in {count} seconds</h2>
-        <div className="loader"></div>
-      </div>
-    </>
+    <div className="spinner-container">
+      <p className="text-lg sm:text-sm">
+        Redirecting to you in {count} seconds
+      </p>
+      <div className="spinner"></div>
+    </div>
   );
 };
 

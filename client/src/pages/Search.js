@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout/Layout";
 import { useSearch } from "../context/search";
-import { useCart } from "./cart.js";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { t } from "i18next";
+import { useCart } from "../context/cart";
 
 const Search = () => {
-  const [values, setValues] = useSearch();
+  const [values, setValues] = useSearch([]);
   const [cart, setCart] = useCart([]);
   const navigate = useNavigate();
   const [units, setUnits] = useState(1);
@@ -18,18 +19,18 @@ const Search = () => {
     toast.success("Item Added to cart");
   };
   return (
-    <Layout title={"bg-slate-200"}>
+    <Layout title={"Search Results"}>
       <div className="container">
         <div className="text-center">
           <h1 className="text-center mt-5">Search Results</h1>
           <h6>
             {values?.results.length < 1
-              ? "No Products Found"
+              ? t("No Products Found")
               : `Found ${values?.results.length}`}
           </h6>
           <div className="flex flex-wrap my-3">
             <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-3  ">
-              {values?.map((p) => (
+              {values?.results.map((p) => (
                 <div
                   className=" flex lg:flex-col sm:flex-row 
                 lg:aspect-[2/3]   "
@@ -90,7 +91,7 @@ const Search = () => {
                       }}
                       className="btun4 text-white lg:inline-flex items-center lg:gap-3 sm:gap-1 group-hover:bg-slate-200 group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer lg:py-2 sm:py-1 lg:px-4 sm:px-2 lg:text-sm sm:text-xs font-semibold rounded-full butn"
                     >
-                      ADD TO CART
+                      {t("common.ADD TO CART")}
                     </button>
                   </div>
                 </div>

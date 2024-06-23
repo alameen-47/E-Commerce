@@ -15,7 +15,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 5.625rem;
 }
 
 .rawad-mall_navbar-links_logo {
@@ -42,7 +41,7 @@
 .rawad-mall_navbar-links_container p {
   color: #fff;
   font-family: var(--font-family);
-  font-weight: 500;
+  font-weight: 700;
   font-size: 1.125rem;
   line-height: 1.5625rem;
   text-transform: capitalize;
@@ -107,7 +106,7 @@
   gap: 0.625rem;
 }
 .dropdown-items div:hover {
-  background: rgba(69, 68, 68, 0.503);
+  background: #45444480;
 }
 
 .dropdown1 {
@@ -315,6 +314,9 @@
     display: flex;
     gap: 16px;
   }
+  .language-switcher {
+    display: none;
+  }
   .rawad-mall_navbar-icons img {
     color: #f1f1f1;
     transition: all 0.3s ease-in-out;
@@ -364,6 +366,9 @@
     justify-content: space-between;
     gap: 20px;
   }
+  .language-switcher {
+    display: none;
+  }
   .search-box {
     display: flex;
     margin-left: 8px;
@@ -373,5 +378,8 @@
   .rawad-mall_navbar {
     padding: 1.4rem 1.6rem;
     width: 12.5rem;
+  }
+  .language-switcher {
+    display: none;
   }
 }

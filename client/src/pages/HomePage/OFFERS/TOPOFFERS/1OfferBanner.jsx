@@ -4,19 +4,19 @@ import { Paper, Typography } from "@mui/material";
 
 const items = [
   {
-    name: "Offer 1",
+    name: "Mobiles",
     description: "This is the first offer",
     image:
       "https://i.pinimg.com/736x/31/70/a7/3170a718979579879f8a0ef3938eb20b.jpg",
   },
   {
-    name: "Offer 2",
+    name: "Watches",
     description: "This is the second offer",
     image:
       "https://i.pinimg.com/originals/de/cf/7b/decf7bec02081acb2e37890f17d54221.jpg",
   },
   {
-    name: "Offer 3",
+    name: "Head Phones",
     description: "This is the third offer",
     image: "https://img.pikbest.com/origin/06/25/08/79HpIkbEsT2WZ.jpg!sw800",
   },

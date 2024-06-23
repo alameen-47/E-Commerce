@@ -1,0 +1,111 @@
+{
+  "common": {
+    "Search": "തിരയുക",
+    "Contact Us": "ഞങ്ങളുമായി ബന്ധപ്പെടുക",
+    "Login": "ലോഗിൻ",
+    "Register": "രജിസ്റ്റർ",
+    "Profile": "പ്രൊഫൈൽ",
+    "Logout": "ലോഗൗട്ട്",
+    "ADD TO CART": "കാർട്ടിലേക്കു ചേർക്കുക",
+    "No Products Found": "ഉൽപ്പന്നങ്ങൾ കണ്ടില്ല",
+    "RAWAD MALL": "റാവാഡ് മാൾ",
+    "All Categories": "എല്ലാ വിഭാഗങ്ങളും"
+  },
+  "home": {
+    "Home": "ഹോം",
+    "Welcome": "സ്വാഗതം",
+    "ELECTRONICS": "ഇലക്ട്രോണിക്സ്",
+    "Discover Our Electronics Appliances": "ഞങ്ങളുടെ ഇലക്ട്രോണിക് ഉപകരണങ്ങൾ കണ്ടെത്തുക",
+    "FURNITURES": "ഫർണിച്ചറുകൾ",
+    "The Right Furniture can make any space feel like a vacation": "ശരിയായ ഫർണിച്ചർ ഏതൊരു സ്ഥലത്തെയും ഒരു അവധി പോലെ അനുഭവപ്പെടാൻ കഴിയും",
+    "We offer a wide range of furniture for your home, from sofas and chairs to dining tables and desks. Our furniture is made with the highest quality materials and designed by experienced craftsmen who are passionate about creating pieces that will last for years to come. Whether you're looking for something classic or trendy and modern, we have everything you need to create the perfect living room, bedroom, office or outdoor space. Browse our collection below to find the perfect piece for your home today!": "സോഫകൾ, കസേരകൾ മുതൽ ഡൈനിങ് ടേബിളുകളും ഡെസ്കുകളും വരെ നിങ്ങളുടെ വീടിന് ഒരു വിശാലമായ ഫർണിച്ചർ ശ്രേണി ഞങ്ങൾ വാഗ്ദാനം ചെയ്യുന്നു. ഞങ്ങളുടെ ഫർണിച്ചറുകൾ ഉയർന്ന ഗുണമേന്മയുള്ള വസ്തുക്കൾ ഉപയോഗിച്ച് നിർമ്മിച്ചതാണ്, നാളുകളോളം നിലനിൽക്കുന്ന ഭാഗങ്ങൾ സൃഷ്ടിക്കുന്നതിൽ ആസക്തരായ പരിചയസമ്പന്നരായ ക്വാർട്ട്സ്മേന്മാർ ഡിസൈൻ ചെയ്തവയുമാണ്. നിങ്ങൾ ക്ലാസിക്കൽ അല്ലെങ്കിൽ ട്രെൻഡി ആൻഡ് മോഡേൺ ആയ എന്തെങ്കിലും തേടുകയാണെങ്കിൽ, ഒരു പൂർണ്ണമായതും മികവുറ്റതുമായ ലിവിംഗ് റൂം, ബെഡ്റൂം, ഓഫീസ് അല്ലെങ്കിൽ ഔട്ട്‌ഡോർ സ്പേസ് സൃഷ്ടിക്കാൻ നിങ്ങൾക്ക് ആവശ്യമായ എല്ലാം ഞങ്ങൾക്കുണ്ട്. ഇന്ന് നിങ്ങളുടെ വീട്ടിൽ ഏറ്റവും അനുയോജ്യമായ ഭാഗം കണ്ടെത്താൻ താഴെയുള്ള നമ്മുടെ ശേഖരം തിരയൂ!",
+    "Shop Electronics": "ഇലക്ട്രോണിക്സ് ഷോപ്പുചെയ്യുക",
+    "Shop Furniture's": "ഫർണിച്ചറുകൾ ഷോപ്പുചെയ്യുക",
+    "Click here to Explore More Products": "കൂടുതൽ ഉൽപ്പന്നങ്ങൾ കണ്ടുപിടിക്കാൻ ഇവിടെ ക്ലിക്കുചെയ്യുക",
+    "IF YOU WONDER": "നിങ്ങൾ ആശ്ചര്യപ്പെടുന്നു",
+    "Why Choose Us": "ഞങ്ങളെ തിരഞ്ഞെടുക്കാൻ കാരണം",
+    "Verified Products": "സ്ഥിരീകരിച്ച ഉൽപ്പന്നങ്ങൾ",
+    "Elevate your confidence with our verified products, Quality assurance you can rely on.": "ഞങ്ങളുടെ സ്ഥിരീകരിച്ച ഉൽപ്പന്നങ്ങളാൽ നിങ്ങളുടെ ആത്മവിശ്വാസം ഉയർത്തുക, നിങ്ങൾ ആശ്രയിക്കാൻ കഴിയുന്ന ഗുണനിലവാര ഉറപ്പു.",
+    "Best Value": "മികച്ച മൂല്യം",
+    "Unlock unbeatable value with our best price guarantee, Shop smart, save big, and indulge guilt-free.": "നമ്മുടെ മികച്ച വില ഉറപ്പോടെ പിടിക്കാവുന്ന വിലയറ്റ മൂല്യം തുറക്കുക, സ്മാർട്ട് ഷോപ്പുചെയ്യുക, വലിയ സാമ്പത്തികം സംരക്ഷിക്കുക, കുറ്റം കൂടാതെ സുഖപ്പെടുത്തുക.",
+    "Top pick": "മികച്ച തിരഞ്ഞെടുപ്പ്",
+    "Embrace excellence, make the best choice today, Elevate your selection, redefine your way.": "മികവിന്റെ പരിവേഷം സ്വീകരിക്കുക, ഇന്ന് ഏറ്റവും നല്ലത് തിരഞ്ഞെടുക്കുക, നിങ്ങളുടെ തിരഞ്ഞെടുപ്പ് ഉയർത്തുക, നിങ്ങളുടെ വഴി പുനർനിർവ്വചിക്കുക.",
+    "24/7 Support": "24/7 പിന്തുണ",
+    "Always here, day or night, for your needs, Expert assistance, whenever you seek.": "ദിവസവും അല്ലെങ്കിൽ രാത്രിയും, നിങ്ങളുടെ ആവശ്യങ്ങൾക്കായി ഇവിടെ എല്ലായ്പ്പോഴും, നിങ്ങൾ തേടുമ്പോഴെല്ലാം വിദഗ്ദ്ധ സഹായം.",
+    "BEST QUALITY AND BEST PRICES ON EVERY PAIR": "ഓരോ ജോഡിയിലും മികച്ച ഗുണമേന്മയും മികച്ച വിലയും"
+  },
+  "allProducts": {
+    "Filter Products": "ഉൽപ്പന്നങ്ങൾ ഫിൽട്ടർ ചെയ്യുക",
+    "Filter By Category": "വിഭാഗം പ്രകാരം ഫിൽട്ടർ ചെയ്യുക",
+    "Filter By Price": "വില പ്രകാരം ഫിൽട്ടർ ചെയ്യുക",
+    "Reset Filters": "ഫിൽട്ടറുകൾ പുനഃസജ്ജമാക്കുക",
+    "Loading...": "ലോഡുചെയ്യുന്നു...",
+    "Loadmore": "കൂടുതൽ ലോഡ് ചെയ്യുക"
+  },
+  "header": {
+    "Home": "ഹോം",
+    "Products": "ഉൽപ്പന്നങ്ങൾ",
+    "About Us": "ഞങ്ങളേക്കുറിച്ച്",
+    "Contact Us": "ഞങ്ങളുമായി ബന്ധപ്പെടുക",
+    "Categories": "വിഭാഗങ്ങൾ"
+  },
+  "footer": {
+    "Rawad Mall, Al Sulaymi": "റാവാഡ് മാൾ, അൽ സുലൈമി",
+    "Visit Our Store": "ഞങ്ങളുടെ സ്റ്റോർ സന്ദർശിക്കുക",
+    "USEFUL LINKS": "ഉപയോഗപ്രദമായ ലിങ്കുകൾ",
+    "Home": "ഹോം",
+    "Products": "ഉൽപ്പന്നങ്ങൾ",
+    "About Us": "ഞങ്ങളേക്കുറിച്ച്",
+    "Contact Us": "ഞങ്ങളുമായി ബന്ധപ്പെടുക",
+    "Categories": "വിഭാഗങ്ങൾ",
+    "PRODUCTS": "ഉൽപ്പന്നങ്ങൾ",
+    "Furnitures": "ഫർണിച്ചറുകൾ",
+    "Electronics": "ഇലക്ട്രോണിക്സ്",
+    "Toys": "കളിപ്പാട്ടങ്ങൾ",
+    "STAY IN TOUCH": "ബന്ധത്തിൽ തുടരുക",
+    "Checkout our social media": "ഞങ്ങളുടെ സോഷ്യൽ മീഡിയ പരിശോധിക്കുക"
+  },
+  "about": {
+    "RAWAD MAll": "റാവാഡ് മാൾ",
+    "At RAWAD MAll, all that you see is hand-picked and 100% true – sourced straight from the best brands and their approved affiliates from KSA and over the world, only for you. We present to you the most up to date – it’s in-season and on-incline; if it’s on the racks, it’s on the web. Also, it’s nowest – have it conveyed ASAP to you, from a store close you, when you utilize our Phygital services. It’s New and Now Barely a year from dispatch, RAWAD MAll is as of now in the Top 20, and one of the quickest developing, web based business organizations in the nation. Offering adaptability in the manner in which you shop, RAWAD MAll is a first-of-its-kind Phygital commercial center that serves more than one million clients.": "റാവാഡ് മാളിൽ നിങ്ങൾ കാണുന്ന എല്ലാം കൈകൊണ്ടു തിരഞ്ഞെടുത്തതും 100% യഥാർത്ഥവും ആണ് - KSA യിൽ നിന്നും ലോകത്തെയും മികച്ച ബ്രാൻഡുകളും അവരുടെ അംഗീകരിച്ച അനുബന്ധവ്യവസ്ഥകളും മാര്ഗ്ഗാന്തരത്തിലുള്ളവ നിങ്ങളുടെ വേണ്ടി മാത്രം. ഏറ്റവും പുതിയവയും - ഇതിന്റെ സീസണിൽ ആകുന്നു; ഷെൽവുകളിൽ ഉണ്ടെങ്കിൽ, അത് വെബ്-ൽ ആണ്. കൂടാതെ, അത് ഇപ്പോൾ തന്നെ - ASAP നിങ്ങളിലേക്കു കൊണ്ട് വരിക, നിങ്ങളുടെ അടുത്ത സ്റ്റോറിൽ നിന്ന്, നിങ്ങൾ നമ്മുടെ ഫിജിറ്റൽ സേവനങ്ങൾ ഉപയോഗിക്കുമ്പോൾ. ഇത് പുതിയതും ഇപ്പോൾ തന്നെ Barely ഒരു വർഷം ലാൻഡ്, റാവാഡ് മാൾ ഇപ്പോൾ Top 20-ൽ, രാജ്യമിൽ ഏറ്റവും വേഗത്തിൽ വളരുന്ന ഇ-കൊമേഴ്‌സ് കമ്പനികളിൽ ഒന്നാണ്. നിങ്ങളുടെ ഷോപ്പിംഗിന് എളുപ്പമുള്ള മാറ്റങ്ങൾ വാഗ്ദാനം ചെയ്യുന്നതിലൂടെ, റാവാഡ് മാൾ ഒന്നാമത്തെ ഫിജിറ്റൽ വിപണനകേന്ദ്രമാണ്, ഒന്നര ദശലക്ഷം ഉപഭോക്താക്കൾക്കു സേവനം നൽകുന്നു."
+  },
+  "contact": {
+    "CONTACT US": "ഞങ്ങളുമായി ബന്ധപ്പെടുക",
+    "Any queries and info about product": "ഉൽപ്പന്നത്തെക്കുറിച്ചുള്ള എന്തെങ്കിലും ചോദ്യങ്ങൾക്കും വിവരങ്ങൾക്കും",
+    "feel free to contact at any time": "ഏതെങ്കിലും സമയത്ത് ബന്ധപ്പെടാൻ മടിക്കേണ്ട"
+  },
+  "account": {
+    "MY ACCOUNT": "എൻറെ അക്കൗണ്ട്",
+    "Profile": "പ്രൊഫൈൽ",
+    "Edit Profile": "പ്രൊഫൈൽ തിരുത്തുക",
+    "Orders": "ഓർഡറുകൾ",
+    "Logout": "ലോഗ് ഔട്ട്",
+    "User Profile": "ഉപയോക്തൃ പ്രൊഫൈൽ",
+    "Full name": "പൂർണ്ണനാമം",
+    "Email address": "ഇമെയിൽ വിലാസം",
+    "Phone number": "ഫോൺ നമ്പർ",
+    "Address": "വിലാസം",
+    "Full Address": "പൂർണ്ണ വിലാസം",
+    "Your Orders": "നിങ്ങളുടെ ഓർഡറുകൾ"
+  },
+  "cart": {
+    "Shopping Cart": "ഷോപ്പിംഗ് കാർട്ട്",
+    "PRODUCT DETAILS": "ഉൽപ്പന്ന വിശദാംശങ്ങൾ",
+    "Cart is Empty": "കാർട്ട് ശൂന്യമാണെന്ന്",
+    "QUANTITY": "അളവ്",
+    "PRICE": "വില",
+    "TOTAL": "മൊത്തം",
+    "Order Summary": "ഓർഡർ സംഗ്രഹം",
+    "ITEMS": "ഇനങ്ങൾ",
+    "SAR": "SAR",
+    "SHIPPING": "ഷിപ്പിംഗ്",
+    "Standard shipping": "സ്റ്റാൻഡേർഡ് ഷിപ്പിംഗ് ചാർജ്",
+    "Enter your delivery address": "നിങ്ങളുടെ ഡെലിവറി വിലാസം നൽകുക",
+    "UPDATE ADDRESS": "വിലാസം അപ്ഡേറ്റ് ചെയ്യുക",
+    "TOTAL COST": "മൊത്തം ചെലവ്",
+    "REMOVE": "നീക്കം ചെയ്യുക",
+    "Please Login to Checkout": "ചെക്കൗട്ട് ചെയ്യാൻ ദയവായി ലോഗിൻ ചെയ്യുക",
+    "Processing ....": "പ്രോസസ്സ് ചെയ്യുന്നു ....",
+    "Make Payment": "പേയ്മെന്റ് ചെയ്യുക"
+  }
+}

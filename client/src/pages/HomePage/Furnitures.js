@@ -50,24 +50,21 @@ const Furnitures = () => {
         <div className="h-96  col-span-7 row-start-1 sm:col-start-5 sm:row-start-1 sm:col-span 7 md:col-start-5 md:row-start-1 md:col-span-6 lg:col-start-3 lg:row-start-1 sm:w-4/5">
           <h2 className=" lg:text-sm font-bold text-gray-800 mb-5 flex gap-2 items-center text-sm ">
             <div className="bg-black  h-[0.1rem] sm:w-12 xl:lg:w-20"></div>
-            FURNITURES
+            {t("home.FURNITURES")}
           </h2>
           <h1 className="lg:text-3xl font-semibold leading-tight tracking-tight md:w-[37.25rem] dark:text-black sm:text-xl text-pretty">
-            The Right Furniture can make any space feel like a vacation
+            {t(
+              "home.The Right Furniture can make any space feel like a vacation"
+            )}
           </h1>
           <p className="text-xs text-gray-700 dark:text-gray-400 my-5 w-96 text-pretty sm:w-4/5">
-            We offer a wide range of furniture for your home, from sofas and
-            chairs to dining tables and desks. Our furniture is made with the
-            highest quality materials and designed by experienced craftsmen who
-            are passionate about creating pieces that will last for years to
-            come. Whether you're looking for something classic or trendy and
-            modern, we have everything you need to create the perfect living
-            room, bedroom, office or outdoor space. Browse our collection below
-            to find the perfect piece for your home today!
+            {t(
+              "home.We offer a wide range of furniture for your home, from sofas and chairs to dining tables and desks. Our furniture is made with the highest quality materials and designed by experienced craftsmen who are passionate about creating pieces that will last for years to come. Whether you're looking for something classic or trendy and modern, we have everything you need to create the perfect living room, bedroom, office or outdoor space. Browse our collection below to find the perfect piece for your home today!"
+            )}
           </p>
           <Link to={"/category/furnitures"}>
             <button className="bg-black hover:bg-gray-800 focus:ring ring-black rounded-sm shadow-sm  lg:p-3 text-white sm:p-[.27rem] lg:text-sm sm:text-xs">
-              Shop Now
+              {t("home.Shop Furniture's")}
             </button>
           </Link>
         </div>
@@ -135,7 +132,7 @@ const Furnitures = () => {
                   }}
                   className="btun4 text-white lg:inline-flex items-center lg:gap-3 sm:gap-1 group-hover:bg-white group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer lg:py-2 sm:py-1 lg:px-4 sm:px-2 lg:text-sm sm:text-xs font-semibold rounded-full butn"
                 >
-                  ADD TO CART
+                  {t("common.ADD TO CART")}
                 </button>
               </div>
             </div>

@@ -1,0 +1,111 @@
+{
+  "common": {
+    "Search": "بحث",
+    "Contact Us": "اتصل بنا",
+    "Login": "تسجيل الدخول",
+    "Register": "تسجيل",
+    "Profile": "الملف الشخصي",
+    "Logout": "تسجيل الخروج",
+    "ADD TO CART": "أضف إلى السلة",
+    "No Products Found": "لم يتم العثور على منتجات",
+    "RAWAD MALL": "مول رواد",
+    "All Categories": "جميع الفئات"
+  },
+  "home": {
+    "Home": "الصفحة الرئيسية",
+    "Welcome": "مرحبا",
+    "ELECTRONICS": "الإلكترونيات",
+    "Discover Our Electronics Appliances": "اكتشف أجهزتنا الإلكترونية",
+    "FURNITURES": "الأثاث",
+    "The Right Furniture can make any space feel like a vacation": "الأثاث المناسب يمكن أن يجعل أي مساحة تشعر وكأنها عطلة",
+    "We offer a wide range of furniture for your home, from sofas and chairs to dining tables and desks. Our furniture is made with the highest quality materials and designed by experienced craftsmen who are passionate about creating pieces that will last for years to come. Whether you're looking for something classic or trendy and modern, we have everything you need to create the perfect living room, bedroom, office or outdoor space. Browse our collection below to find the perfect piece for your home today!": "نحن نقدم مجموعة واسعة من الأثاث لمنزلك، من الأرائك والكراسي إلى طاولات الطعام والمكاتب. يتم صنع أثاثنا من أجود المواد وصممه حرفيون ذوو خبرة شغوفون بإنشاء قطع تدوم لسنوات قادمة. سواء كنت تبحث عن شيء كلاسيكي أو عصري وحديث، لدينا كل ما تحتاجه لإنشاء غرفة معيشة مثالية، أو غرفة نوم، أو مكتب، أو مساحة خارجية. تصفح مجموعتنا أدناه للعثور على القطعة المثالية لمنزلك اليوم!",
+    "Shop Electronics": "تسوق الإلكترونيات",
+    "Shop Furniture's": "تسوق الأثاث",
+    "Click here to Explore More Products": "انقر هنا لاستكشاف المزيد من المنتجات",
+    "IF YOU WONDER": "إذا كنت تتساءل",
+    "Why Choose Us": "لماذا تختارنا",
+    "Verified Products": "منتجات معتمدة",
+    "Elevate your confidence with our verified products, Quality assurance you can rely on.": "ارفع مستوى ثقتك بمنتجاتنا المعتمدة، ضمان الجودة الذي يمكنك الاعتماد عليه.",
+    "Best Value": "أفضل قيمة",
+    "Unlock unbeatable value with our best price guarantee, Shop smart, save big, and indulge guilt-free.": "اكتشف قيمة لا تضاهى مع ضمان أفضل الأسعار لدينا، تسوق بذكاء، وادخر بشكل كبير، وانغمس دون شعور بالذنب.",
+    "Top pick": "الاختيار الأفضل",
+    "Embrace excellence, make the best choice today, Elevate your selection, redefine your way.": "اعتمد التميز، اتخذ أفضل اختيار اليوم، ارفع مستوى اختيارك، وأعد تعريف طريقتك.",
+    "24/7 Support": "دعم 24/7",
+    "Always here, day or night, for your needs, Expert assistance, whenever you seek.": "دائماً هنا، ليلاً أو نهاراً، لتلبية احتياجاتك، مساعدة خبراء في أي وقت تحتاج.",
+    "BEST QUALITY AND BEST PRICES ON EVERY PAIR": "أفضل جودة وأفضل الأسعار على كل زوج"
+  },
+  "allProducts": {
+    "Filter Products": "تصفية المنتجات",
+    "Filter By Category": "التصفية حسب الفئة",
+    "Filter By Price": "التصفية حسب السعر",
+    "Reset Filters": "إعادة تعيين الفلاتر",
+    "Loading...": "جارٍ التحميل...",
+    "Loadmore": "تحميل المزيد"
+  },
+  "header": {
+    "Home": "الصفحة الرئيسية",
+    "Products": "المنتجات",
+    "About Us": "من نحن",
+    "Contact Us": "اتصل بنا",
+    "Categories": "الفئات"
+  },
+  "footer": {
+    "Rawad Mall, Al Sulaymi": "مول رواد، السليمي",
+    "Visit Our Store": "زوروا متجرنا",
+    "USEFUL LINKS": "روابط مفيدة",
+    "Home": "الصفحة الرئيسية",
+    "Products": "المنتجات",
+    "About Us": "من نحن",
+    "Contact Us": "اتصل بنا",
+    "Categories": "الفئات",
+    "PRODUCTS": "المنتجات",
+    "Furnitures": "الأثاث",
+    "Electronics": "الإلكترونيات",
+    "Toys": "الألعاب",
+    "STAY IN TOUCH": "ابق على تواصل",
+    "Checkout our social media": "تحقق من وسائل التواصل الاجتماعي الخاصة بنا"
+  },
+  "about": {
+    "RAWAD MAll": "مول رواد",
+    "At RAWAD MAll, all that you see is hand-picked and 100% true – sourced straight from the best brands and their approved affiliates from KSA and over the world, only for you. We present to you the most up to date – it’s in-season and on-incline; if it’s on the racks, it’s on the web. Also, it’s nowest – have it delivered ASAP to you, from a store close to you, when you use our Phygital services. It’s New and Now Barely a year from launch, RAWAD MAll is already in the Top 20, and one of the fastest-growing, e-commerce companies in the country. Offering flexibility in the way you shop, RAWAD MAll is a first-of-its-kind Phygital marketplace that serves more than one million customers.": "في مول رواد، كل ما تراه هو مختار بعناية و 100٪ حقيقي - تم الحصول عليه مباشرة من أفضل العلامات التجارية والشركاء المعتمدين من المملكة العربية السعودية وحول العالم، فقط من أجلك. نقدم لك أحدث ما هو موجود - إنه في الموسم وعلى الموضة؛ إذا كان على الرفوف، فهو على الإنترنت. أيضًا، إنه جديد - احصل عليه بسرعة من متجر قريب منك عند استخدام خدماتنا الفيزيائية الرقمية. بالكاد سنة من الإطلاق، مول رواد موجود بالفعل ضمن أفضل 20، ومن بين أسرع الشركات نمواً في التجارة الإلكترونية في البلاد. نقدم لك المرونة في الطريقة التي تتسوق بها، مول رواد هو أول سوق رقمي مادي من نوعه يخدم أكثر من مليون عميل."
+  },
+  "contact": {
+    "CONTACT US": "اتصل بنا",
+    "Any queries and info about product": "أي استفسارات ومعلومات حول المنتج",
+    "feel free to contact at any time": "لا تتردد في الاتصال في أي وقت"
+  },
+  "account": {
+    "MY ACCOUNT": "حسابي",
+    "Profile": "الملف الشخصي",
+    "Edit Profile": "تعديل الملف الشخصي",
+    "Orders": "الطلبات",
+    "Logout": "تسجيل الخروج",
+    "User Profile": "ملف المستخدم",
+    "Full name": "الاسم الكامل",
+    "Email address": "عنوان البريد الإلكتروني",
+    "Phone number": "رقم الهاتف",
+    "Address": "العنوان",
+    "Full Address": "العنوان الكامل",
+    "Your Orders": "طلباتك"
+  },
+  "cart": {
+    "Shopping Cart": "عربة التسوق",
+    "PRODUCT DETAILS": "تفاصيل المنتج",
+    "Cart is Empty": "عربة التسوق فارغة",
+    "QUANTITY": "الكمية",
+    "PRICE": "السعر",
+    "TOTAL": "المجموع",
+    "Order Summary": "ملخص الطلب",
+    "ITEMS": "العناصر",
+    "SAR": "SAR",
+    "SHIPPING": "الشحن",
+    "Standard shipping": "رسوم الشحن القياسي",
+    "Enter your delivery address": "أدخل عنوان التسليم الخاص بك",
+    "UPDATE ADDRESS": "تحديث العنوان",
+    "TOTAL COST": "التكلفة الإجمالية",
+    "REMOVE": "إزالة",
+    "Please Login to Checkout": "يرجى تسجيل الدخول لإتمام الشراء",
+    "Processing ....": "جاري المعالجة ....",
+    "Make Payment": "قم بالدفع"
+  }
+}

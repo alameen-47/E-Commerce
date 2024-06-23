@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { useCart } from "../../context/cart.js";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { t } from "i18next";
 
 const Electronics = () => {
   const navigate = useNavigate();
@@ -37,22 +38,22 @@ const Electronics = () => {
         <div>
           <h2 className=" lg:text-sm font-bold text-gray-800 mb-5 flex gap-2 items-center text-sm ">
             <div className="bg-black  h-[0.1rem] sm:w-12 xl:lg:w-20"></div>
-            ELECTRONICS
+            {t("home.ELECTRONICS")}
           </h2>
           <h1 className="lg:text-3xl font-semibold leading-tight tracking-tight md:w-[37.25rem] dark:text-black sm:text-xl text-pretty">
-            Discover Our Electronics Appliances
+            {t("home.Discover Our Electronics Appliances")}
           </h1>
         </div>
         <div className="items-center hidden xl:block">
           <Link to={"/category/electronics"}>
             <button className="bg-black hover:bg-gray-800 focus:ring ring-black rounded-sm shadow-sm  p-3 text-white">
-              Shop Electronics
+              {t("home.Shop Electronics")}
             </button>
           </Link>
         </div>
       </div>
       <div className="flex justify-center align-middle">
-        {products.length < 1 && <p>No Products Found</p>}
+        {products.length < 1 && <p>{t("common.No Products Found")}</p>}
 
         <div className="grid gap-3 lg:grid-cols-7 md:grid-cols-4 sm:grid-cols-2 ">
           {products?.map((p) => (
@@ -116,7 +117,7 @@ const Electronics = () => {
                   }}
                   className="btun4 text-white lg:inline-flex items-center lg:gap-3 sm:gap-1 group-hover:bg-white group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer lg:py-2 sm:py-1 lg:px-4 sm:px-2 lg:text-sm sm:text-xs font-semibold rounded-full butn"
                 >
-                  ADD TO CART
+                  {t("common.ADD TO CART")}
                 </button>
               </div>
             </div>

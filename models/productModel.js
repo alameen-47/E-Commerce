@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
 
+const translationSchema = new mongoose.Schema({
+  name: String,
+  description: String,
+});
 const productSchema = new mongoose.Schema(
   {
     name: {
@@ -46,6 +50,10 @@ const productSchema = new mongoose.Schema(
     },
     shipping: {
       type: Boolean,
+    },
+    translations: {
+      en: translationSchema,
+      ar: translationSchema,
     },
   },
   { timestamps: true }

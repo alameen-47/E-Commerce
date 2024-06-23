@@ -16,6 +16,7 @@ const CreateCategory = () => {
   const [updatedName, setUpdatedName] = useState("");
   const [icons, setIcons] = useState("");
   const [images, setImages] = useState("");
+  const [banners, setBanners] = useState("");
   const navigate = useNavigate();
 
   //handle form
@@ -192,6 +193,44 @@ const CreateCategory = () => {
               </div>
             )}
           </div>
+          <div className="flex justify-center mb-2">
+            <label
+              style={{
+                width: "50%",
+
+                border: "1px Solid Black",
+                padding: "0.2em",
+                backgroundColor: " rgb(206, 205, 200)",
+                cursor: "pointer",
+                display: "flex",
+                justifyContent: "center",
+                bottom: "10px",
+              }}
+            >
+              {banners ? banners.name : "Upload banners"}
+              <input
+                type="file"
+                name="banners"
+                accept="banners/*"
+                onChange={(e) => setBanners(e.target.files[0])}
+                hidden
+              />
+            </label>
+          </div>
+          <div style={{}}>
+            {banners && (
+              <div style={{ textAlign: "center" }}>
+                <img
+                  className="w-16 md:w-32 lg:w-48 inline m-4"
+                  src={URL.createObjectURL(banners)}
+                  alt="Category_banners"
+                  width="50%"
+                  height="auto"
+                  margin=".2rem"
+                />
+              </div>
+            )}
+          </div>
           <div className=" overflow-scroll h-[50vh] s:w-full">
             <div class="table-wrapper">
               <table className="fl-table">
@@ -222,6 +261,17 @@ const CreateCategory = () => {
                         <td>
                           <img
                             src={`/api/v1/category/categories-images/${c._id}`}
+                            style={{
+                              transform:
+                                "translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)",
+                            }}
+                            className="w-14 card1img aspect-square text-[#000000] group-hover:bg-gray-200 text-5xl rounded-s p-2 transition-all duration-300 group-hover:transition-all group-hover:duration-300 group-hover:-translate-y-2  mx-auto"
+                            alt=""
+                          ></img>
+                        </td>
+                        <td>
+                          <img
+                            src={`/api/v1/category/categories-banners/${c._id}`}
                             style={{
                               transform:
                                 "translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)",

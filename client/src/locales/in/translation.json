@@ -1,0 +1,112 @@
+{
+  "common": {
+    "Search": "खोज",
+    "Contact Us": "हमसे संपर्क करें",
+    "Login": "लॉगिन करें",
+    "Register": "पंजीकरण करें",
+    "Profile": "प्रोफ़ाइल",
+    "Logout": "लॉगआउट",
+    "ADD TO CART": "कार्ट में जोड़ें",
+    "No Products Found": "कोई उत्पाद नहीं मिला",
+    "RAWAD MALL": "रावाद मॉल",
+    "All Categories": "सभी श्रेणियाँ"
+  },
+  "home": {
+    "Home": "मुख्य पृष्ठ",
+    "Welcome": "स्वागत है",
+    "ELECTRONICS": "इलेक्ट्रॉनिक्स",
+    "Discover Our Electronics Appliances": "हमारे इलेक्ट्रॉनिक्स उपकरणों की खोज करें",
+    "FURNITURES": "फर्नीचर",
+    "The Right Furniture can make any space feel like a vacation": "सही फर्नीचर किसी भी स्थान को छुट्टी जैसा महसूस करा सकता है",
+    "We offer a wide range of furniture for your home, from sofas and chairs to dining tables and desks. Our furniture is made with the highest quality materials and designed by experienced craftsmen who are passionate about creating pieces that will last for years to come. Whether you're looking for something classic or trendy and modern, we have everything you need to create the perfect living room, bedroom, office or outdoor space. Browse our collection below to find the perfect piece for your home today!": "हम आपके घर के लिए सोफे और कुर्सियों से लेकर खाने की मेज और डेस्क तक का एक व्यापक रेंज प्रदान करते हैं। हमारे फर्नीचर को उच्चतम गुणवत्ता वाली सामग्री से बनाया गया है और अनुभवी कारीगरों द्वारा डिज़ाइन किया गया है जो वर्षों तक चलने वाले टुकड़े बनाने के लिए प्रेरित होते हैं। चाहे आप कुछ क्लासिक या ट्रेंडी और आधुनिक की तलाश में हों, हमारे पास आपकी परफेक्ट लिविंग रूम, बेडरूम, ऑफिस या बाहरी स्थान बनाने के लिए आवश्यक सब कुछ है। आज ही अपने घर के लिए सही टुकड़ा खोजने के लिए नीचे हमारे संग्रह को ब्राउज़ करें!",
+    "Shop Electronics": "इलेक्ट्रॉनिक्स खरीदें",
+    "Shop Furniture's": "फर्नीचर खरीदें",
+    "Click here to Explore More Products": "अधिक उत्पादों की खोज के लिए यहाँ क्लिक करें",
+    "IF YOU WONDER": "यदि आप आश्चर्यचकित हैं",
+    "Why Choose Us": "हमें क्यों चुनें",
+    "Verified Products": "सत्यापित उत्पाद",
+    "Elevate your confidence with our verified products, Quality assurance you can rely on.": "हमारे सत्यापित उत्पादों के साथ अपने आत्मविश्वास को बढ़ाएँ, गुणवत्ता आश्वासन जिस पर आप निर्भर कर सकते हैं।",
+    "Best Value": "सर्वश्रेष्ठ मूल्य",
+    "Unlock unbeatable value with our best price guarantee, Shop smart, save big, and indulge guilt-free.": "हमारे सर्वोत्तम मूल्य गारंटी के साथ अप्रतिम मूल्य अनलॉक करें, समझदारी से खरीदारी करें, बड़ा बचत करें, और दोषमुक्त आनंद लें।",
+    "Top pick": "सर्वोत्तम चयन",
+    "Embrace excellence, make the best choice today, Elevate your selection, redefine your way.": "उत्कृष्टता को अपनाएँ, आज सर्वोत्तम चयन करें, अपने चयन को ऊंचा करें, अपने मार्ग को पुन: परिभाषित करें।",
+    "24/7 Support": "24/7 सहायता",
+    "Always here, day or night, for your needs, Expert assistance, whenever you seek.": "हमेशा यहाँ, दिन हो या रात, आपकी आवश्यकताओं के लिए, विशेषज्ञ सहायता, जब भी आप चाहें।",
+    "BEST QUALITY AND BEST PRICES ON EVERY PAIR": "प्रत्येक जोड़ी पर सर्वोत्तम गुणवत्ता और सर्वोत्तम मूल्य"
+  },
+  "allProducts": {
+    "Filter Products": "उत्पादों को छानें",
+    "Filter By Category": "श्रेणी द्वारा छानें",
+    "Filter By Price": "मूल्य द्वारा छानें",
+    "Reset Filters": "फ़िल्टर रीसेट करें",
+    "Loading...": "लोड हो रहा है...",
+    "Loadmore": "और लोड करें"
+  },
+  "header": {
+    "Home": "मुख्य पृष्ठ",
+    "Products": "उत्पाद",
+    "About Us": "हमारे बारे में",
+    "Contact Us": "हमसे संपर्क करें",
+    "Categories": "श्रेणियाँ"
+  },
+  "footer": {
+    "Rawad Mall, Al Sulaymi": "रावाद मॉल, अल सुलैमी",
+    "Visit Our Store": "हमारी दुकान पर जाएँ",
+    "USEFUL LINKS": "उपयोगी लिंक",
+    "Home": "मुख्य पृष्ठ",
+    "Products": "उत्पाद",
+    "About Us": "हमारे बारे में",
+    "Contact Us": "हमसे संपर्क करें",
+    "Categories": "श्रेणियाँ",
+    "PRODUCTS": "उत्पाद",
+    "Furnitures": "फर्नीचर",
+    "Electronics": "इलेक्ट्रॉनिक्स",
+    "Toys": "खिलौने",
+    "STAY IN TOUCH": "संपर्क में रहें",
+    "Checkout our social media": "हमारे सोशल मीडिया को देखें"
+  },
+  "about": {
+    "RAWAD MAll": "रावाद मॉल",
+    "At RAWAD MAll, all that you see is hand-picked and 100% true – sourced straight from the best brands and their approved affiliates from KSA and over the world, only for you. We present to you the most up to date – it’s in-season and on-incline; if it’s on the racks, it’s on the web. Also, it’s nowest – have it delivered ASAP to you, from a store close to you, when you use our Phygital services. It’s New and Now Barely a year from launch, RAWAD MAll is already in the Top 20, and one of the fastest-growing, e-commerce companies in the country. Offering flexibility in the way you shop, RAWAD MAll is a first-of-its-kind Phygital marketplace that serves more than one million customers.": "रावाद मॉल में, जो कुछ भी आप देखते हैं वह हाथ से चुना हुआ और 100% सच्चा है - केवल आपके लिए KSA और दुनिया भर के सर्वोत्तम ब्रांडों और उनके अनुमोदित सहयोगियों से सीधे प्राप्त किया गया है। हम आपको सबसे अद्यतित प्रस्तुत करते हैं - यह सीज़न में और ट्रेंड में है; यदि यह रैक पर है, तो यह वेब पर है। इसके अलावा, यह सबसे नवीनतम है - हमारे फिजिटल सेवाओं का उपयोग करते समय इसे आपको जल्द से जल्द डिलीवर किया गया है। लॉन्च के लगभग एक साल बाद, रावाद मॉल पहले से ही शीर्ष 20 में और देश में सबसे तेजी से बढ़ती ई-कॉमर्स कंपनियों में से एक है। आपको खरीदारी करने के तरीके में लचीलापन प्रदान करते हुए, रावाद मॉल एक प्रकार का पहला फिजिटल मार्केटप्लेस है जो दस लाख से अधिक ग्राहकों की सेवा करता है।"
+  },
+  "contact": {
+    "CONTACT US": "हमसे संपर्क करें",
+    "Any queries and info about product": "उत्पाद के बारे में कोई भी प्रश्न और जानकारी",
+    "feel free to contact at any time": "किसी भी समय संपर्क करने में संकोच न करें"
+  },
+  "account": {
+    "MY ACCOUNT": "मेरा खाता",
+    "Profile": "प्रोफ़ाइल",
+    "Edit Profile": "प्रोफ़ाइल संपादित करें",
+    "Orders": "आदेश",
+    "Logout": "लॉग आउट",
+    "User Profile": "उपयोगकर्ता प्रोफ़ाइल",
+    "Full name": "पूरा नाम",
+    "Email address": "ईमेल पता",
+    "Phone number": "फ़ोन नंबर",
+    "Address": "पता",
+    "Full Address": "पूरा पता",
+    "Your Orders": "आपके आदेश"
+  },
+
+  "cart": {
+    "Shopping Cart": "शॉपिंग कार्ट",
+    "PRODUCT DETAILS": "उत्पाद विवरण",
+    "Cart is Empty": "कार्ट खाली है",
+    "QUANTITY": "मात्रा",
+    "PRICE": "मूल्य",
+    "TOTAL": "कुल",
+    "Order Summary": "ऑर्डर सारांश",
+    "ITEMS": "आइटम्स",
+    "SAR": "SAR",
+    "SHIPPING": "शिपिंग",
+    "Standard shipping": "मानक शिपिंग शुल्क",
+    "Enter your delivery address": "अपना डिलीवरी पता दर्ज करें",
+    "UPDATE ADDRESS": "पता अपडेट करें",
+    "TOTAL COST": "कुल लागत",
+    "REMOVE": "हटाएं",
+    "Please Login to Checkout": "कृपया चेकआउट करने के लिए लॉगिन करें",
+    "Processing ....": "प्रक्रिया हो रही है ....",
+    "Make Payment": "भुगतान करें"
+  }
+}

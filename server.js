@@ -10,6 +10,21 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import path from "path";
 
+//translation i18n
+import i18next from "i18next";
+import Backend from "i18next-fs-backend";
+import middleware from "i18next-http-middleware";
+
+i18next
+  .use(Backend)
+  .use(middleware.LanguageDetector)
+  .init({
+    fallbackLng: "en",
+    backend: {
+      loadPath: "./locales/{{lng}}/{{ns}}.json",
+    },
+  });
+
 //configure env
 dotenv.config();
 
@@ -18,6 +33,7 @@ connectDB();
 
 //rest object
 const app = express();
+app.use(middleware.handle(i18next));
 
 // ******
 app.use(express.json({ limit: "50mb" }));

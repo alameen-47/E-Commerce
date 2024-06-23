@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useCart } from "../context/cart";
 import { toast } from "react-hot-toast";
+import { t } from "i18next";
 
 const ProductCategory = () => {
   const [page, setPage] = useState(1);
@@ -66,19 +67,19 @@ const ProductCategory = () => {
                 />
                 <p className="cardtxt font-semibold text-black tracking-wider group-hover:text-white h-2 md:text-sm lg:text-lg">
                   {(() => {
-                      const words = p.name.split(" ");
-                      return words.length > 1
-                        ? words.slice(0, 2).join(" ")
-                        : words[0];
-                    })()}
+                    const words = p.name.split(" ");
+                    return words.length > 1
+                      ? words.slice(0, 2).join(" ")
+                      : words[0];
+                  })()}
                 </p>
                 <p className="blueberry font-semibold text-gray-500  group-hover:text-gray-200 mb-0 lg:text-xs md:text-sm sm:text-xs text-center">
-                      {(() => {
-                      const words = p.description.split(" ");
-                      return words.length > 1
-                        ? words.slice(0, 4).join(" ")
-                        : words[0];
-                    })()}
+                  {(() => {
+                    const words = p.description.split(" ");
+                    return words.length > 1
+                      ? words.slice(0, 4).join(" ")
+                      : words[0];
+                  })()}
                 </p>
                 {p.offer ? (
                   <>
@@ -108,7 +109,7 @@ const ProductCategory = () => {
                   }}
                   className="btun4 text-white lg:inline-flex items-center lg:gap-3 sm:gap-1 group-hover:bg-slate-200 group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer lg:py-2 sm:py-1 lg:px-4 sm:px-2 lg:text-sm sm:text-xs font-semibold rounded-full butn"
                 >
-                  ADD TO CART
+                  {t("common.ADD TO CART")}
                 </button>
               </div>
             </div>
@@ -123,7 +124,7 @@ const ProductCategory = () => {
               }}
               className=" items-center  justify-between bg-black  rounded box-border p-4 text-white text-xs font-semibold tracking-widest uppercase overflow-hidden cursor-pointer hover:opacity-80 shadow-lg "
             >
-              {loading ? "Loading..." : "Loadmore"}
+              {loading ? t("allProducts.Loading...") : t("common.Loadmore")}
             </button>
           )}
         </div>

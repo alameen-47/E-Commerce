@@ -1,0 +1,111 @@
+{
+  "common": {
+    "Search": "অনুসন্ধান",
+    "Contact Us": "যোগাযোগ করুন",
+    "Login": "প্রবেশ করুন",
+    "Register": "নিবন্ধন করুন",
+    "Profile": "প্রোফাইল",
+    "Logout": "প্রস্থান",
+    "ADD TO CART": "কার্টে যোগ করুন",
+    "No Products Found": "কোনও পণ্য পাওয়া যায়নি",
+    "RAWAD MALL": "রাওয়াদ মল",
+    "All Categories": "সব বিভাগ"
+  },
+  "home": {
+    "Home": "বাড়ি",
+    "Welcome": "স্বাগতম",
+    "ELECTRONICS": "ইলেকট্রনিক্স",
+    "Discover Our Electronics Appliances": "আমাদের ইলেকট্রনিক্স যন্ত্রপাতি আবিষ্কার করুন",
+    "FURNITURES": "আসবাবপত্র",
+    "The Right Furniture can make any space feel like a vacation": "সঠিক আসবাবপত্র যে কোনও স্থানকে ছুটির মতো অনুভব করতে পারে",
+    "We offer a wide range of furniture for your home, from sofas and chairs to dining tables and desks. Our furniture is made with the highest quality materials and designed by experienced craftsmen who are passionate about creating pieces that will last for years to come. Whether you're looking for something classic or trendy and modern, we have everything you need to create the perfect living room, bedroom, office or outdoor space. Browse our collection below to find the perfect piece for your home today!": "আমরা আপনার বাড়ির জন্য সোফা এবং চেয়ার থেকে শুরু করে ডাইনিং টেবিল এবং ডেস্ক পর্যন্ত বিস্তৃত আসবাবপত্র সরবরাহ করি। আমাদের আসবাবপত্র সর্বোচ্চ মানের উপকরণ দিয়ে তৈরি এবং অভিজ্ঞ কারিগরদের দ্বারা ডিজাইন করা হয়েছে যারা টুকরো তৈরি করতে অনুপ্রাণিত যা বছরের পর বছর টিকে থাকবে। আপনি ক্লাসিক বা ট্রেন্ডি এবং আধুনিক কিছু খুঁজছেন না কেন, আমাদের কাছে আপনার বসার ঘর, শয়নকক্ষ, অফিস বা বহিরঙ্গন স্থান তৈরির জন্য প্রয়োজনীয় সবকিছু রয়েছে। আজই আপনার বাড়ির জন্য নিখুঁত টুকরো খুঁজতে নীচের আমাদের সংগ্রহ ব্রাউজ করুন!",
+    "Shop Electronics": "ইলেকট্রনিক্স কিনুন",
+    "Shop Furniture's": "আসবাবপত্র কিনুন",
+    "Click here to Explore More Products": "আরও পণ্যগুলি অন্বেষণ করতে এখানে ক্লিক করুন",
+    "IF YOU WONDER": "যদি আপনি আশ্চর্য হন",
+    "Why Choose Us": "আমাদের কেন বেছে নিন",
+    "Verified Products": "যাচাই করা পণ্য",
+    "Elevate your confidence with our verified products, Quality assurance you can rely on.": "আমাদের যাচাইকৃত পণ্যগুলির সাথে আপনার আত্মবিশ্বাস বাড়ান, মানের আশ্বাস যা আপনি নির্ভর করতে পারেন।",
+    "Best Value": "সেরা মূল্য",
+    "Unlock unbeatable value with our best price guarantee, Shop smart, save big, and indulge guilt-free.": "আমাদের সেরা মূল্য গ্যারান্টি সহ অদম্য মান আনলক করুন, বুদ্ধিমানের সাথে কিনুন, বড় সঞ্চয় করুন এবং অপরাধবোধ ছাড়াই ভোগ করুন।",
+    "Top pick": "শীর্ষ পছন্দ",
+    "Embrace excellence, make the best choice today, Elevate your selection, redefine your way.": "উৎকর্ষতা গ্রহণ করুন, আজই সেরা পছন্দ করুন, আপনার নির্বাচন বাড়ান, আপনার পথ পুনঃসংজ্ঞায়িত করুন।",
+    "24/7 Support": "২৪/৭ সাপোর্ট",
+    "Always here, day or night, for your needs, Expert assistance, whenever you seek.": "সদা উপস্থিত, দিন বা রাত, আপনার প্রয়োজনের জন্য, বিশেষজ্ঞ সহায়তা, যখনই আপনি চান।",
+    "BEST QUALITY AND BEST PRICES ON EVERY PAIR": "প্রত্যেক জোড়ার সেরা গুণমান এবং সেরা মূল্য"
+  },
+  "allProducts": {
+    "Filter Products": "পণ্যগুলি ফিল্টার করুন",
+    "Filter By Category": "বিভাগ অনুসারে ফিল্টার করুন",
+    "Filter By Price": "মূল্য অনুযায়ী ফিল্টার করুন",
+    "Reset Filters": "ফিল্টারগুলি রিসেট করুন",
+    "Loading...": "লোড হচ্ছে...",
+    "Loadmore": "আরও লোড করুন"
+  },
+  "header": {
+    "Home": "বাড়ি",
+    "Products": "পণ্যসমূহ",
+    "About Us": "আমাদের সম্পর্কে",
+    "Contact Us": "যোগাযোগ করুন",
+    "Categories": "বিভাগসমূহ"
+  },
+  "footer": {
+    "Rawad Mall, Al Sulaymi": "রাওয়াদ মল, আল সুলাইমি",
+    "Visit Our Store": "আমাদের দোকানে আসুন",
+    "USEFUL LINKS": "উপকারী লিঙ্কগুলি",
+    "Home": "বাড়ি",
+    "Products": "পণ্যসমূহ",
+    "About Us": "আমাদের সম্পর্কে",
+    "Contact Us": "যোগাযোগ করুন",
+    "Categories": "বিভাগসমূহ",
+    "PRODUCTS": "পণ্যসমূহ",
+    "Furnitures": "আসবাবপত্র",
+    "Electronics": "ইলেকট্রনিক্স",
+    "Toys": "খেলনা",
+    "STAY IN TOUCH": "যোগাযোগে থাকুন",
+    "Checkout our social media": "আমাদের সামাজিক যোগাযোগ মাধ্যমগুলি দেখুন"
+  },
+  "about": {
+    "RAWAD MAll": "রাওয়াদ মল",
+    "At RAWAD MAll, all that you see is hand-picked and 100% true – sourced straight from the best brands and their approved affiliates from KSA and over the world, only for you. We present to you the most up to date – it’s in-season and on-incline; if it’s on the racks, it’s on the web. Also, it’s nowest – have it delivered ASAP to you, from a store close to you, when you use our Phygital services. It’s New and Now Barely a year from launch, RAWAD MAll is already in the Top 20, and one of the fastest-growing, e-commerce companies in the country. Offering flexibility in the way you shop, RAWAD MAll is a first-of-its-kind Phygital marketplace that serves more than one million customers.": "রাওয়াদ মলে, যা দেখছেন সবই হাতে বাছাই করা এবং ১০০% সত্য - শুধুমাত্র আপনার জন্য কেএসএ এবং বিশ্বের সেরা ব্র্যান্ড এবং তাদের অনুমোদিত সহযোগীদের কাছ থেকে সরাসরি উৎস। আমরা আপনাকে সবচেয়ে আপ টু ডেট উপস্থাপন করি - এটি মৌসুমে এবং প্রবণতায় রয়েছে; যদি এটি তাকগুলিতে থাকে, তবে এটি ওয়েবে রয়েছে। এছাড়াও, এটি নতুন - আমাদের ফিজিটাল পরিষেবা ব্যবহার করার সময় এটি আপনার কাছে ASAP ডেলিভার করা হয়েছে। প্রায় এক বছরের লঞ্চ থেকে, রাওয়াদ মল ইতিমধ্যে শীর্ষ ২০ এ এবং দেশের দ্রুততম বৃদ্ধি পাচ্ছে, ই-কমার্স কোম্পানির মধ্যে একটি। আপনি যেভাবে কেনাকাটা করেন তার নমনীয়তা প্রদান করে, রাওয়াদ মল একটি প্রথম ধরনের ফিজিটাল মার্কেটপ্লেস যা এক মিলিয়নেরও বেশি গ্রাহককে পরিবেশন করে।"
+  },
+  "contact": {
+    "CONTACT US": "যোগাযোগ করুন",
+    "Any queries and info about product": "যেকোন প্রশ্ন এবং পণ্য সম্পর্কে তথ্য",
+    "feel free to contact at any time": "যেকোন সময় যোগাযোগ করতে দ্বিধা করবেন না"
+  },
+  "account": {
+    "MY ACCOUNT": "আমার অ্যাকাউন্ট",
+    "Profile": "প্রোফাইল",
+    "Edit Profile": "প্রোফাইল সম্পাদনা করুন",
+    "Orders": "অর্ডার",
+    "Logout": "লগ আউট",
+    "User Profile": "ব্যবহারকারীর প্রোফাইল",
+    "Full name": "পূর্ণ নাম",
+    "Email address": "ইমেইল ঠিকানা",
+    "Phone number": "ফোন নম্বর",
+    "Address": "ঠিকানা",
+    "Full Address": "পূর্ণ ঠিকানা",
+    "Your Orders": "আপনার অর্ডার"
+  },
+  "cart": {
+    "Shopping Cart": "শপিং কার্ট",
+    "PRODUCT DETAILS": "পণ্যের বিবরণ",
+    "Cart is Empty": "কার্ট খালি",
+    "QUANTITY": "পরিমাণ",
+    "PRICE": "মূল্য",
+    "TOTAL": "মোট",
+    "Order Summary": "অর্ডার সারাংশ",
+    "ITEMS": "আইটেম",
+    "SAR": "SAR",
+    "SHIPPING": "শিপিং",
+    "Standard shipping": "স্ট্যান্ডার্ড শিপিং চার্জ",
+    "Enter your delivery address": "আপনার ডেলিভারি ঠিকানা লিখুন",
+    "UPDATE ADDRESS": "ঠিকানা আপডেট করুন",
+    "TOTAL COST": "মোট খরচ",
+    "REMOVE": "সরান",
+    "Please Login to Checkout": "চেকআউট করতে লগইন করুন",
+    "Processing ....": "প্রক্রিয়া চলছে ....",
+    "Make Payment": "পেমেন্ট করুন"
+  }
+}

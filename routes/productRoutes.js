@@ -45,6 +45,9 @@ router.put(
 //get products
 router.get("/get-product", getProductController);
 
+// //get offersFilteredProducts
+// router.get("/get-product/offer-filter", getProductsForSlideshowController);
+
 //single product
 router.get("/get-product/:slug", getSingleProductController);
 

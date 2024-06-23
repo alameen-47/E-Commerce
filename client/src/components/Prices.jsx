@@ -1,7 +1,10 @@
+import React from "react";
+import { t } from "i18next";
+
 export const Prices = [
   {
     _id: 0,
-    name: "SR:0 to 100",
+    name: "SR:Under 100",
     array: [0, 100],
   },
   {

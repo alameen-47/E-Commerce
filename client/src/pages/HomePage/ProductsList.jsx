@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Prices } from "../../components/Prices.js";
+import { Prices } from "../../components/Prices.jsx";
 import { useCart } from "../../context/cart.js";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { t } from "i18next";
 
 const ProductsList = ({ start, end }) => {
   const [cart, setCart] = useCart([]);
@@ -54,7 +55,11 @@ const ProductsList = ({ start, end }) => {
   }, [start, end]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center align-middle p-2">
+        {t("allProducts.Loading...")}
+      </div>
+    );
   }
 
   // useEffect(() => {
@@ -116,10 +121,7 @@ const ProductsList = ({ start, end }) => {
                     <strike className="ordernow-text text-[#616161] font-semibold  group-hover:text-white text-center items-center lg:text-sm  sm:text-xs">
                       SR: {Math.floor(p.price * (1 + p.offer / 100))}/-
                     </strike>
-                    <span
-                      className="text-green-500 font-semibold lg:text-lg sm:text-xs
-            "
-                    >
+                    <span className="text-green-500 font-semibold lg:text-lg sm:text-xs">
                       {p.offer}% off
                     </span>
                   </div>
@@ -138,13 +140,13 @@ const ProductsList = ({ start, end }) => {
                 }}
                 className="btun4 text-white lg:inline-flex items-center lg:gap-3 sm:gap-1 group-hover:bg-white group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer lg:py-2 sm:py-1 lg:px-4 sm:px-2 lg:text-sm sm:text-xs font-semibold rounded-full butn"
               >
-                ADD TO CART
+                {t("common.ADD TO CART")}
               </button>
             </div>
           </div>
         ))}
       </div>
-      <div className="flex justify-center  p-3">
+      {/* <div className="flex justify-center  p-3">
         {products && products.length < total && (
           <button
             onClick={(e) => {
@@ -153,10 +155,10 @@ const ProductsList = ({ start, end }) => {
             }}
             className=" items-center  justify-between  rounded box-border p-4 hover:bg-gray-700-200 hover:scale-15 hover:text-white bg-[#000]  hover:shadow-4xl  text-white text-xs font-semibold tracking-widest uppercase overflow-hidden cursor-pointer hover:opacity-80 hover:shadow-lg  peer-focus-visible:border"
           >
-            {loading ? "Loading..." : "Loadmore"}
+            {loading ? t("allProducts.Loading...") : t("allProducts.Loadmore")}
           </button>
         )}
-      </div>
+      </div> */}
     </>
   );
 };
