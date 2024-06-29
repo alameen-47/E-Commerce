@@ -2,35 +2,41 @@ import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import userModel from "../models/userModel.js";
 import orderModel from "../models/orderModel.js";
 import JWT from "jsonwebtoken";
+import otpGenerator from "otp-generator";
+import bcrypt from "bcryptjs";
+import transporter from "../config/nodemailer.js";
+import { t } from "i18next";
+import translateText from "../services/translateText.js";
+
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address, answer } = req.body;
+    const { name, email, password, phone, address } = req.body;
     //validationns
     if (!name) {
-      return res.send({ message: "Name is Required" });
+      return res.send({ message: t("alert.Name is Required") });
     }
     if (!email) {
-      return res.send({ message: "Email is Required" });
+      return res.send({ message: t("Email is Required") });
     }
     if (!password) {
-      return res.send({ message: "Password is Required" });
+      return res.send({ message: t("Password is Required") });
     }
     if (!phone) {
-      return res.send({ message: "Phone Number is Required" });
+      return res.send({ message: t("Phone Number is Required") });
     }
     if (!address) {
-      return res.send({ message: "Address is Required" });
+      return res.send({ message: t("Address is Required") });
     }
-    if (!answer) {
-      return res.send({ message: "Answer is Required" });
-    }
+    // if ( {
+    //   return res.send({ message: "Answer is Required" });
+    // }
     //check user
     const existinguser = await userModel.findOne({ email });
     //existing user
     if (existinguser) {
       return res.status(200).send({
         success: false,
-        message: "User already exists,Please Sign In",
+        message: t("User already exists,Please Sign In"),
       });
     }
     //register user
@@ -42,19 +48,18 @@ export const registerController = async (req, res) => {
       phone,
       address,
       password: hashedPassword,
-      answer,
     }).save();
 
     res.status(201).json({
       success: true,
-      message: "User Registered Succesfully",
+      message: t("User Registered Succesfully"),
       user,
     });
   } catch (error) {
     console.log(error);
     res.status(500).json({
       success: false,
-      message: "Error in Registration",
+      message: t("Error in Registration"),
       error,
     });
   }
@@ -68,7 +73,7 @@ export const loginController = async (req, res) => {
     if (!email || !password) {
       return res.status(404).send({
         success: false,
-        message: "Invalid email or password",
+        message: t("Invalid email or password"),
       });
     }
     //ceck user
@@ -76,7 +81,7 @@ export const loginController = async (req, res) => {
     if (!user) {
       return res.status(404).send({
         success: false,
-        message: "Email is not registered",
+        message: t("Email is not registered"),
       });
     }
     //compare passwords
@@ -85,7 +90,7 @@ export const loginController = async (req, res) => {
     if (!match) {
       return res.status(200).send({
         success: false,
-        message: "Invalid Password",
+        message: t("Invalid Password"),
       });
     }
 
@@ -95,7 +100,7 @@ export const loginController = async (req, res) => {
     });
     res.status(200).send({
       success: true,
-      message: "Signed In Successfully",
+      message: t("Signed In Successfully"),
       user: {
         id: user._id,
         name: user.name,
@@ -110,7 +115,7 @@ export const loginController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error in login",
+      message: t("Error in login"),
       error,
     });
   }
@@ -119,46 +124,117 @@ export const loginController = async (req, res) => {
 //forgotPasswordController
 export const forgotPasswordController = async (req, res) => {
   try {
-    const { email, answer, newPassword } = req.body;
+    const { email } = req.body;
     if (!email) {
-      res.status(400).send({ message: "Email is Required" });
+      return res
+        .status(400)
+        .send({ success: false, message: t("Email is Required") });
     }
-    if (!answer) {
-      res.status(400).send({ message: "Answer is Required" });
-    }
-    if (!newPassword) {
-      res.status(400).send({ message: "New Password is Required" });
-    }
-    //check
-    const user = await userModel.findOne({ email, answer });
-    //validation
+
+    const user = await userModel.findOne({ email });
     if (!user) {
-      return res.send(404).send({
+      return res.status(404).send({
         success: false,
-        message: "User not found,Please Check your Email or Answer",
+        message: t("User not found, please check your email."),
       });
     }
-    //update password
-    const hashed = await hashPassword(newPassword);
-    await userModel.findByIdAndUpdate(user._id, { password: hashed });
-    res.status(200).send({
-      success: true,
-      message: "Password Updated Successfully",
+
+    // Generate OTP
+    const otp = otpGenerator.generate(6, {
+      upperCaseAlphabets: false,
+      specialChars: false,
+      lowerCaseAlphabets: false,
+    });
+    const hashedOtp = await bcrypt.hash(otp, 10);
+
+    // Update user with OTP and expiration time
+    user.otp = hashedOtp;
+    user.otpExpires = Date.now() + 120000; // 2 minutes expiry
+    await user.save();
+
+    // Send OTP via email
+    const mailOptions = {
+      from: "rawadmall.info@gmail.com",
+      to: email,
+      subject: "Your OTP for Password Reset of Your Rawad Mall Account",
+      text: `Your OTP for password reset of Your Rawad Mall Account is ${otp}. It will expire in 2 minutes.`,
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        return res
+          .status(500)
+          .json({ success: false, message: t("Error sending email") });
+      }
+      console.log(info); // Log the information about the sent email
+
+      return res
+        .status(200)
+        .json({ success: true, message: t("OTP sent successfully") });
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Something went wrong!",
+      message: t("Something went wrong!"),
       error,
     });
   }
 };
 
-//test controller
-export const testController = (req, res) => {
-  res.send("Protected Routes");
+export const verifyOtpController = async (req, res) => {
+  try {
+    const { email, otp, newPassword } = req.body;
+    // Validate inputs
+    if (!email || !otp || !newPassword) {
+      return res.status(400).send({ message: t("All fields are required") });
+    }
+
+    const user = await userModel.findOne({ email });
+    // Validate user existence
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: t("User not found, please check your email"),
+      });
+    }
+
+    // Validate OTP expiration
+    if (Date.now() > user.otpExpires) {
+      return res.status(400).send({ message: t("OTP expired") });
+    }
+
+    // Verify OTP
+    const isMatch = await bcrypt.compare(otp, user.otp);
+    if (!isMatch) {
+      return res.status(400).send({ message: t("Invalid OTP") });
+    }
+
+    // Update password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    user.otp = undefined;
+    user.otpExpires = undefined;
+    await user.save();
+
+    res.status(200).send({
+      success: true,
+      message: t("Password Changed Successfully"),
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: t("Something went wrong!"),
+      error,
+    });
+  }
 };
+
+// //test controller
+// export const testController = (req, res) => {
+//   res.send("Protected Routes");
+// };
 
 //update profile
 export const updateProfileController = async (req, res) => {
@@ -185,14 +261,14 @@ export const updateProfileController = async (req, res) => {
     );
     res.status(201).send({
       success: true,
-      message: "Profile Updated Succesfully",
+      message: t("Profile Updated Succesfully"),
       updatedUser,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Failed to Update Profile",
+      message: t("Failed to Update Profile"),
       error,
     });
   }
@@ -210,7 +286,7 @@ export const getOrdersController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Failed to Get Orders",
+      message: t("Failed to Get Orders"),
       error,
     });
   }
@@ -225,21 +301,20 @@ export const cancelOrderController = async (req, res) => {
     if (!order) {
       return res.status(404).send({
         success: false,
-        message: "Order not found",
+        message: t("Order not found"),
       });
     }
-    
 
     // await orderModel.findByIdAndDelete(id);
     res.status(200).send({
       success: true,
-      message: "Order Cancelled Succesfully",
+      message: t("Order Cancelled Succesfully"),
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error While Cancelling Order",
+      message: t("Error While Cancelling Order"),
       error,
     });
   }
@@ -257,7 +332,7 @@ export const getAllOrdersController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error While Geting Orders",
+      message: t("Error While Geting Orders"),
       error,
     });
   }
@@ -278,8 +353,18 @@ export const orderStatusController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error while updating order status",
+      message: t("Error while updating order status"),
       error,
     });
+  }
+};
+//translationn controller
+export const translationController = async (req, res) => {
+  try {
+    const { text, targetLanguage } = req.body;
+    const translatedText = await translateText(text, targetLanguage);
+    res.json({ translatedText });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };

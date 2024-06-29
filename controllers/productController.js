@@ -56,7 +56,6 @@ export const createProductController = async (req, res) => {
 
       offer,
       slug: slugify(name),
-      translations: JSON.parse(translations), // Parse translations JSON
     });
 
     if (image) {
@@ -446,7 +445,6 @@ export const productCategoryController = async (req, res) => {
     const products = await productModel.find({ category }).populate("category");
     res.status(200).send({
       success: true,
-
       category,
       products,
     });

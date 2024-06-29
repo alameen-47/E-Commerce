@@ -7,6 +7,7 @@ import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
 import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import slug from "slugify";
+
 const { Option } = Select;
 
 const CreateProducts = () => {
@@ -20,26 +21,6 @@ const CreateProducts = () => {
   const [quantity, setQuantity] = useState("");
   const [shipping, setShipping] = useState("");
   const [image, setImage] = useState("");
-  //translation
-  const [enName, setEnName] = useState("");
-  const [enDescription, setEnDescription] = useState("");
-  const [arName, setArName] = useState("");
-  const [arDescription, setArDescription] = useState("");
-  // New states for translations
-  const [translations, setTranslations] = useState({
-    en: { name: "", description: "" },
-    ar: { name: "", description: "" },
-  });
-
-  const handleTranslationChange = (lang, field, value) => {
-    setTranslations((prev) => ({
-      ...prev,
-      [lang]: {
-        ...prev[lang],
-        [field]: value,
-      },
-    }));
-  };
 
   // Get all categories
   const getAllCategory = async () => {
@@ -71,19 +52,7 @@ const CreateProducts = () => {
       productData.append("quantity", quantity);
       productData.append("image", image);
       productData.append("category", category);
-      productData.append("translations", JSON.stringify(translations));
 
-      // !!!!!
-      const translations = {
-        en: {
-          name: enName, // Add the state or value for English name
-          description: enDescription, // Add the state or value for English description
-        },
-        ar: {
-          name: arName, // Add the state or value for Arabic name
-          description: arDescription, // Add the state or value for Arabic description
-        },
-      };
       const { data } = await axios.post(
         "/api/v1/product/create-product",
         productData
@@ -179,7 +148,7 @@ const CreateProducts = () => {
             </label>
             <label className="relative block mt-5">
               <textarea
-                className=" placeholder:text-slate-400 placeholder:t-2 block bg-slate-200 w-full h-40 flex border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                className=" placeholder:text-slate-400 placeholder:t-2  bg-slate-200 w-full h-40 flex border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                 type="text"
                 value={description}
                 placeholder="Write a Description"
@@ -234,42 +203,6 @@ const CreateProducts = () => {
               <Option value="1">YES</Option>
               <Option value="0">NO</Option>
             </Select>
-            <div className="mt-5">
-              <label className="relative block mt-5">
-                <input
-                  className=" placeholder:text-slate-400 block bg-slate-200 w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                  type="text"
-                  value={enName}
-                  placeholder="Write English Name"
-                  onChange={(e) => setEnName(e.target.value)}
-                />
-              </label>
-              <label className="relative block mt-5">
-                <textarea
-                  className=" placeholder:text-slate-400 block bg-slate-200 w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                  value={enDescription}
-                  placeholder="Write English Description"
-                  onChange={(e) => setEnDescription(e.target.value)}
-                />
-              </label>
-              <label className="relative block mt-5">
-                <input
-                  className=" placeholder:text-slate-400 block bg-slate-200 w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                  type="text"
-                  value={arName}
-                  placeholder="Write Arabic Name"
-                  onChange={(e) => setArName(e.target.value)}
-                />
-              </label>
-              <label className="relative block mt-5">
-                <textarea
-                  className=" placeholder:text-slate-400 block bg-slate-200 w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                  value={arDescription}
-                  placeholder="Write Arabic Description"
-                  onChange={(e) => setArDescription(e.target.value)}
-                />
-              </label>
-            </div>
             <div className="form-buttons mt-5 mb-5">
               <button
                 className="p-2 text-white w-auto bg-neutral-900 hover:bg-black hover:text-blue-200 rounded-lg shadow-md"

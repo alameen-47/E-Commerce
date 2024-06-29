@@ -2,15 +2,16 @@ import express from "express";
 import {
   registerController,
   loginController,
-  testController,
   forgotPasswordController,
   updateProfileController,
   getOrdersController,
   getAllOrdersController,
   orderStatusController,
   cancelOrderController,
+  verifyOtpController,
 } from "../controllers/authController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authmiddleware.js";
+// import translateText from "../services/translateText.js";
 
 //router object
 const router = express.Router();
@@ -25,8 +26,16 @@ router.post("/signin", loginController);
 //Forgot Password
 router.post("/forgot-password", forgotPasswordController);
 
-//test routes
-router.get("/test", requireSignIn, isAdmin, testController);
+//Reset-Password
+router.post("/reset-password", verifyOtpController);
+// //Translation
+// router.post("/translate", translateController);
+
+// //test routes
+// router.get("/test", requireSignIn, isAdmin, testController);
+
+// // Translation
+// router.post("/translate", translateController);
 
 //protected user-route auth
 router.get("/user-auth", requireSignIn, (req, res) => {

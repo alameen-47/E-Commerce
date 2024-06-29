@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, "please add a password"],
-      minlength: [6,"password should contain min 6 digits"]
+      minlength: [6, "password should contain min 6 digits"],
     },
     phone: {
       type: String,
@@ -27,14 +27,16 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    answer:{
-      type:String,
-      required:true,
-    },
+    otp: { type: String },
+    otpExpires: { type: Date },
+    // answer:{
+    //   type:String,
+    //   required:true,
+    // },
     role: {
       type: Number,
       default: 0,
-    }
+    },
   },
   { timestamps: true }
 );

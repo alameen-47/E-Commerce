@@ -8,7 +8,8 @@ import { AuthProvider } from "./context/auth";
 import { SearchProvider } from "./context/search";
 import { CartProvider } from "./context/cart";
 import "antd/dist/reset.css";
-import "./i18n";
+import i18n from "./i18n";
+import { I18nextProvider } from "react-i18next";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,7 +17,9 @@ root.render(
     <SearchProvider>
       <CartProvider>
         <BrowserRouter>
-          <App />
+          <I18nextProvider i18n={i18n}>
+            <App />
+          </I18nextProvider>
         </BrowserRouter>
       </CartProvider>
     </SearchProvider>

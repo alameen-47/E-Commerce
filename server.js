@@ -8,12 +8,15 @@ import authRoute from "./routes/authRoute.js";
 import cors from "cors";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
-import path from "path";
 
+import translationRoute from "./routes/translationRoute.js";
 //translation i18n
 import i18next from "i18next";
 import Backend from "i18next-fs-backend";
 import middleware from "i18next-http-middleware";
+import router from "./routes/authRoute.js";
+import formidable from "express-formidable";
+const apiKey = process.env.G_TRANSLATION_API_KEY;
 
 i18next
   .use(Backend)
@@ -34,7 +37,8 @@ connectDB();
 //rest object
 const app = express();
 app.use(middleware.handle(i18next));
-
+//
+app.use(formidable());
 // ******
 app.use(express.json({ limit: "50mb" }));
 app.use(
@@ -57,8 +61,6 @@ app.use("/api/v1/product", productRoutes);
 //rest api
 app.get("/", (req, res) => {
   res.send("<h1>WELCOME TO RAWAD MALL</h1>");
-  // app.use("*", function (req, res) {
-  //   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 //PORT
@@ -71,29 +73,5 @@ app.listen(PORT, () => {
       .white
   );
 });
-
 //TRANSLATIONS
-app.get("/translations/:lang", (req, res) => {
-  const lang = req.params.lang;
-
-  //language location
-  const filePath = path.join(
-    __dirname,
-    "translations",
-    `${lang.split("-")[0]}.json`
-  );
-  fs.readFile(filePath, "utf-8", (err, data) => {
-    if (err) {
-      return res.status(404).json({ error: "Translation File is not found!!" });
-    }
-    try {
-      const jsonData = JSON.parse(data);
-      res.set("Cache-control", "public,max-age=3600");
-      res.json(jsonData);
-    } catch (parseError) {
-      res.status(500).json({
-        error: "Error in parsing translation file",
-      });
-    }
-  });
-});
+app.use("/api/v1", translationRoute);

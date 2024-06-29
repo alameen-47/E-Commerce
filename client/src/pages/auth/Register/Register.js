@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { t } from "i18next";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -27,7 +28,7 @@ const Register = () => {
         password,
         phone,
         address,
-        answer,
+        // answer,
       });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
@@ -37,7 +38,7 @@ const Register = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong");
+      toast.error(t("common.Something went wrong"));
     }
   };
   return (
@@ -45,13 +46,13 @@ const Register = () => {
       <form onSubmit={handleSubmit}>
         <div className="Register-container">
           <div className="Register-container-content">
-            <h1>Sign Up</h1>
+            <h1>{t("signin.Sign Up")}</h1>
             <div className="inputs">
               <input
                 type="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Enter Your Name"
+                placeholder={t("signin.Enter Your Name")}
                 autoFocus
                 required
               />
@@ -59,44 +60,44 @@ const Register = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter Your Email"
+                placeholder={t("signin.Enter Your Email")}
                 required
               />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter Your Password"
+                placeholder={t("signin.Enter Your Password")}
                 required
               />
               <input
                 type="text"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="Enter Your Phone Number"
+                placeholder={t("signin.Enter Your Phone Number")}
                 required
               />
               <input
                 type="address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                placeholder="Enter Your Address"
+                placeholder={t("signin.Enter Your Address")}
                 required
               />
-              <input
+              {/* <input
                 type="text"
                 value={answer}
                 onChange={(e) => setAnswer(e.target.value)}
                 placeholder="What is your Dream job?"
                 required
-              />
+              /> */}
             </div>
             <button type="submit" onClick={handleSubmit}>
-              SIGN UP
+              {t("signin.SIGN UP")}
             </button>
             <p>
-              Already have an account?
-              <Link to="/signin">Sign In</Link>
+              {t("signin.Already have an account?")}
+              <Link to="/signin">{t("signin.Sign In")}</Link>
             </p>
           </div>
         </div>

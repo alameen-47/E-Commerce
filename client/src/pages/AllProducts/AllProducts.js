@@ -10,6 +10,10 @@ import { toast } from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useTranslation } from "react-i18next";
+// import translateText from "../../../../services/translateText.js";
+// import translateText from "../../services/translateText.js";
+
+// import { translateAndCache } from "./translateUtility";
 
 const AllProducts = () => {
   const [cart, setCart] = useCart([]);
@@ -23,10 +27,17 @@ const AllProducts = () => {
   const [toggle, setToggle] = useState(false);
   const [c, setC] = useState([]);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  // const units = 1;
   const [units, setUnits] = useState(1);
+  //translation
+  const translateText = async (text, targetLanguage) => {
+    const { data } = await axios.post("/api/v1/translate", {
+      text,
+      targetLanguage,
+    });
+    return data.translatedText;
+  };
 
   useEffect(() => {
     getAllCategory();
@@ -67,7 +78,7 @@ const AllProducts = () => {
     const updatedCart = [...cart, ...item];
     setCart(updatedCart);
     localStorage.setItem("CART", JSON.stringify(updatedCart));
-    toast.success("Item Added to cart");
+    toast.success(`${t("Item Added to cart")}`);
   };
 
   //get all AllProducts
@@ -76,7 +87,24 @@ const AllProducts = () => {
       setLoading(true);
       const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
       setLoading(false);
-      setProducts(data.products);
+      const translatedProducts = await Promise.all(
+        data.products.map(async (product) => {
+          const translatedName = await translateText(
+            product.name,
+            i18n.language
+          );
+          const translatedDescription = await translateText(
+            product.description,
+            i18n.language
+          );
+          return {
+            ...product,
+            name: translatedName,
+            description: translatedDescription,
+          };
+        })
+      );
+      setProducts(translatedProducts);
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -96,18 +124,61 @@ const AllProducts = () => {
     loadMore();
   }, [page]);
 
-  //load more
+  // //load more
+  // const loadMore = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+  //     const translatedProducts = await translateText(data.products);
+  //     setLoading(false);
+  //     // setProducts([...products, ...data?.products]);
+  //     // setProducts([...products, ...translatedProducts]);
+  //     setProducts((prevProducts) => [...prevProducts, ...translatedProducts]);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setLoading(false);
+  //   }
+  // };
+  // Load more products function
   const loadMore = async () => {
     try {
       setLoading(true);
+
+      // Fetch the next set of products
       const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+
+      // Translate the products
+      const translatedProducts = await Promise.all(
+        data.products.map(async (product) => {
+          const translatedName = await translateText(
+            product.name,
+            i18n.language
+          );
+          const translatedDescription = await translateText(
+            product.description,
+            i18n.language
+          );
+          return {
+            ...product,
+            name: translatedName,
+            description: translatedDescription,
+          };
+        })
+      );
+
+      // Merge the new products with the existing ones
+      setProducts((prevProducts) => [...prevProducts, ...translatedProducts]);
+
+      // Update the page number for the next request
+      setPage((prevPage) => prevPage + 1);
+
       setLoading(false);
-      setProducts([...products, ...data?.products]);
     } catch (error) {
-      console.log(error);
+      console.error("Error loading more products:", error);
       setLoading(false);
     }
   };
+
   //filter by category
   const handleFilter = (value, id) => {
     let all = [...checked];
@@ -149,7 +220,7 @@ const AllProducts = () => {
         class="  w-40 lg:hidden  flex justify-around   bg-black  text-white hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium text-sm px-4 py-2.5 text-center   dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
         type="button"
       >
-        <div className=" flex top-0   h-5">
+        <div className=" flex top-0   lg:md:h-5 sm:text-[12px]">
           {t("allProducts.Filter Products")}
           {toggle ? (
             <svg
@@ -176,7 +247,7 @@ const AllProducts = () => {
       </div>
       {toggle && (
         <div className="lg:hidden relative sm:top-5">
-          <h3 className="text-center md:sm:text-sm lg:text-lg font-bold ">
+          <h3 className="text-center md:sm:text-xs lg:text-lg font-bold ">
             {t("allProducts.Filter By Category")}
           </h3>
           <div className="flex flex-col">
@@ -272,7 +343,7 @@ const AllProducts = () => {
                     className="lg:md:w-44 md:w-40 sm:w-32  overflow-hidden object-contain aspect-square text-[#000000] group-hover:bg-gray-200 lg:text-5xl sm:text-2xl rounded-s  transition-all duration-300 group-hover:transition-all group-hover:duration-300 group-hover:-translate-y-2  mx-auto h-[60%]"
                     alt=""
                   />
-                  <p className="cardtxt font-semibold  text-black tracking-wider group-hover:text-white h-2 md:text-sm lg:text-lg sm:text-[12px]">
+                  <p className="cardtxt font-semibold  text-black tracking-wider group-hover:text-white h-2 md:text-sm lg:text-[16px] sm:text-[10px]">
                     {(() => {
                       const words = p.name.split(" ");
                       return words.length > 1
@@ -281,7 +352,6 @@ const AllProducts = () => {
                     })()}
                   </p>
                   <p className="blueberry font-semibold text-gray-500  group-hover:text-gray-200 mb-0 lg:text-xs md:text-sm sm:text-[10px] text-center px-2">
-                    {t("description")}:
                     {(() => {
                       const words = p.description.split(" ");
                       return words.length > 1

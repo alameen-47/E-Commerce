@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Signin.css";
 import { useAuth } from "../../../context/auth";
+import { t } from "i18next";
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +25,7 @@ const Signin = () => {
       });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
-        toast.success("Signed in Succesfully");
+        toast.success(`${t("signin.Signed in Succesfully")}`);
         setAuth({
           ...auth,
           user: res.data.user,
@@ -37,7 +38,7 @@ const Signin = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong");
+      toast.error(`${t("alert.Something went wrong!")}`);
     }
   };
   return (
@@ -45,13 +46,13 @@ const Signin = () => {
       <form onSubmit={handleSubmit}>
         <div className="Signin-container">
           <div className="Signin-container-content">
-            <h1>Sign In</h1>
+            <h1>{t("signin.SIGN IN")}</h1>
             <div className="inputs">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter Your Email"
+                placeholder={t("signin.Enter Your Email")}
                 required
                 autoFocus
               />
@@ -59,12 +60,12 @@ const Signin = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter Your Password"
+                placeholder={t("signin.Enter Your Password")}
                 required
               />
             </div>
             <button type="submit" onClick={handleSubmit}>
-              SIGN IN
+              {t("signin.SIGN IN")}
             </button>
             <button
               className="forgot-password"
@@ -73,12 +74,12 @@ const Signin = () => {
                 navigate("/forgot-password");
               }}
             >
-              Forgot Password
+              {t("signin.Forgot Password")}
             </button>
             <p>
-              Don't have an account?
+              {t("signin.Don't have an account?")}
               <Link to="/register">
-                <span>Sign Up</span>
+                <span>{t("signin.Sign Up")}</span>
               </Link>
             </p>
           </div>

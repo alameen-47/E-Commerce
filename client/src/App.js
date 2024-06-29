@@ -27,12 +27,37 @@ import ProductCategory from "./pages/ProductCategory.js";
 import CartPage from "./pages/CartPage.js";
 import AdminOrders from "./pages/Admin/AdminOrders.js";
 import LanguageWrapper from "./components/LanguageWrapper/index.jsx";
-
+import { useTranslation } from "react-i18next";
+import clsx from "clsx";
 import i18n from "./i18n/index.js";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 
 function App() {
+  //configure env
+
+  const { i18n } = useTranslation();
+  useEffect(() => {
+    if (["ar", "ur"].includes(i18n.language)) {
+      document.body.dir = "rtl";
+    } else {
+      document.body.dir = "ltr";
+    }
+    const body = document.querySelector("body");
+    if (["fil", "bd", "hi", "ml"].includes(i18n.language)) {
+      body.style.fontSize = "12px";
+    } else {
+      body.style.fontSize = "16px";
+    }
+  }, [i18n.language]);
+  const bodyClass = clsx({
+    "text-lg": !["fil", "bd", "hi", "ml"].includes(i18n.language),
+    "text-xs": ["fil", "bd", "hi", "ml"].includes(i18n.language),
+  });
+  useEffect(() => {
+    document.body.className = bodyClass;
+  }, [bodyClass]);
+
   return (
     <>
       <Routes>
@@ -55,6 +80,7 @@ function App() {
           <Route path="admin/create-category" element={<CreateCategory />} />
           <Route path="admin/create-product" element={<CreateProducts />} />
           <Route path="admin/product/:slug" element={<UpdateProduct />} />
+
           <Route path="admin/products" element={<Products />} />
           <Route path="admin/users" element={<Users />} />
           <Route path="admin/orders" element={<AdminOrders />} />
