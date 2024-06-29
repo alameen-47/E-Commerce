@@ -16,13 +16,7 @@ const CartProvider = ({ children }) => {
     localStorage.setItem("CART", JSON.stringify(updatedCart));
     toast.success("Item Added to cart");
   };
-  // useEffect(() => {
-  //   if (localStorage.getItem("cart") === null) {
-  //     localStorage.setItem("cart", JSON.stringify([]));
-  //   } else {
-  //     setCart(JSON.parse(localStorage.getItem("cart")));
-  //   }
-  // }, []);
+
   return (
     <CartContext.Provider value={[cart, setCart, addToCart]}>
       {children}

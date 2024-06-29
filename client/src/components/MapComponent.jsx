@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-
 import pointerIcon from "../assets/icons/locationMark.png";
 import { t } from "i18next";
 
