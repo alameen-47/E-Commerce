@@ -52,6 +52,4 @@ router.get("/categories-icons/:id", categoryIconsController);
 router.get("/categories-Images/:id", categoryImagesController);
 //get Banners
 router.get("/categories-banners/:id", categoryBannersController);
-// //get image
-// router.get("/categories-image/:id", categoryImageController);
 export default router;
