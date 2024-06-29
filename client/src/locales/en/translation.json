@@ -67,7 +67,7 @@
   },
   "about": {
     "RAWAD MAll": "RAWAD MALL",
-    "At RAWAD MAll, all that you see is hand-picked and 100% true – sourced straight from the best brands and their  approved affiliates from KSA and over the world, only for you. We present to you the most up to date – it’s in-season and on-incline; if it’s on the racks, it’s on the web. Also, it’s nowest – have it conveyed ASAP to you, from a store close you, when you utilize our Phygital services. It’s New and Now Barely a year from dispatch, RAWAD MAll is as of now in the Top 20, and one of the quickest developing, web based business organizations in the nation. Offering adaptability in the manner in which you shop, RAWAD MAll is a first-of-its-kind Phygital commercial center that serves more than one million clients.": "At RAWAD MAll, all that you see is hand-picked and 100% true – sourced straight from the best brands and their approved affiliates from KSA and over the world, only for you. We present to you the most up to date – it’s in-season and on-incline; if it’s on the racks, it’s on the web. Also, it’s nowest – have it conveyed ASAP to you, from a store close you, when you utilize our Phygital services. It’s New and Now Barely a year from dispatch, RAWAD MAll is as of now in the Top 20, and one of the quickest developing, web based business organizations in the nation. Offering adaptability in the manner in which you shop, RAWAD MAll is a first-of-its-kind Phygital commercial center that serves more than one million clients."
+    "At RAWAD MAll, all that you see is hand-picked and 100% true – sourced straight from the best brands and their approved affiliates from KSA and over the world, only for you. We present to you the most up to date – it’s in-season and on-incline; if it’s on the racks, it’s on the web. Also, it’s nowest – have it delivered ASAP to you, from a store close to you, when you use our Phygital services. It’s New and Now Barely a year from launch, RAWAD MAll is already in the Top 20, and one of the fastest-growing, e-commerce companies in the country. Offering flexibility in the way you shop, RAWAD MAll is a first-of-its-kind Phygital marketplace that serves more than one million customers.": "At RAWAD MAll, all that you see is hand-picked and 100% true – sourced straight from the best brands and their approved affiliates from KSA and over the world, only for you. We present to you the most up to date – it’s in-season and on-incline; if it’s on the racks, it’s on the web. Also, it’s nowest – have it conveyed ASAP to you, from a store close you, when you utilize our Phygital services. It’s New and Now Barely a year from dispatch, RAWAD MAll is as of now in the Top 20, and one of the quickest developing, web based business organizations in the nation. Offering adaptability in the manner in which you shop, RAWAD MAll is a first-of-its-kind Phygital commercial center that serves more than one million clients."
   },
   "contact": {
     "CONTACT US": "CONTACT US",
@@ -85,8 +85,26 @@
     "Email address": "Email Address",
     "Phone number": "Phone number",
     "Address": "Address",
+    "Password": "Password",
+    "Phone": "Phone",
+    "Update": "Update",
     "Full Address": "Full Address",
-    "Your Orders": "Your Orders"
+    "Update Personal Details.": "Update Personal Details.",
+    "Enter Your Full Name": "Enter Your Full Name",
+    "Enter your New password": "Enter your New password",
+    "Enter your address , Zip Code": "Enter your address , Zip Code",
+    "Enter Your Phone Number": "Enter Your Phone Number"
+  },
+
+  "orders": {
+    "Your Orders": "Your Orders",
+    "STATUS": "STATUS",
+    "ORDERED DATE": "ORDERED DATE",
+    "PAYMENT": "PAYMENT",
+    "QUANTITY": "QUANTITY",
+    "TOTAL PAID": "TOTAL PAID",
+    "CANCEL": "CANCEL",
+    "Cancel Order": "Cancel Order"
   },
   "cart": {
     "Shopping Cart": "Shopping Cart",

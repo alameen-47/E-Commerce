@@ -85,10 +85,26 @@
     "Email address": "ईमेल पता",
     "Phone number": "फ़ोन नंबर",
     "Address": "पता",
+    "Password": "पासवर्ड",
+    "Phone": "फ़ोन",
+    "Update": "अपडेट करें",
     "Full Address": "पूरा पता",
-    "Your Orders": "आपके आदेश"
+    "Update Personal Details.": "व्यक्तिगत विवरण अपडेट करें।",
+    "Enter Your Full Name": "अपना पूरा नाम दर्ज करें",
+    "Enter your New password": "अपना नया पासवर्ड दर्ज करें",
+    "Enter your address , Zip Code": "अपना पता, पिन कोड दर्ज करें",
+    "Enter Your Phone Number": "अपना फोन नंबर दर्ज करें"
   },
-
+  "orders": {
+    "Your Orders": "आपके आदेश",
+    "STATUS": "स्थिति",
+    "ORDERED DATE": "आदेश की तिथि",
+    "PAYMENT": "भुगतान",
+    "QUANTITY": "मात्रा",
+    "TOTAL PAID": "कुल भुगतान",
+    "CANCEL": "रद्द करें",
+    "Cancel Order": "आदेश रद्द करें"
+  },
   "cart": {
     "Shopping Cart": "शॉपिंग कार्ट",
     "PRODUCT DETAILS": "उत्पाद विवरण",

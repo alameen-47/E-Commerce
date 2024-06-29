@@ -85,8 +85,25 @@
     "Email address": "ইমেইল ঠিকানা",
     "Phone number": "ফোন নম্বর",
     "Address": "ঠিকানা",
+    "Password": "পাসওয়ার্ড",
+    "Phone": "ফোন",
+    "Update": "আপডেট করুন",
     "Full Address": "পূর্ণ ঠিকানা",
-    "Your Orders": "আপনার অর্ডার"
+    "Update Personal Details.": "ব্যক্তিগত বিবরণ আপডেট করুন।",
+    "Enter Your Full Name": "আপনার পূর্ণ নাম লিখুন",
+    "Enter your New password": "আপনার নতুন পাসওয়ার্ড লিখুন",
+    "Enter your address , Zip Code": "আপনার ঠিকানা, জিপ কোড লিখুন",
+    "Enter Your Phone Number": "আপনার ফোন নম্বর লিখুন"
+  },
+  "orders": {
+    "Your Orders": "আপনার অর্ডার",
+    "STATUS": "অবস্থা",
+    "ORDERED DATE": "অর্ডারের তারিখ",
+    "PAYMENT": "পেমেন্ট",
+    "QUANTITY": "পরিমাণ",
+    "TOTAL PAID": "মোট পরিশোধ",
+    "CANCEL": "বাতিল করুন",
+    "Cancel Order": "অর্ডার বাতিল করুন"
   },
   "cart": {
     "Shopping Cart": "শপিং কার্ট",

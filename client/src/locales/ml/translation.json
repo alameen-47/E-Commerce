@@ -85,8 +85,25 @@
     "Email address": "ഇമെയിൽ വിലാസം",
     "Phone number": "ഫോൺ നമ്പർ",
     "Address": "വിലാസം",
+    "Password": "പാസ്‌വേഡ്",
+    "Phone": "ഫോൺ",
+    "Update": "അപ്ഡേറ്റ്",
     "Full Address": "പൂർണ്ണ വിലാസം",
-    "Your Orders": "നിങ്ങളുടെ ഓർഡറുകൾ"
+    "Update Personal Details.": "വ്യക്തിഗത വിവരങ്ങൾ പുതുക്കുക.",
+    "Enter Your Full Name": "നിങ്ങളുടെ പൂർണ്ണ പേര് നൽകുക",
+    "Enter your New password": "നിങ്ങളുടെ പുതിയ പാസ്‌വേഡ് നൽകുക",
+    "Enter your address , Zip Code": "നിങ്ങളുടെ വിലാസം, പിന്‍കോഡ് നൽകുക",
+    "Enter Your Phone Number": "നിങ്ങളുടെ ഫോൺ നമ്പർ നൽകുക"
+  },
+  "orders": {
+    "Your Orders": "നിങ്ങളുടെ ഓർഡറുകൾ",
+    "STATUS": "സ്ഥിതി",
+    "ORDERED DATE": "ഓർഡർ ചെയ്ത തീയതി",
+    "PAYMENT": "പേയ്മെന്റ്",
+    "QUANTITY": "അളവ്",
+    "TOTAL PAID": "മൊത്തം അടച്ചത്",
+    "CANCEL": "റദ്ദാക്കുക",
+    "Cancel Order": "ഓർഡർ റദ്ദാക്കുക"
   },
   "cart": {
     "Shopping Cart": "ഷോപ്പിംഗ് കാർട്ട്",

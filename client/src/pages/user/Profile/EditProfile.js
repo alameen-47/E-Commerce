@@ -5,6 +5,7 @@ import UserMenu from "../../../components/Layout/UserMenu/UserMenu";
 import { useAuth } from "../../../context/auth";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { t } from "i18next";
 const Profile = () => {
   //context
   const [auth, setAuth] = useAuth();
@@ -58,10 +59,10 @@ const Profile = () => {
             <form onSubmit={handleSubmit}>
               <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                 <p className="sm:text-lg lg:text-2xl">
-                  Update Personal Details.
+                  {t("account.Update Personal Details.")}
                 </p>
                 <div class="md:col-span-5">
-                  <label for="full_name">Full Name</label>
+                  <label for="full_name">{t("account.Full name")}</label>
                   <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -69,11 +70,11 @@ const Profile = () => {
                     name="full_name"
                     id="full_name"
                     class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                    placeholder="Enter Your Full Name"
+                    placeholder={t("account.Enter Your Full Name")}
                   />
                 </div>
                 <div class="md:col-span-5">
-                  <label for="email">Email Address</label>
+                  <label for="email">{t("account.Email address")}</label>
                   <input
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -86,7 +87,7 @@ const Profile = () => {
                   />
                 </div>
                 <div class="md:col-span-3">
-                  <label for="password">Password</label>
+                  <label for="password">{t("account.Password")}</label>
                   <input
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -94,11 +95,11 @@ const Profile = () => {
                     name="password"
                     id="password"
                     class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                    placeholder="Enter your new password"
+                    placeholder={t("account.Enter your New password")}
                   />
                 </div>
                 <div class="md:col-span-3">
-                  <label for="address">Full Address</label>
+                  <label for="address">{t("account.Full Address")}</label>
                   <input
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
@@ -106,11 +107,11 @@ const Profile = () => {
                     name="address"
                     id="address"
                     class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                    placeholder="Enter your address , Zip Code"
+                    placeholder={t("account.Enter your address , Zip Code")}
                   />
                 </div>
                 <div class="md:col-span-3">
-                  <label for="address">Phone</label>
+                  <label for="address">{t("account.Phone")}</label>
                   <input
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -118,7 +119,7 @@ const Profile = () => {
                     name="phone"
                     id="phone"
                     class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                    placeholder="Enter Your Phone Number"
+                    placeholder={t("account.Enter Your Phone Number")}
                   />
                 </div>
                 <div class="md:col-span-5 text-right">
@@ -127,7 +128,7 @@ const Profile = () => {
                       type="submit"
                       class="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded"
                     >
-                      Update
+                      {t("account.Update")}
                     </button>
                   </div>
                 </div>

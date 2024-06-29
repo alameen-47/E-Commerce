@@ -126,7 +126,7 @@ const CartPage = () => {
               </h1>
               <h2 className="font-semibold text-2xl">
                 {cart?.length
-                  ? `${cart.length} Items ${
+                  ? `${cart.length} ${t("cart.ITEMS")}${
                       auth?.token ? "" : ", Please login to Checkout"
                     }`
                   : t("cart.Cart is Empty")}

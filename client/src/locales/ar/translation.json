@@ -85,9 +85,27 @@
     "Email address": "عنوان البريد الإلكتروني",
     "Phone number": "رقم الهاتف",
     "Address": "العنوان",
+    "Password": "كلمة المرور",
+    "Phone": "الهاتف",
+    "Update": "تحديث",
     "Full Address": "العنوان الكامل",
-    "Your Orders": "طلباتك"
+    "Update Personal Details.": "تحديث التفاصيل الشخصية.",
+    "Enter Your Full Name": "أدخل اسمك الكامل",
+    "Enter your New password": "أدخل كلمة المرور الجديدة",
+    "Enter your address , Zip Code": "أدخل عنوانك ، الرمز البريدي",
+    "Enter Your Phone Number": "أدخل رقم هاتفك"
   },
+  "orders": {
+    "Your Orders": "طلباتك",
+    "STATUS": "الحالة",
+    "ORDERED DATE": "تاريخ الطلب",
+    "PAYMENT": "الدفع",
+    "QUANTITY": "الكمية",
+    "TOTAL PAID": "إجمالي المدفوع",
+    "CANCEL": "إلغاء",
+    "Cancel Order": "إلغاء الطلب"
+  },
+
   "cart": {
     "Shopping Cart": "عربة التسوق",
     "PRODUCT DETAILS": "تفاصيل المنتج",

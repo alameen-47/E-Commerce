@@ -50,20 +50,21 @@
     "Categories": "Mga Kategorya"
   },
   "footer": {
-    "Rawad Mall, Al Sulaymi": "Rawad Mall, Al Sulaymi",
-    "Visit Our Store": "Bisitahin ang Aming Tindahan",
-    "USEFUL LINKS": "MGA KAPAKIPAKINABANG NA LINK",
-    "Home": "Bahay",
-    "Products": "Mga Produkto",
-    "About Us": "Tungkol sa Amin",
-    "Contact Us": "Makipag-ugnay sa Amin",
-    "Categories": "Mga Kategorya",
-    "PRODUCTS": "MGA PRODUKTO",
-    "Furnitures": "Muwebles",
-    "Electronics": "Electronics",
-    "Toys": "Mga Laruan",
-    "STAY IN TOUCH": "Manatiling Nakaugnay",
-    "Checkout our social media": "Suriin ang aming social media"
+    "MY ACCOUNT": "Aking Account",
+    "Profile": "Profile",
+    "Edit Profile": "I-edit ang Profile",
+    "Orders": "Mga Order",
+    "Logout": "Mag-logout",
+    "User Profile": "Profile ng User",
+    "Full name": "Buong Pangalan",
+    "Email address": "Email Address",
+    "Phone number": "Numero ng Telepono",
+    "Address": "Address",
+    "Password": "Password",
+    "Phone": "Telepono",
+    "Update": "I-update",
+    "Full Address": "Buong Address",
+    "Update Personal Details.": "I-update ang Personal na Detalye."
   },
   "about": {
     "RAWAD MAll": "RAWAD MALL",
@@ -86,7 +87,21 @@
     "Phone number": "Numero ng Telepono",
     "Address": "Address",
     "Full Address": "Buong Address",
-    "Your Orders": "Iyong Mga Order"
+    "Your Orders": "Iyong Mga Order",
+    "Enter Your Full Name": "Ilagay ang Iyong Buong Pangalan",
+    "Enter your New password": "Ilagay ang iyong Bagong password",
+    "Enter your address , Zip Code": "Ilagay ang iyong address, Zip Code",
+    "Enter Your Phone Number": "Ilagay ang Iyong Numero ng Telepono"
+  },
+  "orders": {
+    "Your Orders": "Iyong Mga Order",
+    "STATUS": "STATUS",
+    "ORDERED DATE": "PETSANG INORDER",
+    "PAYMENT": "PAGBAYAD",
+    "QUANTITY": "Dami",
+    "TOTAL PAID": "Kabuuang Binayaran",
+    "CANCEL": "Kanselahin",
+    "Cancel Order": "Kanselahin ang Order"
   },
   "cart": {
     "Shopping Cart": "Cart ng Pamimili",

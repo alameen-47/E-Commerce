@@ -7,6 +7,7 @@ import { useAuth } from "../../../context/auth";
 import moment from "moment";
 import { CartProvider } from "../../../context/cart";
 import toast from "react-hot-toast";
+import { t } from "i18next";
 const Orders = () => {
   const storedCart = JSON.parse(localStorage.getItem("CART")) || [];
   const [cart, setCart] = useState(storedCart);
@@ -55,7 +56,9 @@ const Orders = () => {
         <div class="bg-slate-200 lg:w-screen  shadow  border rounded-tr-lg rounded-br-lg">
           <div class="lg:col-span-2 px-4 py-5 sm:px-0 lg:h-screen overflow-auto ">
             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5 ">
-              <p className="sm:text-lg lg:text-2xl px-4">Your Orders</p>
+              <p className="sm:text-lg lg:text-2xl px-4">
+                {t("orders.Your Orders")}
+              </p>
             </div>
             {/* <p className="text-pretty">{JSON.stringify(orders, null, 4)}</p> */}
             {orders?.map((o, i) => {
@@ -69,25 +72,25 @@ const Orders = () => {
                           #
                         </td>
                         <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          Status
+                          {t("orders.STATUS")}
                         </td>
                         {/* <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
                           Buyer
                         </td> */}
                         <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          Ordered Date
+                          {t("orders.ORDERED DATE")}
                         </td>
                         <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          Payment
+                          {t("orders.PAYMENT")}
                         </td>
                         <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          Quantity
+                          {t("orders.QUANTITY")}
                         </td>
                         <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          Total Paid
+                          {t("orders.TOTAL PAID")}
                         </td>
                         <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          CANCEL
+                          {t("orders.CANCEL")}
                         </td>
                       </tr>
                     </thead>
@@ -120,7 +123,7 @@ const Orders = () => {
                           className="btn btn-outline btn-error sm:text-xs  text-sm"
                           onClick={() => cancelOrder(o._id)}
                         >
-                          Cancel Order
+                          {t("orders.Cancel Order")}
                         </button>
                       </th>
                     </tbody>

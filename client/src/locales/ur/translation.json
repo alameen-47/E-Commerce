@@ -85,8 +85,25 @@
     "Email address": "ای میل ایڈریس",
     "Phone number": "فون نمبر",
     "Address": "پتہ",
+    "Password": "پاس ورڈ",
+    "Phone": "فون",
+    "Update": "اپ ڈیٹ کریں",
     "Full Address": "مکمل پتہ",
-    "Your Orders": "آپ کے آرڈرز"
+    "Update Personal Details.": "ذاتی تفصیلات اپ ڈیٹ کریں۔",
+    "Enter Your Full Name": "اپنا پورا نام درج کریں",
+    "Enter your New password": "اپنا نیا پاس ورڈ درج کریں",
+    "Enter your address , Zip Code": "اپنا پتہ، زپ کوڈ درج کریں",
+    "Enter Your Phone Number": "اپنا فون نمبر درج کریں"
+  },
+  "orders": {
+    "Your Orders": "آپ کے آرڈرز",
+    "STATUS": "حالت",
+    "ORDERED DATE": "آرڈر کی تاریخ",
+    "PAYMENT": "ادائیگی",
+    "QUANTITY": "مقدار",
+    "TOTAL PAID": "کل ادا شدہ",
+    "CANCEL": "منسوخ کریں",
+    "Cancel Order": "آرڈر منسوخ کریں"
   },
   "cart": {
     "Shopping Cart": "خریداری کی ٹوکری",
