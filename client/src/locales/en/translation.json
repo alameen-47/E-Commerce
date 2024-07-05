@@ -179,5 +179,13 @@
     "Please Login to Checkout": "Please Login to Checkout",
     "Processing ....": "Processing ....",
     "Make Payment": "Make Payment"
+  },
+  "prices": {
+    "under_100": "SR:Under 100",
+    "from_100_to_300": "SR:100 to 300",
+    "from_300_to_600": "SR:300 to 600",
+    "from_600_to_900": "SR:600 to 900",
+    "from_900_to_1000": "SR:900 to 1000",
+    "over_1000": "SR:1000 or more"
   }
 }

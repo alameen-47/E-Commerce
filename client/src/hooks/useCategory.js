@@ -1,14 +1,38 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 export default function useCategory() {
   const [categories, setCategories] = useState([]);
+  const { t, i18n } = useTranslation();
+
+  //translation
+  const translateText = async (text, targetLanguage) => {
+    const { data } = await axios.post("/api/v1/translate", {
+      text,
+      targetLanguage,
+    });
+    return data.translatedText;
+  };
 
   //get categories
   const getCategories = async () => {
     try {
       let { data } = await axios.get("/api/v1/category/all-category");
-      setCategories(data?.categories);
+      const translatedCategories = await Promise.all(
+        data.categories.map(async (category) => {
+          const translatedName = await translateText(
+            category.name,
+            i18n.language
+          );
+
+          return {
+            ...category,
+            name: translatedName,
+          };
+        })
+      );
+      setCategories(translatedCategories);
     } catch (error) {
       console.log(error);
     }

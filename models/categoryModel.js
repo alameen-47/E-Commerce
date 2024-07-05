@@ -1,13 +1,11 @@
 import mongoose from "mongoose";
 
-// const bannerSchema = new mongoose.Schema({
-//   title: String,
-//   description: String,
-//   image: {
-//     data: Buffer,
-//     contentType: String,
-//   },
-// });
+const bannerSchema = new mongoose.Schema({
+  data: Buffer,
+  contentType: String,
+  title: String,
+  description: String,
+});
 
 const categorySchema = new mongoose.Schema({
   name: {
@@ -28,14 +26,6 @@ const categorySchema = new mongoose.Schema({
     data: Buffer,
     contentType: String,
   },
-  banners: {
-    type: Array,
-    data: Buffer,
-    contentType: String,
-  },
-  // banners: {
-  //   type: [bannerSchema], // Array of banner objects
-  //   default: [],
-  // },
+  banners: [bannerSchema],
 });
 export default mongoose.model("Category", categorySchema);

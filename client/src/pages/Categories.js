@@ -3,17 +3,41 @@ import useCategory from "../hooks/useCategory";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import { Link } from "react-router-dom";
-const Categories = () => {
+import { useTranslation } from "react-i18next";
 
+const Categories = () => {
   // const categories = useCategory();
   const [categories, setCategories] = useState([]);
+  const { i18n } = useTranslation();
+
+  //translation
+  const translateText = async (text, targetLanguage) => {
+    const { data } = await axios.post("/api/v1/translate", {
+      text,
+      targetLanguage,
+    });
+    return data.translatedText;
+  };
 
   //get all category
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get("/api/v1/category/all-category");
       if (data?.success) {
-        setCategories(data?.categories);
+        const translatedCategories = await Promise.all(
+          data.categories.map(async (category) => {
+            const translatedName = await translateText(
+              category.name,
+              i18n.language
+            );
+
+            return {
+              ...category,
+              name: translatedName,
+            };
+          })
+        );
+        setCategories(translatedCategories);
       }
     } catch (error) {
       console.log(error);

@@ -1,5 +1,11 @@
 import axios from "axios";
 import { LRUCache } from "lru-cache";
+import dotenv from "dotenv";
+
+//configure env
+dotenv.config();
+const apiKey = process.env.GOOGLE_TRANSLATION_API_KEY;
+const apiUrl = `https://translation.googleapis.com/language/translate/v2`;
 
 // Configure LRUCache Cache
 const cache = new LRUCache({
@@ -7,17 +13,16 @@ const cache = new LRUCache({
   maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
 });
 
-const apiKey = "AIzaSyAs5xsurNhOhJpHNnSNdIPbIR-azSG1iIk";
-// const apiKey = process.env.GOOGLE_TRANSLATION_API_KEY;
-const apiUrl = `https://translation.googleapis.com/language/translate/v2`;
-
 let usageCount = 0;
 const usageLimit = 500000; // Set your monthly character limit
 
 const translateText = async (text, targetLanguage) => {
   const cacheKey = `${text}-${targetLanguage}`;
+  console.log(`Cache Key: ${cacheKey}`);
 
   if (cache.has(cacheKey)) {
+    console.log("Cache hit for key:", cacheKey);
+    console.log("Cache hit:", cache.get(cacheKey));
     return cache.get(cacheKey);
   }
 
@@ -33,7 +38,6 @@ const translateText = async (text, targetLanguage) => {
         key: apiKey,
       },
     });
-
     const translatedText = response.data.data.translations[0].translatedText;
 
     // Update usage count
@@ -42,11 +46,18 @@ const translateText = async (text, targetLanguage) => {
     // Cache the result
     cache.set(cacheKey, translatedText);
 
+    // inspectCache(); // Inspect cache state
+
     return translatedText;
   } catch (error) {
     console.error("Translation API error:", error);
     throw error;
   }
 };
+// Function to inspect the cache state
+// const inspectCache = () => {
+//   console.log("Cache size:", cache.size);
+//   console.log("Cache keys:", Array.from(cache.keys()));
+// };
 
 export default translateText;

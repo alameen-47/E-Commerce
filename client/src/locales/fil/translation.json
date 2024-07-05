@@ -172,5 +172,13 @@
     "Please Login to Checkout": "Mangyaring Mag-login upang Mag-checkout",
     "Processing ....": "Pinoproseso ....",
     "Make Payment": "Magbayad"
+  },
+  "prices": {
+    "under_100": "SAR: Dapat sa ilalim ng 100",
+    "from_100_to_300": "SAR: Mula 100 hanggang 300",
+    "from_300_to_600": "SAR: Mula 300 hanggang 600",
+    "from_600_to_900": "SAR: Mula 600 hanggang 900",
+    "from_900_to_1000": "SAR: Mula 900 hanggang 1000",
+    "over_1000": "SAR: 1000 pataas"
   }
 }

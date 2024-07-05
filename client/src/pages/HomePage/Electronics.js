@@ -55,7 +55,7 @@ const Electronics = () => {
       <div className="flex justify-center align-middle">
         {products.length < 1 && <p>{t("common.No Products Found")}</p>}
 
-        <div className="grid gap-3 lg:grid-cols-7 md:grid-cols-4 sm:grid-cols-2 ">
+        <div className="mx-3 mt-5 justify-center align-middle grid gap-3 lg:grid-cols-7 md:grid-cols-4 sm:grid-cols-2 sm:mx-8">
           {products?.map((p) => (
             <div
               className=" flex lg:flex-col sm:flex-row 

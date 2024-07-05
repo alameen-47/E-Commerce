@@ -9,10 +9,10 @@ import DropIn from "braintree-web-drop-in-react";
 import Orders from "./user/Orders/Orders";
 import MapComponent from "../components/MapComponent";
 import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const CartPage = () => {
   const storedCart = JSON.parse(localStorage.getItem("CART")) || [];
-
   const [cart, setCart] = useState(storedCart);
   const [iqty, setIqty] = useState();
   const [auth, setAuth] = useAuth();
@@ -20,6 +20,16 @@ const CartPage = () => {
   const [instance, setInstance] = useState("");
   const [loading, setLoading] = useState("");
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+
+  //translation
+  const translateText = async (text, targetLanguage) => {
+    const { data } = await axios.post("/api/v1/translate", {
+      text,
+      targetLanguage,
+    });
+    return data.translatedText;
+  };
 
   //get payment gateway token
   const getToken = async () => {
@@ -74,18 +84,28 @@ const CartPage = () => {
     }
   };
 
-  //total price
+  //Items total Price
+  const totalPrice = () => {
+    let total = 0;
+    cart.map((item) => (total += item.price * item.units));
+    return total;
+  };
+
+  //total Checkout Price
   const totalcheckoutPrice = () => {
     try {
       let totalcheckout = 0;
       cart?.map((item) => {
-        totalcheckout += item.price * item.units + 10;
+        totalcheckout += item.price * item.units;
       });
+      totalcheckout += 10;
       return totalcheckout.toLocaleString("en-us", "ar-sa", {
+        style: "currency",
         currency: "SAR",
       });
     } catch (error) {
       console.log(error);
+      return "0.00";
     }
   };
 
@@ -106,11 +126,28 @@ const CartPage = () => {
   };
 
   useEffect(() => {
+    const translateCartItems = async (cartItems) => {
+      const translatedCart = await Promise.all(
+        cartItems.map(async (item) => {
+          const translatedName = await translateText(item.name, i18n.language);
+          const translatedDescription = await translateText(
+            item.description,
+            i18n.language
+          );
+          return {
+            ...item,
+            name: translatedName,
+            description: translatedDescription,
+          };
+        })
+      );
+      setCart(translatedCart);
+    };
     const storedCart = JSON.parse(localStorage.getItem("CART"));
     if (storedCart) {
-      setCart(storedCart);
+      translateCartItems(storedCart);
     }
-  }, []);
+  }, [i18n.language]);
   useEffect(() => {
     localStorage.setItem("CART", JSON.stringify(cart));
   }, [cart]);
@@ -121,13 +158,15 @@ const CartPage = () => {
         <div className="flex flex-col md:flex-row shadow-md my-10">
           <div className="w-full md:w-3/4 bg-slate-200 px-10 py-10">
             <div className="flex justify-between border-b pb-8">
-              <h1 className="font-semibold text-2xl">
+              <h1 className="font-semibold lg:text-2xl">
                 {t("cart.Shopping Cart")}
               </h1>
-              <h2 className="font-semibold text-2xl">
+              <h2 className="font-semibold lg:text-2xl">
                 {cart?.length
                   ? `${cart.length} ${t("cart.ITEMS")}${
-                      auth?.token ? "" : ", Please login to Checkout"
+                      auth?.token
+                        ? ""
+                        : ` ${t("cart.Please Login to Checkout")}`
                     }`
                   : t("cart.Cart is Empty")}
               </h2>
@@ -234,7 +273,7 @@ const CartPage = () => {
                 {t("cart.ITEMS")} {cart?.length}
               </span>
               <span className="font-semibold text-sm">
-                {t("cart.SAR")}: {totalcheckoutPrice() - 10}/-
+                {t("cart.SAR")}: {totalPrice()}/-
               </span>
             </div>
             <div>
@@ -249,11 +288,17 @@ const CartPage = () => {
             </div>
             {auth?.user?.address ? (
               <>
-                <div className="py-10">
+                <div className="py-10 flex flex-col justify-around gap-4">
                   <input
                     type="text"
                     id="address"
                     placeholder="Enter your address"
+                    className="p-2 text-s,m hngbfvdcm w-full"
+                  />
+                  <input
+                    type="text"
+                    id="Zip Code"
+                    placeholder="Enter your Zip Code"
                     className="p-2 text-sm w-full"
                   />
                   <h3 className="p-2 text-sm w-full">{auth.user?.address}</h3>

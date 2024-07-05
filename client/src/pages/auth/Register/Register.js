@@ -14,7 +14,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [zipCode, setZipCode] = useState("");
 
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const Register = () => {
         password,
         phone,
         address,
-        // answer,
+        zipCode,
       });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
@@ -44,8 +44,8 @@ const Register = () => {
   return (
     <Layout title={"Register-Rawad Mall"}>
       <form onSubmit={handleSubmit}>
-        <div className="Register-container">
-          <div className="Register-container-content">
+        <div className="flex justify-center align-middle py-10 px-6">
+          <div className="Register-container-content ">
             <h1>{t("signin.Sign Up")}</h1>
             <div className="inputs">
               <input
@@ -82,6 +82,13 @@ const Register = () => {
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder={t("signin.Enter Your Address")}
+                required
+              />
+              <input
+                type="zipCode"
+                value={zipCode}
+                onChange={(e) => setZipCode(e.target.value)}
+                placeholder={t("signin.Enter Your zip Code")}
                 required
               />
               {/* <input

@@ -15,13 +15,15 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [zipCode, setZipCode] = useState("");
   //get user data
   useEffect(() => {
-    const { email, name, phone, address } = auth?.user;
+    const { email, name, phone, address, zipCode } = auth?.user;
     setEmail(email);
     setName(name);
     setPhone(phone);
     setAddress(address);
+    setZipCode(zipCode);
   }, [auth?.user]);
 
   //form function
@@ -34,6 +36,7 @@ const Profile = () => {
         password,
         address,
         phone,
+        zipCode,
       });
       if (data?.error) {
         toast.error(data?.error);
@@ -107,7 +110,19 @@ const Profile = () => {
                     name="address"
                     id="address"
                     class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                    placeholder={t("account.Enter your address , Zip Code")}
+                    placeholder={t("account.Enter your address")}
+                  />
+                </div>
+                <div class="md:col-span-3">
+                  <label for="address">{t("account.Full Address")}</label>
+                  <input
+                    value={address}
+                    onChange={(e) => setZipCode(e.target.value)}
+                    type="text"
+                    name="zipCode"
+                    id="zipCode"
+                    class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                    placeholder={t("account.Enter your Zip Code ")}
                   />
                 </div>
                 <div class="md:col-span-3">

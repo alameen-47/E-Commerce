@@ -4,17 +4,41 @@ import "react-multi-carousel/lib/styles.css";
 
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const CategorySlider = () => {
   const [categories, setCategories] = useState([]);
   const [isHovered, setIsHovered] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  //translation
+  const translateText = async (text, targetLanguage) => {
+    const { data } = await axios.post("/api/v1/translate", {
+      text,
+      targetLanguage,
+    });
+    return data.translatedText;
+  };
 
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get("/api/v1/category/all-category");
       console.log("Data:", data);
       if (data?.success) {
-        setCategories(data?.categories);
+        const translatedCategories = await Promise.all(
+          data.categories.map(async (category) => {
+            const translatedName = await translateText(
+              category.name,
+              i18n.language
+            );
+
+            return {
+              ...category,
+              name: translatedName,
+            };
+          })
+        );
+        setCategories(translatedCategories);
       }
     } catch (error) {
       console.log(error);

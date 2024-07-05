@@ -10,7 +10,7 @@ import translateText from "../services/translateText.js";
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address } = req.body;
+    const { name, email, password, phone, address, zipCode } = req.body;
     //validationns
     if (!name) {
       return res.send({ message: t("alert.Name is Required") });
@@ -26,6 +26,9 @@ export const registerController = async (req, res) => {
     }
     if (!address) {
       return res.send({ message: t("Address is Required") });
+    }
+    if (!zipCode) {
+      return res.send({ message: t("Zip Code is Required") });
     }
     // if ( {
     //   return res.send({ message: "Answer is Required" });
@@ -47,6 +50,7 @@ export const registerController = async (req, res) => {
       email,
       phone,
       address,
+      zipCode,
       password: hashedPassword,
     }).save();
 
@@ -107,6 +111,7 @@ export const loginController = async (req, res) => {
         email: user.email,
         phone: user.phone,
         address: user.address,
+        zipCode: user.zipCode,
         role: user.role,
       },
       token,
@@ -239,7 +244,7 @@ export const verifyOtpController = async (req, res) => {
 //update profile
 export const updateProfileController = async (req, res) => {
   try {
-    const { name, email, password, address, phone } = req.body;
+    const { name, email, password, address, phone, zipCode } = req.body;
     const user = await userModel.findById(req.user._id);
     //password
     if (!password && password.length < 6) {
@@ -256,6 +261,7 @@ export const updateProfileController = async (req, res) => {
         phone: phone || user.phone,
         email: email || user.email,
         address: address || user.address,
+        zipCode: zipCode || user.zipCode,
       },
       { new: true }
     );

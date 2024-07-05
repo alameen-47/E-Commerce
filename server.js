@@ -38,7 +38,7 @@ connectDB();
 const app = express();
 app.use(middleware.handle(i18next));
 //
-app.use(formidable());
+// app.use(formidable());
 // ******
 app.use(express.json({ limit: "50mb" }));
 app.use(

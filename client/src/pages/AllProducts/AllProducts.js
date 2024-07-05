@@ -10,10 +10,6 @@ import { toast } from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useTranslation } from "react-i18next";
-// import translateText from "../../../../services/translateText.js";
-// import translateText from "../../services/translateText.js";
-
-// import { translateAndCache } from "./translateUtility";
 
 const AllProducts = () => {
   const [cart, setCart] = useCart([]);
@@ -28,8 +24,10 @@ const AllProducts = () => {
   const [c, setC] = useState([]);
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const [hasMore, setHasMore] = useState(true);
 
   const [units, setUnits] = useState(1);
+  
   //translation
   const translateText = async (text, targetLanguage) => {
     const { data } = await axios.post("/api/v1/translate", {
@@ -57,7 +55,8 @@ const AllProducts = () => {
     if (
       window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 50 &&
-      !loading
+      !loading &&
+      hasMore
     ) {
       setPage((prevPage) => prevPage + 1);
     }
@@ -67,7 +66,20 @@ const AllProducts = () => {
     try {
       const { data } = await axios.get("/api/v1/category/all-category");
       if (data?.success) {
-        setCategories(data?.categories);
+        const translatedCategories = await Promise.all(
+          data.categories.map(async (category) => {
+            const translatedName = await translateText(
+              category.name,
+              i18n.language
+            );
+
+            return {
+              ...category,
+              name: translatedName,
+            };
+          })
+        );
+        setCategories(translatedCategories);
       }
     } catch (error) {
       console.log(error);
@@ -81,7 +93,7 @@ const AllProducts = () => {
     toast.success(`${t("Item Added to cart")}`);
   };
 
-  //get all AllProducts
+  // //get all AllProducts
   const getAllProducts = async () => {
     try {
       setLoading(true);
@@ -110,6 +122,7 @@ const AllProducts = () => {
       console.log(error);
     }
   };
+
   //getTotal count
   const getTotal = async () => {
     try {
@@ -124,23 +137,10 @@ const AllProducts = () => {
     loadMore();
   }, [page]);
 
-  // //load more
-  // const loadMore = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
-  //     const translatedProducts = await translateText(data.products);
-  //     setLoading(false);
-  //     // setProducts([...products, ...data?.products]);
-  //     // setProducts([...products, ...translatedProducts]);
-  //     setProducts((prevProducts) => [...prevProducts, ...translatedProducts]);
-  //   } catch (error) {
-  //     console.log(error);
-  //     setLoading(false);
-  //   }
-  // };
   // Load more products function
   const loadMore = async () => {
+    if (!hasMore) return;
+
     try {
       setLoading(true);
 
@@ -205,7 +205,24 @@ const AllProducts = () => {
         checked,
         radio,
       });
-      setProducts(data?.products);
+      const translatedProducts = await Promise.all(
+        data.products.map(async (product) => {
+          const translatedName = await translateText(
+            product.name,
+            i18n.language
+          );
+          const translatedDescription = await translateText(
+            product.description,
+            i18n.language
+          );
+          return {
+            ...product,
+            name: translatedName,
+            description: translatedDescription,
+          };
+        })
+      );
+      setProducts(translatedProducts);
     } catch (error) {
       console.log(error);
     }
@@ -246,11 +263,11 @@ const AllProducts = () => {
         </div>
       </div>
       {toggle && (
-        <div className="lg:hidden relative sm:top-5">
+        <div className="lg:hidden relative sm:top-5 sm:px-2">
           <h3 className="text-center md:sm:text-xs lg:text-lg font-bold ">
             {t("allProducts.Filter By Category")}
           </h3>
-          <div className="flex flex-col">
+          <div className="flex flex-col font-semibold">
             {categories?.map((c) => (
               <Checkbox
                 key={c._id}
@@ -266,9 +283,9 @@ const AllProducts = () => {
           </h3>
           <div className="flex flex-col">
             <Radio.Group onChange={(e) => setRadio(e.target.value)}>
-              {Prices?.map((p) => (
-                <div className="text-white" key={p._id}>
-                  <Radio value={p.array}>{p.name}</Radio>
+              {Prices.map((p) => (
+                <div className="text-white font-semibold" key={p._id}>
+                  <Radio value={p.array}>{t(`prices.${p.nameKey}`)}</Radio>
                 </div>
               ))}
             </Radio.Group>
@@ -344,20 +361,22 @@ const AllProducts = () => {
                     alt=""
                   />
                   <p className="cardtxt font-semibold  text-black tracking-wider group-hover:text-white h-2 md:text-sm lg:text-[16px] sm:text-[10px]">
-                    {(() => {
+                    {/* {(() => {
                       const words = p.name.split(" ");
                       return words.length > 1
                         ? words.slice(0, 2).join(" ").toUpperCase()
                         : words[0].toUpperCase();
-                    })()}
+                    })()} */}
+                    {p.name}
                   </p>
                   <p className="blueberry font-semibold text-gray-500  group-hover:text-gray-200 mb-0 lg:text-xs md:text-sm sm:text-[10px] text-center px-2">
-                    {(() => {
+                    {/* {(() => {
                       const words = p.description.split(" ");
                       return words.length > 1
                         ? words.slice(0, 2).join(" ")
                         : words[0];
-                    })()}
+                    })()} */}
+                    {p.description}
                   </p>
 
                   {p.offer ? (

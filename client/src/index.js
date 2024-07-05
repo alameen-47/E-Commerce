@@ -13,6 +13,7 @@ import { I18nextProvider } from "react-i18next";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+
   <AuthProvider>
     <SearchProvider>
       <CartProvider>

@@ -44,7 +44,7 @@ const Signin = () => {
   return (
     <Layout title={"Signin-Rawad Mall"}>
       <form onSubmit={handleSubmit}>
-        <div className="Signin-container">
+        <div className="Signin-containe flex justify-center align-middle py-10 px-6">
           <div className="Signin-container-content">
             <h1>{t("signin.SIGN IN")}</h1>
             <div className="inputs">

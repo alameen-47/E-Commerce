@@ -113,7 +113,7 @@
 }
 @media screen and (max-device-width: 1450px) {
   .Signin-container {
-    width: 100%;
+    /* width: 100%; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -124,20 +124,20 @@
 }
 @media screen and (min-device-width: 750px) and(max-device-width: 1050px) {
   .Signin-container {
-    width: 100%;
+    /* width: 100%; */
     padding: 0 1rem;
   }
 }
 @media screen and (min-device-width: 550px) and(max-device-width: 750px) {
   .Signin-container {
-    width: 100%;
+    /* width: 100%; */
     height: 100vh;
     margin: 10%;
   }
 }
 @media screen and (min-device-width: 250px) and(max-device-width: 550px) {
   .Signin-container {
-    width: 100%;
+    /* width: 100%; */
     height: 100vh;
     margin: 10%;
   }

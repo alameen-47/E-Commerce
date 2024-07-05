@@ -311,6 +311,19 @@ const CreateCategory = () => {
             </div>
           </div>
         </div>
+        <div className=" overflow-scroll h-[50vh] s:w-full">
+          <table className="fl-table">
+            <thead>
+              <tr className="">
+                <th>Name</th>
+                <th className="bg-gray-200 ">Icons</th>
+                <th className="bg-gray-200 ">Images</th>
+                <th className="bg-black text-white ">Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
         <Modal
           onCancel={() => setVisible(false)}
           footer={null}
