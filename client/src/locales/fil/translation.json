@@ -72,7 +72,9 @@
     "Filter By Price": "Salain Ayon sa Presyo",
     "Reset Filters": "I-reset ang Mga Filter",
     "Loading...": "Naglo-load...",
-    "Loadmore": "Mag-load pa"
+    "Loadmore": "Mag-load pa",
+    "loadingMoreProducts": "Naglo-load ng Higit pang mga Produkto...",
+    "noMoreProducts": "Wala nang Higit pang mga Produkto"
   },
   "header": {
     "Home": "Bahay",
@@ -151,7 +153,8 @@
     "Reset Password": "I-reset ang Password",
     "SEND OTP": "IPADALA ANG OTP",
     "Enter Your New Password": "Ilagay ang Iyong Bagong Password",
-    "Don't have an account?": "Wala ka pang account?"
+    "Don't have an account?": "Wala ka pang account?",
+    "enterYourPostalCode": "Ilagay ang Iyong Postal Code"
   },
   "cart": {
     "Shopping Cart": "Cart ng Pamimili",

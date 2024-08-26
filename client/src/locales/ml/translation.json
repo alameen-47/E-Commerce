@@ -72,7 +72,9 @@
     "Filter By Price": "വില പ്രകാരം ഫിൽട്ടർ ചെയ്യുക",
     "Reset Filters": "ഫിൽട്ടറുകൾ പുനഃസജ്ജമാക്കുക",
     "Loading...": "ലോഡുചെയ്യുന്നു...",
-    "Loadmore": "കൂടുതൽ ലോഡ് ചെയ്യുക"
+    "Loadmore": "കൂടുതൽ ലോഡ് ചെയ്യുക",
+    "loadingMoreProducts": "കൂടുതൽ ഉൽപ്പന്നങ്ങൾ ലോഡ് ചെയ്യുന്നു...",
+    "noMoreProducts": "കൂടുതൽ ഉൽപ്പന്നങ്ങൾ ഇല്ല"
   },
   "header": {
     "Home": "ഹോം",
@@ -153,7 +155,8 @@
     "Reset Password": "പാസ്വേഡ് റീസെറ്റ് ചെയ്യുക",
     "SEND OTP": "OTP അയയ്ക്കുക",
     "Enter Your New Password": "നിങ്ങളുടെ പുതിയ പാസ്‌വേഡ് നൽകുക",
-    "Don't have an account?": "അക്കൗണ്ട് ഇല്ലേ?"
+    "Don't have an account?": "അക്കൗണ്ട് ഇല്ലേ?",
+    "enterYourPostalCode": "നിങ്ങളുടെ പോസ്റ്റൽ കോഡ് പ്രവേശിപ്പിക്കുക"
   },
   "cart": {
     "Shopping Cart": "ഷോപ്പിംഗ് കാർട്ട്",

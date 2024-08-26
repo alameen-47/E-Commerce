@@ -63,7 +63,9 @@
     "SEND OTP": "SEND OTP",
     "Enter OTP": "Enter OTP",
     "Enter Your New Password": "Enter Your New Password",
-    "Don't have an account?": "Don't have an account?"
+    "Don't have an account?": "Don't have an account?",
+    "enterYourPostalCode": "Enter Your Poastal Code"
+
   },
   "home": {
     "Home": "Home",
@@ -94,7 +96,9 @@
     "Filter By Price": "Filter By Price",
     "Reset Filters": "Reset Filters",
     "Loading...": "Loading...",
-    "Loadmore": "Loadmore"
+    "Loadmore": "Loadmore",
+    "loadingMoreProducts": "Loading...",
+    "noMoreProducts": "No More Products"
   },
   "header": {
     "Home": "Home",

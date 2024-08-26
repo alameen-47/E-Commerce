@@ -72,7 +72,9 @@
     "Filter By Price": "التصفية حسب السعر",
     "Reset Filters": "إعادة تعيين الفلاتر",
     "Loading...": "جارٍ التحميل...",
-    "Loadmore": "تحميل المزيد"
+    "Loadmore": "تحميل المزيد",
+    "loadingMoreProducts": "تحميل المزيد من المنتجات...",
+    "noMoreProducts": "لا توجد منتجات أخرى"
   },
   "header": {
     "Home": "الصفحة الرئيسية",
@@ -153,7 +155,8 @@
     "Reset Password": "إعادة تعيين كلمة المرور",
     "SEND OTP": "أرسل OTP",
     "Enter Your New Password": "أدخل كلمة مرورك الجديدة",
-    "Don't have an account?": "ليس لديك حساب؟"
+    "Don't have an account?": "ليس لديك حساب؟",
+    "enterYourPostalCode": "أدخل الرمز البريدي الخاص بك"
   },
   "cart": {
     "Shopping Cart": "عربة التسوق",

@@ -236,11 +236,6 @@ export const verifyOtpController = async (req, res) => {
   }
 };
 
-// //test controller
-// export const testController = (req, res) => {
-//   res.send("Protected Routes");
-// };
-
 //update profile
 export const updateProfileController = async (req, res) => {
   try {

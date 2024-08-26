@@ -72,7 +72,9 @@
     "Filter By Price": "মূল্য অনুযায়ী ফিল্টার করুন",
     "Reset Filters": "ফিল্টারগুলি রিসেট করুন",
     "Loading...": "লোড হচ্ছে...",
-    "Loadmore": "আরও লোড করুন"
+    "Loadmore": "আরও লোড করুন",
+    "loadingMoreProducts": "আরও পণ্য লোড হচ্ছে...",
+    "noMoreProducts": "আর কোন পণ্য নেই"
   },
   "header": {
     "Home": "বাড়ি",
@@ -143,7 +145,8 @@
     "Reset Password": "পাসওয়ার্ড রিসেট করুন",
     "SEND OTP": "OTP পাঠান",
     "Enter Your New Password": "আপনার নতুন পাসওয়ার্ড প্রবেশ করুন",
-    "Don't have an account?": "একাউন্ট নেই?"
+    "Don't have an account?": "একাউন্ট নেই?",
+    "enterYourPostalCode": "আপনার পোস্টাল কোড প্রবেশ করুন"
   },
   "orders": {
     "Your Orders": "আপনার অর্ডার",

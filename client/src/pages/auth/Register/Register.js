@@ -88,7 +88,7 @@ const Register = () => {
                 type="zipCode"
                 value={zipCode}
                 onChange={(e) => setZipCode(e.target.value)}
-                placeholder={t("signin.Enter Your zip Code")}
+                placeholder={t("signin.enterYourPostalCode")}
                 required
               />
               {/* <input

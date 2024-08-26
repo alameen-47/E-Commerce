@@ -72,7 +72,9 @@
     "Filter By Price": "قیمت کے لحاظ سے فلٹر کریں",
     "Reset Filters": "فلٹر ری سیٹ کریں",
     "Loading...": "لوڈ ہو رہا ہے...",
-    "Loadmore": "مزید لوڈ کریں"
+    "Loadmore": "مزید لوڈ کریں",
+    "loadingMoreProducts": "مزید مصنوعات لوڈ ہو رہی ہیں...",
+    "noMoreProducts": "کوئی اور مصنوعات نہیں"
   },
   "header": {
     "Home": "ہوم",
@@ -154,7 +156,8 @@
     "Reset Password": "پاسورڈ ری سیٹ کریں",
     "SEND OTP": "OTP بھیجیں",
     "Enter Your New Password": "اپنا نیا پاس ورڈ درج کریں",
-    "Don't have an account?": "کیا آپ کا اکاؤنٹ نہیں ہے؟"
+    "Don't have an account?": "کیا آپ کا اکاؤنٹ نہیں ہے؟",
+    "enterYourPostalCode": "اپنا پوسٹل کوڈ درج کریں"
   },
   "cart": {
     "Shopping Cart": "خریداری کی ٹوکری",

@@ -3,7 +3,7 @@ import { LRUCache } from "lru-cache";
 import dotenv from "dotenv";
 
 //configure env
-dotenv.config();
+dotenv.config()
 const apiKey = process.env.GOOGLE_TRANSLATION_API_KEY;
 const apiUrl = `https://translation.googleapis.com/language/translate/v2`;
 

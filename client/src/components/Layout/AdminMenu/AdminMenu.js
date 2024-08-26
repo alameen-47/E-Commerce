@@ -56,10 +56,10 @@ const AdminMenu = () => {
         class="flex top-0 left-0 z-40 w-64 h-screen transition-transform translate-x-full sm:translate-x-0 "
         aria-label="Sidebar"
       >
-        <div class="h-full px-3 py-4 relative overflow-y-auto bg-black">
-          <ul class="space-y-2 font-medium ">
+        <div className=" max-h-lvh px-3 py-4 relative  bg-black">
+          <ul className="space-y-2 font-medium top-0 sticky ">
             <li className="border-b">
-              <div class="flex text-center items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ">
+              <div className="flex text-center items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ">
                 <img
                   src={p1}
                   alt=""

@@ -33,10 +33,7 @@ const userSchema = new mongoose.Schema(
     },
     otp: { type: String },
     otpExpires: { type: Date },
-    // answer:{
-    //   type:String,
-    //   required:true,
-    // },
+ 
     role: {
       type: Number,
       default: 0,

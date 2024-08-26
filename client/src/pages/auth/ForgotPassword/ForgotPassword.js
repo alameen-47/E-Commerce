@@ -19,8 +19,6 @@ const ForgotPassword = () => {
 
   const navigate = useNavigate();
 
-  console.log("Component re-rendered, current step:", step); // Add this line
-
   //form function
   const handleSendOtp = async (e) => {
     e.preventDefault();
@@ -29,17 +27,11 @@ const ForgotPassword = () => {
     try {
       const res = await axios.post("/api/v1/auth/forgot-password", {
         email,
-        // newPassword,
-        // answer,
       });
-      console.log("Response from API:", res); // Log the entire response
-
+    
       if (res && res.data.success) {
-        // toast.success(res.data && res.data.message);
         toast.success("OTP has been sent to the Email");
         setStep(2);
-        console.log("Step after setting:", 2);
-        // navigate("/signin");
       } else {
         toast.error(res.data.message);
       }
@@ -58,7 +50,6 @@ const ForgotPassword = () => {
       });
       if (res && res.data.success) {
         toast.success("Password Changed Successfully");
-        toast.success(res.data.message);
         navigate("/signin");
       } else {
         toast.error(res.data.message);

@@ -15,7 +15,7 @@ const ProductDetails = () => {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
-  
+
   const addToCart = (item) => {
     const updatedCart = [...cart, ...item];
     setCart(updatedCart);

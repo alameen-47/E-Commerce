@@ -72,7 +72,7 @@ const CreateProducts = () => {
   return (
     <Layout title={"Admin Dashboard - Create product"}>
       <div className="container flex lg:flex-row sm:flex-col lg:gap-10 sm:gap-0">
-        <div className="relative !important">
+        <div className="relative !important h-sc">
           <AdminMenu />
         </div>
         <div className="lg:w-screen sm:left-0 sm:w-screen sm:overflow-hidden !important">
