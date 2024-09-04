@@ -5,7 +5,7 @@ import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu.js";
 import toast from "react-hot-toast";
 import axios from "axios";
 import CategoryForm from "../../../components/Form/CategoryForm.js";
-import { Modal } from "antd";
+import { Modal, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const CreateCategory = () => {
@@ -15,8 +15,9 @@ const CreateCategory = () => {
   const [selected, setSelected] = useState(null);
   const [updatedName, setUpdatedName] = useState("");
   const [icons, setIcons] = useState("");
+  const [updatedicons, setUpdatedIcons] = useState("");
   const [images, setImages] = useState("");
-  const [banners, setBanners] = useState("");
+  const [updatedimages, setUpdatedImages] = useState("");
   const navigate = useNavigate();
 
   //handle form
@@ -27,7 +28,6 @@ const CreateCategory = () => {
       categoryData.append("name", name);
       categoryData.append("icons", icons);
       categoryData.append("images", images);
-      categoryData.append("banners", banners);
 
       const { data } = await axios.post(
         "/api/v1/category/create-category",
@@ -36,6 +36,9 @@ const CreateCategory = () => {
       if (data?.success) {
         toast.success(`${name} is created`);
         getAllCategory();
+        setName("");
+        setIcons("");
+        setImages("");
       } else {
         toast.error(data?.message);
       }
@@ -62,7 +65,36 @@ const CreateCategory = () => {
     getAllCategory();
   }, []);
 
-  //update Category
+  // //update Category
+  // const handleUpdate = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const categoryData = new FormData();
+  //     categoryData.append("name", updatedName);
+  //     categoryData.append("icons", updatedicons);
+  //     categoryData.append("images", updatedimages);
+
+  //     const { data } = await axios.put(
+  //       `/api/v1/category/update-category/${selected._id}`,
+  //       categoryData
+  //     );
+  //     if (data.success) {
+  //       toast.success(`${updatedName} is updated`);
+  //       setSelected(null);
+  //       setUpdatedName("");
+  //       setUpdatedIcons("");
+  //       setUpdatedImages("");
+  //       setVisible(false);
+  //       getAllCategory();
+  //     } else {
+  //       toast.error(data.message);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Something Went Wrong");
+  //   }
+  // };
+
+  //update category
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -70,7 +102,7 @@ const CreateCategory = () => {
         `/api/v1/category/update-category/${selected._id}`,
         { name: updatedName }
       );
-      if (data.success) {
+      if (data?.success) {
         toast.success(`${updatedName} is updated`);
         setSelected(null);
         setUpdatedName("");
@@ -80,7 +112,7 @@ const CreateCategory = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Something Went Wrong");
+      console.log(error);
     }
   };
   //delete Category
@@ -119,81 +151,24 @@ const CreateCategory = () => {
               setValue={setName}
             />
           </div>
-          <div className="flex justify-center mb-2">
-            <label
-              style={{
-                width: "50%",
-
-                border: "1px Solid Black",
-                padding: "0.2em",
-                backgroundColor: " rgb(206, 205, 200)",
-                cursor: "pointer",
-                display: "flex",
-                justifyContent: "center",
-                bottom: "10px",
-              }}
-            >
-              {icons ? icons.name : "Upload icons"}
-              <input
-                type="file"
-                name="icons"
-                accept="icons/*"
-                onChange={(e) => setIcons(e.target.files[0])}
-                hidden
-              />
-            </label>
-          </div>
-          <div style={{}}>
-            {icons && (
-              <div style={{ textAlign: "center" }}>
-                <img
-                  className="w-16 md:w-32 lg:w-48 inline m-4"
-                  src={URL.createObjectURL(icons)}
-                  alt="Category_icons"
-                  width="50%"
-                  height="auto"
-                  margin=".2rem"
-                />
-              </div>
-            )}
-          </div>
-          <div className="flex justify-center mb-2">
-            <label
-              style={{
-                width: "50%",
-                border: "1px Solid Black",
-                padding: "0.2em",
-                backgroundColor: " rgb(206, 205, 200)",
-                cursor: "pointer",
-                display: "flex",
-                justifyContent: "center",
-                bottom: "10px",
-              }}
-            >
-              {images ? images.name : "Upload images"}
-              <input
-                type="file"
-                name="images"
-                accept="images/*"
-                onChange={(e) => setImages(e.target.files[0])}
-                hidden
-              />
-            </label>
-          </div>
-          <div style={{}}>
-            {images && (
-              <div style={{ textAlign: "center" }}>
-                <img
-                  className="w-16 md:w-32 lg:w-48 inline m-4"
-                  src={URL.createObjectURL(images)}
-                  alt="Category_images"
-                  width="50%"
-                  height="auto"
-                  margin=".2rem"
-                />
-              </div>
-            )}
-          </div>
+          <Upload
+            listType="picture-card"
+            beforeUpload={(file) => {
+              setIcons(file); // Save the selected icon file
+              return false; // Prevent automatic upload
+            }}
+          >
+            + Upload Icon
+          </Upload>
+          <Upload
+            listType="picture-card"
+            beforeUpload={(file) => {
+              setImages(file); // Save the selected image file
+              return false; // Prevent automatic upload
+            }}
+          >
+            + Upload Image
+          </Upload>
 
           <div className="flex justify-center align-middle gap-4">
             <div className=" overflow-y-auto  sm:flex sm:items-center sm:align-middle sm:justify-center w-screen">
@@ -265,19 +240,6 @@ const CreateCategory = () => {
               </div>
             </div>
           </div>
-          <div className=" overflow-scroll h-[50vh] sm:w-full">
-            <table className="fl-table">
-              <thead>
-                <tr className="">
-                  <th>Name</th>
-                  <th className="bg-gray-200 ">Icons</th>
-                  <th className="bg-gray-200 ">Images</th>
-                  <th className="bg-black text-white ">Actions</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
         </div>
         <Modal
           onCancel={() => setVisible(false)}
@@ -289,6 +251,24 @@ const CreateCategory = () => {
             setValue={setUpdatedName}
             handleSubmit={handleUpdate}
           />
+          <Upload
+            listType="picture-card"
+            beforeUpload={(file) => {
+              setUpdatedIcons(file); // Save the selected icon file
+              return false; // Prevent automatic upload
+            }}
+          >
+            + Upload Icon
+          </Upload>
+          <Upload
+            listType="picture-card"
+            beforeUpload={(file) => {
+              setUpdatedImages(file); // Save the selected image file
+              return false; // Prevent automatic upload
+            }}
+          >
+            + Upload Image
+          </Upload>
         </Modal>
       </div>
     </Layout>
