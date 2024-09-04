@@ -6,12 +6,12 @@ export const createCategoryController = async (req, res) => {
   try {
     const { name } = req.fields;
     const { images, icons } = req.files;
-    const banners = req.files.banners ? JSON.parse(req.files.banners) : [];
 
     switch (true) {
       case !name:
         return res.status(401).send({ error: "Category Name is Required" });
       case icons && icons.size > 1000000:
+      case images && images.size > 1000000:
         return res
           .status(500)
           .send({ error: "Icon is Required and should be less than 1mb size" });
@@ -66,50 +66,79 @@ export const createCategoryController = async (req, res) => {
 //updateCategoryController
 export const updateCategoryController = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name } = req.fields;
     const { id } = req.params;
-    const { banners } = req.fields;
     const { images, icons } = req.files;
+
+    // Ensure name exists and is a string before slugifying
+    if (typeof name !== "string" || !name) {
+      return res.status(400).send({
+        success: false,
+        message: "Name is required and should be a valid string",
+      });
+    }
     const category = await categoryModel.findByIdAndUpdate(
       id,
-      { name, slug: slugify(name), icons, images },
+      {
+        ...req.fields,
+        slug: slugify(name),
+        ...req.files,
+      },
       { new: true }
     );
+    if (!category) {
+      return res.status(404).send({
+        success: false,
+        message: "Category not found",
+      });
+    }
     if (icons) {
-      products.icons.data = fs.readFileSync(icons.path);
-      products.icons.contentType = icons.type;
+      category.icons.data = fs.readFileSync(icons.path);
+      category.icons.contentType = icons.type;
     }
     if (images) {
-      products.images.data = fs.readFileSync(images.path);
-      products.images.contentType = images.type;
+      category.images.data = fs.readFileSync(images.path);
+      category.images.contentType = images.type;
     }
-    // if (banners) {
-    //   products.banners.data = fs.readFileSync(banners.path);
-    //   products.banners.contentType = banners.type;
-    // }
-    if (banners) {
-      category.banners = JSON.parse(banners).map((banner) => ({
-        data: fs.readFileSync(banner.path),
-        contentType: banner.type,
-        title: banner.title,
-        description: banner.description,
-      }));
-    }
-    await category.save();
 
+    await category.save();
     res.status(200).send({
       success: true,
-      message: "Category Updated Successfully",
+      message: "Category Updated",
       category,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
-      success: false,
-      error,
-      message: "Error While Updating Category",
-    });
+    console.log("NEW ERRRORRRRORRRORRROROROROROORORORRRRRR");
   }
+  //       slug: slugify(name),
+  //     },
+  //     { new: true }
+  //   );
+  //   if (icons) {
+  //     products.icons.data = fs.readFileSync(icons.path);
+  //     products.icons.contentType = icons.type;
+  //   }
+  //   if (images) {
+  //     products.images.data = fs.readFileSync(images.path);
+  //     products.images.contentType = images.type;
+  //   }
+
+  //   await category.save();
+
+  //   res.status(200).send({
+  //     success: true,
+  //     message: "Category Updated Successfully",
+  //     category,
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  //   res.status(500).send({
+  //     success: false,
+  //     error,
+  //     message: "Error While Updating Category ",
+  //   });
+  // }
 };
 
 //get ALL category

@@ -16,7 +16,7 @@ const AdminMenu = () => {
 
   return (
     <>
-      <div className="items-center   p-2 text-sm text-gray-500 rounded-lg md:hidden  hover:bg-gray-100 ">
+      <div className="items-center p-2 text-sm text-gray-500 rounded-lg md:hidden  hover:bg-gray-100 ">
         {open ? (
           <svg
             color="black"
@@ -51,12 +51,12 @@ const AdminMenu = () => {
       </div>
 
       <aside
-        className={`${open ? "hidden" : "block   left-0    w-screen"}`}
+        className={`${open ? "hidden" : "block     w-screen"}`}
         id="sidebar-multi-level-sidebar"
-        class="flex top-0 left-0 z-40 w-64 h-screen transition-transform translate-x-full sm:translate-x-0 "
+        class="lg:sticky flex top-0 left-0 z-70 w-64 h-screen transition-transform translate-x-full sm:translate-x-0 "
         aria-label="Sidebar"
       >
-        <div className=" max-h-lvh px-3 py-4 relative  bg-black">
+        <div className=" max-h-lvh px-3 py-4  lg:sticky bg-black">
           <ul className="space-y-2 font-medium top-0 sticky ">
             <li className="border-b">
               <div className="flex text-center items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ">

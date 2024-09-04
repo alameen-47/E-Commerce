@@ -5,7 +5,7 @@ import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu.js";
 import toast from "react-hot-toast";
 import axios from "axios";
 import CategoryForm from "../../../components/Form/CategoryForm.js";
-import { Modal, Upload } from "antd";
+import { message, Modal, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const CreateCategory = () => {
@@ -65,42 +65,18 @@ const CreateCategory = () => {
     getAllCategory();
   }, []);
 
-  // //update Category
-  // const handleUpdate = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const categoryData = new FormData();
-  //     categoryData.append("name", updatedName);
-  //     categoryData.append("icons", updatedicons);
-  //     categoryData.append("images", updatedimages);
-
-  //     const { data } = await axios.put(
-  //       `/api/v1/category/update-category/${selected._id}`,
-  //       categoryData
-  //     );
-  //     if (data.success) {
-  //       toast.success(`${updatedName} is updated`);
-  //       setSelected(null);
-  //       setUpdatedName("");
-  //       setUpdatedIcons("");
-  //       setUpdatedImages("");
-  //       setVisible(false);
-  //       getAllCategory();
-  //     } else {
-  //       toast.error(data.message);
-  //     }
-  //   } catch (error) {
-  //     toast.error("Something Went Wrong");
-  //   }
-  // };
-
   //update category
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
+      const updatedData = new FormData();
+      updatedData.append("name", updatedName);
+      updatedData.append("icons", updatedicons);
+      updatedData.append("images", updatedimages);
       const { data } = await axios.put(
         `/api/v1/category/update-category/${selected._id}`,
-        { name: updatedName }
+        // { name: updatedName }
+        updatedData
       );
       if (data?.success) {
         toast.success(`${updatedName} is updated`);
@@ -113,6 +89,7 @@ const CreateCategory = () => {
       }
     } catch (error) {
       console.log(error);
+      toast.error("Error in Update Form");
     }
   };
   //delete Category

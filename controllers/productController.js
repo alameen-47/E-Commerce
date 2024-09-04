@@ -165,16 +165,7 @@ export const deleteProductController = async (req, res) => {
 //updateProductController
 export const updateProductController = async (req, res) => {
   try {
-    const {
-      name,
-      slug,
-      description,
-      price,
-      category,
-      quantity,
-      shipping,
-      offer,
-    } = req.fields;
+    const { name, description, price, category, quantity, offer } = req.fields;
 
     const { image } = req.files;
     //validations
@@ -198,6 +189,7 @@ export const updateProductController = async (req, res) => {
     }
     // Calculate discount price
     const discountPrice = Math.floor(price - (price * offer) / 100);
+
     const products = await productModel.findByIdAndUpdate(
       req.params.pid,
       {

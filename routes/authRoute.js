@@ -9,6 +9,7 @@ import {
   orderStatusController,
   cancelOrderController,
   verifyOtpController,
+  getAllUsers,
 } from "../controllers/authController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authmiddleware.js";
 // import translateText from "../services/translateText.js";
@@ -39,6 +40,11 @@ router.post("/reset-password", verifyOtpController);
 
 //protected user-route auth
 router.get("/user-auth", requireSignIn, (req, res) => {
+  res.status(200).send({ ok: true });
+});
+
+//all orders
+router.get("/all-users", requireSignIn, isAdmin, getAllUsers, (req, res) => {
   res.status(200).send({ ok: true });
 });
 

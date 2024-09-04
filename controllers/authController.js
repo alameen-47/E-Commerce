@@ -359,6 +359,25 @@ export const orderStatusController = async (req, res) => {
     });
   }
 };
+
+//admin all-users
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await userModel
+      .find({ role: { $ne: 1 } }) // Exclude users with role == 1
+      .select("phone name email ")
+      .sort({});
+    res.json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: t("Error While Geting All User Details"),
+      error,
+    });
+  }
+};
+
 //translationn controller
 export const translationController = async (req, res) => {
   try {

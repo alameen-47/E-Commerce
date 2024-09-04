@@ -26,6 +26,9 @@ const categorySchema = new mongoose.Schema({
     data: Buffer,
     contentType: String,
   },
-  banners: [bannerSchema],
+  banners: {
+    data: Buffer,
+    contentType: String,
+  },
 });
 export default mongoose.model("Category", categorySchema);

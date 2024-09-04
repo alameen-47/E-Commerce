@@ -29,6 +29,7 @@ router.put(
   "/update-category/:id",
   requireSignIn,
   isAdmin,
+  formidable(),
   updateCategoryController
 );
 

@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "../../../LanguageSwitcher";
 import axios from "axios";
 import i18n from "../../../i18n/index.js";
+import CategoryListSlider from "./CategoryListSlider.jsx";
 
 function Header() {
   const { t } = useTranslation();
@@ -79,6 +80,11 @@ function Header() {
                 {t("header.Products")}
               </p>
             </Link>
+            <Link to={`/categories`}>
+              <p className="hover:text-gray-400 font-bold">
+                {t("header.Categories")}
+              </p>
+            </Link>
             <Link to="/about">
               <p className="hover:text-gray-400 font-bold">
                 {t("header.About Us")}
@@ -95,7 +101,6 @@ function Header() {
           <SearchInput />
 
           {!auth.user ? (
-
             <button className="inline-flex items-center justify-center w-full p-1 text-sm font-medium text-white bg-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 gap-1 ">
               <Link to="/register">
                 <img
@@ -119,12 +124,17 @@ function Header() {
               {dropDown && (
                 <div className="absolute left-0 mt-2 origin-top-left bg-black divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 text-center lg:w-[200px] sm:w-[120px] focus:outline-none z-50 px-3 py-3">
                   {auth?.user.name}
+
                   <div className=" flex flex-row py-[7%] ">
                     <NavLink
                       to={`/dashboard/${
                         auth?.user?.role === 1 ? "admin" : "user"
                       }`}
                     >
+                      <div className="flex flex-row justify-center items-center align-middle gap-3">
+                        <img src={dashboard} className="" alt="logout" />
+                        <h4 className="mb-0">{t("common.Profile")}</h4>
+                      </div>
                     </NavLink>
                   </div>
                   <div className=" flex flex-row py-[7%] ">
@@ -237,18 +247,7 @@ function Header() {
         </div>
       </div>
       <div className="border-2 border-gray-400 border-b-0 border-l-0 border-r-0 border-t-gray-500 w-full bg-black text-white flex flex-row lg:p-2 justify-center sm:p-1 font-semibold sm:text-[10px] lg:text-sm sm:text-center align-super">
-        <div className="flex justify-between lg:gap-9 sm:gap-2 align-middle">
-          <Link to={`/categories`}>
-            <h1 className="hover:text-gray-100 font-semibold">
-              {t("common.All Categories")}
-            </h1>
-          </Link>
-          {categories.slice(0, window.innerWidth > 768 ? 10 : 5)?.map((ct) => (
-            <Link key={ct.slug} to={`/category/${ct.slug}`}>
-              <h1 className="hover:text-gray-100 font-semibold">{ct?.name}</h1>
-            </Link>
-          ))}
-        </div>
+        <CategoryListSlider />
       </div>
     </div>
   );

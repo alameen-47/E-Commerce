@@ -5,105 +5,105 @@ import axios from "axios";
 import Layout from "../../../components/Layout/Layout";
 import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
 import { Select } from "antd";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const { Option } = Select;
 const UpdateProduct = () => {
-    const navigate = useNavigate();
-    const params = useParams();
-    const [categories, setCategories] = useState([]);
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
-    const [category, setCategory] = useState("");
-    const [quantity, setQuantity] = useState("");
-    const [shipping, setShipping] = useState("");
-    const [image, setImage] = useState("");
-    const [id,setId]=useState("")
-  
-    //get single product
-    const getSingleProduct =async()=>{
-      try {
-        const{data}=await axios.get(`/api/v1/product/get-product/${params.slug}`)
-        setName(data.product.name)
-        setId(data.product._id)
-        setDescription(data.product.description)
-        setCategory(data.product.category._id)
-        setPrice(data.product.price)
-        setQuantity(data.product.quantity)
-        setShipping(data.product.shipping)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    useEffect(() => {
-     
-      getSingleProduct()
-      
-      //eslint-disable-next-line
-    }, []);
+  const navigate = useNavigate();
+  const params = useParams();
+  const [categories, setCategories] = useState([]);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [shipping, setShipping] = useState("");
+  const [image, setImage] = useState("");
+  const [id, setId] = useState("");
 
-    //get all categories
-    const getAllCategory = async () => {
-      try {
-        const { data } = await axios.get("/api/v1/category/all-category");
-        if (data?.success) {
-          setCategories(data?.categories);
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error("Oops!!Something Went Wrong in getting Category!");
-      }
-    };
-    useEffect(() => {
-      getAllCategory();
-    }, []);
-  
-    //update product function
-    const handleUpdate = async (e) => {
-      e.preventDefault();
-      try {
-        const productData = new FormData();
-        productData.append("name", name);
-        productData.append("description", description);
-        productData.append("price", price);
-        productData.append("quantity", quantity);
-        image && productData.append("image", image);
-        productData.append("category", category);
-        const { data } = axios.put(
-       `/api/v1/product/update-product/${id}`,
-          productData
-        );
-        if (data?.success) {
-          toast.error(data?.message);
-        } else {
-          toast.success("Product Updated Succesfully");
-          navigate('/dashboard/admin/products')
-          
-          
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error("Something Went Wrong");
-      }
-    };
-    //delete product function
-    const handleDelete=async(req,res)=>{
-      try {
-        let answer =window.prompt("Are You Sure want to Delete this Product")
-        if(!answer)return
-        const {data}= await axios.delete(`/api/v1/product/delete-product/${id}`)
-        toast.success("Product Deleted Succesfully")
-        navigate("/dashboard/admin/products")
-        
-      } catch (error) {
-        console.log(error)
-        toast.error("Something Went Wrong")
-        
-        
-      }
-
+  //get single product
+  const getSingleProduct = async () => {
+    try {
+      const { data } = await axios.get(
+        `/api/v1/product/get-product/${params.slug}`
+      );
+      setName(data.product.name);
+      setId(data.product._id);
+      setDescription(data.product.description);
+      setCategory(data.product.category._id);
+      setPrice(data.product.price);
+      setQuantity(data.product.quantity);
+      setShipping(data.product.shipping);
+    } catch (error) {
+      console.log(error);
     }
+  };
+  useEffect(() => {
+    getSingleProduct();
+
+    //eslint-disable-next-line
+  }, []);
+
+  //get all categories
+  const getAllCategory = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/category/all-category");
+      if (data?.success) {
+        setCategories(data?.categories);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Oops!!Something Went Wrong in getting Category!");
+    }
+  };
+  useEffect(() => {
+    getAllCategory();
+  }, []);
+
+  //update product function
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const productData = new FormData();
+      productData.append("name", name);
+      productData.append("description", description);
+      productData.append("price", price);
+
+      productData.append("quantity", quantity);
+      productData.append("shipping", shipping);
+
+      image && productData.append("image", image);
+      productData.append("category", category);
+      const { data } = axios.put(
+        `/api/v1/product/update-product/${id}`,
+        productData
+      );
+      if (data?.success) {
+        toast.error(data?.message);
+      } else {
+        toast.success("Product Updated Succesfully");
+        navigate("/dashboard/admin/products");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something Went Wrong");
+    }
+  };
+  //delete product function
+  const handleDelete = async (req, res) => {
+    try {
+      let answer = window.prompt("Are You Sure want to Delete this Product");
+      if (!answer) return;
+      const { data } = await axios.delete(
+        `/api/v1/product/delete-product/${id}`
+      );
+      toast.success("Product Deleted Succesfully");
+      navigate("/dashboard/admin/products");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something Went Wrong");
+    }
+  };
   return (
     <Layout title={"Admin Dashboard-Create product "}>
       <>
@@ -128,7 +128,6 @@ const UpdateProduct = () => {
                       border: "1px Solid #cccccc",
                       borderRadius: "8px",
                       borderShadow: " #cccccc",
-                     
                     }}
                     onChange={(value) => {
                       setCategory(value);
@@ -175,7 +174,7 @@ const UpdateProduct = () => {
                           margin=".2rem"
                         />
                       </div>
-                    ):(
+                    ) : (
                       <div style={{ textAlign: "center" }}>
                         <img
                           className="w-16 md:w-32 lg:w-48 inline m-4"
@@ -229,7 +228,6 @@ const UpdateProduct = () => {
                     bordered={false}
                     placeholder="Shipping"
                     size="large"
-                   
                     className="form-select"
                     style={{
                       marginBottom: "1rem",
@@ -238,18 +236,15 @@ const UpdateProduct = () => {
                       border: "1px Solid #cccccc",
                       borderRadius: "8px",
                       borderShadow: " #cccccc",
-                      marginTop:"1rem"           
+                      marginTop: "1rem",
                     }}
                     onChange={(value) => {
                       setShipping(value);
-                      
                     }}
-                    value={shipping?"YES":"NO"}
+                    value={shipping ? "YES" : "NO"}
                   >
-                      <Option value="1">YES
-                      </Option>
-                      <Option value="0">NO
-                      </Option>
+                    <Option value="1">YES</Option>
+                    <Option value="0">NO</Option>
                   </Select>
                 </div>
                 <div className="my-3">
@@ -268,13 +263,13 @@ const UpdateProduct = () => {
                     DELETE PRODUCT
                   </button>
                 </div>
-              </div> 
+              </div>
             </div>
           </div>
         </div>
       </>
     </Layout>
-  )
-}
+  );
+};
 
-export default UpdateProduct
+export default UpdateProduct;
