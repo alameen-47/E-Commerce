@@ -313,8 +313,8 @@ export const electronicsController = async (req, res) => {
 //get Footwear products controller
 export const footwearController = async (req, res) => {
   try {
-    const gentsFootwearCategoryId = "65ce10c3a1d1490e0f5f49e5";
-    const ladiesFootwearCategoryId = "65ce10dba1d1490e0f5f49ec";
+    const gentsFootwearCategoryId = "66d8d6fb6335b93ea96d4d8f";
+    const ladiesFootwearCategoryId = "65ce10c3a1d1490e0f5f49e5";
     const kidsFootwearCategoryId = "66565632942e27fc00f4022c";
 
     const products = await productModel

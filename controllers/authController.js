@@ -365,7 +365,7 @@ export const getAllUsers = async (req, res) => {
   try {
     const users = await userModel
       .find({ role: { $ne: 1 } }) // Exclude users with role == 1
-      .select("phone name email ")
+      .select("phone name email address")
       .sort({});
     res.json(users);
   } catch (error) {

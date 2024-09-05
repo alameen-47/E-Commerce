@@ -30,26 +30,32 @@ const Users = () => {
             <h1 className="lg:text-3xl lg:font-extrabold  sm:text-xl sm:font-bold">
               All Users
             </h1>
-            <div className="mt-4">
+            <div className="mt-4 h-screen overflow-scroll">
               {/* Display the list of users */}
               {users.length > 0 ? (
-                <ul className="space-y-4">
+                <ul className="space-y-4 grid grid-cols-1 sm:grid-cols- md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {users.map((user) => (
-                    <li key={user._id} className="p-4 border rounded-md">
-                      <p>
+                    <li
+                      key={user._id}
+                      className="p-5 bg-white w-full max-w-xs mx-auto border border-gray-200 rounded-md hover:bg-gray-100 shadow-lg"
+                    >
+                      <p className="mb-1 break-words">
                         <strong>Name:</strong> {user.name}
                       </p>
-                      <p>
+                      <p className="mb-1 break-words">
                         <strong>Email:</strong> {user.email}
                       </p>
-                      <p>
-                        <strong>Mobile:</strong> {user.mobile}
+                      <p className="mb-1 break-words">
+                        <strong>Mobile:</strong> {user.phone}
+                      </p>
+                      <p className="mb-1 break-words">
+                        <strong>Address:</strong> {user.address}
                       </p>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p>No users found.</p>
+                <p className="mb-0">No users found.</p>
               )}
             </div>
           </div>

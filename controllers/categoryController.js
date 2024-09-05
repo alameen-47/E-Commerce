@@ -34,18 +34,6 @@ export const createCategoryController = async (req, res) => {
       category.images.data = fs.readFileSync(images.path);
       category.images.contentType = images.type;
     }
-    // if (banners) {
-    //   category.banners.data = fs.readFileSync(banners.path);
-    //   category.banners.contentType = banners.type;
-    // }
-    if (banners && banners.length > 0) {
-      category.banners = banners.map((banner) => ({
-        data: fs.readFileSync(banner.path),
-        contentType: banner.type,
-        title: banner.title,
-        description: banner.description,
-      }));
-    }
 
     await category.save();
     res.status(201).send({
@@ -109,7 +97,7 @@ export const updateCategoryController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    console.log("NEW ERRRORRRRORRRORRROROROROROORORORRRRRR");
+    console.log(" Error in Controller");
   }
   //       slug: slugify(name),
   //     },

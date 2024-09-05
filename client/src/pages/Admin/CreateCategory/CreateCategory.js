@@ -82,6 +82,8 @@ const CreateCategory = () => {
         toast.success(`${updatedName} is updated`);
         setSelected(null);
         setUpdatedName("");
+        setUpdatedIcons("");
+        setUpdatedImages("");
         setVisible(false);
         getAllCategory();
       } else {
