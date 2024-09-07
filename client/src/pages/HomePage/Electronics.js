@@ -65,7 +65,8 @@ const Electronics = () => {
               <div className="text-wrap h-60 gap-1  group py-3 lg:px-1  bg-slate-100 rounded-lg flex flex-col items-center justify-center  relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all  h-68 lg:h-72 ">
                 <img
                   onClick={() => navigate(`/product/${p.slug}`)}
-                  src={`/api/v1/product/product-image/${p._id}`}
+                  src={`/api/v1/product/product-image/${p._id}/0`}
+                  // src={`/api/v1/product/product-image/${p._id}`}
                   style={{
                     transform:
                       "translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)",

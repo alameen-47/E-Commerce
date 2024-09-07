@@ -61,23 +61,6 @@ const ProductsList = ({ start, end }) => {
     );
   }
 
-  // useEffect(() => {
-  //   if (page === 1) return;
-  //   loadMore();
-  // }, [page]);
-  //load more
-  // const loadMore = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
-  //     setLoading(false);
-  //     setProducts([...products, ...data?.products]);
-  //   } catch (error) {
-  //     console.log(error);
-  //     setLoading(false);
-  //   }
-  // };
-
   return (
     <>
       <div className="sm:mx-8 mx-3 mt-5 grid gap-3 lg:grid-cols-7 md:grid-cols-4 sm:grid-cols-2 ">

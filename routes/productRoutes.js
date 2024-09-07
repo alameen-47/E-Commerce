@@ -52,7 +52,7 @@ router.get("/get-product", getProductController);
 router.get("/get-product/:slug", getSingleProductController);
 
 //get image
-router.get("/product-image/:pid", productImageController);
+router.get("/product-image/:pid/:index?", productImageController);
 
 //delete product
 router.delete("/delete-product/:pid", deleteProductController);
