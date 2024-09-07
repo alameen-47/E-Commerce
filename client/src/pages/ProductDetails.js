@@ -64,7 +64,7 @@ const ProductDetails = () => {
   return (
     <Layout>
       <div className="flex flex-wrap md:flex-row sm:flex-col sm:justify-center my-16 container mx-auto sm:px-4">
-        {/* <div>
+        <div>
           <div className="items-center  flex-col w-auto  flex lg:h-96 sm:h-auto bg-slate-100 rounded-sm align-middle justify-center">
             <img
               src={`/api/v1/product/product-image/${product._id}/0`}
@@ -94,7 +94,7 @@ const ProductDetails = () => {
               className=""
             />
           </div>
-        </div> */}
+        </div>
         <div className="grid gap-4">
           <div>
             <img
