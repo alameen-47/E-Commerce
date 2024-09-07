@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import Layout from "../../../components/Layout/Layout";
 import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
-import { Select } from "antd";
+import { Select, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
 import slug from "slugify";
 
@@ -50,8 +50,13 @@ const CreateProducts = () => {
       productData.append("price", price);
       productData.append("offer", offer);
       productData.append("quantity", quantity);
-      productData.append("image", image);
+      // productData.append("image", image);
       productData.append("category", category);
+
+      // Append images to FormData
+      image.forEach((img) => {
+        productData.append("image", img);
+      });
 
       const { data } = await axios.post(
         "/api/v1/product/create-product",
@@ -103,40 +108,17 @@ const CreateProducts = () => {
                 </Option>
               ))}
             </Select>
-            <div style={{ justifyContent: "center" }}>
-              <label
-                style={{
-                  border: "1px solid Black",
-                  padding: "0.2em",
-                  backgroundColor: "rgb(206, 205, 200)",
-                  cursor: "pointer",
-                  display: "flex",
-                  justifyContent: "center",
-                  marginBottom: "1rem",
-                }}
-              >
-                {image ? image.name : "Upload Image"}
-                <input
-                  type="file"
-                  name="Image"
-                  accept="image/*"
-                  onChange={(e) => setImage(e.target.files[0])}
-                  hidden
-                />
-              </label>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              {image && (
-                <img
-                  className="w-16 md:w-32 lg:w-48 inline m-4"
-                  src={URL.createObjectURL(image)}
-                  alt="Product_Image"
-                  width="50%"
-                  height="auto"
-                  style={{ margin: ".2rem" }}
-                />
-              )}
-            </div>
+            <Upload
+              listType="picture-card"
+              multiple
+              beforeUpload={(file) => {
+                setImage((prevImages) => [...prevImages, file]); // Append selected file to the array
+                return false; // Prevent automatic upload
+              }}
+            >
+              + Upload Icon
+            </Upload>
+
             <label className="relative block mt-5">
               <input
                 className=" placeholder:text-slate-400 block bg-slate-200 w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"

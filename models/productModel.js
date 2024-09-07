@@ -44,10 +44,12 @@ const productSchema = new mongoose.Schema(
       default: 1,
       require: true,
     },
-    image: {
-      data: Buffer,
-      contentType: String,
-    },
+    image: [
+      {
+        data: Buffer,
+        contentType: String,
+      },
+    ],
     shipping: {
       type: Boolean,
     },

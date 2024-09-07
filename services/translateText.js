@@ -3,7 +3,7 @@ import { LRUCache } from "lru-cache";
 import dotenv from "dotenv";
 
 //configure env
-dotenv.config()
+dotenv.config();
 const apiKey = process.env.GOOGLE_TRANSLATION_API_KEY;
 const apiUrl = `https://translation.googleapis.com/language/translate/v2`;
 
@@ -18,11 +18,8 @@ const usageLimit = 500000; // Set your monthly character limit
 
 const translateText = async (text, targetLanguage) => {
   const cacheKey = `${text}-${targetLanguage}`;
-  console.log(`Cache Key: ${cacheKey}`);
 
   if (cache.has(cacheKey)) {
-    console.log("Cache hit for key:", cacheKey);
-    console.log("Cache hit:", cache.get(cacheKey));
     return cache.get(cacheKey);
   }
 

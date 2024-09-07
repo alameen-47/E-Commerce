@@ -46,10 +46,10 @@ export const createProductController = async (req, res) => {
         return res.status(500).send({ error: "Quantity is Required" });
       case !offer:
         return res.status(500).send({ error: "Offer is Required" });
-      case image && image.size > 1000000:
-        return res
-          .status(500)
-          .send({ error: "Image is Required and should be less than 1mb " });
+      // case image && image.size > 1000000:
+      //   return res
+      //     .status(500)
+      //     .send({ error: "Image is Required and should be less than 1mb " });
     }
     const products = new productModel({
       ...req.fields,
@@ -58,9 +58,23 @@ export const createProductController = async (req, res) => {
       slug: slugify(name),
     });
 
+    // Handle multiple images
     if (image) {
-      products.image.data = fs.readFileSync(image.path);
-      products.image.contentType = image.type;
+      if (Array.isArray(image)) {
+        // If multiple images are uploaded
+        image.forEach((img) => {
+          products.image.push({
+            data: fs.readFileSync(img.path),
+            contentType: img.type,
+          });
+        });
+      } else {
+        // If only one image is uploaded
+        products.image.push({
+          data: fs.readFileSync(image.path),
+          contentType: image.type,
+        });
+      }
     }
 
     await products.save();
@@ -143,7 +157,6 @@ export const productImageController = async (req, res) => {
     });
   }
 };
-
 //delete controller
 export const deleteProductController = async (req, res) => {
   try {

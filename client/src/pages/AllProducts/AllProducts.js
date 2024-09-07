@@ -48,14 +48,6 @@ const AllProducts = () => {
     }
   }, [products]);
 
-  // useEffect(() => {
-  //   if (!checked.length && !radio.length) {
-  //     getAllProducts();
-  //   } else {
-  //     filterProduct();
-  //   }
-  // }, [checked, radio]);
-
   //handle scroll event
   const handleScroll = debounce(() => {
     if (

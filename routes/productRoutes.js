@@ -30,7 +30,7 @@ router.post(
   "/create-product",
   requireSignIn,
   isAdmin,
-  formidable(),
+  formidable({ multiples: true }),
   createProductController
 );
 //routes
@@ -38,7 +38,7 @@ router.put(
   "/update-product/:pid",
   requireSignIn,
   isAdmin,
-  formidable(),
+  formidable({ multiples: true }),
   updateProductController
 );
 
