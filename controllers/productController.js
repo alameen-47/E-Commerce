@@ -140,56 +140,37 @@ export const getSingleProductController = async (req, res) => {
   }
 };
 
-// // Product image controller
-
+//get image
 export const productImageController = async (req, res) => {
-  const { pid, index = 0 } = req.params; // Extract product ID and image index (default to 0)
-
   try {
-    // Find the product by its ID and select only the image field
-    const product = await productModel.findById(pid).select("image");
-    if (!product) {
-      return res.status(404).send({
-        success: false,
-        message: "Product not found",
-      });
-    }
+    const { pid, index } = req.params;
+    // Find the product by ID and select the image field
+    const product = await productModel.findById(req.params.pid).select("image");
 
-    // Handle both cases: array or object
-    let image;
+    if (product && product.image.length > 0) {
+      // Send each image in the response
+      // Assuming that `product.image` is an array of image objects
+      const image = product.image[0]; // Select the first image (modify if necessary)
 
-    // Check if the product image is an array (multiple images)
-    if (Array.isArray(product.image)) {
-      image = product.image[index]; // Get the image based on the provided index
-    } else {
-      // If it's not an array, assume it's a single object
-      image = product.image;
-    }
-
-    // Check if the image exists and has data
-    if (image && image.data) {
-      // Set the correct content type (e.g., "image/jpeg" or "image/png")
-      res.set("Content-Type", image.contentType);
-
-      // Send the image data as a buffer
-      return res.status(200).send(image.data);
+      res.setHeader("Content-Type", image.contentType); // Set the correct content type
+      return res.status(200).send(image.data); // Send the image data directly
     } else {
       return res.status(404).send({
         success: false,
-        message: "Image not found",
+        message: "No images found for this product",
       });
     }
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error in Fetching Product Image",
+      message: "Error while getting image",
       error,
     });
   }
 };
 
-//delete controller
+//Delete Controller
 export const deleteProductController = async (req, res) => {
   try {
     await productModel.findByIdAndDelete(req.params.pid).select("-image");
@@ -306,7 +287,7 @@ export const productCountController = async (req, res) => {
 export const furnituresController = async (req, res) => {
   try {
     const products = await productModel
-      .find({ category: "65c54345caab9f1ffb0e02bc" })
+      .find({ category: "66dd86a579f744083e257e2b" })
       .populate("category")
       .select("-image")
       .limit(8)
@@ -332,7 +313,7 @@ export const furnituresController = async (req, res) => {
 export const electronicsController = async (req, res) => {
   try {
     const products = await productModel
-      .find({ category: "65c5437ccaab9f1ffb0e02c3" })
+      .find({ category: "66dd847879f744083e257e0f" })
       .populate("category")
       .select("-image")
       .limit(16)
