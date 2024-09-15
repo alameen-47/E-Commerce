@@ -6,6 +6,9 @@ import { t } from "i18next";
 
 const MapComponent = ({ onSelectLocation, locations }) => {
   useEffect(() => {
+    if (L.DomUtil.get("map")) {
+      return; // If map is already initialized, exit early
+    }
     const map = L.map("map").setView(
       [locations[0].latitude, locations[0].longitude],
       13

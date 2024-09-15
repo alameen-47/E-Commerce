@@ -14,9 +14,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [products, setProducts] = useState([]);
-  const [active, setActive] = useState(
-    `/api/v1/product/product-image/${product._id}/0`
-  );
+
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
 
@@ -29,14 +27,21 @@ const ProductDetails = () => {
   //initial details
   useEffect(() => {
     if (params?.slug) getProduct();
+    // console.log(product);
+    // getImage();
+    console.log("HELOOOOOO", images);
   }, [params?.slug]);
 
+  // const finalImages=async()=>{
+  //   getProduct()
+
+  // }
+
   // getImage
-  const getImage = async (id, index) => {
-    const response = await axios.get(
-      `/api/v1/product/product-image/${id}/${index}`
-    );
-    setImages(response.data);
+  const getImage = async (id) => {
+    const response = await axios.get(`/api/v1/product/product-image/${id}`);
+    console.log("HAHAHAHAHHA ", response);
+    setImages((prevImages) => [...prevImages, response.data]);
   };
   //getProduct
   const getProduct = async () => {
@@ -46,6 +51,9 @@ const ProductDetails = () => {
       );
       setProduct(data?.product);
       getSimilarProduct(data?.product._id, data?.product.category._id);
+      //calling getImages here couse we cannot get the productId from params taking it directly from productDetails
+      getImage(data?.product._id);
+      console.log(images);
     } catch (error) {
       console.log(error);
     }
@@ -63,59 +71,28 @@ const ProductDetails = () => {
   };
   return (
     <Layout>
-      <div className="flex flex-wrap md:flex-row sm:flex-col sm:justify-center my-16 container mx-auto sm:px-4">
+      <div className="flex flex-wrap md:flex-row sm:flex-col sm:justify-center my-16 container mx-auto ">
         <div>
-          <div className="items-center  flex-col w-auto  flex lg:h-96 sm:h-auto bg-slate-100 rounded-sm align-middle justify-center">
+          <div className="items-center md:flex-row sm:flex-col w-auto  flex lg:h-96 sm:h-auto bg-slate-100 rounded-sm align-middle justify-center">
             <img
-              src={`/api/v1/product/product-image/${product._id}/0`}
+              src={`/api/v1/product/product-image/${product._id}`}
               alt={product.name}
               className="MAIN IMAGE justify-center md:sm:h-auto object-scale-down h-auto   transition duration-300 group-hover:scale-105"
             />
           </div>
-          <div className="flex flex-row justify-etween">
-            <img
-              src={`/api/v1/product/product-image/${product._id}/1`}
-              alt={product.name}
-              className=""
-            />
-            <img
-              src={`/api/v1/product/product-image/${product._id}/2`}
-              alt={product.name}
-              className=""
-            />
-            <img
-              src={`/api/v1/product/product-image/${product._id}/3`}
-              alt={product.name}
-              className=""
-            />
-            <img
-              src={`/api/v1/product/product-image/${product._id}/4`}
-              alt={product.name}
-              className=""
-            />
-          </div>
-        </div>
-        <div className="grid gap-4">
-          <div>
-            <img
-              className="h-auto w-full max-w-full rounded-lg object-cover object-center md:h-[480px]"
-              src={active}
-              alt=""
-            />
-          </div>
-          <div className="grid grid-cols-5 gap-4">
-            {images.map(({ imgelink }, index) => (
-              <div key={index}>
+          <div className="flex flex-row justify-between">
+            {images &&
+              images.map((image, i) => (
                 <img
-                  onClick={() => setActive(imgelink)}
-                  src={imgelink}
-                  className="h-20 max-w-full cursor-pointer rounded-lg object-cover object-center"
-                  alt=""
+                  key={i}
+                  src={`data:image/jpeg;base64,${image}`} // Display base64 image
+                  alt={`Product ${i + 1}`}
+                  style={{ width: "200px", height: "200px" }} // Adjust as needed
                 />
-              </div>
-            ))}
+              ))}
           </div>
         </div>
+
         <div className="md:w-1/2 pr-4 pl-12 py-5 flex flex-col  gap-6">
           <h3 className="text-gray-800 sm:text-xs lg:text-2xl pt-3 font-extrabold uppercase">
             {product.name}
@@ -175,7 +152,7 @@ const ProductDetails = () => {
               <div className="m-2 group p-8  bg-slate-200/10 rounded-lg flex flex-col items-center justify-center gap-2 relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all max-w-xs h-96 ">
                 <img
                   onClick={() => navigate(`/product/${p.slug}`)}
-                  src={`/api/v1/product/product-image/${p._id}`}
+                  src={`/api/v1/product/product-image/${p._id}/0`}
                   style={{
                     transform:
                       "translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)",

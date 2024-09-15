@@ -9,13 +9,14 @@ import {
   electronicsController,
   footwearController,
   furnituresController,
-  getProductController,
+  getAllProductController,
+  getProductListController,
   getSingleProductController,
   productCategoryController,
   productCountController,
   productFiltersController,
-  productImageController,
-  productListController,
+  // productImageController,
+  // productListController,
   relatedProductsController,
   searchProductController,
   updateProductController,
@@ -43,7 +44,7 @@ router.put(
 );
 
 //get products
-router.get("/get-product", getProductController);
+router.get("/get-product", getAllProductController);
 
 // //get offersFilteredProducts
 // router.get("/get-product/offer-filter", getProductsForSlideshowController);
@@ -52,7 +53,7 @@ router.get("/get-product", getProductController);
 router.get("/get-product/:slug", getSingleProductController);
 
 //get image
-router.get("/product-image/:pid/:index?", productImageController);
+// router.get("/product-image/:pid", productImageController);
 
 //delete product
 router.delete("/delete-product/:pid", deleteProductController);
@@ -64,7 +65,7 @@ router.post("/product-filters", productFiltersController);
 router.get("/product-count", productCountController);
 
 //product per page
-router.get("/product-list/:page", productListController);
+router.get("/product-list/:page", getProductListController);
 
 //search product
 router.get("/search/:keyword", searchProductController);

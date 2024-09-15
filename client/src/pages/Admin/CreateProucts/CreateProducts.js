@@ -116,7 +116,7 @@ const CreateProducts = () => {
                 return false; // Prevent automatic upload
               }}
             >
-              + Upload Icon
+              + Upload Images
             </Upload>
 
             <label className="relative block mt-5">

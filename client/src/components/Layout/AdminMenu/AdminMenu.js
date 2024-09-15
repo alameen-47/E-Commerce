@@ -53,7 +53,7 @@ const AdminMenu = () => {
       <aside
         className={`${open ? "hidden" : "block     w-screen"}`}
         id="sidebar-multi-level-sidebar"
-        class="lg:sticky flex top-0 left-0 z-70 w-64 h-screen transition-transform translate-x-full sm:translate-x-0 "
+        class="lg:sticky flex top-0 left-0 z-70 w-60 h-screen transition-transform translate-x-full sm:translate-x-0 "
         aria-label="Sidebar"
       >
         <div className=" max-h-lvh px-3 py-4  lg:sticky bg-black">

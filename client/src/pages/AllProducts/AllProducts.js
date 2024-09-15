@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import "./AllProducts.css";
@@ -11,8 +11,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useTranslation } from "react-i18next";
 import { debounce } from "lodash";
 import { Prices } from "../.././components/Prices";
+import { Carousel } from "@material-tailwind/react";
 
-const AllProducts = () => {
+const AllProducts = ({ start, end }) => {
   const [cart, setCart] = useCart([]);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -26,7 +27,13 @@ const AllProducts = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [hasMore, setHasMore] = useState(true);
+  const [displayedProducts, setDisplayedProducts] = useState([]);
+  const pageSize = 20;
   const [units, setUnits] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(12); // Number of visible products initially
+  const [productLimit, setProductLimit] = useState([]);
+  const [startIndex, setStartIndex] = useState(0);
+  const [displayedProductIds, setDisplayedProductIds] = useState(new Set()); // To keep track of displayed product IDs
 
   //translation
   const translateText = async (text, targetLanguage) => {
@@ -39,7 +46,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     getAllCategory();
-    getTotal();
+    // getTotal();
   }, []);
 
   useEffect(() => {
@@ -47,25 +54,6 @@ const AllProducts = () => {
       setLoading(false);
     }
   }, [products]);
-
-  //handle scroll event
-  const handleScroll = debounce(() => {
-    if (
-      window.innerHeight + window.scrollY >= document.body.offsetHeight - 800 &&
-      !loading &&
-      hasMore // Check if there are more products to load
-    ) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  }, 800);
-
-  // Effect to add/remove scroll event listener
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [handleScroll, loading, hasMore]);
 
   //get all category
   const getAllCategory = async () => {
@@ -99,14 +87,14 @@ const AllProducts = () => {
     toast.success(`${t("Item Added to cart")}`);
   };
 
-  // //get all AllProducts
   const getAllProducts = async () => {
-    if (!hasMore) return; // Exit early if there are no more products to load
+    if (loading || !hasMore) return;
 
+    setLoading(true);
     try {
-      setLoading(true);
-      const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
-      setLoading(false);
+      const { data } = await axios.get(`/api/v1/product/get-product`);
+      // setLoading(false);
+      const totalLength = data.length;
       if (data.products.length > 0) {
         const translatedProducts = await Promise.all(
           data.products.map(async (product) => {
@@ -118,37 +106,82 @@ const AllProducts = () => {
               product.description,
               i18n.language
             );
+
+            const updatedImages = product?.image.map((img) => ({
+              ...img,
+              filePath: `http://localhost:8085/uploads/${img.filePath}`,
+            }));
+
             return {
               ...product,
               name: translatedName,
               description: translatedDescription,
+              image: updatedImages,
             };
           })
         );
         setProducts((prevProducts) => [...prevProducts, ...translatedProducts]);
-        if (data.products.length < data.pageSize) {
-          setHasMore(false);
+        // Initialize displayed products and IDs
+        const initialProducts = data.products.slice(0, pageSize);
+        setDisplayedProducts(initialProducts);
+        setDisplayedProductIds(
+          new Set(initialProducts.map((product) => product.id))
+        );
+        setStartIndex(pageSize);
+        if (data.products.length <= pageSize) setHasMore(false);
+        // Check if there are more pages to load
+        if (data.currentPage >= data.totalPages || data.products.length < 10) {
+          setHasMore(false); // Stop fetching when no more products are available
         }
-      } else {
-        setHasMore(false);
       }
     } catch (error) {
       setLoading(false);
       console.log(error);
     }
   };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop ===
+          document.documentElement.offsetHeight &&
+        !loading &&
+        hasMore
+      ) {
+        loadMoreProducts();
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [loading, hasMore]);
 
-  //getTotal count
-  const getTotal = async () => {
+  const loadMoreProducts = async () => {
+    if (loading || !hasMore) return;
+
+    setLoading(true);
+
     try {
-      const { data } = await axios.get("/api/v1/product/product-count");
-      setTotal(data?.total);
+      // Calculate the next visible products
+      const nextVisibleCount = visibleCount + 20; // Load 20 more products
+      if (nextVisibleCount >= products.length) {
+        setHasMore(false); // No more products to load
+      }
+
+      // Update the visible count
+      setVisibleCount(nextVisibleCount);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const visibleProducts = products.slice(0, visibleCount);
+
+  // Trigger fetching products when scrolling
   useEffect(() => {
-    if (page > 1 && hasMore) {
+    if (hasMore) {
       getAllProducts();
     }
   }, [page]);
@@ -267,7 +300,11 @@ const AllProducts = () => {
             <button
               className="btn-btn-primary my-7 !text-red-500"
               type="primary"
-              onClick={() => window.location.reload()}
+              onClick={() => {
+                setChecked([]);
+                setRadio([]);
+                getAllProducts();
+              }}
               block
             >
               {t("allProducts.Reset Filters")}
@@ -315,25 +352,33 @@ const AllProducts = () => {
           </div>
         </div>
         <div className="md:w-4/4 md:items-center sm:justify-center sm:items-center flex-row justify-center align-middle items-center p-1">
-          <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-3  ">
-            {products?.map((p) => (
+          <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2  gap-2">
+            {visibleProducts?.map((p) => (
               <div
                 className=" flex lg:flex-col sm:flex-row 
-                lg:aspect-[2/3]"
+                lg:aspect-[2/3]
+align-super                
+                "
                 key={p._id}
               >
-                <div className="text-wrap  group lg:py-4 lg:px-2  bg-slate-200/10 rounded-lg flex flex-col items-center justify-center  relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all sm:py-4  lg:xl:h-96 sm:h-72 gap-1">
-                  <img
-                    onClick={() => navigate(`/product/${p.slug}`)}
-                    src={`/api/v1/product/product-image/${p._id}/0`}
-                    style={{
-                      transform:
-                        "translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)",
-                    }}
-                    className="lg:md:w-44 md:w-40 sm:w-32  overflow-hidden object-contain aspect-square text-[#000000] group-hover:bg-gray-200 lg:text-5xl sm:text-2xl rounded-s  transition-all duration-300 group-hover:transition-all group-hover:duration-300 group-hover:-translate-y-2  mx-auto h-[60%]"
-                    alt=""
-                  />
-                  <p className="cardtxt font-semibold  text-black tracking-wider group-hover:text-white h-2 md:text-sm lg:text-[16px] sm:text-[10px]">
+                <div
+                  onClick={() => navigate(`/product/${p.slug}`)}
+                  className=" text-wrap  group align-middle lg:px-2  bg-slate-200/10 rounded-lg flex flex-col items-center justify-center  relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all sm:py-4  gap-1  md:h-[380px]  "
+                >
+                  <div className="carousel rounded-box w-64 bg-green-500 overflow-y-hidden flex  align-middle items-center">
+                    {p.image.map((img, index) => (
+                      <div className="carousel-item  h-64 overflow-hidden bg-white">
+                        <img
+                          key={index}
+                          src={`data:${img.contentType};base64,${img.data}`}
+                          alt={p.name}
+                          className="px-2 object-contain transition-transform flex justify-center align-middle items-center duration-300 ease-in-out hover:scale-110 h-64 w-64 "
+                          loading="lazy"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <p className="cardtxt font-semibold  text-black tracking-wider group-hover:text-white h-2 md:text-sm lg:text-[16px] sm:text-[10px] ">
                     {(() => {
                       const words = p.name.split(" ");
                       return words.length > 1
@@ -342,16 +387,15 @@ const AllProducts = () => {
                     })()}
                     {/* {p.name} */}
                   </p>
-                  <p className="blueberry font-semibold text-gray-500  group-hover:text-gray-200 mb-0 lg:text-xs md:text-sm sm:text-[10px] text-center px-2">
-                    {/* {(() => {
+                  <p className="blueberry font-semibold text-gray-500  group-hover:text-gray-200 mb-0 lg:text-xs md:text-sm sm:text-[10px] text-center px-2 break-words md:h-7 ">
+                    {(() => {
                       const words = p.description.split(" ");
                       return words.length > 1
-                        ? words.slice(0, 2).join(" ")
+                        ? words.slice(0, 3).join(" ")
                         : words[0];
-                    })()} */}
-                    {p.description}
+                    })()}
+                    {/* {p.description} */}
                   </p>
-
                   {p.offer ? (
                     <>
                       <div className="flex gap-1 justify-center items-center mt-0 ">
@@ -376,7 +420,9 @@ const AllProducts = () => {
                     </p>
                   )}
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the parent onClick from firing
+                      
                       addToCart([{ ...p, units }]);
                     }}
                     className="btun4 text-white lg:inline-flex items-center lg:gap-3 sm:gap-1 group-hover:bg-slate-200 group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer lg:py-2 sm:py-1 lg:px-4 sm:px-2 lg:text-sm sm:text-xs font-semibold rounded-full butn"

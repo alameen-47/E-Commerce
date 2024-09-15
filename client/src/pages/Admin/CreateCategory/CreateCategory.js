@@ -7,6 +7,7 @@ import axios from "axios";
 import CategoryForm from "../../../components/Form/CategoryForm.js";
 import { message, Modal, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
+import ImgCrop from "antd-img-crop";
 
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -19,6 +20,21 @@ const CreateCategory = () => {
   const [images, setImages] = useState("");
   const [updatedimages, setUpdatedImages] = useState("");
   const navigate = useNavigate();
+
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
 
   //handle form
   const handleSubmit = async (e) => {
@@ -119,11 +135,11 @@ const CreateCategory = () => {
           <AdminMenu />
         </div>
         {/* Content */}
-        <div className="lg:w-screen sm:left-0 sm:w-screen sm:overflow-hidden !important ">
+        <div className=" mx-2 lg:w-screen sm:left-0 sm:w-screen sm:overflow-hidden !important ">
           <h1 className="lg:text-3xl lg:font-extrabold  sm:text-xl sm:font-bold">
             Manage Category
           </h1>
-          <div style={{ padding: "30px" }}>
+          <div>
             <CategoryForm
               handleSubmit={handleSubmit}
               value={name}
@@ -132,6 +148,7 @@ const CreateCategory = () => {
           </div>
           <Upload
             listType="picture-card"
+            onPreview={onPreview}
             beforeUpload={(file) => {
               setIcons(file); // Save the selected icon file
               return false; // Prevent automatic upload
@@ -141,6 +158,7 @@ const CreateCategory = () => {
           </Upload>
           <Upload
             listType="picture-card"
+            onPreview={onPreview}
             beforeUpload={(file) => {
               setImages(file); // Save the selected image file
               return false; // Prevent automatic upload

@@ -21,6 +21,9 @@ const CartPage = () => {
   const [loading, setLoading] = useState("");
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const [shippingCost, setShippingCost] = useState(0);
+  const [selectedShipping, setSelectedShipping] = useState();
+  const [showError, setShowError] = useState(false); // Track error message for shipping selection
 
   //translation
   const translateText = async (text, targetLanguage) => {
@@ -63,6 +66,31 @@ const CartPage = () => {
       setLoading(false);
     }
   };
+  const handleShippingChange = (e) => {
+    console.log("Event:", e); // Add this line to debug the event object
+    if (e && e.target) {
+      const selectedOption = e.target.value;
+      let cost = 0;
+      switch (selectedOption) {
+        case "standard":
+          cost = 10;
+          break;
+        case "express":
+          cost = 20;
+          break;
+        case "next-day":
+          cost = 30;
+          break;
+        default:
+          cost = 0;
+      }
+      setSelectedShipping(selectedOption); // Track the selected option
+      setShippingCost(cost);
+      setShowError(false); // Reset error if option is selected
+    } else {
+      console.error("Invalid event object:", e);
+    }
+  };
   const increment = (index) => {
     // let updatedQuantity = units ? parseInt(units) + 1 : 1;
     const iqty = [...cart];
@@ -94,12 +122,12 @@ const CartPage = () => {
   //total Checkout Price
   const totalcheckoutPrice = () => {
     try {
-      let totalcheckout = 0;
-      cart?.map((item) => {
-        totalcheckout += item.price * item.units;
-      });
-      totalcheckout += 10;
-      return totalcheckout.toLocaleString("en-us", "ar-sa", {
+      let totalcheckout = cart.reduce(
+        (acc, item) => acc + item.price * item.units,
+        0
+      );
+      totalcheckout += shippingCost; // Add the selected shipping cost
+      return totalcheckout.toLocaleString("en-US", {
         style: "currency",
         currency: "SAR",
       });
@@ -280,11 +308,22 @@ const CartPage = () => {
               <label className="font-medium inline-block mb-3 text-sm uppercase">
                 {t("cart.SHIPPING")}
               </label>
-              <select className="block p-2 text-gray-600 w-full text-sm">
-                <option>
+              {/* <select
+                className="block p-2 text-gray-600 w-full text-sm"
+                // onChange={(e) => setShipping(e.target.value)}
+                onChange={handleShippingChange}
+                required
+              >
+                <option value="standard">
                   {t("cart.Standard shipping")} - {t("cart.SAR")}:10.00
                 </option>
-              </select>
+                <option value="express">
+                  {t("cart.Standard shipping")} - {t("cart.SAR")}:20.00
+                </option>
+                <option value="next-day">
+                  {t("cart.Standard shipping")} - {t("cart.SAR")}:30.00
+                </option>
+              </select> */}
             </div>
             {auth?.user?.address ? (
               <>
@@ -322,7 +361,7 @@ const CartPage = () => {
                   </button>
                 ) : (
                   <button
-                    className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase"
+                    className="bg-green-600 hover:bg-green-400 px-5 py-2 text-sm text-white uppercase"
                     onClick={() =>
                       navigate("/signin", {
                         state: "/cart",
@@ -334,6 +373,18 @@ const CartPage = () => {
                 )}
               </>
             )}
+            <div className="border-t mt-8">
+              <div className="flex flex-col gap-3 font-semibold justify-between text-sm uppercase">
+                <span>
+                  Product Price:
+                  {cart?.map((item) => item.price).reduce((a, b) => a + b)}
+                </span>
+                <span>
+                  Shipping Charge:
+                  {shippingCost}
+                </span>
+              </div>
+            </div>
             <div className="border-t mt-8">
               <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                 <span>{t("cart.TOTAL COST")}</span>
@@ -356,10 +407,34 @@ const CartPage = () => {
                       }}
                       onInstance={(instance) => setInstance(instance)}
                     />
-
+                    <select
+                      className="block p-2 text-gray-600 w-full text-sm"
+                      onChange={handleShippingChange} // Call shipping handler
+                      required
+                    >
+                      <option value="">
+                        -- {t("cart.Choose shipping method")} --
+                      </option>
+                      <option value="standard">
+                        {t("cart.Standard shipping")} - {t("cart.SAR")}:10.00
+                      </option>
+                      <option value="express">
+                        {t("cart.Express shipping")} - {t("cart.SAR")}:20.00
+                      </option>
+                      <option value="next-day">
+                        {t("cart.Next-day shipping")} - {t("cart.SAR")}:30.00
+                      </option>
+                    </select>
                     <button
-                      className="bg-black font-semibold hover:bg-gray-800 py-3 text-sm text-white uppercase w-full"
-                      onClick={handlePayments.bind(this)}
+                      className="bg-green-600 font-semibold hover:bg-green-400 py-3 text-sm text-white uppercase w-full"
+                      onClick={() => {
+                        if (!selectedShipping) {
+                          setShowError(true); // Trigger error
+                          toast.error("Please choose a shipping method");
+                        } else {
+                          handlePayments();
+                        }
+                      }}
                       disabled={loading || !instance || !auth?.user?.address}
                     >
                       {loading

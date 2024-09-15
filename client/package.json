@@ -73,6 +73,6 @@
     "path": false
   },
   "devDependencies": {
-    "daisyui": "^4.11.1"
+    "daisyui": "^4.12.10"
   }
 }

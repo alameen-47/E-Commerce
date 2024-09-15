@@ -3,26 +3,21 @@ import React from "react";
 const CategoryForm = ({ handleSubmit, value, setValue }) => {
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <div
-          className="form-field"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
+      <form
+        className="flex justify-between  flex-col gap-3"
+        onSubmit={handleSubmit}
+      >
+        <div className="form-field flex justify-between gap-3">
           <input
             type="text"
-            className="form-control"
+            className="form-control w-screen h-10 rounded-lg p-1"
             placeholder="Enter new Category"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            style={{ marginBottom: "5px", height: "30px" }}
           />
         </div>
 
-        <button type="submit" className="btn-btn-primary">
+        <button type="submit" className="btn-btn-primary rounded-lg h-10">
           Submit
         </button>
       </form>
