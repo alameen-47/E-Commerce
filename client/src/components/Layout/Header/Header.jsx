@@ -247,7 +247,7 @@ function Header() {
         </div>
       </div>
       <div className="border-2 border-gray-400 border-b-0 border-l-0 border-r-0 border-t-gray-500 w-full bg-black text-white flex flex-row lg:p-2 justify-center sm:p-1 font-semibold sm:text-[10px] lg:text-sm sm:text-center align-super">
-        {/* <CategoryListSlider /> */}
+        <CategoryListSlider />
       </div>
     </div>
   );

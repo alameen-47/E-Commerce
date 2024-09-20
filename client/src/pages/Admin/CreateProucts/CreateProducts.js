@@ -22,6 +22,21 @@ const CreateProducts = () => {
   const [shipping, setShipping] = useState("");
   const [image, setImage] = useState("");
 
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+
   // Get all categories
   const getAllCategory = async () => {
     try {
@@ -109,6 +124,7 @@ const CreateProducts = () => {
               ))}
             </Select>
             <Upload
+              onPreview={onPreview}
               listType="picture-card"
               multiple
               beforeUpload={(file) => {

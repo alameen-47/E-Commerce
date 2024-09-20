@@ -12,7 +12,7 @@ import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 
 const CartPage = () => {
-  const storedCart = JSON.parse(localStorage.getItem("CART")) || [];
+  const storedCart = JSON.parse(localStorage.getItem("CART")) || [null];
   const [cart, setCart] = useState(storedCart);
   const [iqty, setIqty] = useState();
   const [auth, setAuth] = useAuth();
@@ -22,7 +22,7 @@ const CartPage = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [shippingCost, setShippingCost] = useState(0);
-  const [selectedShipping, setSelectedShipping] = useState();
+  const [selectedShipping, setSelectedShipping] = useState(null);
   const [showError, setShowError] = useState(false); // Track error message for shipping selection
 
   //translation
@@ -173,7 +173,15 @@ const CartPage = () => {
     };
     const storedCart = JSON.parse(localStorage.getItem("CART"));
     if (storedCart) {
-      translateCartItems(storedCart);
+      try {
+        const parsedCart = JSON.parse(storedCart); // This will throw an error if it's not valid JSON
+        if (Array.isArray(parsedCart) && parsedCart.length > 0) {
+          translateCartItems(parsedCart);
+        }
+      } catch (error) {
+        console.error("Error parsing cart from localStorage:", error);
+        localStorage.removeItem("CART"); // Clear invalid data
+      }
     }
   }, [i18n.language]);
   useEffect(() => {
@@ -219,20 +227,26 @@ const CartPage = () => {
 
               {storedCart.map((units, index) => (
                 <div
+                  onClick={() => navigate(`/product/${units.slug}`)}
                   key={units._id}
-                  className="flex items-center justify-between border-b py-4"
+                  className="cursor-pointer flex items-center justify-between border-b py-4"
                 >
                   {/* Product Details */}
 
                   <div className="flex w-2/5">
                     {/* product */}
-                    <div className="w-20">
-                      <img
-                        className="h-24 aspect-auto object-contain sm:w-auto "
-                        src={`/api/v1/product/product-image/${units._id}`}
-                        alt={units.name}
-                      />
-                    </div>
+                    {units.image.length > 0 && (
+                      <div className="w-20">
+                        <img
+                          className="h-24 aspect-auto object-contain sm:w-auto "
+                          key={index}
+                          src={`data:${units.image[0].contentType};base64,${units.image[0].data}`}
+                          alt=""
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+
                     <div className="flex flex-col justify-between ml-4 flex-grow">
                       <span className="font-bold text-sm">{units.name}</span>
                       <span className="text-gray-600 text-xs">
@@ -242,7 +256,10 @@ const CartPage = () => {
                       </span>
                       <p
                         className="font-semibold box-border cursor-pointer text-red-500 hover:text-red-700 text-xs"
-                        onClick={() => removeCartItem(units._id)}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent the parent onClick from firing
+                          removeCartItem(units._id);
+                        }}
                       >
                         {t("cart.REMOVE")}
                       </p>
@@ -308,22 +325,6 @@ const CartPage = () => {
               <label className="font-medium inline-block mb-3 text-sm uppercase">
                 {t("cart.SHIPPING")}
               </label>
-              {/* <select
-                className="block p-2 text-gray-600 w-full text-sm"
-                // onChange={(e) => setShipping(e.target.value)}
-                onChange={handleShippingChange}
-                required
-              >
-                <option value="standard">
-                  {t("cart.Standard shipping")} - {t("cart.SAR")}:10.00
-                </option>
-                <option value="express">
-                  {t("cart.Standard shipping")} - {t("cart.SAR")}:20.00
-                </option>
-                <option value="next-day">
-                  {t("cart.Standard shipping")} - {t("cart.SAR")}:30.00
-                </option>
-              </select> */}
             </div>
             {auth?.user?.address ? (
               <>
@@ -377,7 +378,7 @@ const CartPage = () => {
               <div className="flex flex-col gap-3 font-semibold justify-between text-sm uppercase">
                 <span>
                   Product Price:
-                  {cart?.map((item) => item.price).reduce((a, b) => a + b)}
+                  {cart?.map((item) => item.price).reduce((a, b) => a + b, 0)}
                 </span>
                 <span>
                   Shipping Charge:

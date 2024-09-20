@@ -331,14 +331,27 @@ export const furnituresController = async (req, res) => {
       // .select("-image")
       .limit(8)
       .sort({ createdAt: -1 });
-    const link = "/category/furnitures";
-
-    res.status(200).send({
-      success: true,
-      message: "All Furniture Products",
-      products,
-      link,
-    });
+    if (products && products.length > 0) {
+      const productList = products.map((product) => {
+        return {
+          ...product._doc, // Spread other product details
+          image: product.image.map((img) => ({
+            contentType: img.contentType,
+            data: img.data.toString("base64"), // Convert Buffer to base64 string
+          })),
+        };
+      });
+      res.status(200).send({
+        success: true,
+        message: "All Electronics Products",
+        products: productList, // Send the processed product list with base64 images
+      });
+    } else {
+      res.status(404).send({
+        success: false,
+        message: "No products found",
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -354,17 +367,30 @@ export const electronicsController = async (req, res) => {
     const products = await productModel
       .find({ category: "66dd847879f744083e257e0f" })
       .populate("category")
-      // .select("-image")
       .limit(16)
       .sort({ createdAt: -1 });
-    const link = "/category/electronics";
 
-    res.status(200).send({
-      success: true,
-      message: "All Electronics Products",
-      products,
-      link,
-    });
+    if (products && products.length > 0) {
+      const productList = products.map((product) => {
+        return {
+          ...product._doc, // Spread other product details
+          image: product.image.map((img) => ({
+            contentType: img.contentType,
+            data: img.data.toString("base64"), // Convert Buffer to base64 string
+          })),
+        };
+      });
+      res.status(200).send({
+        success: true,
+        message: "All Electronics Products",
+        products: productList, // Send the processed product list with base64 images
+      });
+    } else {
+      res.status(404).send({
+        success: false,
+        message: "No products found",
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -378,43 +404,66 @@ export const electronicsController = async (req, res) => {
 //get Footwear products controller
 export const footwearController = async (req, res) => {
   try {
-    const gentsFootwearCategoryId = "66d8d6fb6335b93ea96d4d8f";
-    const ladiesFootwearCategoryId = "65ce10c3a1d1490e0f5f49e5";
-    const kidsFootwearCategoryId = "66565632942e27fc00f4022c";
-
+    const categoryIds = {
+      gents: "66e81d57434a084e9fce81e5",
+      ladies: "66e81cc2434a084e9fce81de",
+      kids: "66e81da7434a084e9fce81ec",
+    };
     const products = await productModel
       .find({
-        category: {
-          $in: [
-            gentsFootwearCategoryId,
-            ladiesFootwearCategoryId,
-            kidsFootwearCategoryId,
-          ],
-        },
+        category: { $in: Object.values(categoryIds) },
       })
       .populate("category")
-      // .select("-image")
-      .sort({ createdAt: -1 });
-    const link = "/category/footwear";
+      .sort({ createdAt: -1 })
+      .exec();
 
-    const gentsFootwear = products.filter(
-      (product) => product.category._id.toString() === gentsFootwearCategoryId
-    );
-    const ladiesFootwear = products.filter(
-      (product) => product.category._id.toString() === ladiesFootwearCategoryId
-    );
-    const kidsFootwear = products.filter(
-      (product) => product.category._id.toString() === kidsFootwearCategoryId
-    );
+    if (products && products.length > 0) {
+      const productList = products.map((product) => {
+        return {
+          ...product._doc, // Spread other product details
+          image: product.image
+            ? product.image.map((img) => ({
+                contentType: img.contentType,
+                data: img.data.toString("base64"), // Convert Buffer to base64 string
+              }))
+            : [], // Return empty array if no image exists
+        };
+      });
+      const link = "/category/footwear";
 
-    res.status(200).send({
-      success: true,
-      message: "All Footwear Products",
-      gentsFootwear,
-      ladiesFootwear,
-      kidsFootwear,
-      link,
-    });
+      const gentsFootwear = [];
+      const ladiesFootwear = [];
+      const kidsFootwear = [];
+
+      productList.forEach((product) => {
+        switch (product.category._id.toString()) {
+          case categoryIds.gents:
+            gentsFootwear.push(product);
+            break;
+          case categoryIds.ladies:
+            ladiesFootwear.push(product);
+            break;
+          case categoryIds.kids:
+            kidsFootwear.push(product);
+            break;
+        }
+      });
+
+      res.status(200).send({
+        success: true,
+        message: "All Footwear Products",
+        gentsFootwear,
+        ladiesFootwear,
+        kidsFootwear,
+        product: productList,
+        link,
+      });
+    } else {
+      res.status(404).send({
+        success: false,
+        message: "No Footwear Products Found",
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({

@@ -10,16 +10,17 @@ import { CartProvider } from "./context/cart";
 import "antd/dist/reset.css";
 import i18n from "./i18n";
 import { I18nextProvider } from "react-i18next";
+import { ImageCarousel } from "./components/Product/ImageCarousel";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-
   <AuthProvider>
     <SearchProvider>
       <CartProvider>
         <BrowserRouter>
           <I18nextProvider i18n={i18n}>
             <App />
+            {/* <ImageCarousel /> */}
           </I18nextProvider>
         </BrowserRouter>
       </CartProvider>

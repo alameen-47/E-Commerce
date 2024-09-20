@@ -20,13 +20,32 @@ const Footwear = () => {
         setKidsFootwear(data.kidsFootwear);
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching footwear:", error);
     }
   };
 
   useEffect(() => {
     fetchFootwear();
   }, []);
+
+  const renderCarouselItems = (footwearArray) => {
+    return footwearArray.map((product) => (
+      <div key={product._id} className="carousel-item">
+        {product.image &&
+          product.image.length > 0 &&
+          product.image[0] &&
+          product.image.map((img, index) => (
+            <img
+              onClick={() => navigate(`/product/${product.slug}`)}
+              key={index}
+              src={`data:${img.contentType};base64,${img.data}`}
+              alt={`${product.category.name} footwear`}
+              className="object-fit"
+            />
+          ))}
+      </div>
+    ));
+  };
 
   return (
     <div className="px-8 flex align-middle items-center justify-center">
@@ -41,39 +60,10 @@ const Footwear = () => {
             {t("home.BEST QUALITY AND BEST PRICES ON EVERY PAIR")}
           </div>
           {/* Carousel starts */}
-          <div className=" lg:h-60 lg:w-[35rem] sm:w-[18rem] sm:h-24 flex  sm:justify-center sm:align-bottom sm:m-auto  ">
-            <div className="shadow-2xl carousel rounded-b-lg">
-              {gentsFootwear.map((p) => (
-                <div key={p._id} className="carousel-item">
-                  <img
-                    onClick={() => navigate(`/product/${p.slug}`)}
-                    src={`/api/v1/product/product-image/${p._id}`}
-                    alt="footwear"
-                    className="object-fit"
-                  />
-                </div>
-              ))}
-              {ladiesFootwear.map((p) => (
-                <div key={p._id} className="carousel-item">
-                  <img
-                    onClick={() => navigate(`/product/${p.slug}`)}
-                    src={`/api/v1/product/product-image/${p._id}`}
-                    alt="footwear"
-                    className="object-fit"
-                  />
-                </div>
-              ))}
-              {kidsFootwear.map((p) => (
-                <div key={p._id} className="carousel-item">
-                  <img
-                    onClick={() => navigate(`/product/${p.slug}`)}
-                    src={`/api/v1/product/product-image/${p._id}`}
-                    alt="footwear"
-                    className="object-fit"
-                  />
-                </div>
-              ))}
-            </div>
+          <div className="carousel shadow-2xl rounded-b-lg lg:h-60 lg:w-[35rem] sm:w-[18rem] sm:h-24">
+            {gentsFootwear.length > 0 && renderCarouselItems(gentsFootwear)}
+            {ladiesFootwear.length > 0 && renderCarouselItems(ladiesFootwear)}
+            {kidsFootwear.length > 0 && renderCarouselItems(kidsFootwear)}
           </div>
         </div>
       </div>
