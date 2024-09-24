@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import Layout from "../../../components/Layout/Layout";
 import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
-import { Select, Upload } from "antd";
+import { Button, ColorPicker, Modal, Select, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
 import slug from "slugify";
 import { SketchPicker } from "react-color"; // Import color picker
@@ -26,9 +26,21 @@ const CreateProducts = () => {
   const [color, setColor] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedCategoryID, setSelectedCategoryID] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const inputRefs = useRef({});
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const onPreview = async (file) => {
     let src = file.url;
     if (!src) {
@@ -327,9 +339,11 @@ const CreateProducts = () => {
             </label>
             <label className="relative block mt-5">
               Color:
-              <SketchPicker
-                color={color || "#fff"} // Default color
+              <ColorPicker
+                defaultValue="#000000"
                 onChange={(color) => setColor(color.hex)}
+                size="large"
+                showText
               />
             </label>
             <label className="relative block mt-5">
@@ -397,26 +411,50 @@ const CreateProducts = () => {
             </Select> */}
 
             {/* Additional Fields for Category-Specific Details */}
-            {selectedCategory && categoryDetails[selectedCategory] && (
-              <div>
-                <h3 className="mt-5 font-semibold">Additional Details</h3>
-                {categoryDetails[selectedCategory].map((detail, index) => (
-                  <div key={index}>
-                    <label>
-                      {detail.key.charAt(0).toUpperCase() + detail.key.slice(1)}
 
-                      <input
-                        type="text"
-                        name={detail.key}
-                        ref={(el) => (inputRefs.current[detail.key] = el)} // Assign ref
-                        placeholder={`Enter ${detail.key}`}
-                        className=" placeholder:text-slate-400 block bg-white text-black w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                      />
-                    </label>
-                  </div>
-                ))}
-              </div>
-            )}
+            <Button
+              type="default"
+              variant="solid"
+              onClick={showModal}
+              className="bg-gray-300 mt-2 font-semibold"
+            >
+              Additonal Details
+            </Button>
+            <Modal
+              title="Additional Details"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              okButtonProps={{
+                style: {
+                  backgroundColor: "#000000", // Change to your desired color
+                  color: "white",
+                  border: "none", // Optional: Remove border
+                },
+              }}
+            >
+              {/* Additional Fields for Category-Specific Details */}
+              {selectedCategory && categoryDetails[selectedCategory] && (
+                <div>
+                  {categoryDetails[selectedCategory].map((detail, index) => (
+                    <div key={index}>
+                      <label>
+                        {detail.key.charAt(0).toUpperCase() +
+                          detail.key.slice(1)}
+
+                        <input
+                          type="text"
+                          name={detail.key}
+                          ref={(el) => (inputRefs.current[detail.key] = el)} // Assign ref
+                          placeholder={`Enter ${detail.key}`}
+                          className=" placeholder:text-slate-400 block bg-white text-black w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        />
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Modal>
 
             <div className="form-buttons mt-5 mb-5">
               <button

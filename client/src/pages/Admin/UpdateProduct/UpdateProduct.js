@@ -560,6 +560,13 @@ const UpdateProduct = () => {
               open={isModalOpen}
               onOk={handleOk}
               onCancel={handleCancel}
+              okButtonProps={{
+                style: {
+                  backgroundColor: "#000000", // Change to your desired color
+                  color: "white",
+                  border: "none", // Optional: Remove border
+                },
+              }}
             >
               {/* Additional Fields for Category-Specific Details */}
               {fetchedCategoryName && categoryDetails[fetchedCategoryName] && (
