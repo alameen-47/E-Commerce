@@ -177,6 +177,8 @@ const CartPage = () => {
         const parsedCart = JSON.parse(storedCart); // This will throw an error if it's not valid JSON
         if (Array.isArray(parsedCart) && parsedCart.length > 0) {
           translateCartItems(parsedCart);
+        } else {
+          setCart([]);
         }
       } catch (error) {
         console.error("Error parsing cart from localStorage:", error);
@@ -235,7 +237,7 @@ const CartPage = () => {
 
                   <div className="flex w-2/5">
                     {/* product */}
-                    {units.image.length > 0 && (
+                    {units.image && (
                       <div className="w-20">
                         <img
                           className="h-24 aspect-auto object-contain sm:w-auto "

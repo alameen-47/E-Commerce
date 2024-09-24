@@ -20,11 +20,11 @@ const Spinner = ({ path = "login" }) => {
   }, [count, navigate, location, path]);
 
   return (
-    <div className="spinner-container">
+    <div className="spinner-container bg-opacity-45">
       <p className="text-lg sm:text-sm">
         Redirecting to you in {count} seconds
       </p>
-      <div className="spinner"></div>
+      <div className="spinner bg-opacit"></div>
     </div>
   );
 };

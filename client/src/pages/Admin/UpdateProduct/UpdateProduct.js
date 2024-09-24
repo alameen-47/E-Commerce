@@ -251,7 +251,9 @@ const UpdateProduct = () => {
               UPDATE PRODUCT
             </button>
           </div>
-          <div className="my-3">
+            )}
+
+            <div className="form-buttons mt-5 mb-5">
             <button
               className="btn btn-btn-primary !text-red-600"
               onClick={handleDelete}
