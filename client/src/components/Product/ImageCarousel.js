@@ -3,7 +3,7 @@ import React, { useState } from "react";
 export const ImageCarousel = ({ image }) => {
   return (
     <div className="carousel rounded-box w-64 bg-gray-100 overflow-y-hidden flex align-middle items-center max-w-40 h-fit">
-      {image.map((img, index) => (
+      {image?.map((img, index) => (
         <div
           key={index}
           className="carousel-item flex flex-col h-64 overflow-hidden bg-white max-h-40 max-w-40 cursor-pointer"

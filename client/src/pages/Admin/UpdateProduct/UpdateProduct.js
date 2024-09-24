@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./UpdateProduct.css";
 import toast from "react-hot-toast";
 import axios from "axios";
 import Layout from "../../../components/Layout/Layout";
 import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
-import { Select } from "antd";
+import { Button, Select, Upload } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+import slugify from "slugify";
+import { Image, ColorPicker, Modal } from "antd";
 
 const { Option } = Select;
+
 const UpdateProduct = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -15,36 +18,85 @@ const UpdateProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
+  const [offer, setOffer] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [shipping, setShipping] = useState("");
   const [image, setImage] = useState("");
+  const [color, setColor] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategoryID, setSelectedCategoryID] = useState("");
   const [id, setId] = useState("");
+  const [fetchedCategoryDetails, setFetchedCategoryDetails] = useState({});
+  const [fetchedCategoryName, setFetchedCategoryName] = useState();
+  const [fetchedProductDetails, setFetchedProductDetails] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const inputRefs = useRef({});
+
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
   //get single product
   const getSingleProduct = async () => {
     try {
       const { data } = await axios.get(
         `/api/v1/product/get-product/${params.slug}`
       );
-      setName(data.product.name);
+      console.log(typeof data.product, "UPDATE VALUES", data.product);
+
+      setFetchedProductDetails(data.product);
+      setFetchedCategoryName(data.product.category.name);
+      setFetchedCategoryDetails(data.product.categoryDetails);
       setId(data.product._id);
-      setDescription(data.product.description);
-      setCategory(data.product.category._id);
-      setPrice(data.product.price);
-      setQuantity(data.product.quantity);
-      setShipping(data.product.shipping);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     getSingleProduct();
-
-    //eslint-disable-next-line
+    console.log(categoryDetails, "Categrory Details on state");
   }, []);
 
-  //get all categories
+  useEffect(() => {
+    const category = categories.find(
+      (category) => category.name === selectedCategory
+    );
+    if (category) {
+      setSelectedCategoryID(category._id);
+    } else {
+      setSelectedCategoryID("");
+    }
+  }, [selectedCategory, categories]);
+
+  // Watch for changes to selectedCategoryID and log it when updated
+  useEffect(() => {
+    if (selectedCategoryID) {
+      console.log("Selected Category ID:", selectedCategoryID);
+    }
+  }, [selectedCategoryID]);
+  // Get all categories
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get("/api/v1/category/all-category");
@@ -56,33 +108,188 @@ const UpdateProduct = () => {
       toast.error("Oops!!Something Went Wrong in getting Category!");
     }
   };
+
   useEffect(() => {
     getAllCategory();
   }, []);
 
-  //update product function
+  const categoryDetails = {
+    Electronics: [
+      { key: "brand", value: "" },
+      { key: "model", value: "" },
+      { key: "warranty", value: "" },
+      { key: "power", value: "" },
+    ],
+    Furnitures: [
+      { key: "material", value: "" },
+      { key: "dimensions", value: "" },
+      { key: "brand", value: "" },
+      { key: "warranty", value: "" },
+    ],
+    "Home Appliances": [
+      { key: "brand", value: "" },
+      { key: "model", value: "" },
+      { key: "warranty", value: "" },
+      { key: "energy efficiency", value: "" },
+      { key: "power", value: "" },
+    ],
+    Footwears: [
+      { key: "brand", value: "" },
+      { key: "size", value: "" },
+      { key: "material", value: "" },
+      { key: "type", value: "" },
+    ],
+    "Ladies Footwear": [
+      { key: "brand", value: "" },
+      { key: "size", value: "" },
+      { key: "material", value: "" },
+      { key: "type", value: "" },
+    ],
+    "Gents Footwear": [
+      { key: "brand", value: "" },
+      { key: "size", value: "" },
+      { key: "material", value: "" },
+      { key: "type", value: "" },
+    ],
+
+    Garments: [
+      { key: "brand", value: "" },
+      { key: "size", value: "" },
+      { key: "fabric", value: "" },
+      { key: "type", value: "" },
+    ],
+    "Ladies Collection": [
+      { key: "brand", value: "" },
+      { key: "size", value: "" },
+      { key: "fabric", value: "" },
+      { key: "type", value: "" },
+    ],
+    "Gents Collection": [
+      { key: "brand", value: "" },
+      { key: "size", value: "" },
+      { key: "fabric", value: "" },
+      { key: "type", value: "" },
+    ],
+    "Kids Collection": [
+      { key: "brand", value: "" },
+      { key: "size", value: "" },
+      { key: "fabric", value: "" },
+      { key: "type", value: "" },
+    ],
+
+    "Kitchen Appliances": [
+      { key: "brand", value: "" },
+      { key: "model", value: "" },
+      { key: "power", value: "" },
+      { key: "warranty", value: "" },
+      { key: "capacity", value: "" },
+    ],
+    Cookwares: [
+      { key: "brand", value: "" },
+      { key: "material", value: "" },
+      { key: "size", value: "" },
+      { key: "coating", value: "" },
+      { key: "type", value: "" },
+    ],
+    "Cleaning Products": [
+      { key: "brand", value: "" },
+      { key: "type", value: "" },
+      { key: "fragrance", value: "" },
+      { key: "size", value: "" },
+      { key: "material compatibility", value: "" },
+    ],
+    "Plastic Appliances": [
+      { key: "brand", value: "" },
+      { key: "material", value: "" },
+
+      { key: "durability", value: "" },
+      { key: "size", value: "" },
+    ],
+    "Camping Products": [
+      { key: "brand", value: "" },
+      { key: "size", value: "" },
+      { key: "material", value: "" },
+      { key: "weight", value: "" },
+      { key: "type", value: "" },
+    ],
+    Mobiles: [
+      { key: "brand", value: "" },
+      { key: "model", value: "" },
+      { key: "storage", value: "" },
+
+      { key: "battery capacity", value: "" },
+    ],
+    Gadgets: [
+      { key: "brand", value: "" },
+      { key: "model", value: "" },
+      { key: "type", value: "" },
+      { key: "features", value: "" },
+    ],
+    Perfumes: [
+      { key: "brand", value: "" },
+      { key: "fragrance", value: "" },
+      { key: "volume", value: "" },
+      { key: "gender", value: "" },
+      { key: "type", value: "" },
+    ],
+    "Beauty Products": [
+      { key: "brand", value: "" },
+      { key: "skin type", value: "" },
+      { key: "ingredients", value: "" },
+      { key: "type", value: "" },
+      { key: "volume", value: "" },
+    ],
+    Toys: [
+      { key: "brand", value: "" },
+      { key: "age group", value: "" },
+      { key: "material", value: "" },
+      { key: "safety certifications", value: "" },
+      { key: "type", value: "" },
+    ],
+    "Stationary Products": [
+      { key: "brand", value: "" },
+      { key: "type", value: "" },
+      { key: "size", value: "" },
+      { key: "material", value: "" },
+      { key: "usage", value: "" },
+    ],
+    // Add more categories as needed
+  };
+  console.log(fetchedProductDetails, "FETCHED DETAILS STORED ON STATE");
+  // Create product function
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
       const productData = new FormData();
       productData.append("name", name);
+      productData.append("slug", slugify(name));
       productData.append("description", description);
       productData.append("price", price);
-
+      productData.append("offer", offer);
       productData.append("quantity", quantity);
-      productData.append("shipping", shipping);
+      productData.append("color", color);
+      productData.append("category", selectedCategoryID);
 
-      image && productData.append("image", image);
-      productData.append("category", category);
-      const { data } = axios.put(
+      // Append images to FormData
+      image.forEach((img) => {
+        productData.append("image", img);
+      });
+
+      // Append category details to FormData
+      categoryDetails[selectedCategory]?.forEach((detail) => {
+        const value = inputRefs.current[detail.key]?.value || ""; // Get values from refs
+        productData.append(detail.key, value); // Append to FormData
+      });
+
+      const { data } = await axios.put(
         `/api/v1/product/update-product/${id}`,
         productData
       );
       if (data?.success) {
-        toast.error(data?.message);
-      } else {
-        toast.success("Product Updated Succesfully");
         navigate("/dashboard/admin/products");
+        toast.success("Product Updated Successfully");
+      } else {
+        toast.error(data?.message);
       }
     } catch (error) {
       console.log(error);
@@ -105,164 +312,297 @@ const UpdateProduct = () => {
     }
   };
   return (
-    <Layout title={"Admin Dashboard-Create product "}>
-      <>
-        <div className="container flex lg:flex-row sm:flex-col lg:gap-10 sm:gap-0">
-          <div className="relative !important h-sc">
-            <AdminMenu />
-          </div>
-          <div className="lg:w-screen sm:left-0 sm:w-screen sm:overflow-hidden !important">
-            <h1 className="lg:text-3xl lg:font-extrabold sm:text-xl sm:font-bold">
-              Create Products
-            </h1>
-            <Select
-              bordered={false}
-              placeholder="Select a Category"
-              size="large"
-              className="form-select"
-              style={{
-                marginBottom: "1rem",
-                width: "100%",
-                cursor: "pointer",
-                border: "1px Solid #cccccc",
-                borderRadius: "8px",
-                borderShadow: " #cccccc",
-              }}
-              onChange={(value) => {
-                setCategory(value);
-              }}
-              value={category}
-            >
-              {categories?.map((c) => (
-                <Option key={c._id} value={c._id}>
-                  {c.name}
-                </Option>
-              ))}
-            </Select>
-            <div style={{ justifyContent: "center" }}>
+    <Layout title={"Admin Dashboard - Update product"}>
+      <div className="container flex lg:flex-row sm:flex-col lg:gap-10 sm:gap-0">
+        <div className="relative !important h-sc">
+          <AdminMenu />
+        </div>
+        <div className="lg:w-screen sm:left-0 sm:w-screen sm:overflow-hidden !important">
+          <h1 className="lg:text-3xl lg:font-extrabold sm:text-xl sm:font-bold">
+            Update Products
+          </h1>
+          <div style={{ margin: "1px", width: "100%" }}>
+            {/* {fetchedProductDetails?.map((p) => {})} */}
+            <div className="flex flex-col ">
               <label
+                className="
+              font-semibold
+              "
+              >
+                Category :
+              </label>
+              <span
+                className="
+              text-gray-600
+              font-mono
+              
+              "
+              >
+                Before:{fetchedProductDetails?.category.name}
+              </span>
+              <Select
+                bordered={false}
+                placeholder="Select a Category"
+                size="large"
+                className="form-select text-black"
                 style={{
-                  border: "1px Solid Black",
-                  padding: "0.2em",
-                  backgroundColor: " rgb(206, 205, 200)",
+                  marginBottom: "1rem",
+                  width: "100%",
                   cursor: "pointer",
-                  display: "flex",
-                  justifyContent: "center",
-                  bottom: "10px",
+                  border: "1px solid #cccccc",
+                  borderRadius: "8px",
+                  boxShadow: "0 0 5px #cccccc",
+                  backgroundColor: "white",
+                }}
+                onChange={(e) => setSelectedCategory(e)}
+              >
+                {categories?.map((c) => (
+                  <Option className="text-[#0e0c0c]" key={c._id} value={c.name}>
+                    {c.name}
+                  </Option>
+                ))}
+              </Select>
+              <label
+                className="
+              font-semibold
+              "
+              >
+                Images :
+              </label>
+              <span
+                className="
+              text-gray-600
+              font-mono
+              
+              "
+              >
+                Before:
+                <div className="product-images flex gap-3 overflow-auto">
+                  {fetchedProductDetails && fetchedProductDetails["image"] ? ( // Check if fetchedProductDetails is not null and contains the 'image' key
+                    <Image.PreviewGroup
+                      preview={{
+                        onChange: (current, prev) =>
+                          console.log(
+                            `current index: ${current}, prev index: ${prev}`
+                          ),
+                      }}
+                    >
+                      {/* Assuming fetchedProductDetails['image'] contains an array of image objects */}
+                      {fetchedProductDetails["image"].map((img, index) => (
+                        <Image
+                          key={index}
+                          width={100}
+                          src={`data:${img.contentType};base64,${img.data}`} // Displaying image as base64
+                          alt={img.alt || `Product Image ${index + 1}`} // Fallback alt text
+                        />
+                      ))}
+                    </Image.PreviewGroup>
+                  ) : (
+                    <p>No images available.</p> // Optional: Message to display if no images are found
+                  )}
+                </div>
+              </span>
+              <Upload
+                className="mt-2"
+                onPreview={onPreview}
+                listType="picture-card"
+                multiple
+                beforeUpload={(file) => {
+                  setImage((prevImages) => [...prevImages, file]); // Append selected file to the array
+                  return false; // Prevent automatic upload
                 }}
               >
-                {image ? image.name : "Upload Image"}
+                <span
+                  className=" 
+              text-[#0e0c0c]
+              shadow-black"
+                >
+                  + Upload New Images
+                </span>
+              </Upload>
+              <label className="relative flex flex-col mt-5 font-semibold ">
+                Name :
+                <span
+                  className="
+              text-gray-600
+              font-mono
+              
+              "
+                >
+                  Before:{fetchedProductDetails?.name}
+                </span>
                 <input
-                  type="file"
-                  name="Image"
-                  accept="image/*"
-                  onChange={(e) => setImage(e.target.files[0])}
-                  hidden
+                  className=" placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                  type="text"
+                  value={name}
+                  placeholder="Enter a Name for Product"
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </label>
+              <label className=" flex-col  align-middle items-start flex mt-5 font-semibold ">
+                Color :
+                <br />
+                <span
+                  className="
+              text-gray-600
+              font-mono "
+                >
+                  <div className="flex ">
+                    Before:
+                    {fetchedProductDetails && fetchedProductDetails?.color ? (
+                      <ColorPicker
+                        defaultValue={
+                          fetchedProductDetails && fetchedProductDetails?.color
+                        }
+                        disabled
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </span>
+                <ColorPicker
+                  defaultValue="#000000"
+                  onChange={(color) => setColor(color.hex)}
+                  size="large"
+                  showText
+                />
+              </label>
+              <label className="relative flex flex-col mt-5 font-semibold">
+                Description :
+                <span
+                  className="
+              text-gray-600
+              font-mono
+              overflow-auto
+              "
+                >
+                  Before:{fetchedProductDetails?.description}
+                </span>
+                <textarea
+                  className=" placeholder:text-slate-400 placeholder:t-2  bg-white text-black w-full h-40 flex border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                  type="text"
+                  value={description}
+                  placeholder="Enter a Description"
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </label>
+              <label className="relative flex flex-col mt-5 font-semibold">
+                Price:
+                <span
+                  className="
+              text-gray-600
+              font-mono
+              
+              "
+                >
+                  Before:{fetchedProductDetails?.price}
+                </span>
+                <input
+                  className=" placeholder:text-slate-400 block bg-white text-black w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                  type="number"
+                  value={price}
+                  placeholder="Enter a Price"
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              </label>
+              <label className="relative flex flex-col mt-5 font-semibold">
+                Offer:
+                <span
+                  className="
+              text-gray-600
+              font-mono
+              
+              "
+                >
+                  Before:{fetchedProductDetails?.offer}%
+                </span>
+                <input
+                  className=" placeholder:text-slate-400 block bg-white text-black w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                  type="number"
+                  value={offer}
+                  placeholder="Offer in %"
+                  onChange={(e) => setOffer(e.target.value)}
+                />
+              </label>
+              <label className="relative flex flex-col mt-5 font-semibold">
+                Quantity:
+                <span
+                  className="
+              text-gray-600
+              font-mono
+              
+              "
+                >
+                  Before:{fetchedProductDetails?.quantity}
+                </span>
+                <input
+                  className=" placeholder:text-slate-400 block bg-white text-black w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                  type="number"
+                  value={quantity}
+                  placeholder="Enter the Quantity"
+                  onChange={(e) => setQuantity(e.target.value)}
                 />
               </label>
             </div>
-            <div>
-              {image ? (
-                <div style={{ textAlign: "center" }}>
-                  <img
-                    className="w-16 md:w-32 lg:w-48 inline m-4"
-                    src={URL.createObjectURL(image)}
-                    alt="Product_Image"
-                    width="50%"
-                    height="auto"
-                    margin=".2rem"
-                  />
-                </div>
-              ) : (
-                <div style={{ textAlign: "center" }}>
-                  <img
-                    className="w-16 md:w-32 lg:w-48 inline m-4"
-                    src={`/api/v1/product/product-image/${id}`}
-                    alt="Product_Image"
-                    width="50%"
-                    height="auto"
-                    margin=".2rem"
-                  />
+            <Button
+              type="
+            primary
+            
+            "
+              onClick={showModal}
+              className="bg-gray-300 mt-2 font-semibold"
+            >
+              Additonal Details
+            </Button>
+            <Modal
+              title="Additional Details"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              {/* Additional Fields for Category-Specific Details */}
+              {fetchedCategoryName && categoryDetails[fetchedCategoryName] && (
+                <div>
+                  {categoryDetails[fetchedCategoryName].map((detail, index) => (
+                    <div key={index}>
+                      <label>
+                        {detail.key.charAt(0).toUpperCase() +
+                          detail.key.slice(1)}
+
+                        <input
+                          type="text"
+                          name={detail.key}
+                          ref={(el) => (inputRefs.current[detail.key] = el)} // Assign ref
+                          placeholder={`Enter ${detail.key}`}
+                          className=" placeholder:text-slate-400 block bg-white text-black w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        />
+                      </label>
+                    </div>
+                  ))}
                 </div>
               )}
-            </div>
-
-            <label className="relative block mt-5">
-              <input
-                className=" placeholder:text-slate-400 block bg-slate-200 w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                type="text"
-                value={name}
-                placeholder="Write a Name for Product"
-                onChange={(e) => setName(e.target.value)}
-              />
-            </label>
-            <label className=" . relative block mt-5">
-              <textarea
-                className=" placeholder:text-slate-400  placeholder:t-2 block bg-slate-200 w-full h-40 flex 	 border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                type="text"
-                value={description}
-                placeholder="Write a Description"
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </label>
-            <label className="relative block mt-5">
-              <input
-                className=" placeholder:text-slate-400 block bg-slate-200 w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                type="number"
-                value={price}
-                placeholder="Write a Price"
-                onChange={(e) => setPrice(e.target.value)}
-              />
-            </label>
-            <label className="relative block mt-5">
-              <input
-                className=" placeholder:text-slate-400 block bg-slate-200 w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                type="number"
-                value={quantity}
-                placeholder="Write the Quantity"
-                onChange={(e) => setQuantity(e.target.value)}
-              />
-            </label>
-            <Select
-              bordered={false}
-              placeholder="Shipping"
-              size="large"
-              className="form-select"
-              style={{
-                marginBottom: "1rem",
-                width: "100%",
-                cursor: "pointer",
-                border: "1px Solid #cccccc",
-                borderRadius: "8px",
-                borderShadow: " #cccccc",
-                marginTop: "1rem",
-              }}
-              onChange={(value) => {
-                setShipping(value);
-              }}
-              value={shipping ? "YES" : "NO"}
-            >
-              <Option value="1">YES</Option>
-              <Option value="0">NO</Option>
-            </Select>
-          </div>
-          <div className="my-3">
-            <button className="btn btn-btn-primary" onClick={handleUpdate}>
-              UPDATE PRODUCT
-            </button>
-          </div>
-            )}
+            </Modal>
 
             <div className="form-buttons mt-5 mb-5">
-            <button
-              className="btn btn-btn-primary !text-red-600"
-              onClick={handleDelete}
-            >
-              DELETE PRODUCT
-            </button>
+              <div className="my-3">
+                <button className="btn btn-btn-primary" onClick={handleUpdate}>
+                  UPDATE PRODUCT
+                </button>
+              </div>
+
+              <div className="form-buttons mt-5 mb-5">
+                <button
+                  className="btn btn-btn-primary !text-red-600"
+                  onClick={handleDelete}
+                >
+                  DELETE PRODUCT
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </>
+      </div>
     </Layout>
   );
 };

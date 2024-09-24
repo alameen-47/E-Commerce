@@ -23,6 +23,7 @@ export default function useCategory() {
         data.categories.map(async (category) => {
           const translatedName = await translateText(
             category.name,
+            
             i18n.language
           );
 

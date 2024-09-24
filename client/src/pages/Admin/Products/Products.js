@@ -5,6 +5,7 @@ import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { ImageCarousel } from "../../../components/Product/ImageCarousel";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -37,7 +38,7 @@ const Products = () => {
                 All Products List
               </h2>
               <div className=" mx-auto  max-w-2xl px-4  sm:px-6  lg:max-w-7xl lg:px-8">
-                <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 ">
+                <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 xl:gap-x-8 ">
                   {products?.map((p) => (
                     <Link
                       key={p._id}
@@ -45,11 +46,7 @@ const Products = () => {
                       className="group shadow-xl hover:shadow-2xl rounded-xl transition duration-300 p-2 pt-5"
                     >
                       <div className="aspect-h-1 aspect-w-2 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7  ">
-                        <img
-                          src={`/api/v1/product/product-image/${p._id}`}
-                          alt={p.name}
-                          className=" h-48 w-96 transition duration-300  aspect-square object-contain group-hover:scale-105"
-                        />
+                        <ImageCarousel image={p.image} />
                       </div>
                       <h3 className="mt-4 text-sm text-gray-900">{p.name}</h3>
                       <p className="mt-1 text-xs font-medium text-gray-500">

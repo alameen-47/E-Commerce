@@ -39,7 +39,7 @@ const HomePage = () => {
           <ElecOffers />
           <br></br>
           <ProductsList start={14} end={28} />
-          <p className="hover:text-gray-800 hover:bg-[#fff] shadow-2xl shadow-gray-500 cursor-pointer flex text-center  justify-center align-middle items-center hover:scale-105 text-white bg-black p-2 w-fit rounded-lg m-auto">
+          <p className="mt-3 hover:text-gray-800 hover:bg-[#fff] shadow-2xl shadow-gray-500 cursor-pointer flex text-center  justify-center align-middle items-center hover:scale-105 text-white bg-black p-2 w-fit rounded-lg m-auto">
             <span className="font-semibold">
               <Link to={"/allproducts"}>
                 {t("home.Click here to Explore More Products")}

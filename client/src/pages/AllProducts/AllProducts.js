@@ -13,6 +13,7 @@ import { debounce } from "lodash";
 import { Prices } from "../.././components/Prices";
 import { Carousel } from "@material-tailwind/react";
 import { ProductCard1 } from "../../components/Product/ProductCard1.jsx";
+import Products from "../Admin/Products/Products.js";
 
 const AllProducts = ({ start, end }) => {
   const [cart, setCart] = useCart([]);
@@ -96,6 +97,8 @@ const AllProducts = ({ start, end }) => {
       const { data } = await axios.get(`/api/v1/product/get-product`);
       // setLoading(false);
       const totalLength = data.length;
+      console.log("DATA.PRODUCT VALUES", data.products);
+
       if (data.products.length > 0) {
         const translatedProducts = await Promise.all(
           data.products.map(async (product) => {
@@ -122,7 +125,6 @@ const AllProducts = ({ start, end }) => {
           })
         );
         setProducts((prevProducts) => [...prevProducts, ...translatedProducts]);
-
         // Initialize displayed products and IDs
         const initialProducts = data.products.slice(0, pageSize);
         setDisplayedProducts(initialProducts);
@@ -185,6 +187,7 @@ const AllProducts = ({ start, end }) => {
   useEffect(() => {
     if (hasMore) {
       getAllProducts();
+      console.log("ALL PRODUCTS OUTPUT ", Products);
     }
   }, [page]);
 

@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
 
+// Define translation schema for multi-language support
 const translationSchema = new mongoose.Schema({
   name: String,
   description: String,
 });
+
+// Define product schema
 const productSchema = new mongoose.Schema(
   {
     name: {
@@ -18,6 +21,9 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    color: {
+      type: String,
+    },
     price: {
       type: Number,
       required: true,
@@ -31,18 +37,14 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
     category: {
-      type: mongoose.ObjectId,
-      ref: "Category",
-      require: true,
-    },
-    discountPrice: {
-      type: Number,
-      require: true,
+      type: mongoose.ObjectId, // Category as a string (e.g., "electronics", "furniture")
+      ref: "Category",  
+          required: true,
     },
     quantity: {
       type: Number,
       default: 1,
-      require: true,
+      required: true,
     },
     image: [
       {
@@ -57,8 +59,14 @@ const productSchema = new mongoose.Schema(
       en: translationSchema,
       ar: translationSchema,
     },
+    // categoryDetails will store data specific to the category
+    categoryDetails: {
+      type: mongoose.Schema.Types.Mixed, // Flexible to store any structure of details
+      default: {},
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Products", productSchema);
+// Export the model
+export default mongoose.model("Product", productSchema);

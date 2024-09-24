@@ -28,9 +28,31 @@ export const createProductController = async (req, res) => {
       offer,
       quantity,
       shipping,
+      color,
       translations,
     } = req.fields;
     const { image } = req.files;
+
+    // Standard fields to exclude from categoryDetails
+    const standardFields = [
+      "name",
+      "slug",
+      "description",
+      "price",
+      "category",
+      "offer",
+      "quantity",
+      "shipping",
+      "color",
+      "translations",
+    ];
+    // Filter category-specific details dynamically (anything not in standardFields)
+    const categoryDetails = {};
+    Object.keys(req.fields).forEach((key) => {
+      if (!standardFields.includes(key)) {
+        categoryDetails[key] = req.fields[key]; // Add the field to categoryDetails if it's not a standard field
+      }
+    });
     //validations
     switch (true) {
       case !name:
@@ -48,10 +70,12 @@ export const createProductController = async (req, res) => {
       case !offer:
         return res.status(500).send({ error: "Offer is Required" });
     }
+
     const products = new productModel({
       ...req.fields,
       offer,
       slug: slugify(name),
+      categoryDetails,
     });
 
     // Handle multiple images
@@ -68,7 +92,7 @@ export const createProductController = async (req, res) => {
 
       const compressedSize = fs.statSync(outputFilePath).size; // Compressed image size
       const imageBuffer = fs.readFileSync(outputFilePath);
-      const imageBase64 = imageBuffer.toString("base64");
+      // const imageBase64 = imageBuffer.toString("base64");
 
       // Clean up the temporary file
       fs.unlinkSync(outputFilePath);
@@ -159,13 +183,30 @@ export const getSingleProductController = async (req, res) => {
   try {
     const product = await productModel
       .findOne({ slug: req.params.slug })
-      // .select("-image")
       .populate("category");
-    res.status(200).send({
-      success: true,
-      message: "Product Fetched successfully",
-      product,
-    });
+    // 2. Check if the product exists
+    if (product) {
+      // 3. Process the image data (converting Buffer to base64 string)
+      const productWithImage = {
+        ...product._doc, // Spread other product details
+        image: product.image.map((img) => ({
+          contentType: img.contentType, // Keep content type (e.g., "image/png")
+          data: img.data.toString("base64"), // Convert Buffer to base64 string
+        })),
+      };
+      // 4. Send back the product details with image in base64
+      res.status(200).send({
+        success: true,
+        message: "Product fetched successfully",
+        product: productWithImage, // Send the processed product with base64 image
+      });
+    } else {
+      // 5. If no product is found, send a 404 response
+      res.status(404).send({
+        success: false,
+        message: "Product not found", // Product with the given slug does not exist
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -228,9 +269,40 @@ export const deleteProductController = async (req, res) => {
 //updateProductController
 export const updateProductController = async (req, res) => {
   try {
-    const { name, description, price, category, quantity, offer } = req.fields;
-
+    const {
+      name,
+      slug,
+      description,
+      price,
+      category,
+      offer,
+      quantity,
+      shipping,
+      color,
+      translations,
+    } = req.fields;
     const { image } = req.files;
+
+    // Standard fields to exclude from categoryDetails
+    const standardFields = [
+      "name",
+      "slug",
+      "description",
+      "price",
+      "category",
+      "offer",
+      "quantity",
+      "shipping",
+      "color",
+      "translations",
+    ];
+    // Filter category-specific details dynamically (anything not in standardFields)
+    const categoryDetails = {};
+    Object.keys(req.fields).forEach((key) => {
+      if (!standardFields.includes(key)) {
+        categoryDetails[key] = req.fields[key]; // Add the field to categoryDetails if it's not a standard field
+      }
+    });
     //validations
     switch (true) {
       case !name:
@@ -245,28 +317,60 @@ export const updateProductController = async (req, res) => {
         return res.status(500).send({ error: "Category is Required" });
       case !quantity:
         return res.status(500).send({ error: "Quantity is Required" });
-      case image && image.size > 1000000:
-        return res
-          .status(500)
-          .send({ error: "Image is Required and should be less than 1mb " });
+      case !offer:
+        return res.status(500).send({ error: "Offer is Required" });
     }
-    // Calculate discount price
-    const discountPrice = Math.floor(price - (price * offer) / 100);
 
-    const products = await productModel.findByIdAndUpdate(
-      req.params.pid,
-      {
-        ...req.fields,
-        discountPrice,
-        slug: slugify(name),
-      },
-      { new: true }
-    );
+    const products = new productModel({
+      ...req.fields,
+      offer,
+      slug: slugify(name),
+      categoryDetails,
+    });
+
+    // Handle multiple images
+    // if (image) {
+    const processImage = async (img) => {
+      const originalSize = fs.statSync(img.path).size;
+
+      const outputFilePath = `compressed_${Date.now()}.webp`; // Create a unique output file name
+      await sharp(img.path)
+        .resize(500, 500, { fit: "inside" }) // Reduced size
+        .webp({ quality: 78 }) // Adjust quality (70-85 is a good balance)
+        .toFormat("webp")
+        .toFile(outputFilePath);
+
+      const compressedSize = fs.statSync(outputFilePath).size; // Compressed image size
+      const imageBuffer = fs.readFileSync(outputFilePath);
+      // const imageBase64 = imageBuffer.toString("base64");
+
+      // Clean up the temporary file
+      fs.unlinkSync(outputFilePath);
+
+      // Log size difference
+      console.log(`Original Size: ${originalSize / 1024} KB`);
+      console.log(`Compressed Size: ${compressedSize / 1024} KB`);
+      console.log(
+        `Size Reduction: ${(originalSize - compressedSize) / 1024} KB`
+      );
+
+      // Read the compressed image and add it to the product
+      return {
+        data: imageBuffer,
+        contentType: "image/webp",
+      };
+    };
+
     if (image) {
-      products.image.data = fs.readFileSync(image.path);
-      products.image.contentType = image.type;
+      const imageArray = Array.isArray(image) ? image : [image];
+      for (const img of imageArray) {
+        const processedImage = await processImage(img);
+        products.image.push(processedImage);
+      }
     }
+
     await products.save();
+
     res.status(201).send({
       success: true,
       message: "Product Updated Successfully",
