@@ -194,7 +194,7 @@ const CartPage = () => {
     <Layout>
       <div className="container mx-auto mt-10">
         <div className="flex flex-col md:flex-row shadow-md my-10">
-          <div className="w-full md:w-3/4 bg-slate-200 px-10 py-10">
+          <div className="w-full md:w-3/4 bg-slate-300 px-10 py-10">
             <div className="flex justify-between border-b pb-8">
               <h1 className="font-semibold lg:text-2xl">
                 {t("cart.Shopping Cart")}

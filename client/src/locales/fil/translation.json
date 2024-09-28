@@ -183,5 +183,14 @@
     "from_600_to_900": "SAR: Mula 600 hanggang 900",
     "from_900_to_1000": "SAR: Mula 900 hanggang 1000",
     "over_1000": "SAR: 1000 pataas"
+  },
+  "offers": {
+    "Up to 15% OFF": "Hanggang 15% Diskwento",
+    "Up to 30% OFF": "Hanggang 30% Diskwento",
+    "Up to 45% OFF": "Hanggang 45% Diskwento",
+    "Up to 60% OFF": "Hanggang 60% Diskwento",
+    "60% and Above OFF": "60% Pataas Diskwento",
+    "Filter By Offers": "I-filter Ayon sa Mga Alok"
+
   }
 }

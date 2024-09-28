@@ -51,7 +51,7 @@ const AdminOrders = () => {
             <AdminMenu />
           </div>
 
-          <div class="bg-slate-200 lg:w-screen h-screen overflow-y-scroll shadow rounded-lg border">
+          <div class="bg-slate-300 lg:w-screen h-screen overflow-y-scroll shadow rounded-lg border">
             <div class="lg:col-span-2 px-4 py-5 sm:px-0">
               <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                 <p className="sm:text-lg lg:text-2xl">Your Orders</p>

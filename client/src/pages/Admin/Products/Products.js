@@ -33,7 +33,7 @@ const Products = () => {
             <AdminMenu />
           </div>
           <div className="lg:w-screen sm:left-0 sm:w-screen h-screen overflow-scroll sm:overflow-y-scroll !important">
-            <div className="bg-slate-200">
+            <div className="bg-slate-300">
               <h2 className="lg:text-3xl lg:font-extrabold sm:text-xl sm:font-bold">
                 All Products List
               </h2>

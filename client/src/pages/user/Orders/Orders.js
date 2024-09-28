@@ -51,9 +51,9 @@ const Orders = () => {
 
   return (
     <Layout title={"Your Orders"}>
-      <div class="bg-slate-200 flex  lg:flex-row sm:flex-col  shadow-lg  px-4 md:p-8 mb-6">
+      <div class="bg-slate-300 flex  lg:flex-row sm:flex-col  shadow-lg  px-4 md:p-8 mb-6">
         <UserMenu />
-        <div class="bg-slate-200 lg:w-screen  shadow  border rounded-tr-lg rounded-br-lg">
+        <div class="bg-slate-300 lg:w-screen  shadow  border rounded-tr-lg rounded-br-lg">
           <div class="lg:col-span-2 px-4 py-5 sm:px-0 lg:h-screen overflow-auto ">
             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5 ">
               <p className="sm:text-lg lg:text-2xl px-4">

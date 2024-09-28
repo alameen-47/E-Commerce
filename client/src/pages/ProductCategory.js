@@ -54,7 +54,7 @@ const ProductCategory = () => {
                 lg:aspect-[2/3]   "
               key={p._id}
             >
-              <div className="text-wrap  group lg:py-4 lg:px-2  bg-slate-200/10 rounded-lg flex flex-col items-center justify-center  relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all  lg:xl:h-96 sm:h-72 ">
+              <div className="text-wrap  group lg:py-4 lg:px-2  bg-slate-300/10 rounded-lg flex flex-col items-center justify-center  relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all  lg:xl:h-96 sm:h-72 ">
                 <img
                   onClick={() => navigate(`/product/${p.slug}`)}
                   src={`/api/v1/product/product-image/${p._id}`}
@@ -107,7 +107,7 @@ const ProductCategory = () => {
                   onClick={() => {
                     addToCart([{ ...p, units }]);
                   }}
-                  className="btun4 text-white lg:inline-flex items-center lg:gap-3 sm:gap-1 group-hover:bg-slate-200 group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer lg:py-2 sm:py-1 lg:px-4 sm:px-2 lg:text-sm sm:text-xs font-semibold rounded-full butn"
+                  className="btun4 text-white lg:inline-flex items-center lg:gap-3 sm:gap-1 group-hover:bg-slate-300 group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer lg:py-2 sm:py-1 lg:px-4 sm:px-2 lg:text-sm sm:text-xs font-semibold rounded-full butn"
                 >
                   {t("common.ADD TO CART")}
                 </button>
@@ -122,7 +122,7 @@ const ProductCategory = () => {
                 e.preventDefault();
                 setPage(page + 1);
               }}
-              className=" items-center  justify-between bg-black  rounded box-border p-4 text-white text-xs font-semibold tracking-widest uppercase overflow-hidden cursor-pointer hover:opacity-80 shadow-lg "
+              className=" items-center  text-centerjustify-between bg-black  rounded box-border p-4 text-white text-xs font-semibold tracking-widest uppercase overflow-hidden cursor-pointer hover:opacity-80 shadow-lg flex -middle"
             >
               {loading ? t("allProducts.Loading...") : t("common.Loadmore")}
             </button>

@@ -9,7 +9,7 @@ import logout from "../../../assets/icons/icons8-logout-90.png";
 import userdetails from "../../../assets/icons/icons8-user-details-64.png";
 import dashboard from "../../../assets/icons/icons8-dashboard-layout-96.png";
 import toast from "react-hot-toast";
-import { Link, NavLink } from "react-router-dom";
+import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import SearchInput from "../../Form/SearchInput";
 import useCategory from "../../../hooks/useCategory";
 import { useCart } from "../../../context/cart";
@@ -27,6 +27,8 @@ function Header() {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [isRTL, setIsRTL] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Check if the document's direction is RTL
     const checkDirection = () => {
@@ -112,7 +114,11 @@ function Header() {
             </button>
           ) : (
             <div
-              onClick={() => setDropDown(!dropDown)}
+              onClick={() =>
+                navigate(
+                  `/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`
+                )
+              }
               onBlur={() => setDropDown(false)}
               className="dropdown"
             >

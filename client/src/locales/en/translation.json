@@ -65,7 +65,6 @@
     "Enter Your New Password": "Enter Your New Password",
     "Don't have an account?": "Don't have an account?",
     "enterYourPostalCode": "Enter Your Poastal Code"
-
   },
   "home": {
     "Home": "Home",
@@ -191,5 +190,13 @@
     "from_600_to_900": "SR:600 to 900",
     "from_900_to_1000": "SR:900 to 1000",
     "over_1000": "SR:1000 or more"
+  },
+  "offers": {
+    "Up to 15% OFF": "Up to 15% OFF",
+    "Up to 30% OFF": "Up to 30% OFF",
+    "Up to 45% OFF": "Up to 45% OFF",
+    "Up to 60% OFF": "Up to 60% OFF",
+    "60% and Above OFF": "60% and Above OFF",
+    "Filter By Offers": "Filter By Offers"
   }
 }

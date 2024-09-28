@@ -547,9 +547,7 @@ const UpdateProduct = () => {
             </div>
             <Button
               type="
-            primary
-            
-            "
+            primary"
               onClick={showModal}
               className="bg-gray-300 mt-2 font-semibold"
             >

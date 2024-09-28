@@ -389,15 +389,47 @@ export const updateProductController = async (req, res) => {
 //filters
 export const productFiltersController = async (req, res) => {
   try {
-    const { checked, radio } = req.body;
+    const { checked, radio, radioOffer } = req.body;
     let args = {};
-    if (checked.length > 0) args.category = checked;
-    if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
+
+    // Apply category filter if "checked" is selected
+    if (checked.length > 0) {
+      args.category = { $in: checked }; // Assuming "checked" is an array of categories
+    }
+
+    // Apply price filter if "radio" is selected
+    if (radio.length) {
+      args.price = { $gte: radio[0], $lte: radio[1] }; // Between radio[0] and radio[1]
+    }
+
+    // Apply offer filter if "radioOffer" is selected
+    if (radioOffer.length) {
+      args.offer = { $gte: radioOffer[0], $lte: radioOffer[1] }; // Between radioOffer[0] and radioOffer[1]
+    }
     const products = await productModel.find(args);
-    res.status(200).send({
-      success: true,
-      products,
-    });
+    if (products && products.length > 0) {
+      const productList = products.map((product) => {
+        return {
+          ...product._doc, // Spread other product details
+          image: product.image.map((img) => ({
+            contentType: img.contentType,
+            data: img.data.toString("base64"), // Convert Buffer to base64 string
+          })),
+        };
+      });
+      res.status(200).send({
+        success: true,
+        totalCount: products.length,
+        message: "Filtered Products",
+        products: productList, // Send the processed product list with base64 images
+      });
+    } else {
+      res.status(404).send({
+        success: false,
+        message: "No products found",
+        products: "",
+      });
+    }
   } catch (error) {
     console.log(e);
     res.status(400).send({

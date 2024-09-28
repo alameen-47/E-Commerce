@@ -149,7 +149,7 @@ const ProductDetails = () => {
         <div className="grid lg:grid-cols-4  sm:grid-cols-2 ">
           {relatedProducts?.map((p) => (
             <div className="flex-col">
-              <div className="m-2 group p-8  bg-slate-200/10 rounded-lg flex flex-col items-center justify-center gap-2 relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all max-w-xs h-96 ">
+              <div className="m-2 group p-8  bg-slate-300/10 rounded-lg flex flex-col items-center justify-center gap-2 relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all max-w-xs h-96 ">
                 <img
                   onClick={() => navigate(`/product/${p.slug}`)}
                   src={`/api/v1/product/product-image/${p._id}/0`}
@@ -193,7 +193,7 @@ const ProductDetails = () => {
                     onClick={() => {
                       addToCart([{ ...p, units }]);
                     }}
-                    className="text-white lg:inline-flex items-center gap-3 group-hover:bg-slate-200 group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer py-2 px-2 text-xs font-semibold rounded-full "
+                    className="text-white lg:inline-flex items-center gap-3 group-hover:bg-slate-300 group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer py-2 px-2 text-xs font-semibold rounded-full "
                   >
                     {t("common.ADD TO CART")}
                   </button>

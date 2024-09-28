@@ -17,6 +17,7 @@
     "country-flag-icons": "^1.5.12",
     "dotenv": "^16.4.5",
     "framer-motion": "^11.2.10",
+    "http-proxy-middleware": "^3.0.2",
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^7.2.1",
     "i18next-http-backend": "^2.5.2",
