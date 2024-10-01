@@ -4,11 +4,14 @@ import { ImageCarousel } from "./ImageCarousel";
 import { useCart } from "../../context/cart";
 import toast from "react-hot-toast";
 import { t } from "i18next";
+import { useNavigate } from "react-router-dom";
 
 export const ProductCard1 = ({ products }) => {
   const [cart, setCart] = useCart();
   const [units, setUnits] = useState(1);
+  const navigate = useNavigate();
 
+  
   const addToCart = (item) => {
     const updatedCart = [...cart, ...item];
     setCart(updatedCart);
@@ -19,8 +22,8 @@ export const ProductCard1 = ({ products }) => {
   return (
     <div>
       <div
-        // onClick={() => navigate(`/product/${products.slug}`)}
-        className=" text-wrap  group align-middle lg:px-2  bg-slate-300/10 rounded-lg flex flex-col items-center justify-center  relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all  md:gap-1 p-2"
+        onClick={() => navigate(`/product/${products.slug}`)}
+        className=" text-wrap  group align-middle lg:px-5  bg-gray-300 rounded-lg flex flex-col items-center justify-center  relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all  md:gap-1 p-2"
       >
         <Badge.Ribbon
           text={products.offer ? `${products.offer}% OFF` : ""}
@@ -32,7 +35,7 @@ export const ProductCard1 = ({ products }) => {
               : "red"
           }
         >
-          <ImageCarousel image={products.image} />
+          <ImageCarousel images={products} />
         </Badge.Ribbon>
         <p className=" PRODUCT-NAME  md:mb-2 cardtxt font-semibold  text-black tracking-wider group-hover:text-white h-2 md:text-sm lg:text-[16px] sm:text-[13px] ">
           {(() => {

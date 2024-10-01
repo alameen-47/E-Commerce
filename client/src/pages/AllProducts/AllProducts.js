@@ -111,18 +111,11 @@ const AllProducts = () => {
               product.description,
               i18n.language
             );
-            // const translatedFilterDetails=
-
-            const updatedImages = product?.image.map((img) => ({
-              ...img,
-              filePath: `http://localhost:8085/uploads/${img.filePath}`,
-            }));
 
             return {
               ...product,
               name: translatedName,
               description: translatedDescription,
-              image: updatedImages,
             };
           })
         );
@@ -164,8 +157,8 @@ const AllProducts = () => {
 
     try {
       // Calculate the next visible products
-      const nextVisibleCount = visibleCount + 20; // Load 20 more products
-      if (nextVisibleCount >= products.length) {
+      const nextVisibleCount = visibleCount + 6; // Load 12 more products
+      if (products.length) {
         setHasMore(false); // No more products to load
       }
 
@@ -341,7 +334,7 @@ const AllProducts = () => {
             )}
           </Drawer>
         </div>
-        <div className="h-auto w-full flex align-top  items-start bg-slate-300 pt-10">
+        <div className="h-auto w-full flex align-top  items-start bg-white pt-10">
           <div className="md:w-1/5 lg:block  sm:hidden pr-4 pl-4 flex-wrap top-0 left-0 bottom-0 sticky  justify-start align-top items-start ">
             <h3 className="text-center md:sm:text-sm lg:text-lg font-bold ">
               {t("allProducts.Filter By Category")}
@@ -407,7 +400,7 @@ const AllProducts = () => {
               {visibleProducts && visibleProducts.length > 0
                 ? visibleProducts.map((p) => (
                     <div
-                      className="flex lg:flex-col sm:flex-row lg:aspect-[2/3] justify-center align-middle items-center"
+                      className="flex w-auto lg:flex-col sm:flex-row  justify-center align-middle items-center"
                       key={p._id}
                     >
                       <ProductCard1 products={p} />

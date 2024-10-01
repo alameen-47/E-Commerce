@@ -22,7 +22,7 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          "base-100": "#E2E8F0",
+          "base-100": "#ffffff",
         },
       },
     ],

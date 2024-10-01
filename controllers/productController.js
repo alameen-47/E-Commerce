@@ -694,19 +694,36 @@ export const relatedProductsController = async (req, res) => {
         category: cid,
         _id: { $ne: pid },
       })
-      // .select("-image")
-      .limit(4)
+      .limit(5)
       .populate("category");
-    res.status(200).send({
-      success: true,
-      products,
-    });
+    if (products && products.length > 0) {
+      const productList = products.map((product) => {
+        return {
+          ...product._doc, // Spread other product details
+          image: product.image.map((img) => ({
+            contentType: img.contentType,
+            data: img.data.toString("base64"), // Convert Buffer to base64 string
+          })),
+        };
+      });
+      res.status(200).send({
+        success: true,
+        totalCount: products.length,
+        message: "All Related Products",
+        products: productList, // Send the processed product list with base64 images
+      });
+    } else {
+      res.status(404).send({
+        success: false,
+        message: "No products found",
+      });
+    }
   } catch (error) {
     console.log(error);
-    res.status(400).send({
+    res.status(500).send({
       success: false,
-      message: "Error while fetching related products",
-      error,
+      message: "Error in Fetching Related Products ",
+      error: error.message,
     });
   }
 };

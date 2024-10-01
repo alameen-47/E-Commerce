@@ -18,7 +18,10 @@ import { t } from "i18next";
 const HomePage = () => {
   return (
     <Layout title={"RAWAD-MALL-Everything you Need!"}>
-      <div className="flex justify-center items-center align-middle  min-h-screen bg-slate-300 w-full overflow-x-hidden ">
+      <div
+        className="flex justify-center items-center align-middle  min-h-screen
+       bg-white w-full overflow-x-hidden "
+      >
         <div className=" w-screen max-w-full ">
           <Slideshow className="bg-gradient-to-b from-current to-transparent" />
           <br></br>
