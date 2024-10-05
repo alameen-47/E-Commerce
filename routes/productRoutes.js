@@ -12,11 +12,10 @@ import {
   getAllProductController,
   getProductListController,
   getSingleProductController,
+  personalizedProductsController,
   productCategoryController,
   productCountController,
   productFiltersController,
-  // productImageController,
-  // productListController,
   relatedProductsController,
   searchProductController,
   updateProductController,
@@ -50,7 +49,7 @@ router.get("/get-product", getAllProductController);
 // router.get("/get-product/offer-filter", getProductsForSlideshowController);
 
 //single product
-router.get("/get-product/:slug", getSingleProductController);
+router.get("/get-product/:slug/:pid", getSingleProductController);
 
 //get image
 // router.get("/product-image/:pid", productImageController);
@@ -84,6 +83,9 @@ router.get("/electronics", electronicsController);
 
 //Footware products
 router.get("/footwear", footwearController);
+
+//personalizedRelated products
+router.get("/similar-product/:pname/:cid", personalizedProductsController);
 
 //payments routes
 //token

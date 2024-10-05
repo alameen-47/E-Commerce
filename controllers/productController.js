@@ -181,8 +181,10 @@ export const getAllProductController = async (req, res) => {
 //get single product
 export const getSingleProductController = async (req, res) => {
   try {
+    const slug = req.params.slug || req.body.slug; // Priority given to params
+    const productId = req.params.pid || req.body.id; // Priority given to params
     const product = await productModel
-      .findOne({ slug: req.params.slug })
+      .findOne({ slug: slug, _id: productId })
       .populate("category");
     // 2. Check if the product exists
     if (product) {
@@ -247,7 +249,6 @@ export const productImageController = async (req, res) => {
     });
   }
 };
-
 //Delete Controller
 export const deleteProductController = async (req, res) => {
   try {
@@ -566,7 +567,6 @@ export const footwearController = async (req, res) => {
         };
       });
       const link = "/category/footwear";
-
       const gentsFootwear = [];
       const ladiesFootwear = [];
       const kidsFootwear = [];
@@ -584,7 +584,6 @@ export const footwearController = async (req, res) => {
             break;
         }
       });
-
       res.status(200).send({
         success: true,
         message: "All Footwear Products",
@@ -672,15 +671,93 @@ export const searchProductController = async (req, res) => {
       $or: [
         { name: { $regex: keyword, $options: "i" } },
         { description: { $regex: keyword, $options: "i" } },
+        { categoryDetails: { $regex: keyword, $options: "i" } },
       ],
     });
-    // .select("-image");
     res.json(results);
   } catch (error) {
     console.log(error);
     res.status(400).send({
       success: false,
       message: "Search Error",
+      error,
+    });
+  }
+};
+
+//  product
+export const personalizedProductsController = async (req, res) => {
+  try {
+    const { pname } = req.params;
+    const { cid } = req.params;
+    if (!pname) {
+      return res.status(400).send({
+        success: false,
+        message: "Product Name is required",
+      });
+    }
+
+    // Split the search term into individual words (e.g., ["iPhone", "XR"])
+    const searchTerms = pname.split(" ");
+
+    // Create a query to search each word separately
+    const regexArray = searchTerms.map((term) => ({
+      $or: [
+        { name: { $regex: term, $options: "i" } }, // Partial match in product name
+        { description: { $regex: term, $options: "i" } }, // Partial match in description
+        { slug: { $regex: term, $options: "i" } }, // Partial match in slug
+        { categoryDetails: { $regex: term, $options: "i" } }, // Partial match in category details
+        { "categories.name": { $regex: term, $options: "i" } }, // Partial match in category name
+        { "categories.keywords": { $regex: term, $options: "i" } }, // Partial match in category keywords
+      ],
+    }));
+
+    // Find products matching any of the individual search terms
+    let products = await productModel
+      .find({
+        $or: regexArray,
+      })
+      .limit(5);
+    // If products found are less than the limit, fetch more from the same category
+    const initialProductCount = products.length;
+    if (initialProductCount < 5 && initialProductCount > 0) {
+      // Get the category of the first product (or relevant category for the search)
+      const categoryToSearch = products[0].categories;
+
+      // Find more products from the same category to fulfill the remaining limit
+      const additionalProducts = await productModel
+        .find({
+          category: cid,
+          _id: { $nin: products.map((prod) => prod._id) }, // Exclude already fetched products
+        })
+        .limit(5 - initialProductCount); // Fetch remaining products to complete the limit
+
+      // Append additional products to the original search results
+      products = products.concat(additionalProducts);
+    }
+
+    if (products && products.length > 0) {
+      const productList = products.map((product) => {
+        return {
+          ...product._doc, // Spread other product details
+          image: product.image.map((img) => ({
+            contentType: img.contentType,
+            data: img.data.toString("base64"), // Convert Buffer to base64 string
+          })),
+        };
+      });
+      // 4. Send back the products details with image in base64
+      res.status(200).send({
+        success: true,
+        message: "products fetched successfully",
+        products: productList, // Send the processed product with base64 image
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Personalized Products Error",
       error,
     });
   }

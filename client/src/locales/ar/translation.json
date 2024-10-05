@@ -167,7 +167,8 @@
     "TOTAL": "المجموع",
     "Order Summary": "ملخص الطلب",
     "ITEMS": "العناصر",
-    "SAR": "SAR",
+    "SAR": "ر.س",
+    "off": " خصم",
     "SHIPPING": "الشحن",
     "Standard shipping": "رسوم الشحن القياسي",
     "Enter your delivery address": "أدخل عنوان التسليم الخاص بك",
@@ -193,6 +194,5 @@
     "Up to 60% OFF": "خصم حتى 60%",
     "60% and Above OFF": "خصم 60% وأكثر",
     "Filter By Offers": "تصفية حسب العروض"
-
   }
 }

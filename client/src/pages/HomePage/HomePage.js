@@ -15,6 +15,7 @@ import OffersTop from "./OFFERS/TOPOFFERS/OffersTop";
 import ElecOffers from "./OFFERS/ELECOFFERS/ElecOffers";
 import { Link } from "react-router-dom";
 import { t } from "i18next";
+
 const HomePage = () => {
   return (
     <Layout title={"RAWAD-MALL-Everything you Need!"}>
@@ -27,7 +28,7 @@ const HomePage = () => {
           <br></br>
           <OffersTop />
           <br></br>
-          <CategoryListAnimation direction="left" />
+          <CategoryListAnimation />
           <br></br>
           <Electronics />
           <br></br>

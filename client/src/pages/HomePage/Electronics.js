@@ -1,62 +1,19 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
-import { useCart } from "../../context/cart.js";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { t } from "i18next";
-import { Badge, Skeleton } from "antd";
-import i18n from "../../i18n/index.js";
-import { ImageCarousel } from "../../components/Product/ImageCarousel.js";
 import { ProductCard1 } from "../../components/Product/ProductCard1.jsx";
 
 const Electronics = () => {
-  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [units, setUnits] = useState(1);
-  const [cart, setCart] = useCart();
 
-  //translation
-  const translateText = async (text, targetLanguage) => {
-    const { data } = await axios.post("/api/v1/translate", {
-      text,
-      targetLanguage,
-    });
-    return data.translatedText;
-  };
   // Get all products from the server
   const getElectronics = async () => {
     try {
       const { data } = await axios.get("/api/v1/product/electronics");
       console.log("Electronics data", data);
-      if (data.products.length > 0) {
-        const translatedProducts = await Promise.all(
-          data.products.map(async (product) => {
-            const translatedName = await translateText(
-              product.name,
-              i18n.language
-            );
-            const translatedDescription = await translateText(
-              product.description,
-              i18n.language
-            );
 
-            const updatedImages = product?.image.map((img) => ({
-              ...img,
-              filePath: `http://localhost:8085/uploads/${img.filePath}`,
-            }));
-
-            return {
-              ...product,
-              name: translatedName,
-              description: translatedDescription,
-              image: updatedImages,
-            };
-          })
-        );
-        setProducts(translatedProducts);
-        // Initialize active image state for all products
-      }
+      setProducts(data.products);
     } catch (error) {
       console.log(error);
     }

@@ -163,6 +163,7 @@
     "QUANTITY": "Dami",
     "PRICE": "Presyo",
     "TOTAL": "Kabuuan",
+    "off": "diskwento",
     "Order Summary": "Buod ng Order",
     "ITEMS": "Mga Item",
     "SAR": "SAR",
@@ -191,6 +192,5 @@
     "Up to 60% OFF": "Hanggang 60% Diskwento",
     "60% and Above OFF": "60% Pataas Diskwento",
     "Filter By Offers": "I-filter Ayon sa Mga Alok"
-
   }
 }

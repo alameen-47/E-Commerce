@@ -6,8 +6,6 @@ import Layout from "../../../components/Layout/Layout";
 import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
 import { Button, ColorPicker, Modal, Select, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
-import slug from "slugify";
-import { SketchPicker } from "react-color"; // Import color picker
 import slugify from "slugify";
 
 const { Option } = Select;
@@ -21,7 +19,6 @@ const CreateProducts = () => {
   const [offer, setOffer] = useState("");
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [shipping, setShipping] = useState("");
   const [image, setImage] = useState("");
   const [color, setColor] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");

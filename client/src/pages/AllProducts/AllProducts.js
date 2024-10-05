@@ -18,7 +18,6 @@ import { FaShoppingCart } from "react-icons/fa";
 
 const AllProducts = () => {
   const [cart] = useCart();
-
   const [open, setOpen] = useState(false);
   const [loadingAnimation, setLoadingAnimation] = useState(true);
   const [products, setProducts] = useState([]);
@@ -100,33 +99,11 @@ const AllProducts = () => {
       const totalLength = data.length;
       console.log(typeof data.products, "DATA.PRODUCT VALUES", data.products);
 
-      if (data.products.length > 0) {
-        const translatedProducts = await Promise.all(
-          data.products.map(async (product) => {
-            const translatedName = await translateText(
-              product.name,
-              i18n.language
-            );
-            const translatedDescription = await translateText(
-              product.description,
-              i18n.language
-            );
+      setProducts(data.products);
 
-            return {
-              ...product,
-              name: translatedName,
-              description: translatedDescription,
-            };
-          })
-        );
-        setProducts((prevProducts) => [...prevProducts, ...translatedProducts]);
-
-        // Check if there are more products to load
-        if (data.products.length < 10) {
-          setHasMore(false); // No more products available if fewer than 10 are returned
-        }
-      } else {
-        setHasMore(false); // No products returned means stop fetching
+      // Check if there are more products to load
+      if (data.products.length < 10) {
+        setHasMore(false); // No more products available if fewer than 10 are returned
       }
     } catch (error) {
       setLoading(false);

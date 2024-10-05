@@ -6,6 +6,7 @@ import search from "../../assets/icons/search icon.png";
 import { t } from "i18next";
 const SearchInput = () => {
   const [values, setValues] = useSearch();
+  const [keyWord, setKeyWord] = useState();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,11 +15,24 @@ const SearchInput = () => {
         `/api/v1/product/search/${values.keyword}`
       );
       setValues({ ...values, results: data });
+      setKeyWord(values.keyword);
+      // Retrieve the existing search history from localStorage
+      let searchHistory =
+        JSON.parse(localStorage.getItem("searchHistory")) || [];
+
+      // Add the current keyword to the search history if it's not already there
+      if (!searchHistory.includes(values.keyword)) {
+        searchHistory.push(values.keyword); // Update the search history array
+      }
+
+      // Store the updated search history in localStorage
+      localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
       navigate("/search");
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <div>
       <form className="d-flex" role="search" onSubmit={handleSubmit}>
