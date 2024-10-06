@@ -713,11 +713,9 @@ export const personalizedProductsController = async (req, res) => {
     }));
 
     // Find products matching any of the individual search terms
-    let products = await productModel
-      .find({
-        $or: regexArray,
-      })
-      .limit(5);
+    let products = await productModel.find({
+      $or: regexArray,
+    });
     // If products found are less than the limit, fetch more from the same category
     const initialProductCount = products.length;
     if (initialProductCount < 5 && initialProductCount > 0) {
@@ -730,7 +728,7 @@ export const personalizedProductsController = async (req, res) => {
           category: cid,
           _id: { $nin: products.map((prod) => prod._id) }, // Exclude already fetched products
         })
-        .limit(5 - initialProductCount); // Fetch remaining products to complete the limit
+        .limit(5 + initialProductCount); // Fetch remaining products to complete the limit
 
       // Append additional products to the original search results
       products = products.concat(additionalProducts);
@@ -771,7 +769,6 @@ export const relatedProductsController = async (req, res) => {
         category: cid,
         _id: { $ne: pid },
       })
-      .limit(5)
       .populate("category");
     if (products && products.length > 0) {
       const productList = products.map((product) => {

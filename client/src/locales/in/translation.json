@@ -31,6 +31,17 @@
     "Error While Geting Orders": "ऑर्डर प्राप्त करते समय त्रुटि",
     "Error while updating order status": "ऑर्डर की स्थिति अपडेट करते समय त्रुटि"
   },
+  "productDetails": {
+    "View All": "सभी देखें",
+    "SR": "SR",
+    "Similar Products You May Also Like": "आपको पसंद आ सकते हैं ऐसे समान उत्पाद",
+    "More in This Category": "इस श्रेणी में और",
+    "Your recent searches, just for you!!": "आपकी हाल की खोजें, सिर्फ आपके लिए!!",
+    "OFF": "छूट",
+    "off": "छूट",
+    "All Images": "सभी चित्र",
+    "Colors": "रंग"
+  },
   "common": {
     "Search": "खोज",
     "Contact Us": "हमसे संपर्क करें",
@@ -41,7 +52,8 @@
     "ADD TO CART": "कार्ट में जोड़ें",
     "No Products Found": "कोई उत्पाद नहीं मिला",
     "RAWAD MALL": "रावाद मॉल",
-    "All Categories": "सभी श्रेणियाँ"
+    "All Categories": "सभी श्रेणियाँ",
+    "Item Added to cart": "आइटम कार्ट में जोड़ा गया"
   },
   "home": {
     "Home": "मुख्य पृष्ठ",

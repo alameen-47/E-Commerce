@@ -31,6 +31,17 @@
     "Error While Geting Orders": "May error sa pagkuha ng mga order",
     "Error while updating order status": "May error sa pag-update ng status ng order"
   },
+  "productDetails": {
+    "View All": "Tingnan Lahat",
+    "SR": "SR",
+    "Similar Products You May Also Like": "Mga Katulad na Produkto na Maaaring Magustuhan Mo",
+    "More in This Category": "Higit Pa sa Kategoryang Ito",
+    "Your recent searches, just for you!!": "Ang iyong mga kamakailang paghahanap, para lang sa iyo!!",
+    "OFF": "OFF",
+    "off": "off",
+    "All Images": "Lahat ng Larawan",
+    "Colors": "Mga Kulay"
+  },
   "common": {
     "Search": "Maghanap",
     "Contact Us": "Makipag-ugnay sa Amin",
@@ -41,7 +52,8 @@
     "ADD TO CART": "IDAGDAG SA CART",
     "No Products Found": "Walang Natagpuang Mga Produkto",
     "RAWAD MALL": "RAWAD MALL",
-    "All Categories": "Lahat ng Kategorya"
+    "All Categories": "Lahat ng Kategorya",
+    "Item Added to cart": "Item Idinagdag sa cart"
   },
   "home": {
     "Home": "Bahay",

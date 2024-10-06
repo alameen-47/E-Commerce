@@ -19,12 +19,12 @@ export const ImageCarousel = ({ images }) => {
       {updatedImages?.map((img, index) => (
         <div
           key={index}
-          className="carousel-item flex flex-col h-64 overflow-hidden bg-white max-h-40 max-w-40 cursor-pointer"
+          className="carousel-item flex flex-col  overflow-hidden bg-white md:max-h-40 md:max-w-40 cursor-pointer"
         >
           <img
             src={`data:${img?.contentType};base64,${img?.data}`}
             alt=""
-            className="px-2 object-contain transition-transform flex justify-center align-middle items-center duration-300 ease-in-out hover:scale-110 h-64 w-64 max-h-40 max-w-40"
+            className="md:px-2 object-contain transition-transform flex justify-center align-middle items-center duration-300 ease-in-out hover:scale-110 h-64 w-64 max-h-40 max-w-40"
             loading="lazy"
           />
         </div>

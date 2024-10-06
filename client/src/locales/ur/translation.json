@@ -31,6 +31,17 @@
     "Error While Geting Orders": "آرڈر حاصل کرتے وقت خرابی",
     "Error while updating order status": "آرڈر کی حیثیت اپ ڈیٹ کرتے وقت خرابی"
   },
+  "productDetails": {
+    "View All": "سب دیکھیں",
+    "SR": "ایس آر",
+    "Similar Products You May Also Like": "آپ کو پسند آنے والے مشابہ مصنوعات",
+    "More in This Category": "اس زمرے میں مزید",
+    "Your recent searches, just for you!!": "آپ کی حالیہ تلاش، صرف آپ کے لیے!!",
+    "OFF": "چھوٹ",
+    "off": "چھوٹ",
+    "All Images": "تمام تصاویر",
+    "Colors": "رنگ"
+  },
   "common": {
     "Search": "تلاش کریں",
     "Contact Us": "ہم سے رابطہ کریں",
@@ -41,7 +52,8 @@
     "ADD TO CART": "ٹوکری میں شامل کریں",
     "No Products Found": "کوئی مصنوعات نہیں ملیں",
     "RAWAD MALL": "راواد مال",
-    "All Categories": "تمام زمرے"
+    "All Categories": "تمام زمرے",
+    "Item Added to cart": "آئٹم کو کارٹ میں شامل کیا گیا"
   },
   "home": {
     "Home": "ہوم",

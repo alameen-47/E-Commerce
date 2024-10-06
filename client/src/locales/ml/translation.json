@@ -31,6 +31,17 @@
     "Error While Geting Orders": "ഓർഡറുകൾ ലഭിക്കുന്നതിൽ പിഴവ്",
     "Error while updating order status": "ഓർഡറിന്റെ നില അപ്ഡേറ്റ് ചെയ്യുന്നതിനിടെ പിഴവ്"
   },
+  "productDetails": {
+    "View All": "എല്ലാം കാണുക",
+    "SR": "SR",
+    "Similar Products You May Also Like": "നിങ്ങൾക്ക് ഇഷ്ടപ്പെടാവുന്ന സമാന ഉൽപ്പന്നങ്ങൾ",
+    "More in This Category": "ഈ വിഭാഗത്തിൽ കൂടുതൽ",
+    "Your recent searches, just for you!!": "നിങ്ങളുടെ പുതിയ തിരച്ചിലുകൾ, നിങ്ങൾക്കായി മാത്രം!!",
+    "OFF": "OFF",
+    "off": "OFF",
+    "All Images": "എല്ലാ ചിത്രങ്ങളും",
+    "Colors": "നിറങ്ങൾ"
+  },
   "common": {
     "Search": "തിരയുക",
     "Contact Us": "ഞങ്ങളുമായി ബന്ധപ്പെടുക",
@@ -41,7 +52,8 @@
     "ADD TO CART": "കാർട്ടിലേക്കു ചേർക്കുക",
     "No Products Found": "ഉൽപ്പന്നങ്ങൾ കണ്ടില്ല",
     "RAWAD MALL": "റാവാഡ് മാൾ",
-    "All Categories": "എല്ലാ വിഭാഗങ്ങളും"
+    "All Categories": "എല്ലാ വിഭാഗങ്ങളും",
+    "Item Added to cart": "ഇനം കാർട്ടിൽ ചേർത്തു"
   },
   "home": {
     "Home": "ഹോം",

@@ -92,7 +92,7 @@ const LanguageSwitcher = () => {
               <div
                 onClick={() => {
                   handleOptionClick("IN");
-                  changeLanguage("in");
+                  changeLanguage("hi");
                 }}
                 href="#"
                 className="flex px-4 gap-3 py-2 text-sm text-white hover:bg-neutral-700 cursor-pointer"
@@ -136,7 +136,7 @@ const LanguageSwitcher = () => {
               <div
                 onClick={() => {
                   handleOptionClick("EN");
-                  changeLanguage("bd");
+                  changeLanguage("bn");
                 }}
                 href="#"
                 className="flex px-4 gap-3 py-2 text-sm text-white hover:bg-neutral-700 cursor-pointer"

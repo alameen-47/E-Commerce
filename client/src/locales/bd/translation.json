@@ -31,6 +31,17 @@
     "Error While Geting Orders": "অর্ডার পেতে ত্রুটি",
     "Error while updating order status": "অর্ডারের স্থিতি আপডেট করতে ত্রুটি"
   },
+  "productDetails": {
+    "View All": "সব দেখুন",
+    "SR": "SR",
+    "Similar Products You May Also Like": "আপনি পছন্দ করতে পারেন এমন অনুরূপ পণ্য",
+    "More in This Category": "এই বিভাগে আরও",
+    "Your recent searches, just for you!!": "আপনার সাম্প্রতিক অনুসন্ধান, শুধু আপনার জন্য!!",
+    "OFF": "ছাড়",
+    "off": "ছাড়",
+    "All Images": "সব ছবি",
+    "Colors": "রং"
+  },
   "common": {
     "Search": "অনুসন্ধান",
     "Contact Us": "যোগাযোগ করুন",
@@ -42,7 +53,8 @@
     "off": "ছাড়",
     "No Products Found": "কোনও পণ্য পাওয়া যায়নি",
     "RAWAD MALL": "রাওয়াদ মল",
-    "All Categories": "সব বিভাগ"
+    "All Categories": "সব বিভাগ",
+    "Item Added to cart": "আইটেম কার্টে যোগ করা হয়েছে"
   },
   "home": {
     "Home": "বাড়ি",

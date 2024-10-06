@@ -31,7 +31,19 @@
     "Error While Geting Orders": "Error While Geting Orders",
     "Error while updating order status": "Error while updating order status"
   },
+  "productDetails": {
+    "View All": "View All",
+    "SR": "SR",
+    "Similar Products You May Also Like": "Similar Products You May Also Like",
+    "More in This Category": "More in This Category",
+    "Your recent searches, just for you!!": "Your recent searches, just for you!!",
+    "OFF": "OFF",
+    "off": "off",
+    "All Images": "All Images",
+    "Colors": "Colors"
+  },
   "common": {
+    
     "Search": "Search",
     "Contact Us": "Contact Us",
     "Login": "Login",

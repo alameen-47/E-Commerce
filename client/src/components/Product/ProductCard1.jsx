@@ -73,7 +73,9 @@ export const ProductCard1 = ({ products }) => {
       >
         <Badge.Ribbon
           text={
-            translatedProduct.offer ? `${translatedProduct.offer}% OFF` : ""
+            translatedProduct.offer
+              ? `${translatedProduct.offer}% ${t("productDetails.OFF")}`
+              : ""
           }
           color={
             translatedProduct.offer <= 33
@@ -86,10 +88,10 @@ export const ProductCard1 = ({ products }) => {
           <ImageCarousel images={translatedProduct} />
         </Badge.Ribbon>
         <p
-          className={` PRODUCT-NAME  md:mb-2 cardtxt font-semibold  text-black tracking-wider group-hover:text-white h-2 md:text-sm lg:text-[16px] sm:text-[13px] text-overflow: ellipsis  break-words ${
+          className={`PRODUCT-NAME md:mb-2 sm:mb-0 cardtxt font-semibold text-black tracking-wider group-hover:text-white  break-words overflow-hidden text-ellipsis ${
             isEnglish
-              ? "md:text-sm lg:text-[13px] sm:text-[13px]"
-              : "md:text-xs lg:text-[12px] sm:text-[11px]"
+              ? "md:text-sm lg:text-base sm:text-xs"
+              : "md:text-xs lg:text-sm sm:text-[0.6rem]"
           }`}
         >
           {(() => {
@@ -100,7 +102,7 @@ export const ProductCard1 = ({ products }) => {
           })()}
         </p>
         <p
-          className={`PRODUCT-DESCRIPTON mb-0 blueberry font-semibold text-gray-500 group-hover:text-gray-200 text-center px-2 break-words truncate ${
+          className={`PRODUCT-DESCRIPTON mb-0 blueberry font-semibold text-gray-500 group-hover:text-gray-200 text-center md:px-2 break-words truncate ${
             isEnglish
               ? "lg:text-xs md:text-sm sm:text-[.625rem]"
               : "lg:text-[.75rem] md:text-[.625rem] sm:text-[.5rem]"
@@ -117,7 +119,7 @@ export const ProductCard1 = ({ products }) => {
           <>
             <div className="flex gap-1 justify-center items-center ">
               <strike className="ordernow-text text-[#616161] font-semibold  group-hover:text-white text-center items-center lg:text-sm  sm:text-xs">
-                SR:
+                {t("productDetails.SR")}:
                 {Math.floor(
                   translatedProduct.price * (1 + translatedProduct.offer / 100)
                 ) || ""}
@@ -133,16 +135,16 @@ export const ProductCard1 = ({ products }) => {
                 }`}
               >
                 {translatedProduct.offer
-                  ? `${translatedProduct.offer}% off`
+                  ? `${translatedProduct.offer}% ${t("productDetails.off")}`
                   : ""}
               </span>
             </div>
             <p className=" mb-0 ordernow-text text-[#000000] font-bold  group-hover:text-white text-center items-center lg:text-lg sm:text-md">
-              SR:{translatedProduct.price || ""}/-
+              {t("productDetails.SR")}:{translatedProduct.price || ""}/-
             </p>
           </>
         ) : (
-          <p className=" mb-0 ordernow-text text-[#000000] font-semibold  group-hover:text-white text-center items-center lg:text-lg sm:text-xs">
+          <p className=" mb-0 ordernow-text text-[#000000] font-semibold  group-hover:text-white text-center items-center lg:text-lg sm:text-xs ">
             {t("cart.SAR")}::{translatedProduct.price || ""}/-
           </p>
         )}
@@ -152,7 +154,12 @@ export const ProductCard1 = ({ products }) => {
 
             addToCart([{ ...translatedProduct, units }]);
           }}
-          className="btun4 text-white lg:inline-flex items-center lg:gap-3 sm:gap-1 group-hover:bg-slate-100 group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer lg:py-2 sm:py-1 lg:px-4 sm:px-2 lg:text-sm sm:text-xs font-semibold rounded-full butn"
+          className={`btun4 text-white lg:inline-flex items-center group-hover:bg-slate-100 group-hover:text-black bg-[#000] shadow-[10px_10px_150px_#ff9f0d] cursor-pointer lg:py-2 sm:py-1 lg:px-4 sm:px-3  font-semibold rounded-lg lg:gap-3 sm:gap-1 butn
+          ${
+            isEnglish
+              ? "md:text-sm lg:text-base sm:text-xs"
+              : "md:text-xs lg:text-sm sm:text-[0.6rem]"
+          }`}
         >
           {t("common.ADD TO CART")}
         </button>

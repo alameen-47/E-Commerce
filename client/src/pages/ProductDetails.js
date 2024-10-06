@@ -6,12 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cart.js";
 import { toast } from "react-hot-toast";
 import { t } from "i18next";
-import { Image, Modal } from "antd";
+import { Image, Modal, Skeleton } from "antd";
 import { ProductCard1 } from "../components/Product/ProductCard1.jsx";
 import badgeImage from "../assets/icons/BADGE 1.png";
 import { useSearch } from "../context/search.js";
 import { useTranslation } from "react-i18next";
 import { ProductHistory } from "../components/ProductHistory.jsx";
+import { ProductCarousel } from "../components/ProductCarousel.jsx";
 
 // Translation function
 const translateText = async (text, targetLanguage) => {
@@ -187,55 +188,70 @@ const ProductDetails = () => {
 
   return (
     <Layout>
-      <div className="md:mb-7 flex flex-col gap-5">
+      <div className="md:m-4 sm:mb-3 flex flex-col gap-7">
         <>
           <div className="CONTENT flex md:flex-row sm:flex-col  justify-center align-middle items-center md:gap-16 ">
-            <div className="LEFT bg-[#D9D9D9] flex flex-col justify-start items-center md:w-[32rem] md:h-[38rem]  rounded-lg drop-shadow-lg md:p-3">
-              <div className=" w-full md:h-[23rem] flex flex-col rounded-lg">
+            <div className="LEFT bg-[#D9D9D9] flex flex-col justify-start items-center md:w-[32rem] sm:w-screen md:h-[ sm:h-auto md:rounded-lg rounded-b-lg rounded-t-none drop-shadow-lg md:p-3 sm:mx-3">
+              <div className="w-full md:h- h-auto flex flex-col rounded-b-lg rounded-t-none">
                 <div className="m-4 flex flex-col justify-between gap-3">
                   {/* First image (main image) */}
                   {/* Image */}
-                  <Image
-                    preview={{ mask: null }}
-                    src={mainImage}
-                    alt="product"
-                    className=" bg-white  max-h-[24rem] object-center rounded-lg object-contain p-2 md:min-h-[24rem]"
-                  />
+                  {!images ? (
+                    <Skeleton.Image />
+                  ) : (
+                    <Image
+                      preview={{
+                        mask: null, // Disable overlay mask
+                      }}
+                      src={mainImage}
+                      alt="product"
+                      className="bg-white w-full max-h-[24rem] md:max-h-[24rem] sm:max-h-[12rem] min-h-[8rem] object-center rounded-lg object-contain p-2 flex align-middle items-center justify-center"
+                    />
+                  )}
 
                   {/* Display next two images, and an overlay for the remaining images */}
                   <div className="flex flex-row justify-between gap-2 rounded-lg">
-                    {images.slice(0, 2).map((image, index) => (
-                      <img
-                        key={index}
-                        src={`data:${image.contentType};base64,${image.data}`}
-                        alt={`product-${index}`}
-                        className="w-[6rem] h-[5rem] sm:w-[7rem] sm:h-[6rem] md:w-[9rem] md:h-[8rem] bg-white rounded-lg cursor-pointer object-contain p-1"
-                        onClick={() =>
-                          setMainImage(
-                            `data:${image.contentType};base64,${image.data}`
-                          )
-                        }
-                      />
-                    ))}
+                    {!images ? (
+                      <div className="skeleton w-[6rem] h-[5rem] sm:w-[7rem] sm:h-[6rem] md:w-[9rem] md:h-[8rem]"></div>
+                    ) : (
+                      images.length > 1 &&
+                      images
+                        .slice(1, 3)
+                        .map((image, index) => (
+                          <img
+                            key={index}
+                            src={`data:${image.contentType};base64,${image.data}`}
+                            alt={`product-${index}`}
+                            className="w-[6rem] h-[5rem] sm:w-[7rem] sm:h-[6rem] md:w-[9rem] md:h-[8rem] bg-white rounded-lg cursor-pointer object-contain p-1"
+                            onClick={() =>
+                              setMainImage(
+                                `data:${image.contentType};base64,${image.data}`
+                              )
+                            }
+                          />
+                        ))
+                    )}
 
                     {/* If there are more than 2 remaining images, show "View All" overlay */}
-                    {images ? (
-                      images.length > 1 && (
+                    {!images ? (
+                      <div className="skeleton w-[6rem] h-[5rem] sm:w-[7rem] sm:h-[6rem] md:w-[9rem] md:h-[8rem]"></div>
+                    ) : (
+                      images.length > 2 && (
                         <div className="relative w-[6rem] h-[5rem] sm:w-[7rem] sm:h-[6rem] md:w-[9rem] md:h-[8rem] bg-gray-200 rounded-lg flex items-center justify-center cursor-pointer">
                           <img
                             alt=""
-                            src={`data:${images[2]?.contentType};base64,${images[2]?.data}`}
+                            src={`data:${images[2]?.contentType};base64,${images[3]?.data}`}
                             className="absolute w-[6rem] h-[5rem] sm:w-[7rem] sm:h-[6rem] md:w-[9rem] md:h-[8rem] bg-white rounded-lg cursor-pointer object-contain p-1"
                           />
                           <span
                             onClick={showModal}
                             className="absolute z-10 text-white text-lg bg-black bg-opacity-40 w-full h-full flex justify-center items-center rounded-lg font-semibold"
                           >
-                            View All
+                            {t("productDetails.View All")}
                           </span>
                           <Modal
                             className="flex flex-col"
-                            title="All Images :"
+                            title={t("productDetails.All Images")}
                             open={isModalOpen}
                             onOk={handleOk}
                             onCancel={handleCancel}
@@ -262,7 +278,7 @@ const ProductDetails = () => {
                                 ))}
                               </div>
                               <span className="mb-0 font-semibold">
-                                Colors :
+                                {t("productDetails.Colors")} :
                               </span>
                               <div className="flex flex-row gap-3">
                                 {Object.entries(colorPalette).map(
@@ -281,142 +297,182 @@ const ProductDetails = () => {
                           </Modal>
                         </div>
                       )
-                    ) : (
-                      // Display skeleton when there's no image
-                      <div className="relative w-[9rem] h-[8rem] bg-gray-200 rounded-lg flex items-center justify-center cursor-pointer">
-                        <div className="skeleton w-[9rem] h-[8rem] bg-gray-300 rounded-lg" />
-                      </div>
                     )}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="RIGHT w-[20rem] h-[25rem] sm:w-[25rem] sm:h-[30rem] md:w-[32rem] md:h-[38rem]">
-              <div className="flex flex-col justify-between gap-3 p-4 sm:gap-4 md:gap-6">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold w-full mb-0">
-                  {translatedProduct?.name}
-                </h1>
-                <span className="text-[#A9A9A9] font-bold">
-                  {translatedProduct?.description}
-                </span>
-                <div className="flex justify-start items-center gap-3 sm:gap-4">
-                  <strike className="font-bold text-lg sm:text-xl text-[#808080]">
-                    SR:
-                    {Math.floor(
-                      translatedProduct.price *
-                        (1 + translatedProduct.offer / 100)
-                    ) || ""}
-                    /-
-                  </strike>
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#088E18]">
-                    {translatedProduct.offer}%
+
+            <div className="RIGHT w-[20rem] h-[25rem] sm:w-[25rem] sm:h-auto md:w-[32rem] md:h-[38rem]">
+              {!translatedProduct.description ? (
+                <>
+                  {/* {SKeleton} */}
+                  <div className="flex flex-col justify-between gap-3 p-4 sm:gap-2 md:gap-7">
+                    <div className="skeleton sm:h-5 md:h-10 w-full sm:w-[50%] md:w-[40%]"></div>
+                    <div className="skeleton sm:h-5 md:h-10 w-full"></div>
+                    <div className="skeleton sm:h-5 md:h-10 w-full"></div>
+                    <div className="skeleton sm:h-5 md:h-10 w-full sm:w-[80%] md:w-[70%]"></div>
+                    <div className="skeleton sm:h-5 md:h-10 w-full sm:w-[80%] md:w-[70%]"></div>
+                    <div className="skeleton sm:h-5 md:h-10 w-full sm:w-[20%] md:w-[30%]"></div>
+                    <div className="skeleton sm:h-2 md:h-5 w-full sm:w-[40%] md:w-[50%]"></div>
+                    <div className="skeleton sm:h-2 md:h-5 w-full sm:w-[40%] md:w-[50%]"></div>
+                    <div className="skeleton sm:h-2 md:h-5 w-full sm:w-[40%] md:w-[50%]"></div>
+                    <div className="skeleton sm:h-2 md:h-5 w-full sm:w-[40%] md:w-[50%]"></div>
+                  </div>
+                </>
+              ) : (
+                <div className="flex flex-col justify-between gap-3 p-4 sm:gap-2 md:gap-3">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold w-full mb-0">
+                    {translatedProduct?.name}
+                  </h1>
+                  <span className="text-[#A9A9A9] font-bold">
+                    {translatedProduct?.description}
                   </span>
-                  {/* Badge */}
-                  <div className="relative max-w-sm sm:max-w-md inline-flex items-center justify-center">
-                    <div className="relative w-[4rem] h-[4rem] sm:w-[5rem] sm:h-[5rem] md:w-[6rem] md:h-[6rem] overflow-hidden rounded-full">
-                      <img
-                        src={badgeImage} // Replace with your badge's source
-                        alt="badge"
-                        className="relative z-1 w-full h-full object-contain drop-shadow-xl"
+                  <div className="flex flex-row gap-2 sm:gap-3">
+                    {Object.entries(colorPalette).map(([color, hexValue]) => (
+                      <button
+                        key={color}
+                        src={""}
+                        alt=""
+                        className="drop-shadow-lg w-[1.5rem] h-[1.5rem] sm:w-[2rem] sm:h-[2rem] md:w-[2rem] md:h-[2rem] rounded-lg cursor-pointer"
+                        style={{ backgroundColor: hexValue }} // Use inline style to apply the background color
                       />
-                      <div
-                        className="absolute inset-0 bg-[linear-gradient(90deg,transparent_25%,rgba(255,255,255,0.6)_50%,transparent_75%,transparent_100%)] bg-[length:200%_200%] bg-no-repeat bg-[position:-100%_0] transition-[background-position_1s_ease] hover:bg-[position:100%_0] hover:duration-[1.5s]"
-                        style={{
-                          transform: "skewX(-30deg)",
-                          animationFillMode: "forwards", // This ensures the effect stays after the hover
-                          transition: "background-position 1.5s ease-in-out",
-                        }}
-                      />
+                    ))}
+                  </div>
+                  <div className="flex justify-start items-center md:gap-3 sm:gap-2 ">
+                    <strike className="font-bold md:text-lg sm:text-md text-[#808080]">
+                      {t("productDetails.SR")}:
+                      {Math.floor(
+                        translatedProduct.price *
+                          (1 + translatedProduct.offer / 100)
+                      ) || ""}
+                      /-
+                    </strike>
+                    <span className="text-2xl sm:text-2xl md:text-3xl font-bold text-[#088E18]">
+                      {translatedProduct.offer}% {t("productDetails.OFF")}
+                    </span>
+                    {/* Badge */}
+                    <div className="relative max-w-sm sm:max-w-md inline-flex items-center justify-center">
+                      <div className="relative w-[4rem] h-[4rem] sm:w-[4rem] sm:h-[4rem] md:w-[6rem] md:h-[6rem] overflow-hidden rounded-full">
+                        <img
+                          src={badgeImage} // Replace with your badge's source
+                          alt="badge"
+                          className="relative z-1 w-full h-full object-contain drop-shadow-xl"
+                        />
+                        <div
+                          className="absolute inset-0 bg-[linear-gradient(90deg,transparent_25%,rgba(255,255,255,0.6)_50%,transparent_75%,transparent_100%)] bg-[length:200%_200%] bg-no-repeat bg-[position:-100%_0] transition-[background-position_1s_ease] hover:bg-[position:100%_0] hover:duration-[1.5s]"
+                          style={{
+                            transform: "skewX(-30deg)",
+                            animationFillMode: "forwards", // This ensures the effect stays after the hover
+                            transition: "background-position 1.5s ease-in-out",
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <span className="text-2xl sm:text-3xl md:text-4xl font-bold">
-                  {t("cart.SAR")}: {translatedProduct.price}
-                </span>
-                <div className="flex flex-row gap-2 sm:gap-3">
-                  {Object.entries(colorPalette).map(([color, hexValue]) => (
-                    <button
-                      key={color}
-                      src={""}
-                      alt=""
-                      className="drop-shadow-lg w-[1.5rem] h-[1.5rem] sm:w-[2rem] sm:h-[2rem] md:w-[2.5rem] md:h-[2.5rem] rounded-lg cursor-pointer"
-                      style={{ backgroundColor: hexValue }} // Use inline style to apply the background color
-                    />
-                  ))}
-                </div>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent the parent onClick from firing
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold">
+                    {t("cart.SAR")}: {translatedProduct.price}
+                  </span>
 
-                    addToCart([{ ...products, units }]);
-                  }}
-                  className="bg-black text-white p-2 font-bold text-lg sm:text-xl rounded-lg w-full sm:w-3/4 md:w-2/4"
-                >
-                  {t("common.ADD TO CART")}
-                </button>
-                {translatedProduct?.categoryDetails &&
-                  typeof translatedProduct.categoryDetails === "object" &&
-                  Object.entries(translatedProduct.categoryDetails).map(
-                    ([key, value], index) => (
-                      <div
-                        key={index}
-                        className="flex flex-row gap-2 items-center"
-                      >
-                        <span className="first-letter:uppercase lowercase font-bold ">
-                          {key}:
-                        </span>
-                        <span className="uppercase  text-[#858383] font-semibold">
-                          {/* Handle nested objects by stringifying them or rendering the value */}
-                          {typeof value === "object" && value !== null
-                            ? JSON.stringify(value) // Convert object to string
-                            : value}
-                        </span>
-                      </div>
-                    )
-                  )}
-              </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the parent onClick from firing
+
+                      addToCart([{ ...products, units }]);
+                    }}
+                    className="bg-black text-white p-2 font-bold text-lg sm:text-xl rounded-lg w-full sm:w-2/4 md:w-2/4 drop-shadow-xl "
+                  >
+                    {t("common.ADD TO CART")}
+                  </button>
+                  {translatedProduct?.categoryDetails &&
+                    typeof translatedProduct.categoryDetails === "object" &&
+                    Object.entries(translatedProduct.categoryDetails).length >
+                      0 && (
+                      <>
+                        {Object.entries(translatedProduct.categoryDetails)
+                          .length > 4 ? (
+                          <div className="collapse bg-base-200">
+                            <input type="checkbox" className="peer" />
+                            <div className="collapse-title text-xl font-medium">
+                              Additional Details (
+                              {Object.entries(translatedProduct.categoryDetails)
+                                .length - 4}{" "}
+                              more)
+                            </div>
+                            <div className="collapse-content">
+                              {Object.entries(
+                                translatedProduct.categoryDetails
+                              ).map(([key, value], index) => (
+                                <div
+                                  key={index}
+                                  className="flex flex-row gap-2 items-center"
+                                >
+                                  <span className="first-letter:uppercase lowercase font-bold ">
+                                    {key}:
+                                  </span>
+                                  <span className="uppercase text-[#858383] font-semibold">
+                                    {/* Handle nested objects by stringifying them or rendering the value */}
+                                    {typeof value === "object" && value !== null
+                                      ? JSON.stringify(value) // Convert object to string
+                                      : value}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ) : (
+                          Object.entries(translatedProduct.categoryDetails).map(
+                            ([key, value], index) => (
+                              <div
+                                key={index}
+                                className="flex flex-row gap-2 items-center"
+                              >
+                                <span className="first-letter:uppercase lowercase font-bold ">
+                                  {key}:
+                                </span>
+                                <span className="uppercase  text-[#858383] font-semibold">
+                                  {/* Handle nested objects by stringifying them or rendering the value */}
+                                  {typeof value === "object" && value !== null
+                                    ? JSON.stringify(value) // Convert object to string
+                                    : value}
+                                </span>
+                              </div>
+                            )
+                          )
+                        )}
+                      </>
+                    )}
+                </div>
+              )}
             </div>
           </div>
         </>
-        {/* {similarProducts?.length > 0 ? (
-          <div className="SIMILAR PRODUCTS bg-white flex flex-col justify-center text-center items-center align-middle ">
-            <div className="p-5  flex flex-col   justify-center bg-green-   items-center align-middle rounded-lg  shadow-lg drop-shadow-xl">
-              <h1 className="text-left self-start w-full font-semibold text-xl">
-                Similar Products You May Also Like
+        {similarProducts?.length > 0 ? (
+          <div className="SimilarProducts bg-white flex flex-col justify-center text-center items-center align-middle ">
+            <div className="px-5  flex flex-col  bg-white justify-center items-center align-middle rounded-lg ">
+              <h1 className="text-left self-start pl-3 font-semibold text-lg md:text-xl lg:text-2xl xl:text-3xl sm:mb-0">
+                {t("productDetails.Similar Products You May Also Like")}
               </h1>
 
-              <div className="grid lg:grid-cols-5 w-full gap-3 sm:grid-cols-2  ">
-                {similarProducts &&
-                  similarProducts?.map((p) => (
-                    <div className="flex-col">
-                      <ProductCard1 products={p} />
-                    </div>
-                  ))}
-              </div>
+              <ProductCarousel products={similarProducts} />
             </div>
           </div>
         ) : (
           ""
         )}
         {sameCategoryProducts?.length > 0 ? (
-          <div className="BOUGHT TOGETHER PRODUCTS bg-white flex flex-col justify-center text-center items-center align-middle ">
-            <div className="p-5  flex flex-col   justify-center bg-green-   items-center align-middle rounded-lg  shadow-lg drop-shadow-xl">
-              <h1 className="text-left self-start w-full font-semibold text-xl">
-                More in This Category
+          <div className="SameCategoryProducts bg-white flex flex-col justify-center text-center items-center align-middle ">
+            <div className="px-5  flex flex-col  bg-white justify-center items-center align-middle rounded-lg ">
+              <h1 className="text-left self-start pl-3 font-semibold text-lg md:text-xl lg:text-2xl xl:text-3xl sm:mb-0">
+                {t("productDetails.More in This Category")}
               </h1>
-
-              <div className="grid lg:grid-cols-5 w-full gap-3 sm:grid-cols-2  ">
-                {sameCategoryProducts?.map((p) => (
-                  <div className="flex-col">
-                    <ProductCard1 products={p} />
-                  </div>
-                ))}
-              </div>
+              <ProductCarousel products={sameCategoryProducts} />
             </div>
           </div>
         ) : (
           ""
-        )} */}
+        )}
+
         <ProductHistory />
       </div>
     </Layout>

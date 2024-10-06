@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ProductCard1 } from "./Product/ProductCard1";
+import { ProductCarousel } from "./ProductCarousel";
+import { t } from "i18next";
 
 export const ProductHistory = () => {
   const [products, setProducts] = useState([]);
@@ -27,18 +29,11 @@ export const ProductHistory = () => {
       <div className="bg-blue-600  ">
         {products?.length > 0 ? (
           <div className="HISTORY PRODUCTS bg-white flex flex-col justify-center text-center items-center align-middle ">
-            <div className="p-5  flex flex-col  bg-white justify-center items-center align-middle rounded-lg    ">
-              <h1 className="text-left self-start pl-3 font-semibold text-xl">
-                Your recent searches, just for you!!
+            <div className="px-5  flex flex-col  bg-white justify-center items-center align-middle rounded-lg ">
+              <h1 className="text-left self-start pl-3 font-semibold text-lg md:text-xl lg:text-2xl xl:text-3xl sm:mb-0">
+                {t("productDetails.Your recent searches, just for you!!")}
               </h1>
-              <div className="bg-white carousel carousel-center rounded-box max-w-[70rem] drop-shadow-2xl p-4 ">
-                {/* Use a wrapper div for the carousel items */}
-                {products.map((p, index) => (
-                  <div key={index} className="carousel-item w-1/5">
-                    <ProductCard1 products={p} />
-                  </div>
-                ))}
-              </div>
+              <ProductCarousel products={products} />
             </div>
           </div>
         ) : (

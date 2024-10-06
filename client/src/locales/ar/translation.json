@@ -31,6 +31,17 @@
     "Error While Geting Orders": "خطأ أثناء الحصول على الطلبات",
     "Error while updating order status": "خطأ أثناء تحديث حالة الطلب"
   },
+  "productDetails": {
+    "View All": "عرض الكل",
+    "SR": "ر.س",
+    "Similar Products You May Also Like": "منتجات مشابهة قد تعجبك",
+    "More in This Category": "المزيد في هذه الفئة",
+    "Your recent searches, just for you!!": "بحثك الأخير، خصيصًا لك!!",
+    "OFF": "خصم",
+    "off": "خصم",
+    "All Images": "جميع الصور",
+    "Colors": "الألوان"
+  },
   "common": {
     "Search": "بحث",
     "Contact Us": "اتصل بنا",
@@ -41,7 +52,9 @@
     "ADD TO CART": "أضف إلى السلة",
     "No Products Found": "لم يتم العثور على منتجات",
     "RAWAD MALL": "مول رواد",
-    "All Categories": "جميع الفئات"
+    "All Categories": "جميع الفئات",
+    "Item Added to cart": "تم إضافة العنصر إلى العربة"
+
   },
   "home": {
     "Home": "الصفحة الرئيسية",
