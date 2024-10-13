@@ -24,6 +24,7 @@ const translateText = async (text, targetLanguage) => {
 };
 
 const ProductDetails = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [values, setValues] = useSearch([]);
   const params = useParams();
   const [cart, setCart] = useCart();
@@ -38,6 +39,9 @@ const ProductDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [similarProducts, setSimilarProducts] = useState([]);
   const [slug, setSlug] = useState();
+  const [selectedColor, setSelectedColor] = useState(null); // Tracks selected color
+  const [colorsArray, setColorsArray] = useState([]);
+  const [filteredImages, setFilteredImages] = useState([]);
 
   const { i18n } = useTranslation();
 
@@ -47,9 +51,11 @@ const ProductDetails = () => {
   const translateProductFields = async (product) => {
     const translatedProduct = { ...product };
     // Loop through each key in the product
+    const fieldsToTranslate = ["name", "description", "category"]; // Add the specific keys you want
+
     for (let key in product) {
       // Check if the field is a string and translate it
-      if (typeof product[key] === "string") {
+      if (fieldsToTranslate.includes(key) && typeof product[key] === "string") {
         translatedProduct[key] = await translateText(
           product[key],
           i18n.language
@@ -74,7 +80,24 @@ const ProductDetails = () => {
 
     return translatedProduct;
   };
+  const handleColorClick = (color) => {
+    setSelectedColor(color); // Update the selected color
+  };
+  useEffect(() => {
+    if (selectedColor) {
+      // Filter images based on the selected color
+      const filtered = images.filter((img) => img.color === selectedColor);
+      setFilteredImages(filtered);
+    } else {
+      // If no color is selected, display all images
+      setFilteredImages(images);
+    }
+  }, [selectedColor, images]); // Re-run when selectedColor or images change
 
+  console.log(
+    selectedColor,
+    "<<<<<<<<<<<<-SELECTED----------- COLOUR->>>>>>>>>>>>>"
+  );
   // Effect to handle translation on product change
   useEffect(() => {
     const translateProduct = async () => {
@@ -88,14 +111,6 @@ const ProductDetails = () => {
 
     translateProduct(); // Call the function when product changes
   }, [products, i18n.language]); // Re-run if the product or language changes
-
-  const colorPalette = {
-    red: "#FF0000",
-    green: "#00FF00",
-    blue: "#0000FF",
-    yellow: "#FFFF00",
-    purple: "#800080",
-  };
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -121,48 +136,77 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    getProduct();
     getSameCategory();
     getSimilarProducts();
   }, [params?.slug, params?._id]);
 
   //getProduct
-  const getProduct = async () => {
-    try {
-      const { data } = await axios.get(
-        `/api/v1/product/get-product/${params.slug}/${params.pid}`
-      );
-      const updatedImages = data?.product?.image?.map((img) => ({
-        ...img,
-        filePath: `http://localhost:8085/uploads/${img.filePath}`,
-      }));
-      setImages(updatedImages);
-      setProducts(data?.product);
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const { data } = await axios.get(
+          `/api/v1/product/get-product/${params.slug}/${params.pid}`
+        );
 
-      let searchHistoryProducts =
-        JSON.parse(localStorage.getItem("searchHistoryProducts")) || [];
-      // Check if the product with the same _id already exists
-      const productExists = searchHistoryProducts.some(
-        (item) => item._id === data?.product?._id
-      );
-      // Add the current product to the search history if it's not already there
-      if (!productExists) {
-        searchHistoryProducts.push(data?.product);
+        if (Array.isArray(data?.product.images)) {
+          const newImages = data?.product.images.flatMap((imageObj) =>
+            imageObj.imageSet.map((img) => {
+              const transformedImage = {
+                ...img,
+                color: imageObj.colors, // Assuming each imageObj has a color field
+                filePath: `http://localhost:8085/uploads/${img.filePath}`,
+              };
+              // Log each transformed image object with the color
+              // console.log(transformedImage, "TRANSFORMED IMAGE");
+
+              return transformedImage;
+            })
+          );
+          // Filter or sort images by the selected color
+          const filteredImages = selectedColor
+            ? newImages.filter((img) => img.color === selectedColor) // Filter by selected color
+            : newImages; // Show all images if no color is selected
+          setImages(filteredImages);
+
+          // Extract unique colors
+          const uniqueColors = Array.from(
+            new Set(newImages.map((img) => img.color))
+          );
+          console.log(uniqueColors, "UNIQUE COLORS");
+
+          // Set the colors state
+          setColorsArray(uniqueColors);
+        }
+        setProducts(data?.product);
+
+        let searchHistoryProducts =
+          JSON.parse(localStorage.getItem("searchHistoryProducts")) || [];
+        // Check if the product with the same _id already exists
+        const productExists = searchHistoryProducts.some(
+          (item) => item._id === data?.product?._id
+        );
+        // Add the current product to the search history if it's not already there
+        if (!productExists) {
+          searchHistoryProducts.push(data?.product);
+        }
+
+        // Store the updated search history in localStorage
+        localStorage.setItem(
+          "searchHistoryProducts",
+          JSON.stringify(searchHistoryProducts)
+        );
+
+        getSameCategory(data?.product._id, data?.product.category._id);
+        getSimilarProducts(data?.product?.name, data?.product.category._id);
+        setSlug(params.slug);
+      } catch (error) {
+        console.log(error);
       }
+    };
+    getProduct();
+  }, [params.slug, params.pid]);
+  console.log(colorsArray, "COLORS ARRAY");
 
-      // Store the updated search history in localStorage
-      localStorage.setItem(
-        "searchHistoryProducts",
-        JSON.stringify(searchHistoryProducts)
-      );
-
-      getSameCategory(data?.product._id, data?.product.category._id);
-      getSimilarProducts(data?.product?.name, data?.product.category._id);
-      setSlug(params.slug);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   //getSameCategory products
   const getSameCategory = async (pid, cid) => {
     try {
@@ -191,13 +235,16 @@ const ProductDetails = () => {
       <div className="md:m-4 sm:mb-3 flex flex-col gap-7">
         <>
           <div className="CONTENT flex md:flex-row sm:flex-col  justify-center align-middle items-center md:gap-16 ">
-            <div className="LEFT bg-[#D9D9D9] flex flex-col justify-start items-center md:w-[32rem] sm:w-screen md:h-[ sm:h-auto md:rounded-lg rounded-b-lg rounded-t-none drop-shadow-lg md:p-3 sm:mx-3">
-              <div className="w-full md:h- h-auto flex flex-col rounded-b-lg rounded-t-none">
+            <div className="LEFT md:bg-[#D9D9D9] sm:bg-white flex flex-col justify-start items-center md:w-[32rem] sm:w-screen md:h-[ sm:h-auto md:rounded-lg rounded-b-lg rounded-t-none drop-shadow-lg md:p-3 sm:mx-3">
+              <div className="w-full md:h- h-auto hidden md:flex flex-col rounded-b-lg rounded-t-none">
                 <div className="m-4 flex flex-col justify-between gap-3">
                   {/* First image (main image) */}
-                  {/* Image */}
                   {!images ? (
-                    <Skeleton.Image />
+                    <Skeleton.Image
+                      style={{
+                        width: 160,
+                      }}
+                    />
                   ) : (
                     <Image
                       preview={{
@@ -211,11 +258,11 @@ const ProductDetails = () => {
 
                   {/* Display next two images, and an overlay for the remaining images */}
                   <div className="flex flex-row justify-between gap-2 rounded-lg">
-                    {!images ? (
+                    {!filteredImages ? (
                       <div className="skeleton w-[6rem] h-[5rem] sm:w-[7rem] sm:h-[6rem] md:w-[9rem] md:h-[8rem]"></div>
                     ) : (
-                      images.length > 1 &&
-                      images
+                      filteredImages?.length > 1 &&
+                      filteredImages
                         .slice(1, 3)
                         .map((image, index) => (
                           <img
@@ -233,10 +280,10 @@ const ProductDetails = () => {
                     )}
 
                     {/* If there are more than 2 remaining images, show "View All" overlay */}
-                    {!images ? (
+                    {!filteredImages ? (
                       <div className="skeleton w-[6rem] h-[5rem] sm:w-[7rem] sm:h-[6rem] md:w-[9rem] md:h-[8rem]"></div>
                     ) : (
-                      images.length > 2 && (
+                      filteredImages?.length > 2 && (
                         <div className="relative w-[6rem] h-[5rem] sm:w-[7rem] sm:h-[6rem] md:w-[9rem] md:h-[8rem] bg-gray-200 rounded-lg flex items-center justify-center cursor-pointer">
                           <img
                             alt=""
@@ -259,14 +306,14 @@ const ProductDetails = () => {
                           >
                             <div className="flex flex-col justify-center gap-1">
                               <div className="flex flex-row items-center align-middle justify-center rounded-lg">
-                                {images.map((image, index) => (
-                                  <div className="flex flex- w-[15rem] h-[10rem]">
+                                {filteredImages?.map((image, index) => (
+                                  <div className="flex flex- w-[15rem] h-[15rem]">
                                     <Image
                                       preview={{ mask: null }}
                                       key={index}
                                       src={`data:${image.contentType};base64,${image.data}`}
                                       alt={`product-${index}`}
-                                      className=" rounded-lg cursor-pointer object-contain p-1 flex justify-center items-center align-middle max-h-[10rem]"
+                                      className=" rounded-lg cursor-pointer  p-1 flex justify-center items-center align-middle max-h-[10rem] h-[9rem]"
                                       onClick={
                                         () =>
                                           setMainImage(
@@ -281,17 +328,22 @@ const ProductDetails = () => {
                                 {t("productDetails.Colors")} :
                               </span>
                               <div className="flex flex-row gap-3">
-                                {Object.entries(colorPalette).map(
-                                  ([color, hexValue]) => (
-                                    <button
-                                      key={color}
-                                      src={""}
-                                      alt=""
-                                      className="w-[1rem] h-[1rem] sm:w-[2rem] sm:h-[2rem] md:w-[3rem] md:h-[3rem] drop-shadow-lg rounded-lg"
-                                      style={{ backgroundColor: hexValue }} // Use inline style to apply the background color
-                                    />
-                                  )
-                                )}
+                                {/* Render Color Options */}
+                                {Array.from(colorsArray)?.map((color) => (
+                                  <button
+                                    onClick={() => handleColorClick(color)}
+                                    key={color}
+                                    src={""}
+                                    alt=""
+                                    className={`drop-shadow-md w-[1.5rem] h-[1.5rem] sm:w-[2rem] sm:h-[2rem] md:w-[2rem] md:h-[2rem] rounded-lg cursor-pointer
+                            ${
+                              selectedColor === color
+                                ? "ring-1 ring-offset-1 ring-gray-500 drop-shadow-xl"
+                                : ""
+                            }`} // Add an outline for the selected color
+                                    style={{ backgroundColor: color }} // Use inline style to apply the background color
+                                  />
+                                ))}
                               </div>
                             </div>
                           </Modal>
@@ -301,10 +353,59 @@ const ProductDetails = () => {
                   </div>
                 </div>
               </div>
+              <div className="IMAGE CAROUSEL FOR SMALL SCREEN bg-white !important text-white carousel  md:hidden  sm:max-h-[20rem]  group m-auto   ">
+                {filteredImages.length &&
+                  filteredImages.map((image, index) => (
+                    <div
+                      key={index}
+                      className={` carousel-item  relative   h-[20rem] ${
+                        index === currentSlide ? "flex !important" : "hidden"
+                      }`}
+                      style={{ height: "20rem" }} // Explicit height for the container
+                    >
+                      <Image
+                        preview={{
+                          mask: null, // Disable overlay mask
+                        }}
+                        src={`data:${image.contentType};base64,${image.data}`}
+                        className="w-full h-full inline-block object-scale-down p-12 " // Ensure image scales without overflowing
+                        alt=""
+                      />
+                    </div>
+                  ))}
+                {/* Navigation buttons */}
+                <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between   transition-opacity duration-300 bg-opacity-50">
+                  <button
+                    onClick={() =>
+                      setCurrentSlide(
+                        currentSlide === 0
+                          ? filteredImages.length - 1
+                          : currentSlide - 1
+                      )
+                    }
+                    className="btn btn-xs rounded-full drop-shadow-xl shadow-2xl"
+                    style={{ opacity: currentSlide === 0 ? 0 : 1 }}
+                  >
+                    ❮
+                  </button>
+                  <button
+                    onClick={() =>
+                      setCurrentSlide(
+                        currentSlide === filteredImages.length - 1
+                          ? 0
+                          : currentSlide + 1
+                      )
+                    }
+                    className="btn btn-xs rounded-full drop-shadow-xl   shadow-2xl"
+                  >
+                    ❯
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div className="RIGHT w-[20rem] h-[25rem] sm:w-[25rem] sm:h-auto md:w-[32rem] md:h-[38rem]">
-              {!translatedProduct.description ? (
+              {!translatedProduct?.name ? (
                 <>
                   {/* {SKeleton} */}
                   <div className="flex flex-col justify-between gap-3 p-4 sm:gap-2 md:gap-7">
@@ -322,22 +423,31 @@ const ProductDetails = () => {
                 </>
               ) : (
                 <div className="flex flex-col justify-between gap-3 p-4 sm:gap-2 md:gap-3">
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold w-full mb-0">
+                  <h1 className="text-2xl sm:text-2xl md:text-4xl font-extrabold w-full mb-0">
                     {translatedProduct?.name}
                   </h1>
                   <span className="text-[#A9A9A9] font-bold">
                     {translatedProduct?.description}
                   </span>
                   <div className="flex flex-row gap-2 sm:gap-3">
-                    {Object.entries(colorPalette).map(([color, hexValue]) => (
-                      <button
-                        key={color}
-                        src={""}
-                        alt=""
-                        className="drop-shadow-lg w-[1.5rem] h-[1.5rem] sm:w-[2rem] sm:h-[2rem] md:w-[2rem] md:h-[2rem] rounded-lg cursor-pointer"
-                        style={{ backgroundColor: hexValue }} // Use inline style to apply the background color
-                      />
-                    ))}
+                    {/* Render Color Options */}
+                    {Array.from(new Set(colorsArray.map((color) => color))).map(
+                      (color) => (
+                        <button
+                          onClick={() => handleColorClick(color)}
+                          key={color}
+                          src={""}
+                          alt=""
+                          className={`drop-shadow-md w-[1.5rem] h-[1.5rem] sm:w-[2rem] sm:h-[2rem] md:w-[2rem] md:h-[2rem] rounded-lg cursor-pointer
+                            ${
+                              selectedColor === color
+                                ? "ring-1 ring-offset-1 ring-gray-500 drop-shadow-xl"
+                                : ""
+                            }`} // Add an outline for the selected color
+                          style={{ backgroundColor: color }} // Use inline style to apply the background color
+                        />
+                      )
+                    )}
                   </div>
                   <div className="flex justify-start items-center md:gap-3 sm:gap-2 ">
                     <strike className="font-bold md:text-lg sm:text-md text-[#808080]">
@@ -370,7 +480,7 @@ const ProductDetails = () => {
                       </div>
                     </div>
                   </div>
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold">
+                  <span className="text-xs sm:text-xl md:text-4xl font-bold">
                     {t("cart.SAR")}: {translatedProduct.price}
                   </span>
 
@@ -449,7 +559,7 @@ const ProductDetails = () => {
         </>
         {similarProducts?.length > 0 ? (
           <div className="SimilarProducts bg-white flex flex-col justify-center text-center items-center align-middle ">
-            <div className="px-5  flex flex-col  bg-white justify-center items-center align-middle rounded-lg ">
+            <div className="px-5  flex flex-col  bg-white justify-center items-center align-middle rounded-b rounded-t-none ">
               <h1 className="text-left self-start pl-3 font-semibold text-lg md:text-xl lg:text-2xl xl:text-3xl sm:mb-0">
                 {t("productDetails.Similar Products You May Also Like")}
               </h1>

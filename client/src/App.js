@@ -32,6 +32,7 @@ import clsx from "clsx";
 import i18n from "./i18n/index.js";
 import { Suspense, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
+import { NetworkError } from "./pages/NetworkError.jsx";
 
 function App() {
   //configure env
@@ -93,6 +94,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="*" element={<Pagenotfound />} />
+        <Route path="/network-error" element={<NetworkError />} />
       </Routes>
       <Toaster />
     </>

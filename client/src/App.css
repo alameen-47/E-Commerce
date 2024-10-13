@@ -1,3 +1,14 @@
 body {
   background-color: #ffffff;
 }
+:where(.css-dev-only-do-not-override-5wsri9).ant-image .ant-image-img {
+  height: 100%; /* Override the height to fit the container */
+  object-fit: contain;
+  /* padding: 3rem; */
+  display: flex;
+
+  justify-items: center;
+  align-items: center;
+
+  /* Ensures the image retains aspect ratio and fills the container */
+}

@@ -28,10 +28,15 @@ export const createProductController = async (req, res) => {
       offer,
       quantity,
       shipping,
-      color,
+      colors,
       translations,
     } = req.fields;
-    const { image } = req.files;
+    const { imageSet } = req.files;
+    const { colorsSet } = req.fields;
+    // Ensure both colorsSet and imageSet are available
+    if (!colorsSet || !imageSet) {
+      return res.status(400).json({ error: "Colors or images are missing." });
+    }
 
     // Standard fields to exclude from categoryDetails
     const standardFields = [
@@ -43,8 +48,10 @@ export const createProductController = async (req, res) => {
       "offer",
       "quantity",
       "shipping",
-      "color",
+      "colors",
+      "colorsSet",
       "translations",
+      "imageSet",
     ];
     // Filter category-specific details dynamically (anything not in standardFields)
     const categoryDetails = {};
@@ -71,19 +78,12 @@ export const createProductController = async (req, res) => {
         return res.status(500).send({ error: "Offer is Required" });
     }
 
-    const products = new productModel({
-      ...req.fields,
-      offer,
-      slug: slugify(name),
-      categoryDetails,
-    });
-
-    // Handle multiple images
+    // Handle multiple imageSet
     // if (image) {
     const processImage = async (img) => {
       const originalSize = fs.statSync(img.path).size;
-
       const outputFilePath = `compressed_${Date.now()}.webp`; // Create a unique output file name
+
       await sharp(img.path)
         .resize(500, 500, { fit: "inside" }) // Reduced size
         .webp({ quality: 78 }) // Adjust quality (70-85 is a good balance)
@@ -93,16 +93,16 @@ export const createProductController = async (req, res) => {
       const compressedSize = fs.statSync(outputFilePath).size; // Compressed image size
       const imageBuffer = fs.readFileSync(outputFilePath);
       // const imageBase64 = imageBuffer.toString("base64");
-
+      ``;
       // Clean up the temporary file
       fs.unlinkSync(outputFilePath);
 
-      // Log size difference
-      console.log(`Original Size: ${originalSize / 1024} KB`);
-      console.log(`Compressed Size: ${compressedSize / 1024} KB`);
-      console.log(
-        `Size Reduction: ${(originalSize - compressedSize) / 1024} KB`
-      );
+      // // Log size difference
+      // console.log(`Original Size: ${originalSize / 1024} KB`);
+      // console.log(`Compressed Size: ${compressedSize / 1024} KB`);
+      // console.log(
+      //   `Size Reduction: ${(originalSize - compressedSize) / 1024} KB`
+      // );
 
       // Read the compressed image and add it to the product
       return {
@@ -110,15 +110,46 @@ export const createProductController = async (req, res) => {
         contentType: "image/webp",
       };
     };
+    // Group imageSet by color
+    let colorImageMap = {};
+    let colorsArray = JSON.parse(colorsSet);
 
-    if (image) {
-      const imageArray = Array.isArray(image) ? image : [image];
-      for (const img of imageArray) {
+    if (imageSet && colorsArray) {
+      const imageArray = Array.isArray(imageSet) ? imageSet : [imageSet];
+
+      // // Ensure that the number of colors matches the number of images
+      if (imageArray.length !== colorsArray.length) {
+        return res
+          .status(400)
+          .send({ error: "Mismatch between colors and images" });
+      }
+
+      for (let i = 0; i < colorsArray.length; i++) {
+        const color = colorsArray[i];
+        const img = imageArray[i];
+        // Process the image
         const processedImage = await processImage(img);
-        products.image.push(processedImage);
+
+        if (!colorImageMap[color]) {
+          colorImageMap[color] = {
+            colors: color,
+            imageSet: [processedImage],
+          };
+        } else {
+          colorImageMap[color].imageSet.push(processedImage);
+        }
       }
     }
+    // Prepare images array in the desired format
+    const imagesArray = Object.values(colorImageMap);
 
+    const products = new productModel({
+      ...req.fields,
+      offer,
+      slug: slugify(name),
+      categoryDetails,
+      images: imagesArray,
+    });
     await products.save();
 
     res.status(201).send({
@@ -149,9 +180,25 @@ export const getAllProductController = async (req, res) => {
       const productList = products.map((product) => {
         return {
           ...product._doc, // Spread other product details
-          image: product.image.map((img) => ({
-            contentType: img.contentType,
-            data: img.data.toString("base64"), // Convert Buffer to base64 string
+          images: product.images.map((imageObj) => ({
+            colors: imageObj.colors,
+            imageSet: imageObj.imageSet.map((img) => {
+              if (img.data && img.data.buffer) {
+                // Convert the buffer to base64
+                const base64Data = img.data.toString("base64");
+
+                // // Log the base64 converted data
+                // console.log("Base64 converted data: ", base64Data);
+                // Check if data exists
+                return {
+                  contentType: img.contentType,
+                  data: base64Data, /// Store the converted data
+                };
+              } else {
+                return {};
+                // Handle missing data gracefully
+              }
+            }),
           })),
         };
       });
@@ -191,9 +238,23 @@ export const getSingleProductController = async (req, res) => {
       // 3. Process the image data (converting Buffer to base64 string)
       const productWithImage = {
         ...product._doc, // Spread other product details
-        image: product.image.map((img) => ({
-          contentType: img.contentType, // Keep content type (e.g., "image/png")
-          data: img.data.toString("base64"), // Convert Buffer to base64 string
+        images: product.images.map((imageObj) => ({
+          colors: imageObj.colors,
+          imageSet: imageObj.imageSet.map((img) => {
+            if (img.data && img.data.buffer) {
+              // Convert the buffer to base64
+              const base64Data = img.data.toString("base64");
+
+              // Check if data exists
+              return {
+                contentType: img.contentType,
+                data: base64Data, /// Store the converted data
+              };
+            } else {
+              return {};
+              // Handle missing data gracefully
+            }
+          }),
         })),
       };
       // 4. Send back the product details with image in base64
@@ -232,7 +293,6 @@ export const productImageController = async (req, res) => {
       const image = product.image[0]; // Select the first image (modify if necessary)
 
       res.setHeader("Content-Type", image.contentType);
-      // console.log("Images Controller ", image.data);
       return res.status(200).send(image.data); // Send the image data directly
     } else {
       return res.status(404).send({
@@ -279,7 +339,7 @@ export const updateProductController = async (req, res) => {
       offer,
       quantity,
       shipping,
-      color,
+      colors,
       translations,
     } = req.fields;
     const { image } = req.files;
@@ -294,7 +354,7 @@ export const updateProductController = async (req, res) => {
       "offer",
       "quantity",
       "shipping",
-      "color",
+      "colors",
       "translations",
     ];
     // Filter category-specific details dynamically (anything not in standardFields)
@@ -322,13 +382,6 @@ export const updateProductController = async (req, res) => {
         return res.status(500).send({ error: "Offer is Required" });
     }
 
-    const products = new productModel({
-      ...req.fields,
-      offer,
-      slug: slugify(name),
-      categoryDetails,
-    });
-
     // Handle multiple images
     // if (image) {
     const processImage = async (img) => {
@@ -348,12 +401,12 @@ export const updateProductController = async (req, res) => {
       // Clean up the temporary file
       fs.unlinkSync(outputFilePath);
 
-      // Log size difference
-      console.log(`Original Size: ${originalSize / 1024} KB`);
-      console.log(`Compressed Size: ${compressedSize / 1024} KB`);
-      console.log(
-        `Size Reduction: ${(originalSize - compressedSize) / 1024} KB`
-      );
+      // // Log size difference
+      // console.log(`Original Size: ${originalSize / 1024} KB`);
+      // console.log(`Compressed Size: ${compressedSize / 1024} KB`);
+      // console.log(
+      //   `Size Reduction: ${(originalSize - compressedSize) / 1024} KB`
+      // );
 
       // Read the compressed image and add it to the product
       return {
@@ -362,13 +415,46 @@ export const updateProductController = async (req, res) => {
       };
     };
 
-    if (image) {
-      const imageArray = Array.isArray(image) ? image : [image];
-      for (const img of imageArray) {
+    // Group imageSet by color
+    let colorImageMap = {};
+    let colorsArray = JSON.parse(colorsSet);
+
+    if (imageSet && colorsArray) {
+      const imageArray = Array.isArray(imageSet) ? imageSet : [imageSet];
+
+      // // Ensure that the number of colors matches the number of images
+      if (imageArray.length !== colorsArray.length) {
+        return res
+          .status(400)
+          .send({ error: "Mismatch between colors and images" });
+      }
+
+      for (let i = 0; i < colorsArray.length; i++) {
+        const color = colorsArray[i];
+        const img = imageArray[i];
+        // Process the image
         const processedImage = await processImage(img);
-        products.image.push(processedImage);
+
+        if (!colorImageMap[color]) {
+          colorImageMap[color] = {
+            colors: color,
+            imageSet: [processedImage],
+          };
+        } else {
+          colorImageMap[color].imageSet.push(processedImage);
+        }
       }
     }
+    // Prepare images array in the desired format
+    const imagesArray = Object.values(colorImageMap);
+
+    const products = new productModel({
+      ...req.fields,
+      offer,
+      slug: slugify(name),
+      categoryDetails,
+      images: imagesArray,
+    });
 
     await products.save();
 
@@ -558,12 +644,26 @@ export const footwearController = async (req, res) => {
       const productList = products.map((product) => {
         return {
           ...product._doc, // Spread other product details
-          image: product.image
-            ? product.image.map((img) => ({
-                contentType: img.contentType,
-                data: img.data.toString("base64"), // Convert Buffer to base64 string
-              }))
-            : [], // Return empty array if no image exists
+          images: product.images.map((imageObj) => ({
+            colors: imageObj.colors,
+            imageSet: imageObj.imageSet.map((img) => {
+              if (img.data && img.data.buffer) {
+                // Convert the buffer to base64
+                const base64Data = img.data.toString("base64");
+
+                // Log the base64 converted data
+                // console.log("Base64 converted data: ", base64Data);
+                // Check if data exists
+                return {
+                  contentType: img.contentType,
+                  data: base64Data, /// Store the converted data
+                };
+              } else {
+                return {};
+                // Handle missing data gracefully
+              }
+            }),
+          })),
         };
       });
       const link = "/category/footwear";
@@ -629,9 +729,25 @@ export const getProductListController = async (req, res) => {
     if (products && products.length > 0) {
       const productList = products.map((product) => ({
         ...product._doc,
-        image: product.image.map((img) => ({
-          contentType: img.contentType,
-          data: img.data.toString("base64"),
+        images: product.images.map((imageObj) => ({
+          colors: imageObj.colors,
+          imageSet: imageObj.imageSet.map((img) => {
+            if (img.data && img.data.buffer) {
+              // Convert the buffer to base64
+              const base64Data = img.data.toString("base64");
+
+              // Log the base64 converted data
+              // console.log("Base64 converted data: ", base64Data);
+              // Check if data exists
+              return {
+                contentType: img.contentType,
+                data: base64Data, /// Store the converted data
+              };
+            } else {
+              return {};
+              // Handle missing data gracefully
+            }
+          }),
         })),
       }));
 
@@ -738,9 +854,25 @@ export const personalizedProductsController = async (req, res) => {
       const productList = products.map((product) => {
         return {
           ...product._doc, // Spread other product details
-          image: product.image.map((img) => ({
-            contentType: img.contentType,
-            data: img.data.toString("base64"), // Convert Buffer to base64 string
+          images: product.images.map((imageObj) => ({
+            colors: imageObj.colors,
+            imageSet: imageObj.imageSet.map((img) => {
+              if (img.data && img.data.buffer) {
+                // Convert the buffer to base64
+                const base64Data = img.data.toString("base64");
+
+                // Log the base64 converted data
+                // console.log("Base64 converted data: ", base64Data);
+                // Check if data exists
+                return {
+                  contentType: img.contentType,
+                  data: base64Data, /// Store the converted data
+                };
+              } else {
+                return {};
+                // Handle missing data gracefully
+              }
+            }),
           })),
         };
       });
@@ -760,6 +892,7 @@ export const personalizedProductsController = async (req, res) => {
     });
   }
 };
+
 //related product
 export const relatedProductsController = async (req, res) => {
   try {
@@ -774,9 +907,25 @@ export const relatedProductsController = async (req, res) => {
       const productList = products.map((product) => {
         return {
           ...product._doc, // Spread other product details
-          image: product.image.map((img) => ({
-            contentType: img.contentType,
-            data: img.data.toString("base64"), // Convert Buffer to base64 string
+          images: product.images.map((imageObj) => ({
+            colors: imageObj.colors,
+            imageSet: imageObj.imageSet.map((img) => {
+              if (img.data && img.data.buffer) {
+                // Convert the buffer to base64
+                const base64Data = img.data.toString("base64");
+
+                // Log the base64 converted data
+                // console.log("Base64 converted data: ", base64Data);
+                // Check if data exists
+                return {
+                  contentType: img.contentType,
+                  data: base64Data, /// Store the converted data
+                };
+              } else {
+                return {};
+                // Handle missing data gracefully
+              }
+            }),
           })),
         };
       });

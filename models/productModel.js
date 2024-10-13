@@ -38,18 +38,23 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: mongoose.ObjectId, // Category as a string (e.g., "electronics", "furniture")
-      ref: "Category",  
-          required: true,
+      ref: "Category",
+      required: true,
     },
     quantity: {
       type: Number,
       default: 1,
       required: true,
     },
-    image: [
+    images: [
       {
-        data: Buffer,
-        contentType: String,
+        colors: String,
+        imageSet: [
+          {
+            data: Buffer,
+            contentType: String,
+          },
+        ],
       },
     ],
     shipping: {

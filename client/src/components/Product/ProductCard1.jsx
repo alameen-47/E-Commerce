@@ -22,24 +22,24 @@ export const ProductCard1 = ({ products }) => {
   const { i18n } = useTranslation();
   const isEnglish = i18n.language === "en"; // Check if the language is English
   const [translatedProduct, setTranslatedProduct] = useState(products);
-
+  const fieldsToTranslate = ["name", "description", "price", "offer"]; // Add the specific keys you want
   // Function to translate all string fields and update image paths
   const translateProductFields = async (product) => {
     const translatedProduct = { ...product };
     // Loop through each key in the product
     for (let key in product) {
-      if (typeof product[key] === "string") {
+      if (fieldsToTranslate.includes(key)) {
         translatedProduct[key] = await translateText(
           product[key],
           i18n.language
         );
       }
     }
-    // Update the image paths
-    translatedProduct.image = product?.image.map((img) => ({
-      ...img,
-      filePath: `http://localhost:8085/uploads/${img.filePath}`,
-    }));
+    // // Update the image paths
+    // translatedProduct.image = product?.image.map((img) => ({
+    //   ...img,
+    //   filePath: `http://localhost:8085/uploads/${img.filePath}`,
+    // }));
 
     return translatedProduct;
   };
@@ -85,7 +85,7 @@ export const ProductCard1 = ({ products }) => {
               : "red"
           }
         >
-          <ImageCarousel images={translatedProduct} />
+          <ImageCarousel product={translatedProduct} />
         </Badge.Ribbon>
         <p
           className={`PRODUCT-NAME md:mb-2 sm:mb-0 cardtxt font-semibold text-black tracking-wider group-hover:text-white  break-words overflow-hidden text-ellipsis ${

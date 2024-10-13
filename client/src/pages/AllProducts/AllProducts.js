@@ -312,7 +312,7 @@ const AllProducts = () => {
           </Drawer>
         </div>
         <div className="h-auto w-full flex align-top  items-start bg-white pt-10">
-          <div className="md:w-1/5 lg:block  sm:hidden pr-4 pl-4 flex-wrap top-0 left-0 bottom-0 sticky  justify-start align-top items-start ">
+          <div className="PRODUCT FILTERS md:w-1/5 lg:block  sm:hidden pr-4 pl-4 flex-wrap top-0 left-0 bottom-0 sticky  justify-start align-top items-start ">
             <h3 className="text-center md:sm:text-sm lg:text-lg font-bold ">
               {t("allProducts.Filter By Category")}
             </h3>
@@ -365,7 +365,7 @@ const AllProducts = () => {
               </button>
             </div>
           </div>
-          <div className="md:w-4/4 md:items-center sm:justify-center sm:items-center sm:w-full flex-row justify-center align-middle items-center p-1 ">
+          <div className="PRODUCT LIST md:w-4/4 md:items-center sm:justify-center sm:items-center sm:w-full flex-row justify-center align-middle items-center p-1 ">
             <FloatButton
               icon={<FaShoppingCart />}
               badge={{

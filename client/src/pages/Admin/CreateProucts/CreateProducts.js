@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import Layout from "../../../components/Layout/Layout";
 import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
-import { Button, ColorPicker, Modal, Select, Upload } from "antd";
+import { Button, ColorPicker, Image, Modal, Select, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
 import slugify from "slugify";
 
@@ -19,8 +19,10 @@ const CreateProducts = () => {
   const [offer, setOffer] = useState("");
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [image, setImage] = useState("");
-  const [color, setColor] = useState("");
+  const [images, setImages] = useState({});
+  const [colors, setColors] = useState([]);
+  const [selectedColor, setSelectedColor] = useState([]); // Track the current color
+
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedCategoryID, setSelectedCategoryID] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -229,9 +231,65 @@ const CreateProducts = () => {
     // Add more categories as needed
   };
 
-  console.log(selectedCategory, "SELECTED VALUE");
-  console.log(color, "SELECTED COLOR");
+  const handleColorChange = (newColor) => {
+    if (newColor && newColor.metaColor && newColor.metaColor.isValid) {
+      const { r, g, b } = newColor.metaColor; // Extract RGB values
+      // Convert RGB to Hex
+      const hex = `#${((1 << 24) + (r << 16) + (g << 8) + b)
+        .toString(16)
+        .slice(1)
+        .padStart(6, "0")}`;
+
+      setSelectedColor(hex);
+
+      // setColors(hex); // Set the color state to the hex value
+      setColors((prevColors) => {
+        // Add the new color only if it's not already in the array
+        if (hex && !prevColors.includes(hex)) {
+          return [...prevColors, hex]; // Add the new color to the array
+        }
+        return prevColors; // If color is already in the array, return the array unchanged
+      });
+
+      setImages((prevImages) => ({
+        ...prevImages,
+        [hex]: prevImages[hex] || [],
+      }));
+    }
+  };
+  // console.log(colors, "COLORS ARRAY");
+  const handleBeforeUpload = (file) => {
+    if (selectedColor) {
+      // Use selectedColor instead of colors array or combination
+      setImages((prevImages) => {
+        const newImages = prevImages[selectedColor]
+          ? [...prevImages[selectedColor], file]
+          : [file];
+        return {
+          ...prevImages,
+          [selectedColor]: newImages,
+        };
+      });
+    } else {
+      // Handle case where color is not set
+      console.error("Please select a color before uploading an image.");
+    }
+    return false; // Prevent automatic upload
+  };
   // Create product function
+  // console.log(images, " IMAGES DATA");
+
+  // Delete a color and its associated images
+  const handleDeleteColor = (colorToDelete) => {
+    setColors((prevColors) =>
+      prevColors.filter((colors) => colors !== colorToDelete)
+    );
+    setImages((prevImages) => {
+      const newImages = { ...prevImages };
+      delete newImages[colorToDelete]; // Remove images for this color
+      return newImages;
+    });
+  };
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
@@ -242,19 +300,40 @@ const CreateProducts = () => {
       productData.append("price", price);
       productData.append("offer", offer);
       productData.append("quantity", quantity);
-      productData.append("color", color);
+      // productData.append("color", color);
       productData.append("category", selectedCategoryID);
 
-      // Append images to FormData
-      image.forEach((img) => {
-        productData.append("image", img);
+      // // Append images to FormData
+      // images.forEach((img) => {
+      //   productData.append("images", img);
+      // });
+      // Iterate over each color and its associated images
+      let colorsArray = [];
+
+      Object.keys(images).forEach((color) => {
+        images[color].forEach((img) => {
+          // Append color and image to the FormData
+          productData.append("imageSet", img); // Append the image
+          colorsArray.push(color); // Collect color for each image
+          console.log(img, "------IMAGES------", color, "-------COLORS------");
+        });
       });
+      productData.append("colorsSet", JSON.stringify(colorsArray));
+
+      console.log(images, " IMAGES DATA INSIDE");
+      for (let [key, value] of productData.entries()) {
+        console.log("KEY", key, "VALUE", value);
+      }
 
       // Append category details to FormData
       categoryDetails[selectedCategory]?.forEach((detail) => {
         const value = inputRefs.current[detail.key]?.value || ""; // Get values from refs
         productData.append(detail.key, value); // Append to FormData
       });
+
+      for (let pair of productData.entries()) {
+        console.log(pair[0], pair[1]); // Logs each key-value pair in FormData
+      }
 
       const { data } = await axios.post(
         "/api/v1/product/create-product",
@@ -306,24 +385,6 @@ const CreateProducts = () => {
               ))}
             </Select>
 
-            <Upload
-              onPreview={onPreview}
-              listType="picture-card"
-              multiple
-              beforeUpload={(file) => {
-                setImage((prevImages) => [...prevImages, file]); // Append selected file to the array
-                return false; // Prevent automatic upload
-              }}
-            >
-              <span
-                className="
-              text-[#0e0c0c]
-              shadow-black"
-              >
-                + Upload Images
-              </span>
-            </Upload>
-
             <label className="relative block mt-5 ">
               Name:
               <input
@@ -338,11 +399,60 @@ const CreateProducts = () => {
               Color:
               <ColorPicker
                 defaultValue="#000000"
-                onChange={(color) => setColor(color.hex)}
+                // onChange={handleColorChange}
+                onChangeComplete={handleColorChange}
                 size="large"
                 showText
               />
             </label>
+
+            <Upload
+              // onPreview={onPreview}
+              listType="picture-card"
+              multiple
+              beforeUpload={handleBeforeUpload}
+              showUploadList={false} // This hides the uploaded images
+            >
+              <span
+                className="
+              text-[#0e0c0c]
+              shadow-black"
+              >
+                + Upload Images
+              </span>
+            </Upload>
+
+            <div>
+              {Object.keys(images).map((colorKey) => (
+                <div key={colorKey}>
+                  <h3 className="flex items-center ">
+                    Images for Color:
+                    <span
+                      className="inline-block w-5 h-5 rounded-lg border border-gray-400 ml-2 shadow-2xl drop-shadow-lg"
+                      style={{ backgroundColor: colorKey }}
+                    ></span>
+                    <button
+                      className="hover:bg-red-700/90 ml-4 px-[.2rem] bg-red-500 text-white rounded-lg"
+                      onClick={() => handleDeleteColor(colorKey)}
+                    >
+                      Remove
+                    </button>
+                  </h3>
+                  <div className="flex gap-4 rounded-lg">
+                    {images[colorKey].map((image, index) => (
+                      <Image
+                        key={index}
+                        src={URL.createObjectURL(image)}
+                        alt=""
+                        className="rounded-lg"
+                        style={{ width: "100px", height: "100px" }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
             <label className="relative block mt-5">
               Description
               <textarea

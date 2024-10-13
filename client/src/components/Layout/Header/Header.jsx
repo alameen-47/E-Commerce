@@ -103,7 +103,7 @@ function Header() {
           <SearchInput />
 
           {!auth.user ? (
-            <button className="inline-flex items-center justify-center w-full p-1 text-sm font-medium text-white bg-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 gap-1 ">
+            <button className="inline-flex items-center justify-center w-full p-1 text-sm font-medium text-white bg-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 gap-1  ">
               <Link to="/register">
                 <img
                   className="sm:w-5 !important"
@@ -119,7 +119,8 @@ function Header() {
                   `/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`
                 )
               }
-              onBlur={() => setDropDown(false)}
+              onMouseEnter={() => setDropDown(true)}
+              // onMouseLeave={() => setDropDown(false)}
               className="dropdown"
             >
               <img
@@ -128,7 +129,11 @@ function Header() {
                 alt="*"
               />
               {dropDown && (
-                <div className="absolute left-0 mt-2 origin-top-left bg-black divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 text-center lg:w-[200px] sm:w-[120px] focus:outline-none z-50 px-3 py-3">
+                <div
+                  onMouseEnter={() => setDropDown(true)}
+                  onMouseLeave={() => setDropDown(false)} // Hide dropdown when not hovered
+                  className="absolute left-0 mt-2 origin-top-left bg-black divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 text-center lg:w-[200px] sm:w-[120px] focus:outline-none z-50 px-3 py-3"
+                >
                   {auth?.user.name}
 
                   <div className=" flex flex-row py-[7%] ">
