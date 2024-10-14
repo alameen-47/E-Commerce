@@ -558,9 +558,25 @@ export const furnituresController = async (req, res) => {
       const productList = products.map((product) => {
         return {
           ...product._doc, // Spread other product details
-          image: product.image.map((img) => ({
-            contentType: img.contentType,
-            data: img.data.toString("base64"), // Convert Buffer to base64 string
+          images: product.images.map((imageObj) => ({
+            colors: imageObj.colors,
+            imageSet: imageObj.imageSet.map((img) => {
+              if (img.data && img.data.buffer) {
+                // Convert the buffer to base64
+                const base64Data = img.data.toString("base64");
+
+                // // Log the base64 converted data
+                // console.log("Base64 converted data: ", base64Data);
+                // Check if data exists
+                return {
+                  contentType: img.contentType,
+                  data: base64Data, /// Store the converted data
+                };
+              } else {
+                return {};
+                // Handle missing data gracefully
+              }
+            }),
           })),
         };
       });
@@ -597,9 +613,25 @@ export const electronicsController = async (req, res) => {
       const productList = products.map((product) => {
         return {
           ...product._doc, // Spread other product details
-          image: product.image.map((img) => ({
-            contentType: img.contentType,
-            data: img.data.toString("base64"), // Convert Buffer to base64 string
+          images: product.images.map((imageObj) => ({
+            colors: imageObj.colors,
+            imageSet: imageObj.imageSet.map((img) => {
+              if (img.data && img.data.buffer) {
+                // Convert the buffer to base64
+                const base64Data = img.data.toString("base64");
+
+                // // Log the base64 converted data
+                // console.log("Base64 converted data: ", base64Data);
+                // Check if data exists
+                return {
+                  contentType: img.contentType,
+                  data: base64Data, /// Store the converted data
+                };
+              } else {
+                return {};
+                // Handle missing data gracefully
+              }
+            }),
           })),
         };
       });
@@ -651,7 +683,7 @@ export const footwearController = async (req, res) => {
                 // Convert the buffer to base64
                 const base64Data = img.data.toString("base64");
 
-                // Log the base64 converted data
+                // // Log the base64 converted data
                 // console.log("Base64 converted data: ", base64Data);
                 // Check if data exists
                 return {
@@ -727,29 +759,31 @@ export const getProductListController = async (req, res) => {
       .limit(limitNum);
 
     if (products && products.length > 0) {
-      const productList = products.map((product) => ({
-        ...product._doc,
-        images: product.images.map((imageObj) => ({
-          colors: imageObj.colors,
-          imageSet: imageObj.imageSet.map((img) => {
-            if (img.data && img.data.buffer) {
-              // Convert the buffer to base64
-              const base64Data = img.data.toString("base64");
+      const productList = products.map((product) => {
+        return {
+          ...product._doc, // Spread other product details
+          images: product.images.map((imageObj) => ({
+            colors: imageObj.colors,
+            imageSet: imageObj.imageSet.map((img) => {
+              if (img.data && img.data.buffer) {
+                // Convert the buffer to base64
+                const base64Data = img.data.toString("base64");
 
-              // Log the base64 converted data
-              // console.log("Base64 converted data: ", base64Data);
-              // Check if data exists
-              return {
-                contentType: img.contentType,
-                data: base64Data, /// Store the converted data
-              };
-            } else {
-              return {};
-              // Handle missing data gracefully
-            }
-          }),
-        })),
-      }));
+                // // Log the base64 converted data
+                // console.log("Base64 converted data: ", base64Data);
+                // Check if data exists
+                return {
+                  contentType: img.contentType,
+                  data: base64Data, /// Store the converted data
+                };
+              } else {
+                return {};
+                // Handle missing data gracefully
+              }
+            }),
+          })),
+        };
+      });
 
       res.status(200).send({
         success: true,
@@ -861,7 +895,7 @@ export const personalizedProductsController = async (req, res) => {
                 // Convert the buffer to base64
                 const base64Data = img.data.toString("base64");
 
-                // Log the base64 converted data
+                // // Log the base64 converted data
                 // console.log("Base64 converted data: ", base64Data);
                 // Check if data exists
                 return {
@@ -914,7 +948,7 @@ export const relatedProductsController = async (req, res) => {
                 // Convert the buffer to base64
                 const base64Data = img.data.toString("base64");
 
-                // Log the base64 converted data
+                // // Log the base64 converted data
                 // console.log("Base64 converted data: ", base64Data);
                 // Check if data exists
                 return {

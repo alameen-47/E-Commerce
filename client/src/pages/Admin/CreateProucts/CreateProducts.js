@@ -94,12 +94,16 @@ const CreateProducts = () => {
       { key: "model", value: "" },
       { key: "warranty", value: "" },
       { key: "power", value: "" },
+      { key: "energy efficiency", value: "" }, // Replaced battery life with energy efficiency
+      { key: "connectivity", value: "" },
     ],
     Furnitures: [
       { key: "material", value: "" },
       { key: "dimensions", value: "" },
       { key: "brand", value: "" },
       { key: "warranty", value: "" },
+      { key: "weight capacity", value: "" }, // Replacing "weight" with capacity
+      { key: "assembly required", value: "" },
     ],
     "Home Appliances": [
       { key: "brand", value: "" },
@@ -107,57 +111,71 @@ const CreateProducts = () => {
       { key: "warranty", value: "" },
       { key: "energy efficiency", value: "" },
       { key: "power", value: "" },
+      { key: "capacity", value: "" },
     ],
     Footwears: [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "material", value: "" },
       { key: "type", value: "" },
+      { key: "sole type", value: "" },
+      { key: "closure type", value: "" },
     ],
     "Ladies Footwear": [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "material", value: "" },
       { key: "type", value: "" },
+      { key: "heel height", value: "" },
+      { key: "occasion", value: "" },
     ],
     "Gents Footwear": [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "material", value: "" },
       { key: "type", value: "" },
+      { key: "sole material", value: "" },
+      { key: "water resistance", value: "" },
     ],
-
     Garments: [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "fabric", value: "" },
       { key: "type", value: "" },
+      { key: "care instructions", value: "" },
+      { key: "fit type", value: "" },
     ],
     "Ladies Collection": [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "fabric", value: "" },
       { key: "type", value: "" },
+      { key: "pattern", value: "" },
+      { key: "occasion", value: "" },
     ],
     "Gents Collection": [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "fabric", value: "" },
       { key: "type", value: "" },
+      { key: "style", value: "" },
+      { key: "fit type", value: "" },
     ],
     "Kids Collection": [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "fabric", value: "" },
       { key: "type", value: "" },
+      { key: "care instructions", value: "" },
+      { key: "age group", value: "" },
     ],
-
     "Kitchen Appliances": [
       { key: "brand", value: "" },
       { key: "model", value: "" },
       { key: "power", value: "" },
       { key: "warranty", value: "" },
       { key: "capacity", value: "" },
+      { key: "energy efficiency", value: "" },
     ],
     Cookwares: [
       { key: "brand", value: "" },
@@ -165,6 +183,7 @@ const CreateProducts = () => {
       { key: "size", value: "" },
       { key: "coating", value: "" },
       { key: "type", value: "" },
+      { key: "heat compatibility", value: "" },
     ],
     "Cleaning Products": [
       { key: "brand", value: "" },
@@ -172,33 +191,39 @@ const CreateProducts = () => {
       { key: "fragrance", value: "" },
       { key: "size", value: "" },
       { key: "material compatibility", value: "" },
+      { key: "eco-friendly", value: "" },
     ],
     "Plastic Appliances": [
       { key: "brand", value: "" },
       { key: "material", value: "" },
-
       { key: "durability", value: "" },
       { key: "size", value: "" },
+      { key: "recyclable", value: "" },
+      { key: "heat resistance", value: "" },
     ],
     "Camping Products": [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "material", value: "" },
-      { key: "weight", value: "" },
+      { key: "waterproof", value: "" },
       { key: "type", value: "" },
+      { key: "durability", value: "" },
     ],
     Mobiles: [
       { key: "brand", value: "" },
       { key: "model", value: "" },
       { key: "storage", value: "" },
-
       { key: "battery capacity", value: "" },
+      { key: "camera", value: "" },
+      { key: "operating system", value: "" },
     ],
     Gadgets: [
       { key: "brand", value: "" },
       { key: "model", value: "" },
       { key: "type", value: "" },
       { key: "features", value: "" },
+      { key: "battery life", value: "" },
+      { key: "connectivity", value: "" },
     ],
     Perfumes: [
       { key: "brand", value: "" },
@@ -206,6 +231,7 @@ const CreateProducts = () => {
       { key: "volume", value: "" },
       { key: "gender", value: "" },
       { key: "type", value: "" },
+      { key: "lasting hours", value: "" },
     ],
     "Beauty Products": [
       { key: "brand", value: "" },
@@ -213,13 +239,15 @@ const CreateProducts = () => {
       { key: "ingredients", value: "" },
       { key: "type", value: "" },
       { key: "volume", value: "" },
+      { key: "SPF protection", value: "" },
     ],
     Toys: [
       { key: "brand", value: "" },
       { key: "age group", value: "" },
       { key: "material", value: "" },
-      { key: "safety certifications", value: "" },
       { key: "type", value: "" },
+      { key: "features", value: "" }, // Removed safety certifications
+      { key: "color", value: "" },
     ],
     "Stationary Products": [
       { key: "brand", value: "" },
@@ -227,6 +255,7 @@ const CreateProducts = () => {
       { key: "size", value: "" },
       { key: "material", value: "" },
       { key: "usage", value: "" },
+      { key: "color", value: "" },
     ],
     // Add more categories as needed
   };

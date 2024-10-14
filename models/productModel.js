@@ -69,6 +69,39 @@ const productSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Mixed, // Flexible to store any structure of details
       default: {},
     },
+    // Tags for product categories
+    newArrivals: {
+      type: Boolean,
+      default: false,
+    },
+    // Use an enum for specifying seasonal sales
+    seasonalSales: {
+      type: String,
+      enum: [
+        "Winter",
+        "Spring",
+        "Summer",
+        "Autumn",
+        "None",
+        "Ramadan",
+        "Bakr-Eid",
+        "ThaHsees",
+        "National Day",
+      ],
+      default: "None",
+    },
+    bestSellers: {
+      type: Boolean,
+      default: false,
+    },
+    limitedTimeDeals: {
+      type: Boolean,
+      default: false,
+    },
+    stockClearance: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

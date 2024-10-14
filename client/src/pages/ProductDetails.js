@@ -39,8 +39,10 @@ const ProductDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [similarProducts, setSimilarProducts] = useState([]);
   const [slug, setSlug] = useState();
-  const [selectedColor, setSelectedColor] = useState(null); // Tracks selected color
-  const [colorsArray, setColorsArray] = useState([]);
+  const initialColor = images.length > 0 ? images[0].color : "";
+
+  const [selectedColor, setSelectedColor] = useState(initialColor); // Tracks selected color
+  const [colorsArray, setColorsArray] = useState(images[0]?.color || "");
   const [filteredImages, setFilteredImages] = useState([]);
 
   const { i18n } = useTranslation();
@@ -94,10 +96,6 @@ const ProductDetails = () => {
     }
   }, [selectedColor, images]); // Re-run when selectedColor or images change
 
-  console.log(
-    selectedColor,
-    "<<<<<<<<<<<<-SELECTED----------- COLOUR->>>>>>>>>>>>>"
-  );
   // Effect to handle translation on product change
   useEffect(() => {
     const translateProduct = async () => {
@@ -121,13 +119,8 @@ const ProductDetails = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  // Use useEffect to set the main image once images are available
-  useEffect(() => {
-    if (images && images.length > 0) {
-      // Set the first image as the main image
-      setMainImage(`data:${images[0].contentType};base64,${images[0].data}`);
-    }
-  }, [images]); // Re-run the effect when 'images' change
+
+  // Re-run the effect when 'images' change
   const addToCart = (item) => {
     const updatedCart = [...cart, ...item];
     setCart(updatedCart);
@@ -162,11 +155,6 @@ const ProductDetails = () => {
               return transformedImage;
             })
           );
-          // Filter or sort images by the selected color
-          const filteredImages = selectedColor
-            ? newImages.filter((img) => img.color === selectedColor) // Filter by selected color
-            : newImages; // Show all images if no color is selected
-          setImages(filteredImages);
 
           // Extract unique colors
           const uniqueColors = Array.from(
@@ -176,6 +164,17 @@ const ProductDetails = () => {
 
           // Set the colors state
           setColorsArray(uniqueColors);
+
+          // If `selectedColor` is not yet set, initialize it with the first unique color
+          if (!selectedColor && uniqueColors.length > 0) {
+            setSelectedColor(uniqueColors[0]); // Set the initial selected color
+          }
+
+          // Filter or sort images by the selected color
+          const filteredImages = selectedColor
+            ? newImages.filter((img) => img.color === selectedColor) // Filter by selected color
+            : newImages; // Show all images if no color is selected
+          setImages(filteredImages);
         }
         setProducts(data?.product);
 
@@ -229,7 +228,13 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
-
+  // Use useEffect to set the main image once images are available
+  useEffect(() => {
+    if (images && images.length > 0) {
+      // Set the first image as the main image
+      setMainImage(`data:${images[0].contentType};base64,${images[0].data}`);
+    }
+  }, [images]);
   return (
     <Layout>
       <div className="md:m-4 sm:mb-3 flex flex-col gap-7">
@@ -558,7 +563,7 @@ const ProductDetails = () => {
           </div>
         </>
         {similarProducts?.length > 0 ? (
-          <div className="SimilarProducts bg-white flex flex-col justify-center text-center items-center align-middle ">
+          <div className="SIMILAR_PRODUCTS bg-white flex flex-col justify-center text-center items-center align-middle ">
             <div className="px-5  flex flex-col  bg-white justify-center items-center align-middle rounded-b rounded-t-none ">
               <h1 className="text-left self-start pl-3 font-semibold text-lg md:text-xl lg:text-2xl xl:text-3xl sm:mb-0">
                 {t("productDetails.Similar Products You May Also Like")}
@@ -571,7 +576,7 @@ const ProductDetails = () => {
           ""
         )}
         {sameCategoryProducts?.length > 0 ? (
-          <div className="SameCategoryProducts bg-white flex flex-col justify-center text-center items-center align-middle ">
+          <div className="SAME_CATEGORY_PRODUCTS SameCategoryProducts bg-white flex flex-col justify-center text-center items-center align-middle ">
             <div className="px-5  flex flex-col  bg-white justify-center items-center align-middle rounded-lg ">
               <h1 className="text-left self-start pl-3 font-semibold text-lg md:text-xl lg:text-2xl xl:text-3xl sm:mb-0">
                 {t("productDetails.More in This Category")}

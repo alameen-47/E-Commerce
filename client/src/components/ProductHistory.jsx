@@ -27,7 +27,7 @@ export const ProductHistory = () => {
   return (
     <div>
       <div className="bg-blue-600  ">
-        {products?.length > 0 ? (
+        {products?.length > 1 ? (
           <div className="HISTORY PRODUCTS bg-white flex flex-col justify-center text-center items-center align-middle ">
             <div className="px-5  flex flex-col  bg-white justify-center items-center align-middle rounded-lg ">
               <h1 className="text-left self-start pl-3 font-semibold text-lg md:text-xl lg:text-2xl xl:text-3xl sm:mb-0">
