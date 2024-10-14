@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ProductCard1 } from "./Product/ProductCard1";
+import { ProductCard1 } from "./ProductCard1";
 
 export const ProductCarousel = ({ products }) => {
   const [visibleProducts, setVisibleProducts] = useState(5); // Initially show 5 products

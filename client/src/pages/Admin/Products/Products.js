@@ -6,6 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { ImageCarousel } from "../../../components/Product/ImageCarousel";
+import { ProductCard2 } from "../../../components/Product/ProductCard2";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -32,47 +33,21 @@ const Products = () => {
           <div className="relative !important">
             <AdminMenu />
           </div>
-          <div className="lg:w-screen sm:left-0 sm:w-screen h-screen overflow-scroll sm:overflow-y-scroll !important">
-            <div className="bg-slate-300">
-              <h2 className="lg:text-3xl lg:font-extrabold sm:text-xl sm:font-bold">
-                All Products List
-              </h2>
-              <div className=" mx-auto  max-w-2xl px-4  sm:px-6  lg:max-w-7xl lg:px-8">
-                <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 xl:gap-x-8 ">
-                  {products?.map((p) => (
-                    <Link
+          <div className="lg:w-screen sm:left-0 sm:w-screen h-screen overflow-scroll sm:overflow-y-scroll !important custom-scrollbar">
+            <h2 className="lg:text-3xl lg:font-extrabold sm:text-xl sm:font-bold">
+              All Products List
+            </h2>
+            <div className="grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 gap-2 ">
+              {products && products.length > 0
+                ? products.map((p) => (
+                    <div
+                      className="flex w-auto lg:flex-col sm:flex-row justify-center align-middle items-center bg-gray-200 drop-shadow-lg rounded-lg sm:p-2"
                       key={p._id}
-                      to={`/dashboard/admin/product/${p.slug}`}
-                      className="group shadow-xl hover:shadow-2xl rounded-xl transition duration-300 p-2 pt-5"
                     >
-                      <div className="aspect-h-1 aspect-w-2 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7  ">
-                        <ImageCarousel image={p.image} />
-                      </div>
-                      <h3 className="mt-4 text-sm text-gray-900">{p.name}</h3>
-                      <p className="mt-1 text-xs font-medium text-gray-500">
-                        {p.description}
-                      </p>
-                      <p className="mt-1 text-xs font-medium">
-                        <p className="mt-1 text-xs font-medium text-gray-600">
-                          <strike className="font-semibold text-gray-400">
-                            {Math.floor(p.price * (1 + p.offer / 100))}/-
-                          </strike>
-                          <span className="text-green-500 font-semibold">
-                            {p.offer}% off
-                          </span>
-                        </p>
-
-                        <span className="font-semibold text-lg">
-                          {Math.floor(
-                            p.price * (1 + p.offer / 100) * (1 - p.offer / 100)
-                          )}
-                          /-
-                        </span>
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
+                      <ProductCard2 product={p} />
+                    </div>
+                  ))
+                : ""}
             </div>
           </div>
         </div>

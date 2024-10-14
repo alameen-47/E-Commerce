@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ProductCard1 } from "./Product/ProductCard1";
-import { ProductCarousel } from "./ProductCarousel";
+import { ProductCarousel } from "./Product/ProductCarousel";
 import { t } from "i18next";
 
 export const ProductHistory = () => {

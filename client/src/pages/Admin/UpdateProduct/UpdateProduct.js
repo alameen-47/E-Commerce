@@ -4,10 +4,20 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import Layout from "../../../components/Layout/Layout";
 import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
-import { Button, Select, Upload } from "antd";
+import {
+  Button,
+  Select,
+  UploadImage,
+  ColorPicker,
+  Modal,
+  Popconfirm,
+  Upload,
+  Image,
+} from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+
 import { useNavigate, useParams } from "react-router-dom";
 import slugify from "slugify";
-import { Image, ColorPicker, Modal } from "antd";
 
 const { Option } = Select;
 
@@ -62,7 +72,7 @@ const UpdateProduct = () => {
   const getSingleProduct = async () => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/get-product/${params.slug}`
+        `/api/v1/product/get-product/${params.slug}/${params.pid}`
       );
       console.log(typeof data.product, "UPDATE VALUES", data.product);
 
@@ -119,12 +129,16 @@ const UpdateProduct = () => {
       { key: "model", value: "" },
       { key: "warranty", value: "" },
       { key: "power", value: "" },
+      { key: "energy efficiency", value: "" }, // Replaced battery life with energy efficiency
+      { key: "connectivity", value: "" },
     ],
     Furnitures: [
       { key: "material", value: "" },
       { key: "dimensions", value: "" },
       { key: "brand", value: "" },
       { key: "warranty", value: "" },
+      { key: "weight capacity", value: "" }, // Replacing "weight" with capacity
+      { key: "assembly required", value: "" },
     ],
     "Home Appliances": [
       { key: "brand", value: "" },
@@ -132,57 +146,71 @@ const UpdateProduct = () => {
       { key: "warranty", value: "" },
       { key: "energy efficiency", value: "" },
       { key: "power", value: "" },
+      { key: "capacity", value: "" },
     ],
     Footwears: [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "material", value: "" },
       { key: "type", value: "" },
+      { key: "sole type", value: "" },
+      { key: "closure type", value: "" },
     ],
     "Ladies Footwear": [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "material", value: "" },
       { key: "type", value: "" },
+      { key: "heel height", value: "" },
+      { key: "occasion", value: "" },
     ],
     "Gents Footwear": [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "material", value: "" },
       { key: "type", value: "" },
+      { key: "sole material", value: "" },
+      { key: "water resistance", value: "" },
     ],
-
     Garments: [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "fabric", value: "" },
       { key: "type", value: "" },
+      { key: "care instructions", value: "" },
+      { key: "fit type", value: "" },
     ],
     "Ladies Collection": [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "fabric", value: "" },
       { key: "type", value: "" },
+      { key: "pattern", value: "" },
+      { key: "occasion", value: "" },
     ],
     "Gents Collection": [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "fabric", value: "" },
       { key: "type", value: "" },
+      { key: "style", value: "" },
+      { key: "fit type", value: "" },
     ],
     "Kids Collection": [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "fabric", value: "" },
       { key: "type", value: "" },
+      { key: "care instructions", value: "" },
+      { key: "age group", value: "" },
     ],
-
     "Kitchen Appliances": [
       { key: "brand", value: "" },
       { key: "model", value: "" },
       { key: "power", value: "" },
       { key: "warranty", value: "" },
       { key: "capacity", value: "" },
+      { key: "energy efficiency", value: "" },
     ],
     Cookwares: [
       { key: "brand", value: "" },
@@ -190,6 +218,7 @@ const UpdateProduct = () => {
       { key: "size", value: "" },
       { key: "coating", value: "" },
       { key: "type", value: "" },
+      { key: "heat compatibility", value: "" },
     ],
     "Cleaning Products": [
       { key: "brand", value: "" },
@@ -197,33 +226,39 @@ const UpdateProduct = () => {
       { key: "fragrance", value: "" },
       { key: "size", value: "" },
       { key: "material compatibility", value: "" },
+      { key: "eco-friendly", value: "" },
     ],
     "Plastic Appliances": [
       { key: "brand", value: "" },
       { key: "material", value: "" },
-
       { key: "durability", value: "" },
       { key: "size", value: "" },
+      { key: "recyclable", value: "" },
+      { key: "heat resistance", value: "" },
     ],
     "Camping Products": [
       { key: "brand", value: "" },
       { key: "size", value: "" },
       { key: "material", value: "" },
-      { key: "weight", value: "" },
+      { key: "waterproof", value: "" },
       { key: "type", value: "" },
+      { key: "durability", value: "" },
     ],
     Mobiles: [
       { key: "brand", value: "" },
       { key: "model", value: "" },
       { key: "storage", value: "" },
-
       { key: "battery capacity", value: "" },
+      { key: "camera", value: "" },
+      { key: "operating system", value: "" },
     ],
     Gadgets: [
       { key: "brand", value: "" },
       { key: "model", value: "" },
       { key: "type", value: "" },
       { key: "features", value: "" },
+      { key: "battery life", value: "" },
+      { key: "connectivity", value: "" },
     ],
     Perfumes: [
       { key: "brand", value: "" },
@@ -231,6 +266,7 @@ const UpdateProduct = () => {
       { key: "volume", value: "" },
       { key: "gender", value: "" },
       { key: "type", value: "" },
+      { key: "lasting hours", value: "" },
     ],
     "Beauty Products": [
       { key: "brand", value: "" },
@@ -238,13 +274,15 @@ const UpdateProduct = () => {
       { key: "ingredients", value: "" },
       { key: "type", value: "" },
       { key: "volume", value: "" },
+      { key: "SPF protection", value: "" },
     ],
     Toys: [
       { key: "brand", value: "" },
       { key: "age group", value: "" },
       { key: "material", value: "" },
-      { key: "safety certifications", value: "" },
       { key: "type", value: "" },
+      { key: "features", value: "" }, // Removed safety certifications
+      { key: "color", value: "" },
     ],
     "Stationary Products": [
       { key: "brand", value: "" },
@@ -252,9 +290,11 @@ const UpdateProduct = () => {
       { key: "size", value: "" },
       { key: "material", value: "" },
       { key: "usage", value: "" },
+      { key: "color", value: "" },
     ],
     // Add more categories as needed
   };
+
   console.log(fetchedProductDetails, "FETCHED DETAILS STORED ON STATE");
   // Create product function
   const handleUpdate = async (e) => {
@@ -299,8 +339,6 @@ const UpdateProduct = () => {
   //delete product function
   const handleDelete = async (req, res) => {
     try {
-      let answer = window.prompt("Are You Sure want to Delete this Product");
-      if (!answer) return;
       const { data } = await axios.delete(
         `/api/v1/product/delete-product/${id}`
       );
@@ -591,18 +629,25 @@ const UpdateProduct = () => {
 
             <div className="form-buttons mt-5 mb-5">
               <div className="my-3">
-                <button className="btn btn-btn-primary" onClick={handleUpdate}>
+                <button
+                  className="btn btn-btn-primary hover:text-black "
+                  onClick={handleUpdate}
+                >
                   UPDATE PRODUCT
                 </button>
               </div>
 
               <div className="form-buttons mt-5 mb-5">
-                <button
-                  className="btn btn-btn-primary !text-red-600"
-                  onClick={handleDelete}
+                <Popconfirm
+                  title="Delete the Product"
+                  description="Are you sure to delete this Product?"
+                  onConfirm={handleDelete} // Call handleDelete on confirmation
+                  className="btn btn-btn-primary !text-red-600 "
                 >
-                  DELETE PRODUCT
-                </button>
+                  <Button className="btn btn-btn-primary !text-red-600">
+                    DELETE PRODUCT
+                  </Button>
+                </Popconfirm>
               </div>
             </div>
           </div>

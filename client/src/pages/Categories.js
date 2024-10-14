@@ -69,7 +69,7 @@ const Categories = () => {
                 {categories?.map((ct) => (
                   <Link
                     to={`/category/${ct.slug}`}
-                    className="transition-all  duration-1000 bg-slate-300 hover:bg-black  hover:shadow-xl m-2 p-4 relative z-40 group  "
+                    className="transition-all  duration-1000 bg-white hover:bg-black  hover:shadow-xl m-2 p-4 relative z-40 group  "
                   >
                     <>
                       <div className=" absolute  bg-black top-0 left-0 w-24 h-1 z-30  transition-all duration-200   group-hover:bg-slate-300 group-hover:w-1/2  "></div>

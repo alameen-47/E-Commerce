@@ -7,12 +7,12 @@ import { useCart } from "../context/cart.js";
 import { toast } from "react-hot-toast";
 import { t } from "i18next";
 import { Image, Modal, Skeleton } from "antd";
-import { ProductCard1 } from "../components/Product/ProductCard1.jsx";
+
 import badgeImage from "../assets/icons/BADGE 1.png";
 import { useSearch } from "../context/search.js";
 import { useTranslation } from "react-i18next";
 import { ProductHistory } from "../components/ProductHistory.jsx";
-import { ProductCarousel } from "../components/ProductCarousel.jsx";
+import { ProductCarousel } from "../components/Product/ProductCarousel.jsx";
 
 // Translation function
 const translateText = async (text, targetLanguage) => {
@@ -141,9 +141,9 @@ const ProductDetails = () => {
           `/api/v1/product/get-product/${params.slug}/${params.pid}`
         );
 
-        if (Array.isArray(data?.product.images)) {
-          const newImages = data?.product.images.flatMap((imageObj) =>
-            imageObj.imageSet.map((img) => {
+        if (Array.isArray(data?.product?.images)) {
+          const newImages = data?.product?.images?.flatMap((imageObj) =>
+            imageObj?.imageSet?.map((img) => {
               const transformedImage = {
                 ...img,
                 color: imageObj.colors, // Assuming each imageObj has a color field
