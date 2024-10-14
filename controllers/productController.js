@@ -118,11 +118,11 @@ export const createProductController = async (req, res) => {
       const imageArray = Array.isArray(imageSet) ? imageSet : [imageSet];
 
       // // Ensure that the number of colors matches the number of images
-      if (imageArray.length !== colorsArray.length) {
-        return res
-          .status(400)
-          .send({ error: "Mismatch between colors and images" });
-      }
+      // if (imageArray.length !== colorsArray.length) {
+      //   return res
+      //     .status(400)
+      //     .send({ error: "Mismatch between colors and images" });
+      // }
 
       for (let i = 0; i < colorsArray.length; i++) {
         const color = colorsArray[i];
@@ -343,7 +343,8 @@ export const updateProductController = async (req, res) => {
       translations,
     } = req.fields;
     const { image } = req.files;
-
+    const { imageSet } = req.files;
+    const { colorsSet } = req.fields;
     // Standard fields to exclude from categoryDetails
     const standardFields = [
       "name",
@@ -423,11 +424,11 @@ export const updateProductController = async (req, res) => {
       const imageArray = Array.isArray(imageSet) ? imageSet : [imageSet];
 
       // // Ensure that the number of colors matches the number of images
-      if (imageArray.length !== colorsArray.length) {
-        return res
-          .status(400)
-          .send({ error: "Mismatch between colors and images" });
-      }
+      // if (imageArray.length !== colorsArray.length) {
+      //   return res
+      //     .status(400)
+      //     .send({ error: "Mismatch between colors and images" });
+      // }
 
       for (let i = 0; i < colorsArray.length; i++) {
         const color = colorsArray[i];
@@ -498,9 +499,25 @@ export const productFiltersController = async (req, res) => {
       const productList = products.map((product) => {
         return {
           ...product._doc, // Spread other product details
-          image: product.image.map((img) => ({
-            contentType: img.contentType,
-            data: img.data.toString("base64"), // Convert Buffer to base64 string
+          images: product.images.map((imageObj) => ({
+            colors: imageObj.colors,
+            imageSet: imageObj.imageSet.map((img) => {
+              if (img.data && img.data.buffer) {
+                // Convert the buffer to base64
+                const base64Data = img.data.toString("base64");
+
+                // // Log the base64 converted data
+                // console.log("Base64 converted data: ", base64Data);
+                // Check if data exists
+                return {
+                  contentType: img.contentType,
+                  data: base64Data, /// Store the converted data
+                };
+              } else {
+                return {};
+                // Handle missing data gracefully
+              }
+            }),
           })),
         };
       });

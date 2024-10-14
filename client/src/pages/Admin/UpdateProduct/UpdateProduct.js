@@ -30,8 +30,8 @@ const UpdateProduct = () => {
   const [price, setPrice] = useState("");
   const [offer, setOffer] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [image, setImage] = useState("");
-  const [color, setColor] = useState("");
+  const [images, setImages] = useState({});
+  const [colors, setColors] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedCategoryID, setSelectedCategoryID] = useState("");
   const [id, setId] = useState("");
@@ -39,7 +39,10 @@ const UpdateProduct = () => {
   const [fetchedCategoryName, setFetchedCategoryName] = useState();
   const [fetchedProductDetails, setFetchedProductDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [selectedColor, setSelectedColor] = useState([]); // Track the current color
+  const [prevImages, setPrevImages] = useState();
+  const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -75,14 +78,42 @@ const UpdateProduct = () => {
         `/api/v1/product/get-product/${params.slug}/${params.pid}`
       );
       console.log(typeof data.product, "UPDATE VALUES", data.product);
-
       setFetchedProductDetails(data.product);
+
       setFetchedCategoryName(data.product.category.name);
       setFetchedCategoryDetails(data.product.categoryDetails);
       setId(data.product._id);
+
+      if (Array.isArray(data?.product?.images)) {
+        const newImages = data?.product?.images?.flatMap((imageObj) =>
+          imageObj?.imageSet?.map((img) => {
+            const transformedImage = {
+              ...img,
+              color: imageObj.colors, // Assuming each imageObj has a color field
+              filePath: `http://localhost:8085/uploads/${img.filePath}`,
+            };
+            // Log each transformed image object with the color
+            // console.log(transformedImage, "TRANSFORMED IMAGE");
+
+            return transformedImage;
+          })
+        );
+        setPrevImages(newImages);
+      }
     } catch (error) {
       console.log(error);
     }
+  };
+  console.log(prevImages, "<<<<<<<<<<<<<<PREVIOUS IMAGES??????????????????");
+
+  const showLoading = () => {
+    setOpen(true);
+    setLoading(true);
+
+    // Simple loading mock. You should add cleanup logic in real world.
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   };
   useEffect(() => {
     getSingleProduct();
@@ -122,7 +153,16 @@ const UpdateProduct = () => {
   useEffect(() => {
     getAllCategory();
   }, []);
-
+  const handleDeleteColor = (colorToDelete) => {
+    setColors((prevColors) =>
+      prevColors.filter((colors) => colors !== colorToDelete)
+    );
+    setImages((prevImages) => {
+      const newImages = { ...prevImages };
+      delete newImages[colorToDelete]; // Remove images for this color
+      return newImages;
+    });
+  };
   const categoryDetails = {
     Electronics: [
       { key: "brand", value: "" },
@@ -294,7 +334,6 @@ const UpdateProduct = () => {
     ],
     // Add more categories as needed
   };
-
   console.log(fetchedProductDetails, "FETCHED DETAILS STORED ON STATE");
   // Create product function
   const handleUpdate = async (e) => {
@@ -307,13 +346,19 @@ const UpdateProduct = () => {
       productData.append("price", price);
       productData.append("offer", offer);
       productData.append("quantity", quantity);
-      productData.append("color", color);
       productData.append("category", selectedCategoryID);
 
-      // Append images to FormData
-      image.forEach((img) => {
-        productData.append("image", img);
+      let colorsArray = [];
+
+      Object.keys(images).forEach((color) => {
+        images[color].forEach((img) => {
+          // Append color and image to the FormData
+          productData.append("imageSet", img); // Append the image
+          colorsArray.push(color); // Collect color for each image
+          console.log(img, "------IMAGES------", color, "-------COLORS------");
+        });
       });
+      productData.append("colorsSet", JSON.stringify(colorsArray));
 
       // Append category details to FormData
       categoryDetails[selectedCategory]?.forEach((detail) => {
@@ -336,6 +381,53 @@ const UpdateProduct = () => {
       toast.error("Something Went Wrong");
     }
   };
+
+  const handleColorChange = (newColor) => {
+    if (newColor && newColor.metaColor && newColor.metaColor.isValid) {
+      const { r, g, b } = newColor.metaColor; // Extract RGB values
+      // Convert RGB to Hex
+      const hex = `#${((1 << 24) + (r << 16) + (g << 8) + b)
+        .toString(16)
+        .slice(1)
+        .padStart(6, "0")}`;
+
+      setSelectedColor(hex);
+
+      // setColors(hex); // Set the color state to the hex value
+      setColors((prevColors) => {
+        // Add the new color only if it's not already in the array
+        if (hex && !prevColors.includes(hex)) {
+          return [...prevColors, hex]; // Add the new color to the array
+        }
+        return prevColors; // If color is already in the array, return the array unchanged
+      });
+
+      setImages((prevImages) => ({
+        ...prevImages,
+        [hex]: prevImages[hex] || [],
+      }));
+    }
+  };
+  // console.log(colors, "COLORS ARRAY");
+  const handleBeforeUpload = (file) => {
+    if (selectedColor) {
+      // Use selectedColor instead of colors array or combination
+      setImages((prevImages) => {
+        const newImages = prevImages[selectedColor]
+          ? [...prevImages[selectedColor], file]
+          : [file];
+        return {
+          ...prevImages,
+          [selectedColor]: newImages,
+        };
+      });
+    } else {
+      // Handle case where color is not set
+      console.error("Please select a color before uploading an image.");
+    }
+    return false; // Prevent automatic upload
+  };
+
   //delete product function
   const handleDelete = async (req, res) => {
     try {
@@ -351,7 +443,7 @@ const UpdateProduct = () => {
   };
   return (
     <Layout title={"Admin Dashboard - Update product"}>
-      <div className="container flex lg:flex-row sm:flex-col lg:gap-10 sm:gap-0">
+      <div className="container flex lg:flex-row sm:flex-col lg:gap-10  sm:gap-0">
         <div className="relative !important h-sc">
           <AdminMenu />
         </div>
@@ -384,7 +476,6 @@ const UpdateProduct = () => {
                 size="large"
                 className="form-select text-black"
                 style={{
-                  marginBottom: "1rem",
                   width: "100%",
                   cursor: "pointer",
                   border: "1px solid #cccccc",
@@ -400,64 +491,6 @@ const UpdateProduct = () => {
                   </Option>
                 ))}
               </Select>
-              <label
-                className="
-              font-semibold
-              "
-              >
-                Images :
-              </label>
-              <span
-                className="
-              text-gray-600
-              font-mono
-              
-              "
-              >
-                Before:
-                <div className="product-images flex gap-3 overflow-auto">
-                  {fetchedProductDetails && fetchedProductDetails["image"] ? ( // Check if fetchedProductDetails is not null and contains the 'image' key
-                    <Image.PreviewGroup
-                      preview={{
-                        onChange: (current, prev) =>
-                          console.log(
-                            `current index: ${current}, prev index: ${prev}`
-                          ),
-                      }}
-                    >
-                      {/* Assuming fetchedProductDetails['image'] contains an array of image objects */}
-                      {fetchedProductDetails["image"].map((img, index) => (
-                        <Image
-                          key={index}
-                          width={100}
-                          src={`data:${img.contentType};base64,${img.data}`} // Displaying image as base64
-                          alt={img.alt || `Product Image ${index + 1}`} // Fallback alt text
-                        />
-                      ))}
-                    </Image.PreviewGroup>
-                  ) : (
-                    <p>No images available.</p> // Optional: Message to display if no images are found
-                  )}
-                </div>
-              </span>
-              <Upload
-                className="mt-2"
-                onPreview={onPreview}
-                listType="picture-card"
-                multiple
-                beforeUpload={(file) => {
-                  setImage((prevImages) => [...prevImages, file]); // Append selected file to the array
-                  return false; // Prevent automatic upload
-                }}
-              >
-                <span
-                  className=" 
-              text-[#0e0c0c]
-              shadow-black"
-                >
-                  + Upload New Images
-                </span>
-              </Upload>
               <label className="relative flex flex-col mt-5 font-semibold ">
                 Name :
                 <span
@@ -501,11 +534,100 @@ const UpdateProduct = () => {
                 </span>
                 <ColorPicker
                   defaultValue="#000000"
-                  onChange={(color) => setColor(color.hex)}
+                  onChangeComplete={handleColorChange}
                   size="large"
                   showText
                 />
               </label>
+              <label
+                className="
+              font-semibold
+              "
+              >
+                Images :
+              </label>
+              <span
+                className="
+              text-gray-600
+              font-mono
+              
+              "
+              >
+                Before:
+                <Button
+                  className="bg-black text-white drop-shadow-md"
+                  onClick={showLoading}
+                >
+                  Exisiting Images
+                </Button>
+                <div className="product-images flex gap-3 overflow-auto">
+                  {/* Assuming fetchedProductDetails['image'] contains an array of image objects */}
+                  <Modal
+                    title="Basic Modal"
+                    loading={loading}
+                    open={open}
+                    onCancel={() => setOpen(false)}
+                  >
+                    {prevImages?.length > 0 &&
+                      prevImages.map((img, index) => (
+                        <Image
+                          key={index}
+                          width={100}
+                          src={`data:${img.contentType};base64,${img.data}`} // Displaying image as base64
+                          alt={img.alt || `Product Image ${index + 1}`} // Fallback alt text
+                        />
+                      ))}
+                  </Modal>
+                </div>
+              </span>
+              <Upload
+                className="mt-2"
+                onPreview={onPreview}
+                listType="picture-card"
+                multiple
+                beforeUpload={handleBeforeUpload}
+                showUploadList={false} // This hides the uploaded images
+              >
+                <span
+                  className=" 
+              text-[#0e0c0c]
+              shadow-black"
+                >
+                  + Upload New Images
+                </span>
+              </Upload>
+
+              <div>
+                {Object.keys(images).map((colorKey) => (
+                  <div key={colorKey}>
+                    <h3 className="flex items-center ">
+                      Images for Color:
+                      <span
+                        className="inline-block w-5 h-5 rounded-lg border border-gray-400 ml-2 shadow-2xl drop-shadow-lg"
+                        style={{ backgroundColor: colorKey }}
+                      ></span>
+                      <button
+                        className="hover:bg-red-700/90 ml-4 px-[.2rem] bg-red-500 text-white rounded-lg"
+                        onClick={() => handleDeleteColor(colorKey)}
+                      >
+                        Remove
+                      </button>
+                    </h3>
+                    <div className="flex gap-4 rounded-lg">
+                      {images[colorKey].map((image, index) => (
+                        <Image
+                          key={index}
+                          src={URL.createObjectURL(image)}
+                          alt=""
+                          className="rounded-lg"
+                          style={{ width: "100px", height: "100px" }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
               <label className="relative flex flex-col mt-5 font-semibold">
                 Description :
                 <span

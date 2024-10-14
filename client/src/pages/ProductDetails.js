@@ -40,13 +40,10 @@ const ProductDetails = () => {
   const [similarProducts, setSimilarProducts] = useState([]);
   const [slug, setSlug] = useState();
   const initialColor = images.length > 0 ? images[0].color : "";
-
   const [selectedColor, setSelectedColor] = useState(initialColor); // Tracks selected color
   const [colorsArray, setColorsArray] = useState(images[0]?.color || "");
   const [filteredImages, setFilteredImages] = useState([]);
-
   const { i18n } = useTranslation();
-
   const [translatedProduct, setTranslatedProduct] = useState(products);
 
   // Function to translate all string fields and update image paths
@@ -150,7 +147,7 @@ const ProductDetails = () => {
                 filePath: `http://localhost:8085/uploads/${img.filePath}`,
               };
               // Log each transformed image object with the color
-              // console.log(transformedImage, "TRANSFORMED IMAGE");
+              console.log(transformedImage, "TRANSFORMED IMAGE");
 
               return transformedImage;
             })
