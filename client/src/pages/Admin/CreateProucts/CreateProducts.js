@@ -424,15 +424,17 @@ const CreateProducts = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </label>
-            <label className="relative block mt-5">
-              Color:
-              <ColorPicker
-                defaultValue="#000000"
-                // onChange={handleColorChange}
-                onChangeComplete={handleColorChange}
-                size="large"
-                showText
-              />
+            <label className=" block my-5">
+              <div className="flex flex-col w-[8rem]">
+                Color:
+                <ColorPicker
+                  defaultValue="#000000"
+                  // onChange={handleColorChange}
+                  onChangeComplete={handleColorChange}
+                  size="large"
+                  showText
+                />
+              </div>
             </label>
 
             <Upload

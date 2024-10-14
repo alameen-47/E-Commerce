@@ -501,35 +501,55 @@ const ProductDetails = () => {
                     Object.entries(translatedProduct.categoryDetails).length >
                       0 && (
                       <>
+                        {/* Display the first 3 key-value pairs */}
                         {Object.entries(translatedProduct.categoryDetails)
-                          .length > 4 ? (
+                          .slice(0, 3) // Display first 3 entries
+                          .map(([key, value], index) => (
+                            <div
+                              key={index}
+                              className="flex flex-row gap-2 items-center"
+                            >
+                              <strong>{key}:</strong> {value}
+                            </div>
+                          ))}
+                        {/* Collapse to display additional details */}
+
+                        {Object.entries(translatedProduct.categoryDetails)
+                          .length > 2 ? (
                           <div className="collapse bg-base-200">
                             <input type="checkbox" className="peer" />
                             <div className="collapse-title text-xl font-medium">
                               Additional Details (
                               {Object.entries(translatedProduct.categoryDetails)
-                                .length - 4}{" "}
+                                .length - 3}
                               more)
                             </div>
                             <div className="collapse-content">
-                              {Object.entries(
-                                translatedProduct.categoryDetails
-                              ).map(([key, value], index) => (
-                                <div
-                                  key={index}
-                                  className="flex flex-row gap-2 items-center"
-                                >
-                                  <span className="first-letter:uppercase lowercase font-bold ">
-                                    {key}:
-                                  </span>
-                                  <span className="uppercase text-[#858383] font-semibold">
-                                    {/* Handle nested objects by stringifying them or rendering the value */}
-                                    {typeof value === "object" && value !== null
-                                      ? JSON.stringify(value) // Convert object to string
-                                      : value}
-                                  </span>
-                                </div>
-                              ))}
+                              {Object.entries(translatedProduct.categoryDetails)
+                                .slice(3)
+                                .map(([key, value], index) => (
+                                  // <div
+                                  //   key={index}
+                                  //   className="flex flex-row gap-2 items-center"
+                                  // >
+                                  //   <span className="first-letter:uppercase lowercase font-bold ">
+                                  //     {key}:
+                                  //   </span>
+                                  //   <span className="uppercase text-[#858383] font-semibold">
+                                  //     {/* Handle nested objects by stringifying them or rendering the value */}
+                                  //     {typeof value === "object" &&
+                                  //     value !== null
+                                  //       ? JSON.stringify(value) // Convert object to string
+                                  //       : value}
+                                  //   </span>
+                                  // </div>
+                                  <div
+                                    key={index}
+                                    className="flex flex-row gap-2 items-center"
+                                  >
+                                    <strong>{key}:</strong> {value}
+                                  </div>
+                                ))}
                             </div>
                           </div>
                         ) : (

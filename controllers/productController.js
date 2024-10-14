@@ -312,7 +312,7 @@ export const productImageController = async (req, res) => {
 //Delete Controller
 export const deleteProductController = async (req, res) => {
   try {
-    // await productModel.findByIdAndDelete(req.params.pid).select("-image");
+    await productModel.findByIdAndDelete(req.params.pid);
     res.status(200).send({
       success: true,
       message: "Product Deleted Succefully",
@@ -356,7 +356,9 @@ export const updateProductController = async (req, res) => {
       "quantity",
       "shipping",
       "colors",
+      "colorsSet",
       "translations",
+      "imageSet",
     ];
     // Filter category-specific details dynamically (anything not in standardFields)
     const categoryDetails = {};
@@ -449,13 +451,17 @@ export const updateProductController = async (req, res) => {
     // Prepare images array in the desired format
     const imagesArray = Object.values(colorImageMap);
 
-    const products = new productModel({
-      ...req.fields,
-      offer,
-      slug: slugify(name),
-      categoryDetails,
-      images: imagesArray,
-    });
+    const products = await productModel.findByIdAndUpdate(
+      req.params.pid, // Find the product by its ID
+      {
+        ...req.fields,
+        offer,
+        slug: slugify(name),
+        categoryDetails,
+        images: imagesArray,
+      },
+      { new: true }
+    );
 
     await products.save();
 
