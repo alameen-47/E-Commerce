@@ -13,8 +13,9 @@ import {
   Popconfirm,
   Upload,
   Image,
+  Input,
 } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import { runes } from "runes2";
 
 import { useNavigate, useParams } from "react-router-dom";
 import slugify from "slugify";
@@ -104,7 +105,7 @@ const UpdateProduct = () => {
       console.log(error);
     }
   };
-  console.log(prevImages, "<<<<<<<<<<<<<<PREVIOUS IMAGES??????????????????");
+  // console.log(prevImages, "<<<<<<<<<<<<<<PREVIOUS IMAGES??????????????????");
 
   const showLoading = () => {
     setOpen(true);
@@ -677,12 +678,24 @@ const UpdateProduct = () => {
                 >
                   Before:{fetchedProductDetails?.offer}%
                 </span>
-                <input
-                  className=" placeholder:text-slate-400 font-medium block bg-white text-black w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                  type="number"
+                <Input
+                  className=" placeholder:text-slate-400 block bg-white text-black w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                   value={offer}
                   placeholder="Offer in %"
-                  onChange={(e) => setOffer(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    // Check if the input has 2 or fewer digits and is a number
+
+                    setOffer(value);
+                  }}
+                  count={{
+                    // show: true,
+                    max: 2,
+                    strategy: (txt) => runes(txt).length,
+                    exceedFormatter: (txt, { max }) =>
+                      runes(txt).slice(0, max).join(""),
+                  }}
+                  defaultValue=""
                 />
               </label>
               <label className="relative flex flex-col mt-5 font-semibold">

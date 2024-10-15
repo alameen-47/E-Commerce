@@ -4,9 +4,10 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import Layout from "../../../components/Layout/Layout";
 import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
-import { Button, ColorPicker, Image, Modal, Select, Upload } from "antd";
+import { Button, ColorPicker, Image, Input, Modal, Select, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
 import slugify from "slugify";
+import { runes } from "runes2";
 
 const { Option } = Select;
 
@@ -506,12 +507,25 @@ const CreateProducts = () => {
             </label>
             <label className="relative block mt-5">
               Offer:
-              <input
+          
+              <Input
                 className=" placeholder:text-slate-400 block bg-white text-black w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                type="number"
                 value={offer}
                 placeholder="Offer in %"
-                onChange={(e) => setOffer(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Check if the input has 2 or fewer digits and is a number
+
+                  setOffer(value);
+                }}
+                count={{
+                  // show: true,
+                  max: 2,
+                  strategy: (txt) => runes(txt).length,
+                  exceedFormatter: (txt, { max }) =>
+                    runes(txt).slice(0, max).join(""),
+                }}
+                defaultValue=""
               />
             </label>
             <label className="relative block mt-5">
@@ -522,6 +536,7 @@ const CreateProducts = () => {
                 value={quantity}
                 placeholder="Enter the Quantity"
                 onChange={(e) => setQuantity(e.target.value)}
+                // Optional: This will prevent users from pasting more than 2 digits
               />
             </label>
 

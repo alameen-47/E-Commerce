@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cart.js";
 import { toast } from "react-hot-toast";
 import { t } from "i18next";
-import { Image, Modal, Skeleton } from "antd";
+import { Image, Modal, Skeleton, Flex, Slider, Switch, Typography } from "antd";
 
 import badgeImage from "../assets/icons/BADGE 1.png";
 import { useSearch } from "../context/search.js";
@@ -498,12 +498,18 @@ const ProductDetails = () => {
                   </button>
                   {translatedProduct?.categoryDetails &&
                     typeof translatedProduct.categoryDetails === "object" &&
-                    Object.entries(translatedProduct.categoryDetails).length >
-                      0 && (
+                    Object.entries(translatedProduct.categoryDetails).filter(
+                      ([key, value]) => value
+                    ).length > 0 && ( // Filter out empty values
                       <>
+                        <span className="md:font-bold md:text-xl sm:font-semibold sm:text-lg uppercase">
+                          Product Details :
+                        </span>
+                        {/* Display the first 3 key-value pairs */}
                         {/* Display the first 3 key-value pairs */}
                         {Object.entries(translatedProduct.categoryDetails)
-                          .slice(0, 3) // Display first 3 entries
+                          .filter(([key, value]) => value) // Exclude empty values
+                          .slice(0, 3) // Show only the first 3 entries
                           .map(([key, value], index) => (
                             <div
                               key={index}
@@ -512,21 +518,29 @@ const ProductDetails = () => {
                               <strong>{key}:</strong> {value}
                             </div>
                           ))}
-                        {/* Collapse to display additional details */}
-
-                        {Object.entries(translatedProduct.categoryDetails)
-                          .length > 2 ? (
-                          <div className="collapse bg-base-200">
-                            <input type="checkbox" className="peer" />
-                            <div className="collapse-title text-xl font-medium">
+                        {/* Collapse to display additional details if there are more than 3 non-empty entries */}
+                        {Object.entries(
+                          translatedProduct.categoryDetails
+                        ).filter(([key, value]) => value).length > 3 && ( // Filter again for non-empty values
+                          <div className="collapse !p-0 !my-0 !gap-0 flex">
+                            <input
+                              type="checkbox"
+                              className="!p-0 !my-0 !h-1"
+                            />
+                            <div className="collapse-title text-sm font-medium !h-1 !p-1">
                               Additional Details (
-                              {Object.entries(translatedProduct.categoryDetails)
-                                .length - 3}
+                              {Object.entries(
+                                translatedProduct.categoryDetails
+                              ).filter(([key, value]) => value).length - 3}
                               more)
                             </div>
-                            <div className="collapse-content">
+                            <div
+                              className="collapse-content 
+                            !p-0"
+                            >
                               {Object.entries(translatedProduct.categoryDetails)
-                                .slice(3)
+                                .filter(([key, value]) => value) // Ensure non-empty values
+                                .slice(3) // Only show entries after the first 3
                                 .map(([key, value], index) => (
                                   // <div
                                   //   key={index}
@@ -545,32 +559,13 @@ const ProductDetails = () => {
                                   // </div>
                                   <div
                                     key={index}
-                                    className="flex flex-row gap-2 items-center"
+                                    className="flex flex-row  items-center"
                                   >
                                     <strong>{key}:</strong> {value}
                                   </div>
                                 ))}
                             </div>
                           </div>
-                        ) : (
-                          Object.entries(translatedProduct.categoryDetails).map(
-                            ([key, value], index) => (
-                              <div
-                                key={index}
-                                className="flex flex-row gap-2 items-center"
-                              >
-                                <span className="first-letter:uppercase lowercase font-bold ">
-                                  {key}:
-                                </span>
-                                <span className="uppercase  text-[#858383] font-semibold">
-                                  {/* Handle nested objects by stringifying them or rendering the value */}
-                                  {typeof value === "object" && value !== null
-                                    ? JSON.stringify(value) // Convert object to string
-                                    : value}
-                                </span>
-                              </div>
-                            )
-                          )
                         )}
                       </>
                     )}

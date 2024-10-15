@@ -8,9 +8,9 @@ export const ProductCard2 = ({ product }) => {
       <Link
         // key={product._id}
         to={`/dashboard/admin/product/${product.slug}/${product._id}`}
-        className="group shadow-xl hover:shadow-2xl rounded-xl transition duration-300 p-2 pt-5 "
+        className="group shadow-xl hover:shadow-2xl rounded-xl transition duration-300 md:p-2 pt-5 "
       >
-        <div className="aspect-h-1 aspect-w-2  overflow-hidden rounded-lg bg-gray-400 xl:aspect-h-8 xl:aspect-w-7  ">
+        <div className="aspect-h-1 aspect-w-2  overflow-hidden rounded-lg bg-white xl:aspect-h-8 xl:aspect-w-7 justify-center items-center align-middle flex ">
           <ImageCarousel product={product} />
         </div>
         <h3 className="md:mt-4 sm:mb-1 lg mb-2 text-sm text-gray-900">
