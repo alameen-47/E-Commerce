@@ -1,7 +1,5 @@
 import express from "express";
-import { translationController } from "../controllers/authController.js";
-// import { authController } from "../controllers/authController.js"; // Ensure this path is correct
-
+import { translationController } from "../controllers/translationController.js";
 //router object
 const router = express.Router();
 

@@ -102,6 +102,15 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+    combo: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

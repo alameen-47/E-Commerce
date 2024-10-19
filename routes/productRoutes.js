@@ -72,6 +72,9 @@ router.get("/search/:keyword", searchProductController);
 //related product
 router.get("/related-product/:pid/:cid", relatedProductsController);
 
+//personalizedRelated products
+router.get("/similar-product/:pname/:cid", personalizedProductsController);
+
 //category wise product list
 router.get("/product-category/:slug", productCategoryController);
 
@@ -83,9 +86,6 @@ router.get("/electronics", electronicsController);
 
 //Footware products
 router.get("/footwear", footwearController);
-
-//personalizedRelated products
-router.get("/similar-product/:pname/:cid", personalizedProductsController);
 
 //payments routes
 //token

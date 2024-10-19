@@ -4,7 +4,18 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import Layout from "../../../components/Layout/Layout";
 import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
-import { Button, ColorPicker, Image, Input, Modal, Select, Upload } from "antd";
+import {
+  Cascader,
+  Button,
+  ColorPicker,
+  Image,
+  Input,
+  Modal,
+  Select,
+  Upload,
+  Switch,
+} from "antd";
+
 import { useNavigate } from "react-router-dom";
 import slugify from "slugify";
 import { runes } from "runes2";
@@ -23,13 +34,69 @@ const CreateProducts = () => {
   const [images, setImages] = useState({});
   const [colors, setColors] = useState([]);
   const [selectedColor, setSelectedColor] = useState([]); // Track the current color
-
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedCategoryID, setSelectedCategoryID] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { SHOW_CHILD } = Cascader;
   const inputRefs = useRef({});
+  const [selectedTags, setSelectedTags] = useState({});
+  const [verified, setVerified] = useState(false);
+  const handleCascaderChange = (value) => {
+    let updatedTags = {
+      newArrivals: false,
+      bestSellers: false,
+      limitedTimeDeals: false,
+      stockClearance: false,
+      seasonalSales: "None", // Default value for seasonalSales
+    };
+    // Update state based on selected tags
+    value.forEach((tag) => {
+      if (tag.length === 1) {
+        updatedTags[tag[0]] = true;
+      } else if (tag[0] === "seasonalSales") {
+        updatedTags["seasonalSales"] = tag[1];
+      }
+    });
 
+    setSelectedTags(updatedTags);
+  };
+  console.log(selectedTags, "SELECTED TAGS ??????????????????");
+  const options = [
+    {
+      value: "newArrivals",
+      label: "New Arrivals",
+    },
+    {
+      value: "seasonalSales",
+      label: "Seasonal Sales",
+      children: [
+        { value: "Winter", label: "Winter" },
+        { value: "Spring", label: "Spring" },
+        { value: "Summer", label: "Summer" },
+        { value: "Autumn", label: "Autumn" },
+        { value: "Ramadan", label: "Ramadan" },
+        { value: "Bakr-Eid", label: "Bakr-Eid" },
+        { value: "ThaHsees", label: "ThaHsees" },
+        { value: "National Day", label: "National Day" },
+      ],
+    },
+    {
+      value: "bestSellers",
+      label: "Best Sellers",
+    },
+    {
+      value: "stockClearance",
+      label: "Stock Clearance",
+    },
+    {
+      value: "limitedTimeDeals",
+      label: "Limited Time Deals",
+    },
+    {
+      value: "combo",
+      label: "Combo Offer Deals",
+    },
+  ];
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -261,6 +328,8 @@ const CreateProducts = () => {
     // Add more categories as needed
   };
 
+  console.log(verified, "VERIFIED STATUS");
+
   const handleColorChange = (newColor) => {
     if (newColor && newColor.metaColor && newColor.metaColor.isValid) {
       const { r, g, b } = newColor.metaColor; // Extract RGB values
@@ -332,6 +401,12 @@ const CreateProducts = () => {
       productData.append("quantity", quantity);
       // productData.append("color", color);
       productData.append("category", selectedCategoryID);
+      // **Append Tags Data from selectedTags state**
+      productData.append("newArrivals", selectedTags.newArrivals); // Boolean
+      productData.append("bestSellers", selectedTags.bestSellers); // Boolean
+      productData.append("limitedTimeDeals", selectedTags.limitedTimeDeals); // Boolean
+      productData.append("stockClearance", selectedTags.stockClearance); // Boolean
+      productData.append("seasonalSales", selectedTags.seasonalSales); // Enum (e.g., "Winter", "Spring", etc.)
 
       // // Append images to FormData
       // images.forEach((img) => {
@@ -416,7 +491,7 @@ const CreateProducts = () => {
             </Select>
 
             <label className="relative block mt-5 ">
-              Name:
+              Name :
               <input
                 className=" placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                 type="text"
@@ -427,7 +502,7 @@ const CreateProducts = () => {
             </label>
             <label className=" block my-5">
               <div className="flex flex-col w-[8rem]">
-                Color:
+                Color :
                 <ColorPicker
                   defaultValue="#000000"
                   // onChange={handleColorChange}
@@ -458,7 +533,7 @@ const CreateProducts = () => {
               {Object.keys(images).map((colorKey) => (
                 <div key={colorKey}>
                   <h3 className="flex items-center ">
-                    Images for Color:
+                    Images for Color :
                     <span
                       className="inline-block w-5 h-5 rounded-lg border border-gray-400 ml-2 shadow-2xl drop-shadow-lg"
                       style={{ backgroundColor: colorKey }}
@@ -486,7 +561,7 @@ const CreateProducts = () => {
             </div>
 
             <label className="relative block mt-5">
-              Description
+              Description :
               <textarea
                 className=" placeholder:text-slate-400 placeholder:t-2  bg-white text-black w-full h-40 flex border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                 type="text"
@@ -496,7 +571,7 @@ const CreateProducts = () => {
               />
             </label>
             <label className="relative block mt-5">
-              Price:
+              Price :
               <input
                 className=" placeholder:text-slate-400 block bg-white text-black w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                 type="number"
@@ -506,8 +581,7 @@ const CreateProducts = () => {
               />
             </label>
             <label className="relative block mt-5">
-              Offer:
-          
+              Offer :
               <Input
                 className=" placeholder:text-slate-400 block bg-white text-black w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                 value={offer}
@@ -515,7 +589,6 @@ const CreateProducts = () => {
                 onChange={(e) => {
                   const value = e.target.value;
                   // Check if the input has 2 or fewer digits and is a number
-
                   setOffer(value);
                 }}
                 count={{
@@ -528,8 +601,31 @@ const CreateProducts = () => {
                 defaultValue=""
               />
             </label>
+
             <label className="relative block mt-5">
-              Quantity:
+              Special Offers :
+              <Cascader
+                style={{
+                  width: "100%",
+                }}
+                options={options}
+                onChange={handleCascaderChange}
+                multiple
+                maxTagCount="responsive"
+                defaultValue={[]}
+              />
+            </label>
+            <label className="relative block justify-between mt-5 ">
+              Verified Check :
+              <Switch
+                checkedChildren="Verified"
+                unCheckedChildren="Not-Verified"
+                className="ml-1"
+                onChange={(checked) => setVerified(checked)} // toggles between true/false
+              />
+            </label>
+            <label className="relative block mt-5">
+              Quantity :
               <input
                 className=" placeholder:text-slate-400 block bg-white text-black w-full border border-slate-300 rounded-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                 type="number"

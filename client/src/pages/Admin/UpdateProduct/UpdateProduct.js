@@ -564,7 +564,7 @@ const UpdateProduct = () => {
                 <div className="product-images flex gap-3 overflow-auto">
                   {/* Assuming fetchedProductDetails['image'] contains an array of image objects */}
                   <Modal
-                    title="Basic Modal"
+                    title="Previous Images"
                     loading={loading}
                     open={open}
                     onCancel={() => setOpen(false)}
@@ -740,9 +740,9 @@ const UpdateProduct = () => {
               }}
             >
               {/* Additional Fields for Category-Specific Details */}
-              {fetchedCategoryName && categoryDetails[fetchedCategoryName] && (
+              {fetchedCategoryName && categoryDetails[selectedCategory] && (
                 <div>
-                  {categoryDetails[fetchedCategoryName].map((detail, index) => (
+                  {categoryDetails[selectedCategory].map((detail, index) => (
                     <div key={index}>
                       <label>
                         {detail.key.charAt(0).toUpperCase() +

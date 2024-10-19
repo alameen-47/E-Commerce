@@ -58,6 +58,9 @@ app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 
+//TRANSLATIONS
+app.use("/api/v1", translationRoute);
+
 //rest api
 app.get("/", (req, res) => {
   res.send("<h1>WELCOME TO RAWAD MALL</h1>");
@@ -73,5 +76,3 @@ app.listen(PORT, () => {
       .white
   );
 });
-//TRANSLATIONS
-app.use("/api/v1", translationRoute);

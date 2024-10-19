@@ -47,11 +47,18 @@ export const createProductController = async (req, res) => {
       "category",
       "offer",
       "quantity",
+      "colorsSet",
       "shipping",
       "colors",
-      "colorsSet",
       "translations",
       "imageSet",
+      "newArrivals",
+      "bestSellers",
+      "limitedTimeDeals",
+      "stockClearance",
+      "seasonalSales",
+      "combo",
+      "verified",
     ];
     // Filter category-specific details dynamically (anything not in standardFields)
     const categoryDetails = {};
@@ -60,6 +67,8 @@ export const createProductController = async (req, res) => {
         categoryDetails[key] = req.fields[key]; // Add the field to categoryDetails if it's not a standard field
       }
     });
+    console.log(categoryDetails, "CATEGORY DETAILS");
+
     //validations
     switch (true) {
       case !name:
@@ -116,13 +125,6 @@ export const createProductController = async (req, res) => {
 
     if (imageSet && colorsArray) {
       const imageArray = Array.isArray(imageSet) ? imageSet : [imageSet];
-
-      // // Ensure that the number of colors matches the number of images
-      // if (imageArray.length !== colorsArray.length) {
-      //   return res
-      //     .status(400)
-      //     .send({ error: "Mismatch between colors and images" });
-      // }
 
       for (let i = 0; i < colorsArray.length; i++) {
         const color = colorsArray[i];
@@ -209,6 +211,8 @@ export const getAllProductController = async (req, res) => {
         message: "All Products",
         products: productList, // Send the processed product list with base64 images
       });
+      // Exclude colorsSet
+      delete products.colorsSet;
     } else {
       res.status(404).send({
         success: false,
@@ -235,16 +239,17 @@ export const getSingleProductController = async (req, res) => {
       .populate("category");
     // 2. Check if the product exists
     if (product) {
+      const { colorsSet, ...productDetails } = product._doc; // Exclude colorsSet from product details
+
       // 3. Process the image data (converting Buffer to base64 string)
       const productWithImage = {
-        ...product._doc, // Spread other product details
+        ...productDetails, // Spread other product details without colorsSet
         images: product.images.map((imageObj) => ({
           colors: imageObj.colors,
           imageSet: imageObj.imageSet.map((img) => {
             if (img.data && img.data.buffer) {
               // Convert the buffer to base64
               const base64Data = img.data.toString("base64");
-
               // Check if data exists
               return {
                 contentType: img.contentType,
@@ -280,36 +285,38 @@ export const getSingleProductController = async (req, res) => {
   }
 };
 
-export const productImageController = async (req, res) => {
-  //get image
-  try {
-    const { pid, index } = req.params;
-    // Find the product by ID and select the image field
-    const product = await productModel.findById(req.params.pid).select("image");
+// export const productImageController = async (req, res) => {
 
-    if (product && product.image.length > 0) {
-      // Send each image in the response
-      // Assuming that `product.image` is an array of image objects
-      const image = product.image[0]; // Select the first image (modify if necessary)
+//   //get image
+//   try {
+//     const { pid, index } = req.params;
+//     // Find the product by ID and select the image field
+//     const product = await productModel.findById(req.params.pid).select("image");
 
-      res.setHeader("Content-Type", image.contentType);
-      return res.status(200).send(image.data); // Send the image data directly
-    } else {
-      return res.status(404).send({
-        success: false,
-        message: "No images found for this product",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Error while getting image",
-      error,
-    });
-  }
-};
+//     if (product && product.image.length > 0) {
+//       // Send each image in the response
+//       // Assuming that `product.image` is an array of image objects
+//       const image = product.image[0]; // Select the first image (modify if necessary)
+
+//       res.setHeader("Content-Type", image.contentType);
+//       return res.status(200).send(image.data); // Send the image data directly
+//     } else {
+//       return res.status(404).send({
+//         success: false,
+//         message: "No images found for this product",
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       success: false,
+//       message: "Error while getting image",
+//       error,
+//     });
+//   }
+// };
 //Delete Controller
+
 export const deleteProductController = async (req, res) => {
   try {
     await productModel.findByIdAndDelete(req.params.pid);
@@ -344,8 +351,9 @@ export const updateProductController = async (req, res) => {
     } = req.fields;
     const { image } = req.files;
     const { imageSet } = req.files;
-    const { colorsSet } = req.fields;
-    // Standard fields to exclude from categoryDetails
+
+    // Access colorsSet directly if needed
+    const colorsSet = req.fields.colorsSet; // Standard fields to exclude from categoryDetails
     const standardFields = [
       "name",
       "slug",
@@ -356,9 +364,9 @@ export const updateProductController = async (req, res) => {
       "quantity",
       "shipping",
       "colors",
-      "colorsSet",
+      // "colorsSet",
       "translations",
-      "imageSet",
+      // "imageSet",
     ];
     // Filter category-specific details dynamically (anything not in standardFields)
     const categoryDetails = {};

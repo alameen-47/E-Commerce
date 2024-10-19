@@ -22,41 +22,83 @@ export const ProductCard1 = ({ products }) => {
   const { i18n } = useTranslation();
   const isEnglish = i18n.language === "en"; // Check if the language is English
   const [translatedProduct, setTranslatedProduct] = useState(products);
-  const fieldsToTranslate = ["name", "description", "price", "offer"]; // Add the specific keys you want
   // Function to translate all string fields and update image paths
-  const translateProductFields = async (product) => {
-    const translatedProduct = { ...product };
-    // Loop through each key in the product
-    for (let key in product) {
-      if (fieldsToTranslate.includes(key)) {
-        translatedProduct[key] = await translateText(
-          product[key],
-          i18n.language
-        );
+  const getProduct = async (products) => {
+    if (!products) {
+      console.error("Products object is undefined or null");
+      return;
+    }
+    const updatedProduct = { ...products };
+    const fieldsToTranslate = ["name", "description"];
+    const fieldValues = [];
+
+    // Collect the values of fields to translate
+    for (let key of fieldsToTranslate) {
+      if (typeof products[key] === "string") {
+        fieldValues.push(products[key]);
       }
     }
-    // // Update the image paths
-    // translatedProduct.image = product?.image.map((img) => ({
-    //   ...img,
-    //   filePath: `http://localhost:8085/uploads/${img.filePath}`,
-    // }));
 
-    return translatedProduct;
-  };
+    // Join the collected values into a single string with a unique delimiter (e.g., "||")
+    const combinedValues = fieldValues.join("||");
 
-  // Effect to handle translation on product change
-  useEffect(() => {
-    const translateProduct = async () => {
-      try {
-        const translated = await translateProductFields(products);
-        setTranslatedProduct(translated); // Update state with translated product
-      } catch (error) {
-        console.error("Error translating product", error);
+    // Send the combined string for translation
+    const translatedCombined = await translateText(
+      combinedValues,
+      i18n.language
+    );
+    // Split the translated response back into individual translated values
+    const translatedArray = translatedCombined.split("||");
+    // Map the translated values back to their respective fields
+    fieldsToTranslate.forEach((key, index) => {
+      if (translatedArray[index]) {
+        updatedProduct[key] = translatedArray[index].trim();
       }
-    };
+    });
 
-    translateProduct(); // Call the function when product changes
-  }, [products, i18n.language]); // Re-run if the product or language changes
+    return setTranslatedProduct(updatedProduct);
+  };
+  useEffect(() => {
+    getProduct(products);
+  }, [products]);
+
+  // // Function to rebuild product object with translated fields
+  // const rebuildProductWithTranslations = (
+  //   product,
+  //   translatedTexts,
+  //   translatableFields
+  // ) => {
+  //   const translatedProduct = { ...product };
+
+  //   let index = 0;
+  //   for (let key in translatableFields) {
+  //     translatedProduct[key] = translatedTexts[index++]; // Map translated strings back to product fields
+  //   }
+
+  //   return translatedProduct;
+  // };
+  // // Effect to handle translation on product change
+  // useEffect(() => {
+  //   const translateProduct = async () => {
+  //     try {
+  //       const { translatableFields, textsArray } =
+  //         collectTranslatableFields(products); // Extract translatable strings
+  //       const translatedTexts = await translateText(textsArray, i18n.language); // Send array of strings for translation
+
+  //       const updatedProduct = rebuildProductWithTranslations(
+  //         products,
+  //         translatedTexts,
+  //         translatableFields
+  //       ); // Rebuild product with translations
+
+  //       setTranslatedProduct(updatedProduct); // Update state with translated product
+  //     } catch (error) {
+  //       console.error("Error translating product", error);
+  //     }
+  //   };
+
+  //   translateProduct(); // Call the function when product changes
+  // }, [products, i18n.language]); // Re-run if the product or language changes
 
   const addToCart = (item) => {
     const updatedCart = [...cart, ...item];
@@ -72,6 +114,7 @@ export const ProductCard1 = ({ products }) => {
         className=" text-wrap  group align-middle lg:px-5  bg-gray-300 rounded-lg flex flex-col items-center justify-center  relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all  md:gap-1 p-2 max-w-[13rem] "
       >
         <Badge.Ribbon
+          className="sm:text-xs md:text-md"
           text={
             translatedProduct.offer
               ? `${translatedProduct.offer}% ${t("productDetails.OFF")}`

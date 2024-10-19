@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ProductCard1 } from "./ProductCard1";
 
 export const ProductCarousel = ({ products }) => {
-  const [visibleProducts, setVisibleProducts] = useState(5); // Initially show 5 products
+  const [visibleProducts, setVisibleProducts] = useState(6); // Initially show 5 products
   const carouselRef = useRef(null); // Reference to the carousel div
 
   // Function to load more products when the carousel scrolls

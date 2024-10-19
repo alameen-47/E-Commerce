@@ -6,7 +6,16 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cart.js";
 import { toast } from "react-hot-toast";
 import { t } from "i18next";
-import { Image, Modal, Skeleton, Flex, Slider, Switch, Typography } from "antd";
+import {
+  Image,
+  Modal,
+  Skeleton,
+  Flex,
+  Slider,
+  Switch,
+  Typography,
+  Collapse,
+} from "antd";
 
 import badgeImage from "../assets/icons/BADGE 1.png";
 import { useSearch } from "../context/search.js";
@@ -46,31 +55,59 @@ const ProductDetails = () => {
   const { i18n } = useTranslation();
   const [translatedProduct, setTranslatedProduct] = useState(products);
 
-  // Function to translate all string fields and update image paths
   const translateProductFields = async (product) => {
     const translatedProduct = { ...product };
     // Loop through each key in the product
-    const fieldsToTranslate = ["name", "description", "category"]; // Add the specific keys you want
+    const fieldsToTranslate = ["name", "description"]; // Add the specific keys you want
+    const fieldValues = [];
 
-    for (let key in product) {
-      // Check if the field is a string and translate it
-      if (fieldsToTranslate.includes(key) && typeof product[key] === "string") {
-        translatedProduct[key] = await translateText(
-          product[key],
-          i18n.language
-        );
+    // Collect the values of fields to translate
+    for (let key of fieldsToTranslate) {
+      if (typeof product[key] === "string") {
+        fieldValues.push(product[key]);
       }
+    }
+
+    // Join the collected values into a single string with a unique delimiter (e.g., "||")
+    const combinedValues = fieldValues.join("||");
+
+    // Send the combined string for translation
+    const translatedCombined = await translateText(
+      combinedValues,
+      i18n.language
+    );
+    // Split the translated response back into individual translated values
+    const translatedArray = translatedCombined.split("||");
+    // Map the translated values back to their respective fields
+    fieldsToTranslate.forEach((key, index) => {
+      if (translatedArray[index]) {
+        translatedProduct[key] = translatedArray[index].trim();
+      }
+    });
+    for (let key in product) {
       // If the key is 'categoryDetails' (an object), translate both keys and values
       if (key === "categoryDetails" && typeof product[key] === "object") {
         const translatedCategoryDetails = {};
+        const translations = [];
 
-        // Translate each category key and value
+        // Prepare combined strings for keys and values
         for (let [categoryKey, categoryValue] of Object.entries(product[key])) {
-          const translatedKey = await translateText(categoryKey, i18n.language);
-          const translatedValue =
-            typeof categoryValue === "string"
-              ? await translateText(categoryValue, i18n.language)
-              : categoryValue; // Handle if value is an object or array
+          translations.push(`${categoryKey}: ${categoryValue}`);
+        }
+        // Send a single request to translate all key-value pairs at once
+        const translatedPairs = await translateText(
+          translations.join("; "),
+          i18n.language
+        );
+
+        // Split the response back into keys and values
+        const translatedArray = translatedPairs.split(/;\s*|؛\s*/);
+
+        // Populate translatedCategoryDetails with translated key-value pairs
+        for (let i = 0; i < translatedArray.length; i++) {
+          const [translatedKey, translatedValue] = translatedArray[i]
+            .split(": ")
+            .map((part) => part.trim());
           translatedCategoryDetails[translatedKey] = translatedValue;
         }
         translatedProduct[key] = translatedCategoryDetails;
@@ -79,6 +116,7 @@ const ProductDetails = () => {
 
     return translatedProduct;
   };
+
   const handleColorClick = (color) => {
     setSelectedColor(color); // Update the selected color
   };
@@ -137,6 +175,7 @@ const ProductDetails = () => {
         const { data } = await axios.get(
           `/api/v1/product/get-product/${params.slug}/${params.pid}`
         );
+        console.log(data, "+++++++++++++DATA OF SINGLE PRODUCTS++++++++++++++");
 
         if (Array.isArray(data?.product?.images)) {
           const newImages = data?.product?.images?.flatMap((imageObj) =>
@@ -147,7 +186,7 @@ const ProductDetails = () => {
                 filePath: `http://localhost:8085/uploads/${img.filePath}`,
               };
               // Log each transformed image object with the color
-              console.log(transformedImage, "TRANSFORMED IMAGE");
+              // console.log(transformedImage, "TRANSFORMED IMAGE");
 
               return transformedImage;
             })
@@ -201,7 +240,6 @@ const ProductDetails = () => {
     };
     getProduct();
   }, [params.slug, params.pid]);
-  console.log(colorsArray, "COLORS ARRAY");
 
   //getSameCategory products
   const getSameCategory = async (pid, cid) => {
@@ -214,6 +252,7 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
+  console.log(getSameCategory, "SAME CATEGORY PRODUCTS");
   //getSameCategory products
   const getSimilarProducts = async (pname, cid) => {
     try {
@@ -225,13 +264,21 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
+  console.log(similarProducts, " SIMILAR PRODUCTS");
+
   // Use useEffect to set the main image once images are available
   useEffect(() => {
-    if (images && images.length > 0) {
+    if (filteredImages && filteredImages.length > 0) {
       // Set the first image as the main image
-      setMainImage(`data:${images[0].contentType};base64,${images[0].data}`);
+      setMainImage(
+        `data:${filteredImages[0].contentType};base64,${filteredImages[0].data}`
+      );
     }
-  }, [images]);
+  }, [images, filteredImages, selectedColor]);
+  console.log(
+    translatedProduct?.categoryDetails,
+    "TRANSLATED CATEGORY DETAILS}}}}}}}}}}}}}}}}}}"
+  );
   return (
     <Layout>
       <div className="md:m-4 sm:mb-3 flex flex-col gap-7">
@@ -241,22 +288,21 @@ const ProductDetails = () => {
               <div className="w-full md:h- h-auto hidden md:flex flex-col rounded-b-lg rounded-t-none">
                 <div className="m-4 flex flex-col justify-between gap-3">
                   {/* First image (main image) */}
-                  {!images ? (
-                    <Skeleton.Image
-                      style={{
-                        width: 160,
-                      }}
-                    />
-                  ) : (
-                    <Image
-                      preview={{
-                        mask: null, // Disable overlay mask
-                      }}
-                      src={mainImage}
-                      alt="product"
-                      className="bg-white w-full max-h-[24rem] md:max-h-[24rem] sm:max-h-[12rem] min-h-[8rem] object-center rounded-lg object-contain p-2 flex align-middle items-center justify-center"
-                    />
-                  )}
+
+                  <>
+                    {!mainImage && !images.length < 0 ? (
+                      <div className="skeleton h-[20rem] max-h-[22rem] max-w-[35rem]"></div>
+                    ) : (
+                      <Image
+                        preview={{
+                          mask: null, // Disable overlay mask
+                        }}
+                        src={mainImage}
+                        alt="product"
+                        className="bg-white w-full max-h-[24rem] md:max-h-[24rem] sm:max-h-[12rem] min-h-[8rem] object-center rounded-lg object-contain p-2 flex align-middle items-center justify-center"
+                      />
+                    )}
+                  </>
 
                   {/* Display next two images, and an overlay for the remaining images */}
                   <div className="flex flex-row justify-between gap-2 rounded-lg">
@@ -329,24 +375,26 @@ const ProductDetails = () => {
                               <span className="mb-0 font-semibold">
                                 {t("productDetails.Colors")} :
                               </span>
-                              <div className="flex flex-row gap-3">
-                                {/* Render Color Options */}
-                                {Array.from(colorsArray)?.map((color) => (
-                                  <button
-                                    onClick={() => handleColorClick(color)}
-                                    key={color}
-                                    src={""}
-                                    alt=""
-                                    className={`drop-shadow-md w-[1.5rem] h-[1.5rem] sm:w-[2rem] sm:h-[2rem] md:w-[2rem] md:h-[2rem] rounded-lg cursor-pointer
+                              {colorsArray.length > 1 && (
+                                <div className="flex flex-row gap-3">
+                                  {/* Render Color Options */}
+                                  {Array.from(colorsArray)?.map((color) => (
+                                    <button
+                                      onClick={() => handleColorClick(color)}
+                                      key={color}
+                                      src={""}
+                                      alt=""
+                                      className={`drop-shadow-md w-[1.5rem] h-[1.5rem] sm:w-[2rem] sm:h-[2rem] md:w-[2rem] md:h-[2rem] rounded-lg cursor-pointer
                             ${
                               selectedColor === color
                                 ? "ring-1 ring-offset-1 ring-gray-500 drop-shadow-xl"
                                 : ""
                             }`} // Add an outline for the selected color
-                                    style={{ backgroundColor: color }} // Use inline style to apply the background color
-                                  />
-                                ))}
-                              </div>
+                                      style={{ backgroundColor: color }} // Use inline style to apply the background color
+                                    />
+                                  ))}
+                                </div>
+                              )}
                             </div>
                           </Modal>
                         </div>
@@ -390,23 +438,25 @@ const ProductDetails = () => {
                   >
                     ❮
                   </button>
-                  <button
-                    onClick={() =>
-                      setCurrentSlide(
-                        currentSlide === filteredImages.length - 1
-                          ? 0
-                          : currentSlide + 1
-                      )
-                    }
-                    className="btn btn-xs rounded-full drop-shadow-xl   shadow-2xl"
-                  >
-                    ❯
-                  </button>
+                  {filteredImages.length > 1 && (
+                    <button
+                      onClick={() => {
+                        setCurrentSlide(
+                          currentSlide === filteredImages.length - 1
+                            ? 0
+                            : currentSlide + 1
+                        );
+                      }}
+                      className="btn btn-xs rounded-full drop-shadow-xl   shadow-2xl"
+                    >
+                      ❯
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
 
-            <div className="RIGHT w-[20rem] h-[25rem] sm:w-[25rem] sm:h-auto md:w-[32rem] md:h-[38rem]">
+            <div className="RIGHT w-[20rem] h-auto sm:w-[25rem] sm:h-auto md:w-[32rem] md:h-auto">
               {!translatedProduct?.name ? (
                 <>
                   {/* {SKeleton} */}
@@ -431,10 +481,12 @@ const ProductDetails = () => {
                   <span className="text-[#A9A9A9] font-bold">
                     {translatedProduct?.description}
                   </span>
-                  <div className="flex flex-row gap-2 sm:gap-3">
-                    {/* Render Color Options */}
-                    {Array.from(new Set(colorsArray.map((color) => color))).map(
-                      (color) => (
+                  {colorsArray.length > 1 && (
+                    <div className="flex flex-row gap-2 sm:gap-3">
+                      {/* Render Color Options */}
+                      {Array.from(
+                        new Set(colorsArray.map((color) => color))
+                      ).map((color) => (
                         <button
                           onClick={() => handleColorClick(color)}
                           key={color}
@@ -448,9 +500,9 @@ const ProductDetails = () => {
                             }`} // Add an outline for the selected color
                           style={{ backgroundColor: color }} // Use inline style to apply the background color
                         />
-                      )
-                    )}
-                  </div>
+                      ))}
+                    </div>
+                  )}
                   <div className="flex justify-start items-center md:gap-3 sm:gap-2 ">
                     <strike className="font-bold md:text-lg sm:text-md text-[#808080]">
                       {t("productDetails.SR")}:
@@ -496,79 +548,83 @@ const ProductDetails = () => {
                   >
                     {t("common.ADD TO CART")}
                   </button>
-                  {translatedProduct?.categoryDetails &&
-                    typeof translatedProduct.categoryDetails === "object" &&
-                    Object.entries(translatedProduct.categoryDetails).filter(
-                      ([key, value]) => value
-                    ).length > 0 && ( // Filter out empty values
-                      <>
+                  {translatedProduct?.categoryDetails && ( // Filter out empty values
+                    <>
+                      <div className="md:hidden sm:block">
                         <span className="md:font-bold md:text-xl sm:font-semibold sm:text-lg uppercase">
                           Product Details :
                         </span>
-                        {/* Display the first 3 key-value pairs */}
-                        {/* Display the first 3 key-value pairs */}
-                        {Object.entries(translatedProduct.categoryDetails)
-                          .filter(([key, value]) => value) // Exclude empty values
-                          .slice(0, 3) // Show only the first 3 entries
-                          .map(([key, value], index) => (
-                            <div
-                              key={index}
-                              className="flex flex-row gap-2 items-center"
-                            >
-                              <strong>{key}:</strong> {value}
-                            </div>
-                          ))}
-                        {/* Collapse to display additional details if there are more than 3 non-empty entries */}
-                        {Object.entries(
-                          translatedProduct.categoryDetails
-                        ).filter(([key, value]) => value).length > 3 && ( // Filter again for non-empty values
-                          <div className="collapse !p-0 !my-0 !gap-0 flex">
-                            <input
-                              type="checkbox"
-                              className="!p-0 !my-0 !h-1"
-                            />
-                            <div className="collapse-title text-sm font-medium !h-1 !p-1">
-                              Additional Details (
-                              {Object.entries(
-                                translatedProduct.categoryDetails
-                              ).filter(([key, value]) => value).length - 3}
-                              more)
-                            </div>
-                            <div
-                              className="collapse-content 
-                            !p-0"
-                            >
-                              {Object.entries(translatedProduct.categoryDetails)
-                                .filter(([key, value]) => value) // Ensure non-empty values
-                                .slice(3) // Only show entries after the first 3
-                                .map(([key, value], index) => (
-                                  // <div
-                                  //   key={index}
-                                  //   className="flex flex-row gap-2 items-center"
-                                  // >
-                                  //   <span className="first-letter:uppercase lowercase font-bold ">
-                                  //     {key}:
-                                  //   </span>
-                                  //   <span className="uppercase text-[#858383] font-semibold">
-                                  //     {/* Handle nested objects by stringifying them or rendering the value */}
-                                  //     {typeof value === "object" &&
-                                  //     value !== null
-                                  //       ? JSON.stringify(value) // Convert object to string
-                                  //       : value}
-                                  //   </span>
-                                  // </div>
-                                  <div
-                                    key={index}
-                                    className="flex flex-row  items-center"
-                                  >
-                                    <strong>{key}:</strong> {value}
-                                  </div>
-                                ))}
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    )}
+                        <div className="md:hidden sm:block">
+                          <p className=" font-medium">
+                            {Object.entries(translatedProduct.categoryDetails)
+                              .filter(([key, value]) => value) // Exclude empty values
+                              .map(([key, value], index) => (
+                                <div
+                                  key={index}
+                                  className="flex flex-row gap-2 items-center"
+                                >
+                                  <strong className="uppercase">{key}:</strong>{" "}
+                                  {value}
+                                </div>
+                              ))}
+                          </p>
+                        </div>
+                        {/* {translatedProduct?.categoryDetails.map(
+                          (item, index) => {
+                            const [key, value] = item
+                              .split(":")
+                              .map((part) => part.trim());
+
+                            return (
+                              key &&
+                              value && (
+                                <div
+                                  key={index}
+                                  className="flex flex-row gap-2 items-center"
+                                >
+                                  <strong className="uppercase">{key}:</strong>
+                                  <span>{value}</span>
+                                </div>
+                              )
+                            );
+                          }
+                        )} */}
+                      </div>
+                      {/* Collapse to display additional details if there are more than 3 non-empty entries */}
+                      <div className="sm:hidden md:block font-bold">
+                        <Collapse
+                          collapsible="header"
+                          defaultActiveKey={["0"]}
+                          style={{ border: "none", boxShadow: "none" }} // Remove outer collapse border/frame
+                          items={[
+                            {
+                              key: "1",
+                              label: "Product Details",
+                              children: (
+                                <p className=" font-medium">
+                                  {Object.entries(
+                                    translatedProduct.categoryDetails
+                                  )
+                                    .filter(([key, value]) => value) // Exclude empty values
+                                    .map(([key, value], index) => (
+                                      <div
+                                        key={index}
+                                        className="flex flex-row gap-2 items-center"
+                                      >
+                                        <strong className="uppercase">
+                                          {key}:
+                                        </strong>{" "}
+                                        {value}
+                                      </div>
+                                    ))}
+                                </p>
+                              ),
+                            },
+                          ]}
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </div>
