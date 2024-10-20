@@ -6,17 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cart.js";
 import { toast } from "react-hot-toast";
 import { t } from "i18next";
-import {
-  Image,
-  Modal,
-  Skeleton,
-  Flex,
-  Slider,
-  Switch,
-  Typography,
-  Collapse,
-} from "antd";
-
+import { Image, Modal, Collapse, InputNumber, Form, Select } from "antd";
 import badgeImage from "../assets/icons/BADGE 1.png";
 import { useSearch } from "../context/search.js";
 import { useTranslation } from "react-i18next";
@@ -54,6 +44,7 @@ const ProductDetails = () => {
   const [filteredImages, setFilteredImages] = useState([]);
   const { i18n } = useTranslation();
   const [translatedProduct, setTranslatedProduct] = useState(products);
+  const [sizes, setSizes] = useState();
 
   const translateProductFields = async (product) => {
     const translatedProduct = { ...product };
@@ -89,6 +80,19 @@ const ProductDetails = () => {
       if (key === "categoryDetails" && typeof product[key] === "object") {
         const translatedCategoryDetails = {};
         const translations = [];
+
+        // Check if the key is 'size' to extract sizes as an array
+        if (product[key].hasOwnProperty("size")) {
+          let sizeArray = product[key]["size"].split(","); // Assuming sizes are comma-separated
+          console.log(sizeArray, "SIZES ARRAY");
+          // Convert sizes into the desired options format for Ant Design
+          const sizeOptions = sizeArray.map((size, index) => ({
+            value: size.trim(), // Use size as the value
+            // label: `${size.trim()} (${index})`, // Label can include the size and a dynamic number
+          }));
+          setSizes(sizeOptions);
+          console.log(sizes, "SIZE OPTIONS");
+        }
 
         // Prepare combined strings for keys and values
         for (let [categoryKey, categoryValue] of Object.entries(product[key])) {
@@ -252,7 +256,7 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
-  console.log(getSameCategory, "SAME CATEGORY PRODUCTS");
+  // console.log(getSameCategory, "SAME CATEGORY PRODUCTS");
   //getSameCategory products
   const getSimilarProducts = async (pname, cid) => {
     try {
@@ -264,7 +268,7 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
-  console.log(similarProducts, " SIMILAR PRODUCTS");
+  // console.log(similarProducts, " SIMILAR PRODUCTS");
 
   // Use useEffect to set the main image once images are available
   useEffect(() => {
@@ -275,16 +279,22 @@ const ProductDetails = () => {
       );
     }
   }, [images, filteredImages, selectedColor]);
-  console.log(
-    translatedProduct?.categoryDetails,
-    "TRANSLATED CATEGORY DETAILS}}}}}}}}}}}}}}}}}}"
-  );
+  // console.log(
+  //   translatedProduct?.categoryDetails,
+  //   "TRANSLATED CATEGORY DETAILS}}}}}}}}}}}}}}}}}}"
+  // );
   return (
     <Layout>
       <div className="md:m-4 sm:mb-3 flex flex-col gap-7">
         <>
           <div className="CONTENT flex md:flex-row sm:flex-col  justify-center align-middle items-center md:gap-16 ">
-            <div className="LEFT md:bg-[#D9D9D9] sm:bg-white flex flex-col justify-start items-center md:w-[32rem] sm:w-screen md:h-[ sm:h-auto md:rounded-lg rounded-b-lg rounded-t-none drop-shadow-lg md:p-3 sm:mx-3">
+            <div className="LEFT md:bg-[#D9D9D9] sm:bg-white flex flex-col justify-start md:items-center md:w-[32rem] sm:w-screen md:h-[ sm:h-auto md:rounded-lg rounded-b-lg rounded-t-none drop-shadow-lg md:p-3 sm:mx-3">
+              <span className="ml-6  top-1 text-2xl sm:text-2xl md:text-4xl font-extrabold w-full mb-0 xs:visible  md:hidden">
+                {translatedProduct?.name}
+                <span className=" top-2 left-2 max-w-fit bg-[#d63013] px-2 py-1 rounded text-sm flex justify-start align-middle items-start text-white">
+                  Limited Time Deal!!!
+                </span>
+              </span>
               <div className="w-full md:h- h-auto hidden md:flex flex-col rounded-b-lg rounded-t-none">
                 <div className="m-4 flex flex-col justify-between gap-3">
                   {/* First image (main image) */}
@@ -410,7 +420,7 @@ const ProductDetails = () => {
                       key={index}
                       className={` carousel-item  relative   h-[20rem] ${
                         index === currentSlide ? "flex !important" : "hidden"
-                      }`}
+                      } object-contain`}
                       style={{ height: "20rem" }} // Explicit height for the container
                     >
                       <Image
@@ -418,7 +428,7 @@ const ProductDetails = () => {
                           mask: null, // Disable overlay mask
                         }}
                         src={`data:${image.contentType};base64,${image.data}`}
-                        className="w-full h-full inline-block object-scale-down p-12 " // Ensure image scales without overflowing
+                        className="w-fit h-full inline-block object-cover p-12 " // Ensure image scales without overflowing
                         alt=""
                       />
                     </div>
@@ -475,7 +485,7 @@ const ProductDetails = () => {
                 </>
               ) : (
                 <div className="flex flex-col justify-between gap-3 p-4 sm:gap-2 md:gap-3">
-                  <h1 className="text-2xl sm:text-2xl md:text-4xl font-extrabold w-full mb-0">
+                  <h1 className="text-2xl sm:text-2xl md:text-4xl font-extrabold w-full mb-0 xs:hidden sm:hidden md:block">
                     {translatedProduct?.name}
                   </h1>
                   <span className="text-[#A9A9A9] font-bold">
@@ -516,38 +526,67 @@ const ProductDetails = () => {
                       {translatedProduct.offer}% {t("productDetails.OFF")}
                     </span>
                     {/* Badge */}
-                    <div className="relative max-w-sm sm:max-w-md inline-flex items-center justify-center">
-                      <div className="relative w-[4rem] h-[4rem] sm:w-[4rem] sm:h-[4rem] md:w-[6rem] md:h-[6rem] overflow-hidden rounded-full">
-                        <img
-                          src={badgeImage} // Replace with your badge's source
-                          alt="badge"
-                          className="relative z-1 w-full h-full object-contain drop-shadow-xl"
-                        />
-                        <div
-                          className="absolute inset-0 bg-[linear-gradient(90deg,transparent_25%,rgba(255,255,255,0.6)_50%,transparent_75%,transparent_100%)] bg-[length:200%_200%] bg-no-repeat bg-[position:-100%_0] transition-[background-position_1s_ease] hover:bg-[position:100%_0] hover:duration-[1.5s]"
-                          style={{
-                            transform: "skewX(-30deg)",
-                            animationFillMode: "forwards", // This ensures the effect stays after the hover
-                            transition: "background-position 1.5s ease-in-out",
-                          }}
-                        />
+                    {translatedProduct?.verified && (
+                      <div className="relative max-w-sm sm:max-w-md inline-flex items-center justify-center">
+                        <div className="relative w-[4rem] h-[4rem] sm:w-[4rem] sm:h-[4rem] md:w-[6rem] md:h-[6rem] overflow-hidden rounded-full">
+                          <img
+                            src={badgeImage} // Replace with your badge's source
+                            alt="badge"
+                            className="relative z-1 w-full h-full object-contain drop-shadow-xl"
+                          />
+                          <div
+                            className="absolute inset-0 bg-[linear-gradient(90deg,transparent_25%,rgba(255,255,255,0.6)_50%,transparent_75%,transparent_100%)] bg-[length:200%_200%] bg-no-repeat bg-[position:-100%_0] transition-[background-position_1s_ease] hover:bg-[position:100%_0] hover:duration-[1.5s]"
+                            style={{
+                              transform: "skewX(-30deg)",
+                              animationFillMode: "forwards", // This ensures the effect stays after the hover
+                              transition:
+                                "background-position 1.5s ease-in-out",
+                            }}
+                          />
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                   <span className="text-xs sm:text-xl md:text-4xl font-bold">
                     {t("cart.SAR")}: {translatedProduct.price}
                   </span>
+                  <div className="flex flex-col gap-2">
+                    <div className=" flex gap-2">
+                      <label className="flex gap-2 font-medium ">
+                        Quantity:
+                        <InputNumber
+                          min={1}
+                          max={translatedProduct?.quantity}
+                          defaultValue={1}
+                          className="w-16 border-1 border-solid "
+                        />
+                      </label>
+                      {translatedProduct?.categoryDetails?.size && (
+                        <label className="flex gap-2 font-medium ">
+                          Size:
+                          <Select
+                            labelInValue
+                            defaultValue={"Select"}
+                            className=" border-1 border-solid "
+                            style={{ border: "#0000" }}
+                            onChange={""}
+                            options={sizes}
+                          />
+                        </label>
+                      )}
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent the parent onClick from firing
 
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent the parent onClick from firing
+                        addToCart([{ ...products, units }]);
+                      }}
+                      className="bg-black text-white p-2 font-bold text-lg sm:text-xl rounded-lg w-full sm:w-2/4 md:w-2/4 drop-shadow-xl "
+                    >
+                      {t("common.ADD TO CART")}
+                    </button>
+                  </div>
 
-                      addToCart([{ ...products, units }]);
-                    }}
-                    className="bg-black text-white p-2 font-bold text-lg sm:text-xl rounded-lg w-full sm:w-2/4 md:w-2/4 drop-shadow-xl "
-                  >
-                    {t("common.ADD TO CART")}
-                  </button>
                   {translatedProduct?.categoryDetails && ( // Filter out empty values
                     <>
                       <div className="md:hidden sm:block">
@@ -557,38 +596,19 @@ const ProductDetails = () => {
                         <div className="md:hidden sm:block">
                           <p className=" font-medium">
                             {Object.entries(translatedProduct.categoryDetails)
-                              .filter(([key, value]) => value) // Exclude empty values
+                              .filter(([key]) => key !== "size") // Exclude the specified key
+                              .filter(([, value]) => value) // Exclude empty values (falsy values)
                               .map(([key, value], index) => (
                                 <div
                                   key={index}
                                   className="flex flex-row gap-2 items-center"
                                 >
-                                  <strong className="uppercase">{key}:</strong>{" "}
+                                  <strong className="uppercase">{key}:</strong>
                                   {value}
                                 </div>
                               ))}
                           </p>
                         </div>
-                        {/* {translatedProduct?.categoryDetails.map(
-                          (item, index) => {
-                            const [key, value] = item
-                              .split(":")
-                              .map((part) => part.trim());
-
-                            return (
-                              key &&
-                              value && (
-                                <div
-                                  key={index}
-                                  className="flex flex-row gap-2 items-center"
-                                >
-                                  <strong className="uppercase">{key}:</strong>
-                                  <span>{value}</span>
-                                </div>
-                              )
-                            );
-                          }
-                        )} */}
                       </div>
                       {/* Collapse to display additional details if there are more than 3 non-empty entries */}
                       <div className="sm:hidden md:block font-bold">
@@ -605,15 +625,16 @@ const ProductDetails = () => {
                                   {Object.entries(
                                     translatedProduct.categoryDetails
                                   )
-                                    .filter(([key, value]) => value) // Exclude empty values
+                                    .filter(([key]) => key !== "size") // Exclude the specified key
+                                    .filter(([, value]) => value) // Exclude empty values (falsy values)
                                     .map(([key, value], index) => (
                                       <div
                                         key={index}
-                                        className="flex flex-row gap-2 items-center"
+                                        className="flex flex-row gap-2 items-center "
                                       >
-                                        <strong className="uppercase">
+                                        <strong className="w-1/4 uppercase text-left">
                                           {key}:
-                                        </strong>{" "}
+                                        </strong>
                                         {value}
                                       </div>
                                     ))}

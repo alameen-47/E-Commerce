@@ -12,3 +12,22 @@ body {
 
   /* Ensures the image retains aspect ratio and fills the container */
 }
+/* MyComponent.css */
+.ant-select-selector:hover {
+  border-color: black !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2) !important;
+  outline: none; /* Remove the default focus outline */
+}
+
+.ant-select-selector:focus {
+  border-color: black !important;
+}
+.ant-input-number:focus {
+  border-color: black !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2) !important;
+  outline: none; /* Remove default outline */
+}
+
+.ant-input-number:hover {
+  border-color: black;
+}

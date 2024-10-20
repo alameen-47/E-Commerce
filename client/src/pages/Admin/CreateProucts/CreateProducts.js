@@ -407,7 +407,7 @@ const CreateProducts = () => {
       productData.append("limitedTimeDeals", selectedTags.limitedTimeDeals); // Boolean
       productData.append("stockClearance", selectedTags.stockClearance); // Boolean
       productData.append("seasonalSales", selectedTags.seasonalSales); // Enum (e.g., "Winter", "Spring", etc.)
-
+      productData.append("verified", verified);
       // // Append images to FormData
       // images.forEach((img) => {
       //   productData.append("images", img);
