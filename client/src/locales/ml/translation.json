@@ -40,7 +40,11 @@
     "OFF": "OFF",
     "off": "OFF",
     "All Images": "എല്ലാ ചിത്രങ്ങളും",
-    "Colors": "നിറങ്ങൾ"
+    "Colors": "നിറങ്ങൾ",
+    "Product Details": "ഉത്പന്ന വിശദാംശങ്ങൾ",
+    "Quantity": "അവസാനങ്ങൾ",
+    "Size": "വലിപ്പം",
+    "Select": "തിരഞ്ഞടുക്കുക"
   },
   "common": {
     "Search": "തിരയുക",
@@ -53,7 +57,12 @@
     "No Products Found": "ഉൽപ്പന്നങ്ങൾ കണ്ടില്ല",
     "RAWAD MALL": "റാവാഡ് മാൾ",
     "All Categories": "എല്ലാ വിഭാഗങ്ങളും",
-    "Item Added to cart": "ഇനം കാർട്ടിൽ ചേർത്തു"
+    "Item Added to cart": "ഇനം കാർട്ടിൽ ചേർത്തു",
+    "New Arrivals": "പുതിയ വരവുകൾ",
+    "Best Seller": "മികച്ച വിൽപ്പനക്കാരൻ",
+    "Limited Time Deal!!": "സാധനങ്ങൾക്കുള്ള സമയപരിധി!!",
+    "Stock Clearance!": "സ്റ്റോക്ക് ക്ലിയറൻസ്!",
+    "Special Combo Offer!": "विशेष കോംബോ ഓഫർ!"
   },
   "home": {
     "Home": "ഹോം",

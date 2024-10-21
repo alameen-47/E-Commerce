@@ -40,7 +40,11 @@
     "OFF": "چھوٹ",
     "off": "چھوٹ",
     "All Images": "تمام تصاویر",
-    "Colors": "رنگ"
+    "Colors": "رنگ",
+    "Product Details": "مصنوعات کی تفصیلات",
+    "Quantity": "مقدار",
+    "Size": "سائز",
+    "Select": "منتخب کریں"
   },
   "common": {
     "Search": "تلاش کریں",
@@ -53,7 +57,12 @@
     "No Products Found": "کوئی مصنوعات نہیں ملیں",
     "RAWAD MALL": "راواد مال",
     "All Categories": "تمام زمرے",
-    "Item Added to cart": "آئٹم کو کارٹ میں شامل کیا گیا"
+    "Item Added to cart": "آئٹم کو کارٹ میں شامل کیا گیا",
+    "New Arrivals": "نئے آنے والے",
+    "Best Seller": "بہترین فروخت کنندہ",
+    "Limited Time Deal!!": "محدود وقت کی پیشکش!!",
+    "Stock Clearance!": "اسٹاک کلیرنس!",
+    "Special Combo Offer!": "خصوصی کمبو پیشکش!"
   },
   "home": {
     "Home": "ہوم",
@@ -181,7 +190,7 @@
     "off": " خصم",
     "Order Summary": "آرڈر کا خلاصہ",
     "ITEMS": "آئٹمز",
-    "SAR": "ر.س",
+    "SAR": "ريال",
     "SHIPPING": "شپنگ",
     "Standard shipping": "معیاری شپنگ چارج",
     "Enter your delivery address": "اپنا ڈلیوری پتہ درج کریں",
@@ -193,12 +202,12 @@
     "Make Payment": "ادائیگی کریں"
   },
   "prices": {
-    "under_100": "SAR: 100 سے کم",
-    "from_100_to_300": "SAR: 100 سے 300 تک",
-    "from_300_to_600": "SAR: 300 سے 600 تک",
-    "from_600_to_900": "SAR: 600 سے 900 تک",
-    "from_900_to_1000": "SAR: 900 سے 1000 تک",
-    "over_1000": "SAR: 1000 یا زیادہ"
+    "under_100": "ريال: 100 سے کم",
+    "from_100_to_300": "ريال: 100 سے 300 تک",
+    "from_300_to_600": "ريال: 300 سے 600 تک",
+    "from_600_to_900": "ريال: 600 سے 900 تک",
+    "from_900_to_1000": "ريال: 900 سے 1000 تک",
+    "over_1000": "ريال: 1000 یا زیادہ"
   },
   "offers": {
     "Up to 15% OFF": "15% تک رعایت",

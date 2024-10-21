@@ -40,7 +40,11 @@
     "OFF": "ছাড়",
     "off": "ছাড়",
     "All Images": "সব ছবি",
-    "Colors": "রং"
+    "Colors": "রং",
+    "Product Details": "পণ্যের বিস্তারিত",
+    "Quantity": "পরিমাণ",
+    "Size": "আকার",
+    "Select": "নির্বাচন করুন"
   },
   "common": {
     "Search": "অনুসন্ধান",
@@ -54,7 +58,12 @@
     "No Products Found": "কোনও পণ্য পাওয়া যায়নি",
     "RAWAD MALL": "রাওয়াদ মল",
     "All Categories": "সব বিভাগ",
-    "Item Added to cart": "আইটেম কার্টে যোগ করা হয়েছে"
+    "Item Added to cart": "আইটেম কার্টে যোগ করা হয়েছে",
+    "New Arrivals": "নতুন আগমন",
+    "Best Seller": "সর্বাধিক বিক্রি",
+    "Limited Time Deal!!": "সীমিত সময়ের অফার!!",
+    "Stock Clearance!": "স্টক ক্লিয়ারেন্স!",
+    "Special Combo Offer!": "বিশেষ কম্বো অফার!"
   },
   "home": {
     "Home": "বাড়ি",

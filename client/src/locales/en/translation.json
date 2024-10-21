@@ -40,10 +40,13 @@
     "OFF": "OFF",
     "off": "off",
     "All Images": "All Images",
-    "Colors": "Colors"
+    "Colors": "Colors",
+    "Product Details": "Product Details",
+    "Quantity": "Quantity",
+    "Size": "Size",
+    "Select": "Select"
   },
   "common": {
-    
     "Search": "Search",
     "Contact Us": "Contact Us",
     "Login": "Login",
@@ -56,7 +59,12 @@
     "All Categories": "All Categories",
     "Item Added to cart": "Item Added to cart",
     "Signed in Succesfully": "Signed in Succesfully",
-    "Something went wrong": "Something went wrong"
+    "Something went wrong": "Something went wrong",
+    "New Arrivals": "New Arrivals",
+    "Best Seller": "Best Seller",
+    "Limited Time Deal!!": "Limited Time Deal!!",
+    "Stock Clearance!": "Stock Clearance!",
+    "Special Combo Offer!": "Special Combo Offer!"
   },
   "signin": {
     "Signed in Succesfully": "Signed in Succesfully",

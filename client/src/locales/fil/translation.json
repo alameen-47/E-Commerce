@@ -40,7 +40,11 @@
     "OFF": "OFF",
     "off": "off",
     "All Images": "Lahat ng Larawan",
-    "Colors": "Mga Kulay"
+    "Colors": "Mga Kulay",
+    "Product Details": "Mga Detalye ng Produkto",
+    "Quantity": "Dami",
+    "Size": "Sukat",
+    "Select": "Piliin"
   },
   "common": {
     "Search": "Maghanap",
@@ -53,7 +57,12 @@
     "No Products Found": "Walang Natagpuang Mga Produkto",
     "RAWAD MALL": "RAWAD MALL",
     "All Categories": "Lahat ng Kategorya",
-    "Item Added to cart": "Item Idinagdag sa cart"
+    "Item Added to cart": "Item Idinagdag sa cart",
+    "New Arrivals": "Mga Bagong Dumating",
+    "Best Seller": "Pinakamabentang Produkto",
+    "Limited Time Deal!!": "Limitadong Panahon na Alok!!",
+    "Stock Clearance!": "Paglilinaw ng Stock!",
+    "Special Combo Offer!": "Espesyal na Alok na Combo!"
   },
   "home": {
     "Home": "Bahay",

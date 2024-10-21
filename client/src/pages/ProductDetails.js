@@ -52,7 +52,10 @@ const ProductDetails = () => {
   const [filteredImages, setFilteredImages] = useState([]);
   const { i18n } = useTranslation();
   const [translatedProduct, setTranslatedProduct] = useState(products);
-  const [sizes, setSizes] = useState();
+  const [sizes, setSizes] = useState(null);
+  const [itemSize, setItemSize] = useState(null);
+  const [itemColor, setItemColor] = useState(null);
+  const [itemQuantity, setItemQuantity] = useState(1);
 
   const translateProductFields = async (product) => {
     const translatedProduct = { ...product };
@@ -68,7 +71,7 @@ const ProductDetails = () => {
     }
 
     // Join the collected values into a single string with a unique delimiter (e.g., "||")
-    const combinedValues = fieldValues.join("#DELIM#");
+    const combinedValues = fieldValues.join("||%%%%||");
 
     // Send the combined string for translation
     const translatedCombined = await translateText(
@@ -76,7 +79,7 @@ const ProductDetails = () => {
       i18n.language
     );
     // Split the translated response back into individual translated values
-    const translatedArray = translatedCombined.split("#DELIM#");
+    const translatedArray = translatedCombined.split("||%%%%||");
     // Map the translated values back to their respective fields
     fieldsToTranslate.forEach((key, index) => {
       if (translatedArray[index]) {
@@ -92,14 +95,12 @@ const ProductDetails = () => {
         // Check if the key is 'size' to extract sizes as an array
         if (product[key].hasOwnProperty("size")) {
           let sizeArray = product[key]["size"].split(","); // Assuming sizes are comma-separated
-          console.log(sizeArray, "SIZES ARRAY");
           // Convert sizes into the desired options format for Ant Design
           const sizeOptions = sizeArray.map((size, index) => ({
             value: size.trim(), // Use size as the value
-            // label: `${size.trim()} (${index})`, // Label can include the size and a dynamic number
+            // Label can include the size and a dynamic number
           }));
           setSizes(sizeOptions);
-          console.log(sizes, "SIZE OPTIONS");
         }
 
         // Prepare combined strings for keys and values
@@ -309,7 +310,7 @@ const ProductDetails = () => {
                 <span className="flex  flex-row gap-2">
                   {translatedProduct?.newArrivals && (
                     <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
-                      🌟 New Arrivals
+                      🌟 {t("common.New Arrivals")}
                     </span>
                   )}
                   {translatedProduct?.seasonalSales !== "None" && (
@@ -319,22 +320,22 @@ const ProductDetails = () => {
                   )}
                   {translatedProduct?.bestSellers && (
                     <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
-                      ⭐ Best Seller
+                      ⭐ {t("common.Best Seller")}
                     </span>
                   )}
                   {translatedProduct?.limitedTimeDeals && (
                     <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
-                      ⏳ Limited Time Deal!!
+                      ⏳ {t("common.Limited Time Deal!!")}
                     </span>
                   )}
                   {translatedProduct?.stockClearance && (
                     <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
-                      🔥 Stock Clearance!
+                      🔥 {t("common.Stock Clearance!")}
                     </span>
                   )}
                   {translatedProduct?.combo && (
                     <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
-                      🎁 Special Combo Offer!
+                      🎁 {t("common.Special Combo Offer!")}
                     </span>
                   )}
                 </span>
@@ -576,8 +577,7 @@ const ProductDetails = () => {
                         <button
                           onClick={() => handleColorClick(color)}
                           key={color}
-                          src={""}
-                          alt=""
+                          onChange={(value) => setItemColor(value)}
                           className={`drop-shadow-md w-[1.5rem] h-[1.5rem] sm:w-[2rem] sm:h-[2rem] md:w-[2rem] md:h-[2rem] rounded-lg cursor-pointer
                             ${
                               selectedColor === color
@@ -629,23 +629,25 @@ const ProductDetails = () => {
                   <div className="flex flex-col gap-2">
                     <div className=" flex gap-2">
                       <label className="flex gap-2 font-medium ">
-                        Quantity:
+                        {t("productDetails.Quantity")}:
                         <InputNumber
                           min={1}
                           max={translatedProduct?.quantity}
                           defaultValue={1}
+                          onChange={(value) => setItemQuantity(value)}
                           className="w-16 border-1 border-solid "
                         />
                       </label>
-                      {translatedProduct?.categoryDetails?.size && (
+                      {translatedProduct && Object.keys(sizes).length > 0 && (
                         <label className="flex gap-2 font-medium ">
-                          Size:
+                          {t("productDetails.Size")}:
                           <Select
-                            labelInValue
-                            defaultValue={"Select"}
+                            // labelInValue
+
+                            defaultValue={t("productDetails.Select")}
                             className=" border-1 border-solid "
                             style={{ border: "#0000" }}
-                            onChange={""}
+                            onChange={(value) => setItemSize(value)}
                             options={sizes}
                           />
                         </label>
@@ -655,7 +657,15 @@ const ProductDetails = () => {
                       onClick={(e) => {
                         e.stopPropagation(); // Prevent the parent onClick from firing
 
-                        addToCart([{ ...products, units }]);
+                        addToCart([
+                          {
+                            ...products,
+                            size: itemSize, // Include size from state
+                            color: itemColor, // Include color from state
+                            quantity: itemQuantity, // Include quantity from state
+                            units,
+                          },
+                        ]);
                       }}
                       className="bg-black text-white p-2 font-bold text-lg sm:text-xl rounded-lg w-full sm:w-2/4 md:w-2/4 drop-shadow-xl "
                     >
@@ -667,7 +677,7 @@ const ProductDetails = () => {
                     <>
                       <div className="md:hidden sm:block">
                         <span className="md:font-bold md:text-xl sm:font-semibold sm:text-lg uppercase">
-                          Product Details :
+                          {t("productDetails.Product Details")} :
                         </span>
                         <div className="md:hidden sm:block">
                           <p className=" font-medium">
@@ -695,7 +705,7 @@ const ProductDetails = () => {
                           items={[
                             {
                               key: "1",
-                              label: "Product Details",
+                              label: t("productDetails.Product Details"),
                               children: (
                                 <p className=" font-medium">
                                   {Object.entries(

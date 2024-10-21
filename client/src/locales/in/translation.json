@@ -40,7 +40,11 @@
     "OFF": "छूट",
     "off": "छूट",
     "All Images": "सभी चित्र",
-    "Colors": "रंग"
+    "Colors": "रंग",
+    "Product Details": "उत्पाद विवरण",
+    "Quantity": "मात्रा",
+    "Size": "आकार",
+    "Select": "चुनें"
   },
   "common": {
     "Search": "खोज",
@@ -53,7 +57,12 @@
     "No Products Found": "कोई उत्पाद नहीं मिला",
     "RAWAD MALL": "रावाद मॉल",
     "All Categories": "सभी श्रेणियाँ",
-    "Item Added to cart": "आइटम कार्ट में जोड़ा गया"
+    "Item Added to cart": "आइटम कार्ट में जोड़ा गया",
+    "New Arrivals": "नए आगमन",
+    "Best Seller": "बेस्ट सेलर",
+    "Limited Time Deal!!": "सीमित समय का सौदा!!",
+    "Stock Clearance!": "स्टॉक क्लियरेंस!",
+    "Special Combo Offer!": "विशेष कॉम्बो ऑफर!"
   },
   "home": {
     "Home": "मुख्य पृष्ठ",
