@@ -127,7 +127,6 @@ export const ProductCard1 = ({ products }) => {
               ? "#008080"
               : "#FF6F61"
           }
-        
         >
           <ImageCarousel product={translatedProduct} />
         </Badge.Ribbon>

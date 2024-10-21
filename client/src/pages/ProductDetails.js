@@ -6,7 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cart.js";
 import { toast } from "react-hot-toast";
 import { t } from "i18next";
-import { Image, Modal, Collapse, InputNumber, Form, Select } from "antd";
+import {
+  Image,
+  Modal,
+  Collapse,
+  InputNumber,
+  Form,
+  Select,
+  Skeleton,
+} from "antd";
 import badgeImage from "../assets/icons/BADGE 1.png";
 import { useSearch } from "../context/search.js";
 import { useTranslation } from "react-i18next";
@@ -297,32 +305,36 @@ const ProductDetails = () => {
             <div className="LEFT md:bg-[#D9D9D9] sm:bg-white flex flex-col justify-start md:items-center md:w-[32rem] sm:w-screen md:h-[ sm:h-auto md:rounded-lg rounded-b-lg rounded-t-none drop-shadow-lg md:p-3 sm:mx-3">
               <span className="ml-6  top-1 text-2xl sm:text-2xl md:text-4xl font-extrabold  mb-0 xs:visible  md:hidden">
                 {translatedProduct?.name}
-
                 {/* Conditionally render the tags based on respective flags */}
                 <span className="flex  flex-row gap-2">
                   {translatedProduct?.newArrivals && (
-                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
+                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
                       🌟 New Arrivals
                     </span>
                   )}
                   {translatedProduct?.seasonalSales !== "None" && (
-                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
                       🎉 {translatedProduct?.seasonalSales} Sale
                     </span>
                   )}
                   {translatedProduct?.bestSellers && (
-                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
                       ⭐ Best Seller
                     </span>
                   )}
                   {translatedProduct?.limitedTimeDeals && (
-                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
                       ⏳ Limited Time Deal!!
                     </span>
                   )}
                   {translatedProduct?.stockClearance && (
-                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
                       🔥 Stock Clearance!
+                    </span>
+                  )}
+                  {translatedProduct?.combo && (
+                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                      🎁 Special Combo Offer!
                     </span>
                   )}
                 </span>
@@ -543,6 +555,11 @@ const ProductDetails = () => {
                       {translatedProduct?.stockClearance && (
                         <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
                           🔥 Stock Clearance!
+                        </span>
+                      )}
+                      {translatedProduct?.stock && (
+                        <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
+                          🎁 Special Combo Offer!
                         </span>
                       )}
                     </span>
