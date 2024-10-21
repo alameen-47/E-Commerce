@@ -60,7 +60,7 @@ const ProductDetails = () => {
     }
 
     // Join the collected values into a single string with a unique delimiter (e.g., "||")
-    const combinedValues = fieldValues.join("||");
+    const combinedValues = fieldValues.join("#DELIM#");
 
     // Send the combined string for translation
     const translatedCombined = await translateText(
@@ -68,7 +68,7 @@ const ProductDetails = () => {
       i18n.language
     );
     // Split the translated response back into individual translated values
-    const translatedArray = translatedCombined.split("||");
+    const translatedArray = translatedCombined.split("#DELIM#");
     // Map the translated values back to their respective fields
     fieldsToTranslate.forEach((key, index) => {
       if (translatedArray[index]) {
@@ -96,7 +96,10 @@ const ProductDetails = () => {
 
         // Prepare combined strings for keys and values
         for (let [categoryKey, categoryValue] of Object.entries(product[key])) {
-          translations.push(`${categoryKey}: ${categoryValue}`);
+          // Exclude the 'size' key from being pushed for translation
+          if (categoryKey !== "size") {
+            translations.push(`${categoryKey}: ${categoryValue}`);
+          }
         }
         // Send a single request to translate all key-value pairs at once
         const translatedPairs = await translateText(
@@ -112,7 +115,10 @@ const ProductDetails = () => {
           const [translatedKey, translatedValue] = translatedArray[i]
             .split(": ")
             .map((part) => part.trim());
-          translatedCategoryDetails[translatedKey] = translatedValue;
+          // Populate translatedCategoryDetails without the 'size' key
+          if (translatedKey !== "size") {
+            translatedCategoryDetails[translatedKey] = translatedValue;
+          }
         }
         translatedProduct[key] = translatedCategoryDetails;
       }
@@ -291,8 +297,9 @@ const ProductDetails = () => {
             <div className="LEFT md:bg-[#D9D9D9] sm:bg-white flex flex-col justify-start md:items-center md:w-[32rem] sm:w-screen md:h-[ sm:h-auto md:rounded-lg rounded-b-lg rounded-t-none drop-shadow-lg md:p-3 sm:mx-3">
               <span className="ml-6  top-1 text-2xl sm:text-2xl md:text-4xl font-extrabold w-full mb-0 xs:visible  md:hidden">
                 {translatedProduct?.name}
-                <span className=" top-2 left-2 max-w-fit bg-[#d63013] px-2 py-1 rounded text-sm flex justify-start align-middle items-start text-white">
-                  Limited Time Deal!!!
+
+                <span className=" top-2 left-2 max-w-max bg-gray-900 text-white px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-lg">
+                  ⏳ Limited Time Deal !!
                 </span>
               </span>
               <div className="w-full md:h- h-auto hidden md:flex flex-col rounded-b-lg rounded-t-none">
@@ -485,9 +492,13 @@ const ProductDetails = () => {
                 </>
               ) : (
                 <div className="flex flex-col justify-between gap-3 p-4 sm:gap-2 md:gap-3">
-                  <h1 className="text-2xl sm:text-2xl md:text-4xl font-extrabold w-full mb-0 xs:hidden sm:hidden md:block">
+                  <span className="  top-1 text-2xl sm:text-2xl md:text-4xl font-extrabold w-full xs:hidden  md:block sm:hidden">
                     {translatedProduct?.name}
-                  </h1>
+
+                    <span className=" top-2 left-2 max-w-max bg-gray-900 text-white px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-lg  mt-3 xs-hidden sm:hidden md-block">
+                      ⏳ Limited Time Deal !!
+                    </span>
+                  </span>
                   <span className="text-[#A9A9A9] font-bold">
                     {translatedProduct?.description}
                   </span>
