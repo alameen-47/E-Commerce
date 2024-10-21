@@ -295,11 +295,36 @@ const ProductDetails = () => {
         <>
           <div className="CONTENT flex md:flex-row sm:flex-col  justify-center align-middle items-center md:gap-16 ">
             <div className="LEFT md:bg-[#D9D9D9] sm:bg-white flex flex-col justify-start md:items-center md:w-[32rem] sm:w-screen md:h-[ sm:h-auto md:rounded-lg rounded-b-lg rounded-t-none drop-shadow-lg md:p-3 sm:mx-3">
-              <span className="ml-6  top-1 text-2xl sm:text-2xl md:text-4xl font-extrabold w-full mb-0 xs:visible  md:hidden">
+              <span className="ml-6  top-1 text-2xl sm:text-2xl md:text-4xl font-extrabold  mb-0 xs:visible  md:hidden">
                 {translatedProduct?.name}
 
-                <span className=" top-2 left-2 max-w-max bg-gray-900 text-white px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-lg">
-                  ⏳ Limited Time Deal !!
+                {/* Conditionally render the tags based on respective flags */}
+                <span className="flex  flex-row gap-2">
+                  {translatedProduct?.newArrivals && (
+                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
+                      🌟 New Arrivals
+                    </span>
+                  )}
+                  {translatedProduct?.seasonalSales !== "None" && (
+                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                      🎉 {translatedProduct?.seasonalSales} Sale
+                    </span>
+                  )}
+                  {translatedProduct?.bestSellers && (
+                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                      ⭐ Best Seller
+                    </span>
+                  )}
+                  {translatedProduct?.limitedTimeDeals && (
+                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                      ⏳ Limited Time Deal!!
+                    </span>
+                  )}
+                  {translatedProduct?.stockClearance && (
+                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                      🔥 Stock Clearance!
+                    </span>
+                  )}
                 </span>
               </span>
               <div className="w-full md:h- h-auto hidden md:flex flex-col rounded-b-lg rounded-t-none">
@@ -494,9 +519,32 @@ const ProductDetails = () => {
                 <div className="flex flex-col justify-between gap-3 p-4 sm:gap-2 md:gap-3">
                   <span className="  top-1 text-2xl sm:text-2xl md:text-4xl font-extrabold w-full xs:hidden  md:block sm:hidden">
                     {translatedProduct?.name}
-
-                    <span className=" top-2 left-2 max-w-max bg-gray-900 text-white px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-lg  mt-3 xs-hidden sm:hidden md-block">
-                      ⏳ Limited Time Deal !!
+                    <span className="flex  flex-row gap-2">
+                      {translatedProduct?.newArrivals && (
+                        <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
+                          🌟 New Arrivals
+                        </span>
+                      )}
+                      {translatedProduct?.seasonalSales !== "None" && (
+                        <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
+                          🎉 {translatedProduct?.seasonalSales} Sale
+                        </span>
+                      )}
+                      {translatedProduct?.bestSellers && (
+                        <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
+                          ⭐ Best Seller
+                        </span>
+                      )}
+                      {translatedProduct?.limitedTimeDeals && (
+                        <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
+                          ⏳ Limited Time Deal!!
+                        </span>
+                      )}
+                      {translatedProduct?.stockClearance && (
+                        <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
+                          🔥 Stock Clearance!
+                        </span>
+                      )}
                     </span>
                   </span>
                   <span className="text-[#A9A9A9] font-bold">
