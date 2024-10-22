@@ -20,6 +20,9 @@ import { useSearch } from "../context/search.js";
 import { useTranslation } from "react-i18next";
 import { ProductHistory } from "../components/ProductHistory.jsx";
 import { ProductCarousel } from "../components/Product/ProductCarousel.jsx";
+import AnimatedBadge from "../components/Product/AnimatedBadge.jsx";
+import CelebrationBadge from "../components/AnimationEffects/ConfettiEffect.jsx";
+import { Sparkle } from "../components/Product/Sparkle.jsx";
 
 // Translation function
 const translateText = async (text, targetLanguage) => {
@@ -106,7 +109,7 @@ const ProductDetails = () => {
         // Prepare combined strings for keys and values
         for (let [categoryKey, categoryValue] of Object.entries(product[key])) {
           // Exclude the 'size' key from being pushed for translation
-          if (categoryKey !== "size") {
+          if (categoryKey !== "size" && categoryKey !== "colorsSet") {
             translations.push(`${categoryKey}: ${categoryValue}`);
           }
         }
@@ -309,32 +312,42 @@ const ProductDetails = () => {
                 {/* Conditionally render the tags based on respective flags */}
                 <span className="flex  flex-row gap-2">
                   {translatedProduct?.newArrivals && (
-                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
+                    <span
+                      className="relative top-2  max-w-max text-white moving-gradient px-4 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center animate-pulse duration-700 mb-1 glow-vibrant"
+                      style={{
+                        background: "linear-gradient(270deg, black, teal)",
+                      }}
+                    >
                       🌟 {t("common.New Arrivals")}
                     </span>
                   )}
                   {translatedProduct?.seasonalSales !== "None" && (
-                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                    <span
+                      className="relative top-2  max-w-max text-white moving-gradient px-4 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center animate-pulse duration-700 mb-1 glow-vibrant"
+                      style={{
+                        background: "linear-gradient(270deg, black, teal)",
+                      }}
+                    >
                       🎉 {translatedProduct?.seasonalSales} Sale
                     </span>
                   )}
                   {translatedProduct?.bestSellers && (
-                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                    <span className="relative top-2  max-w-max text-white bg-gradient-to-r from-gray-900 via-purple-600 to-red-500 px-4 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center animate-pulse duration-700 mb-1 glow-vibrant">
                       ⭐ {t("common.Best Seller")}
                     </span>
                   )}
                   {translatedProduct?.limitedTimeDeals && (
-                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                    <span className="relative top-2  max-w-max text-white bg-gradient-to-r from-black to-blue-500 px-4 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center animate-pulse duration-700 mb-1 glow-vibrant">
                       ⏳ {t("common.Limited Time Deal!!")}
                     </span>
                   )}
                   {translatedProduct?.stockClearance && (
-                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                    <span className="relative top-2  max-w-max text-white bg-gradient-to-r from-black to-red-500 px-4 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center animate-pulse duration-700 mb-1 glow-vibrant">
                       🔥 {t("common.Stock Clearance!")}
                     </span>
                   )}
                   {translatedProduct?.combo && (
-                    <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-[0.7px] rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl mb-1">
+                    <span className="relative top-2  max-w-max text-white bg-gradient-to-r from-gray-900 via-purple-600 to-red-500 px-4 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center animate-pulse duration-700 mb-1 glow-vibrant">
                       🎁 {t("common.Special Combo Offer!")}
                     </span>
                   )}
@@ -534,33 +547,43 @@ const ProductDetails = () => {
                     {translatedProduct?.name}
                     <span className="flex  flex-row gap-2">
                       {translatedProduct?.newArrivals && (
-                        <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
-                          🌟 New Arrivals
+                        <span
+                          className="relative top-2  max-w-max text-white moving-gradient px-4 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center animate-pulse duration-700 mb-1 glow-vibrant"
+                          style={{
+                            background: "linear-gradient(270deg, black, teal)",
+                          }}
+                        >
+                          🌟 {t("common.New Arrivals")}
                         </span>
                       )}
                       {translatedProduct?.seasonalSales !== "None" && (
-                        <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
+                        <span
+                          className="relative top-2  max-w-max text-white moving-gradient px-4 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center animate-pulse duration-700 mb-1 glow-vibrant"
+                          style={{
+                            background: "linear-gradient(270deg, black, teal)",
+                          }}
+                        >
                           🎉 {translatedProduct?.seasonalSales} Sale
                         </span>
                       )}
                       {translatedProduct?.bestSellers && (
-                        <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
-                          ⭐ Best Seller
+                        <span className="relative top-2  max-w-max text-white bg-gradient-to-r from-gray-900 via-purple-600 to-red-500 px-4 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center animate-pulse duration-700 mb-1 glow-vibrant">
+                          ⭐ {t("common.Best Seller")}
                         </span>
                       )}
                       {translatedProduct?.limitedTimeDeals && (
-                        <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
-                          ⏳ Limited Time Deal!!
+                        <span className="relative top-2  max-w-max text-white bg-gradient-to-r from-black to-blue-500 px-4 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center animate-pulse duration-700 mb-1 glow-vibrant">
+                          ⏳ {t("common.Limited Time Deal!!")}
                         </span>
                       )}
                       {translatedProduct?.stockClearance && (
-                        <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
-                          🔥 Stock Clearance!
+                        <span className="relative top-2  max-w-max text-white bg-gradient-to-r from-black to-red-500 px-4 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center animate-pulse duration-700 mb-1 glow-vibrant">
+                          🔥 {t("common.Stock Clearance!")}
                         </span>
                       )}
-                      {translatedProduct?.stock && (
-                        <span className="top-2 left-2 max-w-max text-white bg-gray-900 px-3 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center drop-shadow-xl my-1">
-                          🎁 Special Combo Offer!
+                      {translatedProduct?.combo && (
+                        <span className="relative top-2  max-w-max text-white bg-gradient-to-r from-gray-900 via-purple-600 to-red-500 px-4 py-1 rounded-md text-xs font-bold shadow-lg uppercase tracking-wide flex items-center animate-pulse duration-700 mb-1 glow-vibrant">
+                          🎁 {t("common.Special Combo Offer!")}
                         </span>
                       )}
                     </span>
@@ -632,26 +655,28 @@ const ProductDetails = () => {
                         {t("productDetails.Quantity")}:
                         <InputNumber
                           min={1}
-                          max={translatedProduct?.quantity}
+                          max={translatedProduct?.quantity || 1}
                           defaultValue={1}
                           onChange={(value) => setItemQuantity(value)}
                           className="w-16 border-1 border-solid "
                         />
                       </label>
-                      {translatedProduct && Object.keys(sizes).length > 0 && (
-                        <label className="flex gap-2 font-medium ">
-                          {t("productDetails.Size")}:
-                          <Select
-                            // labelInValue
+                      {translatedProduct &&
+                        sizes &&
+                        Object.keys(sizes).length > 0 && (
+                          <label className="flex gap-2 font-medium ">
+                            {t("productDetails.Size")}:
+                            <Select
+                              // labelInValue
 
-                            defaultValue={t("productDetails.Select")}
-                            className=" border-1 border-solid "
-                            style={{ border: "#0000" }}
-                            onChange={(value) => setItemSize(value)}
-                            options={sizes}
-                          />
-                        </label>
-                      )}
+                              defaultValue={t("productDetails.Select")}
+                              className=" border-1 border-solid "
+                              style={{ border: "#0000" }}
+                              onChange={(value) => setItemSize(value)}
+                              options={sizes}
+                            />
+                          </label>
+                        )}
                     </div>
                     <button
                       onClick={(e) => {
