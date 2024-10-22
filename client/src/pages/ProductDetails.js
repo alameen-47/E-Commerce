@@ -417,7 +417,7 @@ const ProductDetails = () => {
                             open={isModalOpen}
                             onOk={handleOk}
                             onCancel={handleCancel}
-                            footer={null} // Remove default OK and Cancel buttons
+                            footer={null}
                           >
                             <div className="flex flex-col justify-center gap-1">
                               <div className="flex flex-row items-center align-middle justify-center rounded-lg">
@@ -429,11 +429,10 @@ const ProductDetails = () => {
                                       src={`data:${image.contentType};base64,${image.data}`}
                                       alt={`product-${index}`}
                                       className=" rounded-lg cursor-pointer  p-1 flex justify-center items-center align-middle max-h-[10rem] h-[9rem]"
-                                      onClick={
-                                        () =>
-                                          setMainImage(
-                                            `data:${image.contentType};base64,${image.data}`
-                                          ) // Update the main image on click
+                                      onClick={() =>
+                                        setMainImage(
+                                          `data:${image.contentType};base64,${image.data}`
+                                        )
                                       }
                                     />
                                   </div>
@@ -456,8 +455,8 @@ const ProductDetails = () => {
                               selectedColor === color
                                 ? "ring-1 ring-offset-1 ring-gray-500 drop-shadow-xl"
                                 : ""
-                            }`} // Add an outline for the selected color
-                                      style={{ backgroundColor: color }} // Use inline style to apply the background color
+                            }`}
+                                      style={{ backgroundColor: color }}
                                     />
                                   ))}
                                 </div>
@@ -470,7 +469,7 @@ const ProductDetails = () => {
                   </div>
                 </div>
               </div>
-              <div className="IMAGE CAROUSEL FOR SMALL SCREEN bg-white !important text-white carousel  md:hidden  sm:max-h-[20rem]  group m-auto   ">
+              <div className="IMAGE CAROUSEL FOR SMALL SCREEN bg-white !important text-white carousel  md:hidden  sm:min-h-[15rem]  group m-auto   ">
                 {filteredImages.length &&
                   filteredImages.map((image, index) => (
                     <div
@@ -485,7 +484,7 @@ const ProductDetails = () => {
                           mask: null, // Disable overlay mask
                         }}
                         src={`data:${image.contentType};base64,${image.data}`}
-                        className="max-w-[400px] h-full inline-block object-cover p-12 " // Ensure image scales without overflowing
+                        className="max-w-[400px]  h-full inline-block object-cover p-6 " // Ensure image scales without overflowing
                         alt=""
                       />
                     </div>
