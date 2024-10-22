@@ -62,7 +62,7 @@ const ProductDetails = () => {
   const translateProductFields = async (product) => {
     const translatedProduct = { ...product };
     // Loop through each key in the product
-    const fieldsToTranslate = ["name", "description"]; // Add the specific keys you want
+    const fieldsToTranslate = ["name", "description", "seasonalSales"]; // Add the specific keys you want
     const fieldValues = [];
 
     // Collect the values of fields to translate
@@ -327,7 +327,8 @@ const ProductDetails = () => {
                         background: "linear-gradient(270deg, black, teal)",
                       }}
                     >
-                      🎉 {translatedProduct?.seasonalSales} Sale
+                      🎉 {translatedProduct?.seasonalSales}{" "}
+                      {t("productDetails.Sale")}
                     </span>
                   )}
                   {translatedProduct?.bestSellers && (
@@ -561,7 +562,8 @@ const ProductDetails = () => {
                             background: "linear-gradient(270deg, black, teal)",
                           }}
                         >
-                          🎉 {translatedProduct?.seasonalSales} Sale
+                          🎉 {translatedProduct?.seasonalSales}{" "}
+                          {t("productDetails.Sale")}
                         </span>
                       )}
                       {translatedProduct?.bestSellers && (
@@ -612,7 +614,7 @@ const ProductDetails = () => {
                   )}
                   <div className="flex justify-start items-center md:gap-3 sm:gap-2 ">
                     <strike className="font-bold md:text-lg sm:text-md text-[#808080]">
-                      {t("productDetails.SR")}:
+                      {t("cart.SAR")}:
                       {Math.floor(
                         translatedProduct.price *
                           (1 + translatedProduct.offer / 100)
@@ -645,7 +647,7 @@ const ProductDetails = () => {
                     )}
                   </div>
                   <span className="text-xs sm:text-xl md:text-4xl font-bold">
-                    {t("cart.SAR")}: {translatedProduct.price}
+                    {t("cart.SAR")}: {translatedProduct.price}/-
                   </span>
                   <div className="flex flex-col gap-2">
                     <div className=" flex gap-2">
