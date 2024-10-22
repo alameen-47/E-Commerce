@@ -70,14 +70,14 @@ const CreateProducts = () => {
       value: "seasonalSales",
       label: "Seasonal Sales",
       children: [
-        { value: "Winter", label: "Winter" },
-        { value: "Spring", label: "Spring" },
-        { value: "Summer", label: "Summer" },
-        { value: "Autumn", label: "Autumn" },
-        { value: "Ramadan", label: "Ramadan" },
-        { value: "Bakr-Eid", label: "Bakr-Eid" },
-        { value: "ThaHsees", label: "ThaHsees" },
-        { value: "National Day", label: "National Day" },
+        { value: "Winter Sale", label: "Winter" },
+        { value: "Spring Sale", label: "Spring" },
+        { value: "Summer Sale", label: "Summer" },
+        { value: "Autumn Sale", label: "Autumn" },
+        { value: "Ramadan Sale", label: "Ramadan" },
+        { value: "Bakr-Eid Sale", label: "Bakr-Eid" },
+        { value: "ThaHsees Sale", label: "ThaHsees" },
+        { value: "National Day Sale", label: "National Day" },
       ],
     },
     {
@@ -108,6 +108,7 @@ const CreateProducts = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
   const onPreview = async (file) => {
     let src = file.url;
     if (!src) {
@@ -122,6 +123,7 @@ const CreateProducts = () => {
     const imgWindow = window.open(src);
     imgWindow?.document.write(image.outerHTML);
   };
+
   useEffect(() => {
     const category = categories.find(
       (category) => category.name === selectedCategory

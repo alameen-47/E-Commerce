@@ -327,8 +327,7 @@ const ProductDetails = () => {
                         background: "linear-gradient(270deg, black, teal)",
                       }}
                     >
-                      🎉 {translatedProduct?.seasonalSales}{" "}
-                      {t("productDetails.Sale")}
+                      🎉 {translatedProduct?.seasonalSales}
                     </span>
                   )}
                   {translatedProduct?.bestSellers && (
@@ -562,8 +561,7 @@ const ProductDetails = () => {
                             background: "linear-gradient(270deg, black, teal)",
                           }}
                         >
-                          🎉 {translatedProduct?.seasonalSales}{" "}
-                          {t("productDetails.Sale")}
+                          🎉 {translatedProduct?.seasonalSales}
                         </span>
                       )}
                       {translatedProduct?.bestSellers && (
