@@ -20,7 +20,6 @@ import { useSearch } from "../context/search.js";
 import { useTranslation } from "react-i18next";
 import { ProductHistory } from "../components/ProductHistory.jsx";
 import { ProductCarousel } from "../components/Product/ProductCarousel.jsx";
-import AnimatedBadge from "../components/Product/AnimatedBadge.jsx";
 import CelebrationBadge from "../components/AnimationEffects/ConfettiEffect.jsx";
 import { Sparkle } from "../components/Product/Sparkle.jsx";
 
@@ -367,7 +366,7 @@ const ProductDetails = () => {
                         }}
                         src={mainImage}
                         alt="product"
-                        className="bg-white w-full max-h-[24rem] md:max-h-[24rem] sm:max-h-[12rem] min-h-[8rem] object-center rounded-lg object-contain p-2 flex align-middle items-center justify-center"
+                        className="bg-white w-full max-h-[24rem] md:max-h-[24rem] md:min-h-[24rem] sm:max-h-[12rem] min-h-[8rem] object-center rounded-lg object-contain p-2 flex align-middle items-center justify-center"
                       />
                     )}
                   </>
@@ -486,7 +485,7 @@ const ProductDetails = () => {
                           mask: null, // Disable overlay mask
                         }}
                         src={`data:${image.contentType};base64,${image.data}`}
-                        className="w-fit h-full inline-block object-cover p-12 " // Ensure image scales without overflowing
+                        className="max-w-[400px] h-full inline-block object-cover p-12 " // Ensure image scales without overflowing
                         alt=""
                       />
                     </div>
