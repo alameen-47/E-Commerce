@@ -33,6 +33,7 @@ import i18n from "./i18n/index.js";
 import { Suspense, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { NetworkError } from "./pages/NetworkError.jsx";
+import { EditAddress } from "./pages/user/Profile/EditAddress.jsx";
 
 function App() {
   //configure env
@@ -75,6 +76,7 @@ function App() {
           <Route path="user" element={<Dashboard />} />
           <Route path="user/orders" element={<Orders />} />
           <Route path="user/edit-profile" element={<Profile />} />
+          <Route path="user/edit-address" element={<EditAddress />} />
         </Route>
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard />} />

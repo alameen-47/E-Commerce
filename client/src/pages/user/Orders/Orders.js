@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./Orders.css";
 import Layout from "../../../components/Layout/Layout";
-import UserMenu from "../../../components/Layout/UserMenu/UserMenu";
 import axios from "axios";
 import { useAuth } from "../../../context/auth";
 import moment from "moment";
 import { CartProvider } from "../../../context/cart";
 import toast from "react-hot-toast";
 import { t } from "i18next";
+import { UserMenu } from "../../../components/Layout/UserMenu";
 const Orders = () => {
   const storedCart = JSON.parse(localStorage.getItem("CART")) || [];
   const [cart, setCart] = useState(storedCart);

@@ -1,17 +1,18 @@
 import React from "react";
 import Layout from "../../../components/Layout/Layout";
 import "./Dashboard.css";
-import UserMenu from "../../../components/Layout/UserMenu/UserMenu";
+// import UserMenu from "../../../components/Layout/UserMenu/UserMenu";
 import { useAuth } from "../../../context/auth";
 import { t } from "i18next";
+import { UserMenu } from "../../../components/Layout/UserMenu.jsx";
 
 const Dashboard = () => {
   const [auth] = useAuth();
   return (
     <Layout title={"Dashboard - Rawad Mall"}>
-      <div class="bg-slate-300 flex  lg:flex-row sm:flex-col rounded shadow-lg  px-4 md:p-8 mb-6">
+      <div class="bg-white flex  lg:flex-row sm:flex-col rounded shadow-lg  px-4 md:p-8  ">
         <UserMenu />
-        <div class="bg-slate-300 lg:w-screen shadow rounded-tr-lg rounded-br-lg border">
+        <div class="bg-white lg:w-screen shadow rounded-tr-lg rounded-br-lg border">
           <div class="px-4 py-5 sm:px-6">
             <h3 class="sm:text-lg lg:text-2xl leading-6 font-medium text-gray-900">
               {t("account.User Profile")}
