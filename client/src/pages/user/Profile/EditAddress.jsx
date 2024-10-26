@@ -9,7 +9,7 @@ export const EditAddress = () => {
       <Layout title={"Your Profile"}>
         <div className="bg-white md:hidden lg:flex sm:block flex h-screen max-h-screen   lg:flex-row sm:flex-col rounded   lg:px-4 md:p-8 drop-shadow-2xl shadow-2xl">
           <UserMenu />
-          <div className="bg-white lg:w-screen max-h-screen   custom-scrollbar rounded-tr-lg rounded-br-lg border drop-shadow-2xl shadow-xl">
+          <div className="bg-white lg:w-screen max-h-screen    rounded-tr-lg rounded-br-lg border drop-shadow-2xl shadow-xl">
             <div className="lg:col-span-2  max-h-screen h-screen px-4 py-5 sm:px-6">
               <form onSubmit={""}>
                 <div className=" grid  gap-4 md:gap-y-2 text-sm grid-cols-1  md:grid-cols-5 ">
