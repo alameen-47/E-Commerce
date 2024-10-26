@@ -38,7 +38,7 @@ html {
   }
   /* For WebKit browsers (Chrome, Safari, Edge) */
   .custom-scrollbar::-webkit-scrollbar {
-    width: 4px; /* Thin width */
+    width: 1px; /* Thin width */
   }
   .custom-scrollbar::-webkit-scrollbar-track {
     background: #f1f1f1; /* Light background */
@@ -47,7 +47,7 @@ html {
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background-color: #888; /* Darker thumb */
     border-radius: 10px; /* Rounded corners */
-    border: 2px solid #f1f1f1; /* Small border */
+    border: 1px solid #f1f1f1; /* Small border */
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {

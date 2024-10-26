@@ -24,8 +24,22 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     address: {
-      type: String,
-      required: true,
+      street: {
+        type: String,
+        required: true,
+      },
+      city: {
+        type: String,
+        required: true,
+      },
+      province: {
+        type: String,
+        required: true,
+      },
+      zipCode: {
+        type: String,
+        required: true,
+      },
     },
     zipCode: {
       type: String,
@@ -33,7 +47,7 @@ const userSchema = new mongoose.Schema(
     },
     otp: { type: String },
     otpExpires: { type: Date },
- 
+
     role: {
       type: Number,
       default: 0,
@@ -41,4 +55,8 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+// Define a virtual field for the full address
+userSchema.virtual("fullAddress").get(function () {
+  return `${this.address.street}, ${this.address.city}, ${this.address.province}, ${this.address.zipCode}`;
+});
 export default mongoose.model("users", userSchema);

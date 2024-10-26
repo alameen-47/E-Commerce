@@ -8,6 +8,12 @@ import { CartProvider } from "../../../context/cart";
 import toast from "react-hot-toast";
 import { t } from "i18next";
 import { UserMenu } from "../../../components/Layout/UserMenu";
+import shipped from "../../../../src/assets/icons/Shipped.png";
+import delivered from "../../../../src/assets/icons/Delivered Box.png";
+import cancel from "../../../../src/assets/icons/Cancel.png";
+import returned from "../../../../src/assets/icons/Return.png";
+import approved from "../../../../src/assets/icons/Approval.png";
+import orderPlaced from "../../../../src/assets/icons/Ordered.png";
 const Orders = () => {
   const storedCart = JSON.parse(localStorage.getItem("CART")) || [];
   const [cart, setCart] = useState(storedCart);
@@ -51,123 +57,70 @@ const Orders = () => {
 
   return (
     <Layout title={"Your Orders"}>
-      <div class="bg-slate-300 flex  lg:flex-row sm:flex-col  shadow-lg  px-4 md:p-8 mb-6">
+      <div className="bg-white md:hidden lg:flex sm:block flex h-screen max-h-screen   lg:flex-row sm:flex-col rounded   lg:px-4 md:p-8 drop-shadow-2xl shadow-2xl">
         <UserMenu />
-        <div class="bg-slate-300 lg:w-screen  shadow  border rounded-tr-lg rounded-br-lg">
-          <div class="lg:col-span-2 px-4 py-5 sm:px-0 lg:h-screen overflow-auto ">
-            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5 ">
-              <p className="sm:text-lg lg:text-2xl px-4">
-                {t("orders.Your Orders")}
+        <div className="bg-white lg:w-screen max-h-screen overflow-scroll  custom-scrollbar rounded-tr-lg rounded-br-lg border drop-shadow-2xl shadow-xl">
+          <div className="lg:col-span-2  max-h-screen h-screen px-4 py-5 sm:px-6">
+            <div className="grid gap-4 md:gap-y-2 text-sm grid-cols-1  md:grid-cols-5 ">
+              <p className="sm:text-lg lg:text-2xl px-4 uppercase font-bold sm:mb-0 md:mb-2">
+                MY orders
               </p>
             </div>
-            {/* <p className="text-pretty">{JSON.stringify(orders, null, 4)}</p> */}
-            {orders?.map((o, i) => {
-              console.log(orders);
-              return (
-                <div class="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10 ">
-                  <table class="w-full table-fixed">
-                    <thead>
-                      <tr class="bg-gray-100 ">
-                        <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          #
-                        </td>
-                        <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          {t("orders.STATUS")}
-                        </td>
-                        {/* <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          Buyer
-                        </td> */}
-                        <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          {t("orders.ORDERED DATE")}
-                        </td>
-                        <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          {t("orders.PAYMENT")}
-                        </td>
-                        <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          {t("orders.QUANTITY")}
-                        </td>
-                        <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          {t("orders.TOTAL PAID")}
-                        </td>
-                        <td class="lg:w-1/4 py-4 lg:px-6 sm:p-1 sm:w-1/5 text-center text-gray-600 font-bold uppercase lg:text-base sm:text-[0.6rem]">
-                          {t("orders.CANCEL")}
-                        </td>
-                      </tr>
-                    </thead>
-                    <tbody className="py-5 bg-slate-300">
-                      <th class="lg:w-1/4 lg:py-4 sm:text-[0.55rem] lg:text-base ">
-                        {i + 1}
-                      </th>
-                      <th class="lg:w-1/4 lg:py-4 sm:text-[0.55rem] lg:text-base ">
-                        {o?.status}
-                      </th>
-
-                      <th class="lg:w-1/4 lg:py-4 sm:text-[0.55rem] lg:text-base ">
-                        {moment(o?.createdAt).fromNow()}
-                      </th>
-                      <th class="lg:w-1/4 lg:py-4 sm:text-[0.55rem] lg:text-base ">
-                        {o?.payment.success ? "Success" : "Failed"}
-                      </th>
-                      <th class="lg:w-1/4 lg:py-4 sm:text-[0.55rem] lg:text-base ">
-                        {o?.products?.length}
-                      </th>
-                      <th class="lg:w-1/4 lg:py-4 sm:text-[0.55rem] lg:text-base ">
-                        {/* {o?.products.price + 10} */}
-                        {o?.products.reduce(
-                          (sum, product) => sum + product.price,
-                          0
-                        ) + 10}
-                      </th>
-                      <th class="lg:w-1/4 lg:py-4 sm:text-[0.55rem] lg:text-base ">
-                        <button
-                          className="btn btn-outline btn-error sm:text-xs  text-sm"
-                          onClick={() => cancelOrder(o._id)}
-                        >
-                          {t("orders.Cancel Order")}
-                        </button>
-                      </th>
-                    </tbody>
-                  </table>
-                  {o?.products.map((units, index) => (
-                    <div
-                      key={units._id}
-                      className="flex items-center border-b border-t lg:py-4 lg:pl-4 sm:pl-4 sm:pt-2"
-                    >
-                      <div className="flex lg:w-1/4">
-                        {/* product */}
-                        <div className="lg:w-20 sm:w-12">
-                          <img
-                            className="lg:h-auto sm:h-20  lg:aspect-auto object-contain  "
-                            src={`/api/v1/product/product-image/${units._id}`}
-                            alt={units.name}
-                          />
-                        </div>
-                        <div className="flex flex-col  ml-4 flex-grow  justify-center align-middle">
-                          <span className="font-bold lg:text-sm sm:text-[0.5rem]">
-                            {units.name}
-                          </span>
-                          <span className="text-gray-600 lg:text-xs sm:text-[0.4rem]">
-                            {units.description
-                              ? units.description.substring(0, 50)
-                              : ""}
-                          </span>
-                        </div>
-                      </div>
-                      <span className="text-center  w-1/5 font-semibold lg:text-sm sm:text-[0.5rem]">
-                        SAR: {units.price}
-                      </span>
-                      {/* <br></br>
-                      <div>
-                        <h1>
-                          Total Amount Paid:
-                          {units.price}/-
-                        </h1>
-                      </div> */}
+            <div className="flex flex-col  justify-center   align-middle items-center">
+              <div className="flex w-[96%]  justify-center items-center align-middle  border-2 h-1 rounded-xl bg-gray-500 border-gray-300 sm:mb-2 md:my-3"></div>
+              {/* Divider */}
+              <div className=" CARD-CONTAINER w-[95%] ">
+                <div className="CARD. bg-[#D9D9D9] flex  align-middle justify-between  items-center w-full max-h-[12rem] min-h-[8rem]  rounded-lg  md:py-4  sm:px-4 md:px-6 gap-2">
+                  <div className="flex">
+                    <div className="PRODUCT-IMAGE bg-white lg:min-w-[155px] lg:max-h-[120px] sm:h-[100px] sm:w-[90px] rounded-lg">
+                      <img
+                        src="https://picsum.photos/150/125"
+                        alt="Product Thumbnail"
+                        className="object-contain w-full h-full rounded-lg"
+                      />
                     </div>
-                  ))}
+                    <div className="PRODUCT-NAME-DESCRIPTION flex md:pl-5 sm:pl-2 flex-col md:w-[320px] md:max-w-[320px] sm:max-w-[150px]">
+                      <h1 className="font-semibold mb-0 text-md  lg:text-lg ">
+                        Product Name
+                      </h1>
+                      <p className="mb-0 text-gray-600  leading-snug text-sm xs:hidden sm:hidden lg:flex">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Aspernatur itaque Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Aspernatur itaque
+                      </p>
+                      <div className="PRODUCT-DETAILS flex flex-col items-start justify-center mt-1 md:hidden sm:gap-1">
+                        <p className="text-gray-600 sm:text-xs md:text-sm mb-0">
+                          Size: $100
+                        </p>
+                        <p className="text-gray-600 sm:text-xs md:text-sm mb-0">
+                          Color: Black
+                        </p>
+                        <p className="text-gray-600 sm:text-xs md:text-sm mb-0">
+                          Quantity: 1
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="PRODUCT-DETAILS flex flex-col items-start justify-center gap-2 md:flex sm:hidden">
+                    <p className="text-gray-600 text-sm mb-0">Size: $100</p>
+                    <p className="text-gray-600 text-sm mb-0">Color: Black</p>
+                    <p className="text-gray-600 text-sm mb-0">Quantity: 1</p>
+                  </div>
+                  <div className="PRODUCT-SAR flex flex-col justify-center align-middle items-center ">
+                    <h1 className="font-semibold md:text-2xl mb-0">SR:455/-</h1>
+                    <div className="DELIVERY-STATUS flex flex-row justify-center  align-middle items-center md:gap-2">
+                      <span className="md:text-sm sm:text-xs">Confirmed</span>
+                      <img
+                        src={approved}
+                        className="w-full md:h-5 sm:h-4 "
+                        alt=""
+                      />
+                    </div>
+                  </div>
                 </div>
-              );
-            })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
