@@ -34,6 +34,7 @@ import { Suspense, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { NetworkError } from "./pages/NetworkError.jsx";
 import { EditAddress } from "./pages/user/Profile/EditAddress.jsx";
+import { Coupons, MyCoupons } from "./pages/user/MyCoupons.jsx";
 
 function App() {
   //configure env
@@ -77,6 +78,7 @@ function App() {
           <Route path="user/orders" element={<Orders />} />
           <Route path="user/edit-profile" element={<Profile />} />
           <Route path="user/edit-address" element={<EditAddress />} />
+          <Route path="user/coupons" element={<MyCoupons />} />
         </Route>
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard />} />

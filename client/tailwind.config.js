@@ -15,7 +15,11 @@ module.exports = {
       "3xl": "1540px",
     },
 
-    extend: {},
+    extend: {
+      fontFamily: {
+        RoadRage: ["RoadRage", "sans-serif"], // Add your custom font
+      },
+    },
   },
   plugins: [require("daisyui")],
   daisyui: {

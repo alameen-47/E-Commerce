@@ -56,3 +56,10 @@ body {
     opacity: 0; /* Fade out */
   }
 }
+
+@font-face {
+  font-family: "RoadRage"; /* Use a name you want for the font */
+  src: url("/public/RoadRage-Regular.ttf") format("truetype"); /* Adjust the path */
+  font-weight: normal; /* or bold */
+  font-style: normal; /* or italic */
+}

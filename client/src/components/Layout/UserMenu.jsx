@@ -61,12 +61,14 @@ export const UserMenu = () => {
             </h1>
           </div>
         </NavLink>
-        <div className="flex   text-center justify-start  align-middle  mt-4  rounded-lg hover:bg-gray-300/30  transition gap-3 duration-200 items-center ">
-          <img src={coupon} alt="" className="w-8 h-10" />
-          <h1 className="uppercase font-bold flex justify-center items-center align-middle my-auto ">
-            My Coupons
-          </h1>
-        </div>
+        <NavLink to="/dashboard/user/coupons">
+          <div className="flex   text-center justify-start  align-middle  mt-4  rounded-lg hover:bg-gray-300/30  transition gap-3 duration-200 items-center ">
+            <img src={coupon} alt="" className="w-8 h-10" />
+            <h1 className="uppercase font-bold flex justify-center items-center align-middle my-auto ">
+              My Coupons
+            </h1>
+          </div>
+        </NavLink>
         <div className="w-full border-b border-gray-300 py-2"></div>{" "}
         {/* Divider */}
         <NavLink to="/signin">
