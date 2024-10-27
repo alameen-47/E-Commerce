@@ -21,7 +21,16 @@ module.exports = {
       },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    function ({ addUtilities }) {
+      addUtilities({
+        ".scale-custom-sm": { transform: "scaleY(3) scaleX(1.5)" },
+        ".scale-custom-md": { transform: "scaleY(2) scaleX(1.5)" },
+        ".scale-custom-lg": { transform: "scaleY(4) scaleX(2)" },
+      });
+    },
+  ],
   daisyui: {
     themes: [
       {
