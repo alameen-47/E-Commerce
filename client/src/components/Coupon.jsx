@@ -10,7 +10,7 @@ export const Coupon = () => {
       >
         {/* <!-- Left Side Crimps --> */}
         <div className="absolute -left-3  flex flex-col gap-1">
-          {[...Array(8)].map((_, i) => (
+          {Array.from({ length: window.innerWidth < 740 ? 6 : 8 }, (_, i) => (
             <div
               key={i}
               className="bg-white rounded-full sm:h-2 sm:w-4 md:h-3 md:w-5"
@@ -20,7 +20,7 @@ export const Coupon = () => {
 
         {/* <!-- Right Side Crimps --> */}
         <div className="absolute -right-3  flex flex-col gap-1">
-          {[...Array(8)].map((_, i) => (
+          {Array.from({ length: window.innerWidth < 740 ? 6 : 8 }, (_, i) => (
             <div
               key={i}
               className="bg-white rounded-full sm:h-2 sm:w-4 md:h-3 md:w-5"
@@ -31,16 +31,16 @@ export const Coupon = () => {
         {/* {/* <!-- Main Ticket Content --> */}
         <div class="w-full h-full flex items-center justify-center text-white gap-1 pl-4">
           <div className="flex  flex-row justify-between align-middle bg-red items-center w-full ">
-            <IoStarSharp className=" sm:text-xl md:text-5xl sm:mr-1 md:mr-0" />
+            <IoStarSharp className=" animate-pulse text-[#e5e4e2] sm:text-xl md:text-5xl sm:mr-1 md:mr-0" />
             <div className="bg-black flex flex-col justify-center align-middle items-center text-center md:gap-1 ">
               <p className=" font-bold uppercase transform   sm:text-[10px] md:text-sm  md:scale-150 sm:mb-0 md:mb-[1rem]">
                 GRAB YOUr
               </p>
               <p
-                className="sm:text-lg md:text-2xl font-bold font-RoadRage  tracking-wide sm:mb-0 md:mb-[1rem] scale-custom-sm md:scale-custom-md lg:scale-custom-lg"
+                className="sm:text-lg md:text-2xl font-bold font-RoadRage  tracking-wide sm:mb-0 md:mb-[1rem] scale-custom-sm md:scale-custom-md lg:scale-custom-lg "
                 // style={{ transform: "scaleY(4) scaleX(2.5)" }}
               >
-                55% <span className="text-sm">OFF</span>
+                55% <span className="text-sm  ">OFF</span>
               </p>
               <div className="flex flex-row ">
                 {Array.from(
@@ -48,18 +48,18 @@ export const Coupon = () => {
                   (_, index) => (
                     <IoStarSharp
                       key={index}
-                      className="text-[8px]   md:text-[10px] md:mr-[2px] sm:mt-[4px] md:mt-0"
+                      className="text-[8px] animate-pulse text-[#e5e4e2] md:text-[10px] md:mr-[2px] sm:mt-[4px] md:mt-0"
                     />
                   )
                 )}
               </div>
             </div>
-            <IoStarSharp className=" sm:text-xl md:text-5xl " />
+            <IoStarSharp className="animate-pulse text-[#e5e4e2] sm:ml-1 md:ml-0 sm:text-xl md:text-5xl" />
           </div>
         </div>
 
         {/* <!-- center Side Crimps --> */}
-        <div className="flex  flex-col justify-between  items-center  h-full  ">
+        <div className="flex  flex-col justify-between  items-center sm:w-2 md:w-auto h-full  ">
           <div
             className="bg-white rounded-full md:-mt-6 sm:-mt-4   sm:h-4 sm:w-4 md:h-9 md:w-9 "
             style={{ clipPath: "inset(50% 0 0 0)" }} // This will clip the right half to create a semicircle

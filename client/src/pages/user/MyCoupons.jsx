@@ -19,7 +19,7 @@ export const MyCoupons = () => {
               <div className="flex flex-col  justify-center   align-middle items-center">
                 <div className="flex w-[96%]  justify-center items-center align-middle  border-2 h-1 rounded-xl bg-gray-500 border-gray-300 sm:mb-2 md:my-3"></div>
                 {/* Divider */}
-                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-9 ">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 md:gap-9 sm:gap-4 ">
                   <Coupon />
                   <Coupon />
                   <Coupon />

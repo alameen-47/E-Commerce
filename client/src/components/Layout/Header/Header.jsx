@@ -116,7 +116,9 @@ function Header() {
             <div
               onClick={() =>
                 navigate(
-                  `/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`
+                  `/dashboard/${
+                    auth?.user?.role === 1 ? "admin" : "user/edit-profile"
+                  }`
                 )
               }
               onMouseEnter={() => setDropDown(true)}
@@ -139,7 +141,7 @@ function Header() {
                   <div className=" flex flex-row py-[7%] ">
                     <NavLink
                       to={`/dashboard/${
-                        auth?.user?.role === 1 ? "admin" : "user"
+                        auth?.user?.role === 1 ? "admin" : "user/edit-profile"
                       }`}
                     >
                       <div className="flex flex-row justify-center items-center align-middle gap-3">

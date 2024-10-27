@@ -10,29 +10,25 @@ import translateText from "../services/translateText.js";
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address, zipCode } = req.body;
+    const {
+      name,
+      email,
+      password,
+      phone,
+
+      // address, zipCode
+    } = req.body;
     //validationns
-    if (!name) {
-      return res.send({ message: t("alert.Name is Required") });
-    }
+    // if (!name) {
+    //   return res.send({ message: t("alert.Name is Required") });
+    // }
     if (!email) {
       return res.send({ message: t("Email is Required") });
     }
     if (!password) {
       return res.send({ message: t("Password is Required") });
     }
-    if (!phone) {
-      return res.send({ message: t("Phone Number is Required") });
-    }
-    if (!address) {
-      return res.send({ message: t("Address is Required") });
-    }
-    if (!zipCode) {
-      return res.send({ message: t("Zip Code is Required") });
-    }
-    // if ( {
-    //   return res.send({ message: "Answer is Required" });
-    // }
+
     //check user
     const existinguser = await userModel.findOne({ email });
     //existing user
@@ -46,11 +42,11 @@ export const registerController = async (req, res) => {
     const hashedPassword = await hashPassword(password);
     // save
     const user = await new userModel({
-      name,
+      // name,
       email,
       phone,
-      address,
-      zipCode,
+      // address,
+      // zipCode,
       password: hashedPassword,
     }).save();
 
@@ -110,8 +106,8 @@ export const loginController = async (req, res) => {
         name: user.name,
         email: user.email,
         phone: user.phone,
-        address: user.address,
-        zipCode: user.zipCode,
+        // address: user.address,
+        // zipCode: user.zipCode,
         role: user.role,
       },
       token,

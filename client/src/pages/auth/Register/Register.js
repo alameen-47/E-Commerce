@@ -7,14 +7,16 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { t } from "i18next";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 const Register = () => {
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [zipCode, setZipCode] = useState("");
+  // const [address, setAddress] = useState("");
+  // const [zipCode, setZipCode] = useState("");
+  const [visible, setVisible] = useState(false);
 
   const navigate = useNavigate();
 
@@ -23,12 +25,12 @@ const Register = () => {
     e.preventDefault();
     try {
       const res = await axios.post("/api/v1/auth/register", {
-        name,
+        // name,
         email,
         password,
         phone,
-        address,
-        zipCode,
+        // address,
+        // zipCode,
       });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
@@ -48,14 +50,14 @@ const Register = () => {
           <div className="Register-container-content ">
             <h1>{t("signin.Sign Up")}</h1>
             <div className="inputs">
-              <input
+              {/* <input
                 type="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={t("signin.Enter Your Name")}
                 autoFocus
                 required
-              />
+              /> */}
               <input
                 type="email"
                 value={email}
@@ -63,13 +65,27 @@ const Register = () => {
                 placeholder={t("signin.Enter Your Email")}
                 required
               />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder={t("signin.Enter Your Password")}
-                required
-              />
+              <div className="flex flex-row items-center justify-center align-middle">
+                <input
+                  className="pr-10" // Add right padding to create space for the icon
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder={t("signin.Enter Your Password")}
+                  required
+                />
+                {/* Eye Icon */}
+                <span
+                  onClick={() => setVisible(!visible)}
+                  className="absolute right-2 cursor-pointer bg-red-700 " // Position it on the right side
+                >
+                  {visible ? (
+                    <EyeTwoTone twoToneColor="#ffffff" />
+                  ) : (
+                    <EyeInvisibleOutlined style={{ color: "white" }} />
+                  )}
+                </span>
+              </div>
               <input
                 type="text"
                 value={phone}
@@ -77,20 +93,20 @@ const Register = () => {
                 placeholder={t("signin.Enter Your Phone Number")}
                 required
               />
-              <input
+              {/* <input
                 type="address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder={t("signin.Enter Your Address")}
                 required
-              />
-              <input
+              /> */}
+              {/* <input
                 type="zipCode"
                 value={zipCode}
                 onChange={(e) => setZipCode(e.target.value)}
                 placeholder={t("signin.enterYourPostalCode")}
                 required
-              />
+              /> */}
               {/* <input
                 type="text"
                 value={answer}
