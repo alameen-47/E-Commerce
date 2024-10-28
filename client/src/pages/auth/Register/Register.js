@@ -17,7 +17,7 @@ const Register = () => {
   // const [address, setAddress] = useState("");
   // const [zipCode, setZipCode] = useState("");
   const [visible, setVisible] = useState(false);
-
+  const [type, setType] = useState("password");
   const navigate = useNavigate();
 
   //form function
@@ -43,6 +43,7 @@ const Register = () => {
       toast.error(t("common.Something went wrong"));
     }
   };
+
   return (
     <Layout title={"Register-Rawad Mall"}>
       <form onSubmit={handleSubmit}>
@@ -65,10 +66,10 @@ const Register = () => {
                 placeholder={t("signin.Enter Your Email")}
                 required
               />
-              <div className="flex flex-row items-center justify-center align-middle">
+              <div className="flex flex-row items-center justify-center align-middle relative">
                 <input
                   className="pr-10" // Add right padding to create space for the icon
-                  type="password"
+                  type={type}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder={t("signin.Enter Your Password")}
@@ -76,8 +77,11 @@ const Register = () => {
                 />
                 {/* Eye Icon */}
                 <span
-                  onClick={() => setVisible(!visible)}
-                  className="absolute right-2 cursor-pointer bg-red-700 " // Position it on the right side
+                  onClick={() => {
+                    setVisible(!visible);
+                    setType(type === "password" ? "string" : "password");
+                  }}
+                  className="absolute top-[.18rem] right-2  cursor-pointer"
                 >
                   {visible ? (
                     <EyeTwoTone twoToneColor="#ffffff" />
