@@ -3,6 +3,7 @@ import Footer from "./Footer/Footer.js";
 import Header from "./Header/Header.jsx";
 import { Helmet } from "react-helmet";
 import { Toaster } from "react-hot-toast";
+import { MenuBar } from "../MenuBar.jsx";
 
 const Layout = ({ children, title, description, keywords, author }) => {
   return (
@@ -18,6 +19,7 @@ const Layout = ({ children, title, description, keywords, author }) => {
       <main>
         <Toaster />
         {children}
+        <MenuBar />
       </main>
 
       <Footer />

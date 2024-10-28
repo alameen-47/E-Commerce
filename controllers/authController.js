@@ -11,7 +11,7 @@ import translateText from "../services/translateText.js";
 export const registerController = async (req, res) => {
   try {
     const {
-      name,
+      // name,
       email,
       password,
       phone,
@@ -232,7 +232,7 @@ export const verifyOtpController = async (req, res) => {
   }
 };
 
-//update profile
+// //update profile
 export const updateProfileController = async (req, res) => {
   try {
     const { name, email, password, address, phone, zipCode } = req.body;

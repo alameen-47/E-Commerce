@@ -4,8 +4,9 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Please enter your name"],
+      // required: [true, "Please enter your name"],
       trim: true,
+      default: "",
     },
     email: {
       type: String,
@@ -26,25 +27,22 @@ const userSchema = new mongoose.Schema(
     address: {
       street: {
         type: String,
-        required: true,
+        default: "",
       },
       city: {
         type: String,
-        required: true,
+        default: "",
       },
       province: {
         type: String,
-        required: true,
+        default: "",
       },
       zipCode: {
         type: String,
-        required: true,
+        default: "",
       },
     },
-    zipCode: {
-      type: String,
-      required: true,
-    },
+
     otp: { type: String },
     otpExpires: { type: Date },
 
