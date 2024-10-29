@@ -46,6 +46,10 @@ body {
   animation: sparkle-animation forwards; /* Trigger animation */
 }
 
+/* Custom arrow styling */
+.custom-dropdown .ant-dropdown-arrow {
+ color: black !important; /* Arrow background color */
+}
 @keyframes sparkle-animation {
   0% {
     transform: scale(1) rotate(0deg); /* Start normal size */

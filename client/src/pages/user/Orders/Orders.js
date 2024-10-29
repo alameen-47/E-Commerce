@@ -67,10 +67,10 @@ const Orders = () => {
               </p>
             </div>
             <div className="flex flex-col  justify-center   align-middle items-center">
-              <div className="flex w-[96%]  justify-center items-center align-middle  border-2 h-1 rounded-xl bg-gray-500 border-gray-300 sm:mb-2 md:my-3"></div>
+              <div className="flex w-[96%]  justify-center items-center align-middle  border-2 h-1 rounded-xl bg-gray-500 border-gray-300 sm:mb-2  md:my-3"></div>
               {/* Divider */}
               <div className=" CARD-CONTAINER w-[95%] ">
-                <div className="CARD. bg-[#D9D9D9] flex  align-middle justify-between  items-center w-full max-h-[12rem] min-h-[8rem]  rounded-lg  md:py-4  sm:px-4 md:px-6 gap-2">
+                <div className="CARD. bg-[#D9D9D9] flex  align-middle justify-between  items-center w-full max-h-[12rem] md:min-h-[8rem]  rounded-lg  md:py-4  sm:px-4 md:px-6 gap-2 sm:py-1">
                   <div className="flex">
                     <div className="PRODUCT-IMAGE bg-white lg:min-w-[155px] lg:max-h-[120px] sm:h-[100px] sm:w-[90px] rounded-lg">
                       <img

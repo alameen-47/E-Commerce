@@ -221,14 +221,6 @@ const AllProducts = () => {
           }}
           className="md:hidden sm:absolute left-4  "
         >
-          <FloatButton
-            icon={<FaShoppingCart />}
-            badge={{
-              count: cart ? cart.length : 0,
-            }}
-            onClick={() => navigate("/cart")}
-          />
-
           <Button
             type=""
             className="bg-black focus:outline-0 text-white"
@@ -372,6 +364,7 @@ const AllProducts = () => {
                 count: cart ? cart.length : 0,
               }}
               onClick={() => navigate("/cart")}
+              className="bottom-20"
             />
             <div className="grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 gap-2">
               {visibleProducts && visibleProducts.length > 0
