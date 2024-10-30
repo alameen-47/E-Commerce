@@ -47,18 +47,10 @@ const Register = () => {
   return (
     <Layout title={"Register-Rawad Mall"}>
       <form onSubmit={handleSubmit}>
-        <div className="flex justify-center align-middle py-10 px-6">
+        <div className="flex justify-center align-middle py-10 px-6 items-center">
           <div className="Register-container-content ">
             <h1>{t("signin.Sign Up")}</h1>
             <div className="inputs">
-              {/* <input
-                type="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder={t("signin.Enter Your Name")}
-                autoFocus
-                required
-              /> */}
               <input
                 type="email"
                 value={email}
@@ -97,32 +89,11 @@ const Register = () => {
                 placeholder={t("signin.Enter Your Phone Number")}
                 required
               />
-              {/* <input
-                type="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder={t("signin.Enter Your Address")}
-                required
-              /> */}
-              {/* <input
-                type="zipCode"
-                value={zipCode}
-                onChange={(e) => setZipCode(e.target.value)}
-                placeholder={t("signin.enterYourPostalCode")}
-                required
-              /> */}
-              {/* <input
-                type="text"
-                value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
-                placeholder="What is your Dream job?"
-                required
-              /> */}
             </div>
             <button type="submit" onClick={handleSubmit}>
               {t("signin.SIGN UP")}
             </button>
-            <p>
+            <p className="py-1">
               {t("signin.Already have an account?")}
               <Link to="/signin">{t("signin.Sign In")}</Link>
             </p>

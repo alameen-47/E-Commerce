@@ -15,8 +15,6 @@ import useCategory from "../../../hooks/useCategory";
 import { useCart } from "../../../context/cart";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "../../../LanguageSwitcher";
-import axios from "axios";
-import i18n from "../../../i18n/index.js";
 import CategoryListSlider from "./CategoryListSlider.jsx";
 
 function Header() {

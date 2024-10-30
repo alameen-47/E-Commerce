@@ -10,18 +10,8 @@ import translateText from "../services/translateText.js";
 
 export const registerController = async (req, res) => {
   try {
-    const {
-      // name,
-      email,
-      password,
-      phone,
+    const { email, password, phone } = req.body;
 
-      // address, zipCode
-    } = req.body;
-    //validationns
-    // if (!name) {
-    //   return res.send({ message: t("alert.Name is Required") });
-    // }
     if (!email) {
       return res.send({ message: t("Email is Required") });
     }
@@ -42,11 +32,8 @@ export const registerController = async (req, res) => {
     const hashedPassword = await hashPassword(password);
     // save
     const user = await new userModel({
-      // name,
       email,
       phone,
-      // address,
-      // zipCode,
       password: hashedPassword,
     }).save();
 
@@ -65,6 +52,70 @@ export const registerController = async (req, res) => {
   }
 };
 
+export const updateProfileController = async (req, res) => {
+  try {
+    const { name, email, phone, password } = req.body;
+
+    if (!password || password.length < 6) {
+      return res.status(400).json({
+        error: "Password is required and length should be 6 character",
+      });
+    }
+    const user = await userModel.findById(req.user._id);
+
+    const updatedUser = await userModel.findByIdAndUpdate(
+      req.user._id,
+      {
+        name: name || user.name,
+        email: email || email.name,
+        phone: phone || phone.name,
+      },
+      { new: true }
+    );
+
+    res.status(201).send({
+      success: true,
+      message: "Profile Updated Succesfully",
+      updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Failed to Update Profile",
+      error,
+    });
+  }
+};
+
+export const updateAddressController = async (req, res) => {
+  try {
+    const { street, province, zipCode, city } = req.body;
+    const user = await userModel.findById(req.user._id);
+    const updatedAddress = await userModel.findByIdAndUpdate(
+      req.user._id,
+      {
+        "address.street": street,
+        "address.city": city,
+        "address.province": province,
+        "address.zipCode": zipCode,
+      },
+      { new: true }
+    );
+    res.status(200).json({
+      success: true,
+      message: "Address updated successfully",
+      updatedAddress,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error updating address",
+      error,
+    });
+  }
+};
 //POST LOGIN
 export const loginController = async (req, res) => {
   try {
@@ -150,7 +201,7 @@ export const forgotPasswordController = async (req, res) => {
 
     // Update user with OTP and expiration time
     user.otp = hashedOtp;
-    user.otpExpires = Date.now() + 120000; // 2 minutes expiry
+    user.otpExpires = Date.now() + 520000; // 2 minutes expiry
     await user.save();
 
     // Send OTP via email
@@ -233,43 +284,43 @@ export const verifyOtpController = async (req, res) => {
 };
 
 // //update profile
-export const updateProfileController = async (req, res) => {
-  try {
-    const { name, email, password, address, phone, zipCode } = req.body;
-    const user = await userModel.findById(req.user._id);
-    //password
-    if (!password && password.length < 6) {
-      return res.status(400).json({
-        error: "Password is required and length should be 6 character",
-      });
-    }
-    const hashedPassword = password ? await hashPassword(password) : undefined;
-    const updatedUser = await userModel.findByIdAndUpdate(
-      req.user._id,
-      {
-        name: name || user.name,
-        password: hashedPassword || user.password,
-        phone: phone || user.phone,
-        email: email || user.email,
-        address: address || user.address,
-        zipCode: zipCode || user.zipCode,
-      },
-      { new: true }
-    );
-    res.status(201).send({
-      success: true,
-      message: t("Profile Updated Succesfully"),
-      updatedUser,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: t("Failed to Update Profile"),
-      error,
-    });
-  }
-};
+// export const updateProfileController = async (req, res) => {
+//   try {
+//     const { name, email, password, address, phone, zipCode } = req.body;
+//     const user = await userModel.findById(req.user._id);
+//     //password
+//     if (!password || password.length < 6) {
+//       return res.status(400).json({
+//         error: "Password is required and length should be 6 character",
+//       });
+//     }
+//     const hashedPassword = password ? await hashPassword(password) : undefined;
+//     const updatedUser = await userModel.findByIdAndUpdate(
+//       req.user._id,
+//       {
+//         name: name || user.name,
+//         password: hashedPassword || user.password,
+//         phone: phone || user.phone,
+//         email: email || user.email,
+//         address: address || user.address,
+//         zipCode: zipCode || user.zipCode,
+//       },
+//       { new: true }
+//     );
+//     res.status(201).send({
+//       success: true,
+//       message: t("Profile Updated Succesfully"),
+//       updatedUser,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       success: false,
+//       message: t("Failed to Update Profile"),
+//       error,
+//     });
+//   }
+// };
 
 //orders
 export const getOrdersController = async (req, res) => {
@@ -288,6 +339,7 @@ export const getOrdersController = async (req, res) => {
     });
   }
 };
+
 //cancel order
 export const cancelOrderController = async (req, res) => {
   try {
@@ -316,6 +368,7 @@ export const cancelOrderController = async (req, res) => {
     });
   }
 };
+
 //admin all-orders
 export const getAllOrdersController = async (req, res) => {
   try {

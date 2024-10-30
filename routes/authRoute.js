@@ -10,6 +10,7 @@ import {
   cancelOrderController,
   verifyOtpController,
   getAllUsers,
+  updateAddressController,
 } from "../controllers/authController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authmiddleware.js";
 // import translateText from "../services/translateText.js";
@@ -58,6 +59,15 @@ router.put(
   "/update-profile",
   requireSignIn,
   updateProfileController,
+  (req, res) => {
+    res.status(200).send({ ok: true });
+  }
+);
+//update-profile
+router.put(
+  "/update-address",
+  requireSignIn,
+  updateAddressController,
   (req, res) => {
     res.status(200).send({ ok: true });
   }

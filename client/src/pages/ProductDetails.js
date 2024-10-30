@@ -22,6 +22,7 @@ import { ProductHistory } from "../components/ProductHistory.jsx";
 import { ProductCarousel } from "../components/Product/ProductCarousel.jsx";
 import CelebrationBadge from "../components/AnimationEffects/ConfettiEffect.jsx";
 import { Sparkle } from "../components/Product/Sparkle.jsx";
+import { FaHeart } from "react-icons/fa";
 
 // Translation function
 const translateText = async (text, targetLanguage) => {
@@ -300,6 +301,22 @@ const ProductDetails = () => {
   //   translatedProduct?.categoryDetails,
   //   "TRANSLATED CATEGORY DETAILS}}}}}}}}}}}}}}}}}}"
   // );
+
+  const handleLike = (translatedProduct) => {
+    const currentWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const isProductInWishlist = currentWishlist.some(
+      (item) => item._id === translatedProduct?._id
+    );
+
+    if (!isProductInWishlist) {
+      const updateWishList = [...currentWishlist, translatedProduct];
+      localStorage.setItem("wishlist", JSON.stringify(updateWishList));
+      toast.success(<FaHeart color="black" />);
+    } else {
+      return;
+    }
+  };
+
   return (
     <Layout>
       <div className="md:m-4 sm:mb-3 flex flex-col gap-7">
@@ -470,6 +487,13 @@ const ProductDetails = () => {
                 </div>
               </div>
               <div className="IMAGE CAROUSEL FOR SMALL SCREEN bg-white !important text-white carousel  md:hidden  sm:min-h-[15rem]  group m-auto   ">
+                <div
+                  className="absolute bg-gray-200 right-4 mt-4  flex justify-center items-center align-middle p-2 rounded-full drop-shadow-md shadow-md "
+                  onClick={() => handleLike(translatedProduct)}
+                  style={{ zIndex: "9999" }}
+                >
+                  <FaHeart style={{ color: "black" }} />
+                </div>
                 {filteredImages.length &&
                   filteredImages.map((image, index) => (
                     <div

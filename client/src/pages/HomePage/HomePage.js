@@ -43,7 +43,7 @@ const HomePage = () => {
           <ElecOffers />
           <br></br>
           <ProductsList start={14} end={28} />
-          <p className="mt-3 hover:text-gray-800 hover:bg-[#fff] shadow-2xl shadow-gray-500 cursor-pointer flex text-center  justify-center align-middle items-center hover:scale-105 text-white bg-black p-2 w-fit rounded-lg m-auto">
+          <p className="  top-2  max-w-max text-white bg-gradient-to-r from-black to-blue-500 px-4 py-1 rounded-md text-lg font-bold shadow-lg uppercase tracking-wide flex items-center m-auto animate-pulse duration-700 mb-1 glow-vibrant">
             <span className="font-semibold">
               <Link to={"/allproducts"}>
                 {t("home.Click here to Explore More Products")}

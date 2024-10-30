@@ -17,7 +17,7 @@ export const ImageCarousel = ({ product }) => {
     }
   }, [product]);
   return (
-    <div className="carousel rounded-box w-64 bg-gray-100 overflow-y-hidden flex align-middle items-center max-w-40 h-fit">
+    <div className="carousel rounded-box w-64 bg-gray-100 overflow-y-hidden flex align-middle items-center  max-w-40 h-fit">
       {updatedImages?.map((img, index) => (
         <div
           key={index}

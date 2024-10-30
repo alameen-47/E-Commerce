@@ -60,7 +60,10 @@ const Orders = () => {
       <div className="bg-white md:hidden lg:flex sm:block flex h-screen max-h-screen   lg:flex-row sm:flex-col rounded   lg:px-4 md:p-8 drop-shadow-2xl shadow-2xl">
         <UserMenu />
         <div className="bg-white lg:w-screen max-h-screen overflow-scroll  custom-scrollbar rounded-tr-lg rounded-br-lg border drop-shadow-2xl shadow-xl">
-          <div className="lg:col-span-2  max-h-screen h-screen px-4 py-5 sm:px-6">
+          <div
+            className="lg:col-span-2  max-h-screen h-screen  sm:px-1
+           py-5 md:px-6"
+          >
             <div className="grid gap-4 md:gap-y-2 text-sm grid-cols-1  md:grid-cols-5 ">
               <p className="sm:text-lg lg:text-2xl px-4 uppercase font-bold sm:mb-0 md:mb-2">
                 MY orders

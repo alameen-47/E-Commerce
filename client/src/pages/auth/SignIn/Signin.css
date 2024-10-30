@@ -17,14 +17,13 @@
   padding: 1.5rem 0.5rem;
   overflow: hidden;
   background: #000;
-  
   display: flex;
   flex-shrink: 0;
   flex-direction: column;
   align-items: center;
 }
 .Signin-container-content h1 {
-  font-size: 25px;
+  font-size: 30px;
   color: white;
   text-align: center;
   line-height: 36px;
@@ -36,7 +35,6 @@
 .Signin-container-content .inputs {
   width: 340px;
   background: #000000;
-  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,9 +52,9 @@
   line-height: 16px;
   background: #000000;
   color: white;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid #eaeffd;
   padding-left: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .forgot-password {
   margin-top: 10px;
