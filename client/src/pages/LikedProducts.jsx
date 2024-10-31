@@ -46,15 +46,6 @@ export const LikedProducts = () => {
                     onRemove={updateWishlist}
                   />
                 ))}
-                {/* <LikedCard />
-                <LikedCard />
-                <LikedCard />
-                <LikedCard />
-                <LikedCard />
-                <LikedCard />
-                <LikedCard />
-                <LikedCard />
-                <LikedCard /> */}
               </div>
             </div>
           </div>

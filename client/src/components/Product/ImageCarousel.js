@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export const ImageCarousel = ({ product }) => {
+export const ImageCarousel = ({ product, className }) => {
   const [updatedImages, setUpdatedImages] = useState([]);
 
   // Use effect to convert the image URLs when the component receives data
@@ -17,11 +17,13 @@ export const ImageCarousel = ({ product }) => {
     }
   }, [product]);
   return (
-    <div className="carousel rounded-box w-64 bg-gray-100 overflow-y-hidden flex align-middle items-center  max-w-40 h-fit">
+    <div
+      className={`${className} carousel rounded-box w-64 bg-gray-100 overflow-y-hidden flex align-middle items-center  max-w-40 h-fit`}
+    >
       {updatedImages?.map((img, index) => (
         <div
           key={index}
-          className="carousel-item flex flex-col  overflow-hidden bg-white md:max-h-40 md:max-w-40 cursor-pointer"
+          className="carousel-item flex flex-col  overflow-hidden bg-white md:max-h-40 md:max-w-40 cursor-pointer "
         >
           <img
             src={img.src}
