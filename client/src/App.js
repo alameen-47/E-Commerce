@@ -24,7 +24,7 @@ import Search from "./pages/Search.js";
 import ProductDetails from "./pages/ProductDetails.js";
 import Categories from "./pages/Categories.js";
 import ProductCategory from "./pages/ProductCategory.js";
-import CartPage from "./pages/CartPage.js";
+import CartPage from "./pages/CartPage";
 import AdminOrders from "./pages/Admin/AdminOrders.js";
 import LanguageWrapper from "./components/LanguageWrapper/index.jsx";
 import { useTranslation } from "react-i18next";

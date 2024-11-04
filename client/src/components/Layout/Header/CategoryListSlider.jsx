@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import useCategory from "../../../hooks/useCategory";
 
 const CategoryListSlider = ({ direction = "left" }) => {
   const carouselRef = useRef(null);
   const categories = useCategory();
+  const [isScrolling, setIsScrolling] = useState(true);
+
   console.log(categories);
   useEffect(() => {
     const carousel = carouselRef.current;
@@ -42,6 +44,13 @@ const CategoryListSlider = ({ direction = "left" }) => {
     };
   }, []);
 
+  // Function to continuously scroll the carousel
+  const scroll = () => {
+    if (carouselRef.current && isScrolling) {
+      carouselRef.current.scrollLeft += 1;
+    }
+    requestAnimationFrame(scroll);
+  };
   return (
     <div className="overflow-hidden relative w-full">
       <div ref={carouselRef} className="flex whitespace-nowrap">

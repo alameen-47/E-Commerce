@@ -1,3 +1,4 @@
+import { Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 
 export const ImageCarousel = ({ product, className }) => {
@@ -20,6 +21,7 @@ export const ImageCarousel = ({ product, className }) => {
     <div
       className={`${className} carousel rounded-box w-64 bg-gray-100 overflow-y-hidden flex align-middle items-center  max-w-40 h-fit`}
     >
+      <div className="IMAGE skeleton  h-64 w-64 max-h-40 max-w-40  bg-black/20"></div>
       {updatedImages?.map((img, index) => (
         <div
           key={index}

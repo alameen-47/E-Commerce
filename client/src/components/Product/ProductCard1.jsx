@@ -129,6 +129,7 @@ export const ProductCard1 = ({ products }) => {
           }
         >
           <ImageCarousel product={translatedProduct} />
+
         </Badge.Ribbon>
         <p
           className={`PRODUCT-NAME md:mb-2 sm:mb-0 cardtxt font-semibold text-black tracking-wider group-hover:text-white  break-words overflow-hidden text-ellipsis ${
