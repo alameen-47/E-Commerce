@@ -48,7 +48,10 @@ body {
 
 /* Custom arrow styling */
 .custom-dropdown .ant-dropdown-arrow {
- color: black !important; /* Arrow background color */
+  color: black !important; /* Arrow background color */
+}
+.text-lg {
+  line-height: normal !important; /* Remove the default line-height globally */
 }
 @keyframes sparkle-animation {
   0% {
