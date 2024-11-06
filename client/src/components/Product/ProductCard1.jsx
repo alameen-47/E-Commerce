@@ -62,51 +62,12 @@ export const ProductCard1 = ({ products }) => {
     getProduct(products);
   }, [products]);
 
-  // // Function to rebuild product object with translated fields
-  // const rebuildProductWithTranslations = (
-  //   product,
-  //   translatedTexts,
-  //   translatableFields
-  // ) => {
-  //   const translatedProduct = { ...product };
-
-  //   let index = 0;
-  //   for (let key in translatableFields) {
-  //     translatedProduct[key] = translatedTexts[index++]; // Map translated strings back to product fields
-  //   }
-
-  //   return translatedProduct;
-  // };
-  // // Effect to handle translation on product change
-  // useEffect(() => {
-  //   const translateProduct = async () => {
-  //     try {
-  //       const { translatableFields, textsArray } =
-  //         collectTranslatableFields(products); // Extract translatable strings
-  //       const translatedTexts = await translateText(textsArray, i18n.language); // Send array of strings for translation
-
-  //       const updatedProduct = rebuildProductWithTranslations(
-  //         products,
-  //         translatedTexts,
-  //         translatableFields
-  //       ); // Rebuild product with translations
-
-  //       setTranslatedProduct(updatedProduct); // Update state with translated product
-  //     } catch (error) {
-  //       console.error("Error translating product", error);
-  //     }
-  //   };
-
-  //   translateProduct(); // Call the function when product changes
-  // }, [products, i18n.language]); // Re-run if the product or language changes
-
   const addToCart = (item) => {
     const updatedCart = [...cart, ...item];
     setCart(updatedCart);
     localStorage.setItem("CART", JSON.stringify(updatedCart));
     toast.success("Item Added to cart");
   };
-
   return (
     <div>
       <div
@@ -129,7 +90,6 @@ export const ProductCard1 = ({ products }) => {
           }
         >
           <ImageCarousel product={translatedProduct} />
-
         </Badge.Ribbon>
         <p
           className={`PRODUCT-NAME md:mb-2 sm:mb-0 cardtxt font-semibold text-black tracking-wider group-hover:text-white  break-words overflow-hidden text-ellipsis ${

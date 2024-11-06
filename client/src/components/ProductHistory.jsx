@@ -15,7 +15,6 @@ export const ProductHistory = () => {
       const historyArray = JSON.parse(searchHistoryProducts);
       // Store the fetched data in state
       setProducts(historyArray);
-      console.log(historyArray, "HISTORYYY");
     } else {
       setProducts([]); // If no history found, set an empty array
     }
