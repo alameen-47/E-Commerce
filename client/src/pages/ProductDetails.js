@@ -690,11 +690,10 @@ const ProductDetails = () => {
                             {t("productDetails.Size")}:
                             <Select
                               // labelInValue
-
                               defaultValue={t("productDetails.Select")}
                               className=" border-1 border-solid "
                               style={{ border: "#0000" }}
-                              onChange={(value) => setItemSize(value)}
+                              onChange={(value) => setItemSize(+value)}
                               options={sizes}
                             />
                           </label>
@@ -709,8 +708,7 @@ const ProductDetails = () => {
                             ...products,
                             size: itemSize, // Include size from state
                             color: itemColor, // Include color from state
-                            quantity: itemQuantity, // Include quantity from state
-                            units,
+                            units: itemQuantity, // Include quantity from state
                           },
                         ]);
                       }}

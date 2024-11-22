@@ -72,7 +72,7 @@ export const ProductCard1 = ({ products }) => {
     <div>
       <div
         onClick={() => navigate(`/product/${products.slug}/${products._id}`)}
-        className=" text-wrap  group align-middle lg:px-5  bg-gray-300 rounded-lg flex flex-col items-center justify-center  relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all  md:gap-1 p-2 max-w-[13rem] "
+        className="text-wrap  group align-middle lg:px-5  bg-gray-300 rounded-lg flex flex-col items-center justify-center  relative after:absolute after:h-full after:bg-[#000000] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&_p]:delay-200 [&_p]:transition-all  md:gap-1 p-2 max-w-[13rem]"
       >
         <Badge.Ribbon
           className="sm:text-xs md:text-md text-[#F0F0F0]"

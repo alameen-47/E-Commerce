@@ -6,19 +6,31 @@ import { ProductHistory } from "../components/ProductHistory.jsx";
 
 export const CartPage = () => {
   const orderSummaryRef = useRef(null);
-  const [products, setPoducts] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const fetchCart = () => {
     const cartProducts = localStorage.getItem("CART");
     if (cartProducts) {
       const cartArray = JSON.parse(cartProducts);
-      setPoducts(cartArray);
+      setProducts(cartArray);
     } else {
-      setPoducts([]);
+      setProducts([]);
     }
   };
+  const handleDelete = (id) => {
+    const newProducts = products.filter((product) => product._id !== id);
+    setProducts(newProducts);
+  };
 
+  const handleQuantityChange = (id, newQuantity) => {
+    setProducts((prevCart) =>
+      prevCart.map((product) =>
+        product._id === id ? { ...product, quantity: newQuantity } : product
+      )
+    );
+  };
   useEffect(() => {
+    handleQuantityChange();
     fetchCart();
   }, []);
 
@@ -42,7 +54,7 @@ export const CartPage = () => {
             </div>
           </div>
           {products?.length > 1 ? (
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-y-3 ">
               <CartCard products={products} />
             </div>
           ) : (
