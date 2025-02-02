@@ -17,15 +17,14 @@ export const CartPage = () => {
       setProducts([]);
     }
   };
-  const handleDelete = (id) => {
-    const newProducts = products.filter((product) => product._id !== id);
-    setProducts(newProducts);
+  const handleDelete = (_id) => {
+    setProducts((prevProducts) => prevProducts.filter((p) => p._id !== _id));
   };
 
-  const handleQuantityChange = (id, newQuantity) => {
+  const handleQuantityChange = (_id, newQuantity) => {
     setProducts((prevCart) =>
       prevCart.map((product) =>
-        product._id === id ? { ...product, quantity: newQuantity } : product
+        product._id === _id ? { ...product, quantity: newQuantity } : product
       )
     );
   };
@@ -53,13 +52,17 @@ export const CartPage = () => {
               <div>Select All</div>
             </div>
           </div>
-          {products?.length > 1 ? (
-            <div className="flex flex-col gap-y-3 ">
-              <CartCard products={products} />
-            </div>
-          ) : (
-            ""
-          )}
+          {products?.length > 0
+            ? products.map((product) => (
+                <div className="flex flex-col gap-y-3 ">
+                  <CartCard
+                    key={product._id}
+                    product={product}
+                    onDelete={handleDelete}
+                  />
+                </div>
+              ))
+            : ""}
         </div>
         <div
           ref={orderSummaryRef}

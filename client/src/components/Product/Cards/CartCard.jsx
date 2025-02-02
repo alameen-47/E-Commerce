@@ -7,6 +7,9 @@ import { FaCheck } from "react-icons/fa6";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { ImageCarousel } from "../ImageCarousel";
+import { ColorPicker } from "antd";
+import { Skeleton } from "antd";
+
 const translateText = async (text, targetLanguage) => {
   const { data } = await axios.post("/api/v1/translate", {
     text,
@@ -15,268 +18,274 @@ const translateText = async (text, targetLanguage) => {
   return data.translatedText;
 };
 
-export const CartCard = ({ products, handleQuantityChange, handleDelete }) => {
+export const CartCard = ({ product, onDelete, handleQuantityChange }) => {
   const [qty, setQty] = useState(1);
   const increment = () => setQty(qty + 1);
   const decrement = () => setQty(qty > 1 ? qty - 1 : 1);
   const [isChecked, setIsChecked] = useState(false);
   const [checkedProducts, setCheckedProducts] = useState({});
-
+  const [active, setActive] = useState(true);
   const [liked, setLiked] = useState(false);
   const { i18n } = useTranslation();
   const [updatedImages, setUpdatedImages] = useState([]);
   const [images, setImages] = useState([]);
-  const [translatedProduct, setTranslatedProduct] = useState(products);
+  const [translatedProduct, setTranslatedProduct] = useState(product);
   // Function to translate all string fields and update image paths
-  const getProduct = async (products) => {
-    if (!products) {
-      console.error("Products object is undefined or null");
-      return;
-    }
-    const updatedProduct = { ...products };
-    const fieldsToTranslate = ["name", "description"];
-    const fieldValues = [];
+  // const getProduct = async (products) => {
+  //   if (!products) {
+  //     console.error("Products object is undefined or null");
+  //     return;
+  //   }
+  //   const updatedProduct = { ...products };
+  //   const fieldsToTranslate = ["name", "description"];
+  //   const fieldValues = [];
 
-    // Collect the values of fields to translate
-    for (let key of fieldsToTranslate) {
-      if (typeof products[key] === "string") {
-        fieldValues.push(products[key]);
-      }
-    }
+  //   // Collect the values of fields to translate
+  //   for (let key of fieldsToTranslate) {
+  //     if (typeof products[key] === "string") {
+  //       fieldValues.push(products[key]);
+  //     }
+  //   }
 
-    // Join the collected values into a single string with a unique delimiter (e.g., "||")
-    const combinedValues = fieldValues.join("||");
+  //   // Join the collected values into a single string with a unique delimiter (e.g., "||")
+  //   const combinedValues = fieldValues.join("||");
 
-    // Send the combined string for translation
-    const translatedCombined = await translateText(
-      combinedValues,
-      i18n.language
-    );
-    // Split the translated response back into individual translated values
-    const translatedArray = translatedCombined.split("||");
-    // Map the translated values back to their respective fields
-    fieldsToTranslate.forEach((key, index) => {
-      if (translatedArray[index]) {
-        updatedProduct[key] = translatedArray[index].trim();
-      }
-    });
+  //   // Send the combined string for translation
+  //   const translatedCombined = await translateText(
+  //     combinedValues,
+  //     i18n.language
+  //   );
+  //   // Split the translated response back into individual translated values
+  //   const translatedArray = translatedCombined.split("||");
+  //   // Map the translated values back to their respective fields
+  //   fieldsToTranslate.forEach((key, index) => {
+  //     if (translatedArray[index]) {
+  //       updatedProduct[key] = translatedArray[index].trim();
+  //     }
+  //   });
 
-    return setTranslatedProduct(updatedProduct);
-  };
-  const fetchImage = (products) => {
-    if (!Array.isArray(products)) {
-      console.error("Invalid products array");
-      return;
-    }
-    const image = products.map((product) => product.images).filter(Boolean);
+  //   return setTranslatedProduct(updatedProduct);
+  // };
+  // const fetchImage = (products) => {
+  //   if (!Array.isArray(products)) {
+  //     console.error("Invalid products array");
+  //     return;
+  //   }
+  //   const image = products.map((product) => product.images).filter(Boolean);
 
-    const newImages = products.flatMap((product) => {
-      // Ensure product.images is available and is an array
-      if (product.images && Array.isArray(product.images)) {
-        return product.images.flatMap((imageObj) =>
-          Array.isArray(imageObj?.imageSet)
-            ? imageObj.imageSet.map((img) => ({
-                ...img,
-                src: img.data
-                  ? `data:${img.contentType};base64,${img.data}`
-                  : null, // Create base64 image source
-              }))
-            : []
-        );
-      }
-      return [];
-    });
+  //   const newImages = products.flatMap((product) => {
+  //     // Ensure product.images is available and is an array
+  //     if (product.images && Array.isArray(product.images)) {
+  //       return product.images.flatMap((imageObj) =>
+  //         Array.isArray(imageObj?.imageSet)
+  //           ? imageObj.imageSet.map((img) => ({
+  //               ...img,
+  //               src: img.data
+  //                 ? `data:${img.contentType};base64,${img.data}`
+  //                 : null, // Create base64 image source
+  //             }))
+  //           : []
+  //       );
+  //     }
+  //     return [];
+  //   });
 
-    console.log(newImages, "NEW IMAGES");
-    setUpdatedImages(newImages);
-  };
+  //   console.log(newImages, "NEW IMAGES");
+  //   setUpdatedImages(newImages);
+  // };
 
-  useEffect(() => {
-    if (products && Array.isArray(products)) {
-      fetchImage(products);
-    }
-    getProduct(products);
-  }, [products]);
-  console.log(translatedProduct, "TRANSLATED PRODUCT VALUES");
+  // useEffect(() => {
+  //   if (products && Array.isArray(products)) {
+  //     fetchImage(products);
+  //   }
+  //   getProduct(products);
+  // }, [products]);
+  // console.log(translatedProduct, "TRANSLATED PRODUCT VALUES");
 
   return (
     <div>
-      {Object.values(translatedProduct).map((product) => (
-        <div
-          key={product._id}
-          className="PRODUCT-CARD-CONTAINER  bg-[#E3E2E2]  w-[100%] md:h-[20%] sm:h-[9rem] rounded-lg flex flex-row  justify-between sm:px-1 my-2"
-        >
-          <div className="CARD-CONTENT rounded-lg bg-[#E3E2E2] w-auto p-2 flex flex-row  gap-2">
-            {/* <Checkbox className="border border-gray-300 p-2 rounded" /> */}
-            <div className="absolute">
-              <label className=" relative flex ">
-                <input
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={() => setIsChecked(!isChecked)}
-                  className=" appearance-none h-5 w-5 bg-[white] rounded-tl-md rounded-br-md border border-[#808080] checked:bg-white"
-                />
-                {isChecked && (
-                  <span className="absolute inset-0 flex top-1 justify-center text-black text-xs ">
-                    <FaCheck />
-                  </span>
-                )}
-              </label>
-            </div>
+      <div className="PRODUCT-CARD-CONTAINER  bg-[#E3E2E2]  w-[100%] md:h-[20%] sm:h-[9rem] rounded-lg flex flex-row  justify-between sm:px-1 my-2">
+        <div className="CARD-CONTENT rounded-lg bg-[#E3E2E2] w-auto p-2 flex flex-row  gap-2">
+          {/* <Checkbox className="border border-gray-300 p-2 rounded" /> */}
+          <div className="absolute">
+            <label className=" relative flex ">
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={() => setIsChecked(!isChecked)}
+                className=" appearance-none h-5 w-5 bg-[white] rounded-tl-md rounded-br-md border border-[#808080] checked:bg-white"
+              />
+              {isChecked && (
+                <span className="absolute inset-0 flex top-1 justify-center text-black text-xs ">
+                  <FaCheck />
+                </span>
+              )}
+            </label>
+          </div>
 
-            <div className=" flex flex-col gap-1">
-              <div>
-                {!product.images ? (
-                  <div className="IMAGE skeleton h-24 w-24 sm:h-[90%] sm:w-[100%] md:h-32 md:w-36 lg:h-40 lg:w-44 xl:h-48 xl:w-52"></div>
-                ) : (
-                  product.images
-                    ?.flatMap((imageObj) =>
-                      imageObj.imageSet.map((img) => ({
-                        ...img,
-                        src: img.data
-                          ? `data:${img.contentType};base64,${img.data}`
-                          : null, // Create base64 image source
-                      }))
-                    )
-                    .filter((image) => image.src) // Keep only images with a valid `src`
-                    .slice(0, 1) // Take the first valid image
-                    .map((image, index) => (
-                      <div key={index} className="rounded-lg p-3 bg-white">
-                        <img
-                          src={image.src}
-                          className="md:px-2 object-contain transition-transform flex justify-center align-middle items-center duration-300 ease-in-out md:w-[15rem] md:h-[10rem]  sm:h-[5rem] sm:w-[6rem]"
-                          loading="lazy"
-                          alt="Product"
-                        />
-                      </div>
-                    ))
-                )}
-              </div>
-
-              <div className=" SUB-DETAILS md:hidden  bg-[#E3E2E2] md:h-[30%]  sm:flex md:flex-row sm:flex-col sm:items-center sm:align-middle md:gap-5 ">
-                <div className=" bg-[#E3E2E2] justify-center align-middle items-center  left-0 flex md:gap-4 sm:gap-1 sm:h-[1.2rem]">
-                  <div className="QUANTITY  bg-white h-full md:w-[62%] sm:w-[90%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 ">
-                    <FaMinus
-                      className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150"
-                      onClick={() =>
-                        handleQuantityChange(
-                          product._id,
-                          Math.max(1, product.unit - 1)
-                        )
-                      }
-                    />
-                    <input
-                      defaultValue={1}
-                      value={product.unit}
-                      className="w-[50%] text-center sm:h-[100%] "
-                      onChange={(e) =>
-                        handleQuantityChange(
-                          product._id,
-                          parseInt(e.target.value, 10) || 1
-                        )
-                      }
-                      // Optional: keep value in sync if user types
-                    />
-                    <FaPlus
-                      className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150 "
-                      onClick={() =>
-                        handleQuantityChange(
-                          product._id,
-                          Math.max(1, product.unit + 1)
-                        )
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="DETAILS bg-[#E3E2E2] w-full h-auto sm:w-[100%]  md:w-[70%] md:h-[70%] lg:w-[40%] lg:h-[80%] flex flex-col  justify-between items-stretch sm:gap-2 md:gap-1.5 sm:gap- ">
-              <span className="NAME font-bold md:text-xl sm:text-xs">
-                {product.name}
-              </span>
-              <span className="DESCRIPTION md:flex sm:hidden text-[#746E6E] font-medium text-md">
-                {(() => {
-                  const description = product.description;
-                  return description.length > 20
-                    ? description.slice(0, 100) + "..."
-                    : description;
-                })()}
-              </span>
-              <div className=" SUB-DETAILS bg-[#E3E2E2] md:h-[30%] sm:-[20%] md:flex-row sm:flex-col md:items-center md:align-middle md:gap-5  flex justify-between">
-                <div className="flex md:gap-3 md:flex-row sm:flex-col bg-[#E3E2E2]">
-                  <span className="COLOR  text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px]  font-medium ">
-                    Color:
-                    <span className="font-semibold ml-1 text-black">Black</span>
-                  </span>
-                  <span className="SIZE text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px]   ">
-                    Size:
-                    <span className="font-semibold ml-1 text-black">45</span>
-                  </span>
-                </div>
-                <div className="bg-[#E3E2E2]   left-0 flex md:gap-4 sm:gap-1 sm:left-0">
-                  <div className="QUANTITY sm:hidden md:flex  bg-white h-full md:w-[52%] sm:w-[70%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 sm:px-1.5">
-                    <FaMinus
-                      className="md:text-[1.5rem] transform active:scale-95 active:shadow-lg transition duration-150"
-                      onClick={() => decrement()}
-                    />
-                    <input
-                      defaultValue={1}
-                      value={qty}
-                      className="w-[50%] text-center h-[1.8rem]"
-                      onChange={(e) =>
-                        setQty(parseInt(e.target.value, 10) || 1)
-                      } // Optional: keep value in sync if user types
-                    />
-                    <FaPlus
-                      className="md:text-[1.5rem] transform active:scale-95 active:shadow-lg transition duration-150 "
-                      onClick={() => increment()}
-                    />
-                  </div>
-                  <div className="flex md:mt-0 sm:mt-2 sm:gap-2 ">
-                    <div className="DELETE bg-white drop-shadow-lg  shadow-md rounded-md md:p-1.5 sm:p-[.2rem] justify-center align-middle m-auto  items-center transform active:scale-95 active:shadow-lg transition duration-150">
-                      <RiDeleteBin6Line className=" md:text-[1rem] sm:text-[.8rem]" />
-                    </div>
-                    <div
-                      className="LIKE bg-white drop-shadow-lg shadow-md rounded-full md:p-1.5 sm:p-[.2rem] justify-center align-middle  items-center transform active:scale-75 active:shadow-lg transition duration-150"
-                      onClick={() => setLiked(!liked)}
-                    >
-                      <FaHeart
-                        className={`md:text-[1rem] sm:text-[.8rem] ${
-                          liked ? "text-[#992D2D]" : "text-gray-600"
-                        }`}
+          <div className=" flex flex-col gap-1">
+            <div>
+              {!product.images || product.images.length === 0 ? (
+                <div className="IMAGE skeleton md:px-2 object-contain transition-transform flex justify-center align-middle items-center duration-300 ease-in-out md:w-[17rem] md:h-[12rem]  sm:h-[5rem] sm:w-[6rem] bg-black/10"></div>
+              ) : (
+                product.images
+                  ?.flatMap((imageObj) =>
+                    imageObj.imageSet.map((img) => ({
+                      ...img,
+                      src: img.data
+                        ? `data:${img.contentType};base64,${img.data}`
+                        : null, // Create base64 image source
+                    }))
+                  )
+                  .filter((image) => image.src) // Keep only images with a valid `src`
+                  .slice(0, 1) // Take the first valid image
+                  .map((image, index) => (
+                    <div key={index} className="rounded-lg p-3 bg-white">
+                      <img
+                        src={image.src}
+                        className="md:px-2 object-contain transition-transform flex justify-center align-middle items-center duration-300 ease-in-out md:w-[15rem] md:h-[10rem]  sm:h-[5rem] sm:w-[6rem]"
+                        loading="lazy"
+                        alt="Product"
                       />
                     </div>
+                  ))
+              )}
+            </div>
+
+            <div className=" SUB-DETAILS md:hidden  bg-[#E3E2E2] md:h-[30%]  sm:flex md:flex-row sm:flex-col sm:items-center sm:align-middle md:gap-5 ">
+              <div className=" bg-[#E3E2E2] justify-center align-middle items-center  left-0 flex md:gap-4 sm:gap-1 sm:h-[1.2rem]">
+                <div className="QUANTITY  bg-white h-full md:w-[62%] sm:w-[90%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 ">
+                  <FaMinus
+                    className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150"
+                    onClick={() =>
+                      handleQuantityChange(
+                        product._id,
+                        Math.max(1, product.unit - 1)
+                      )
+                    }
+                  />
+                  <input
+                    defaultValue={1}
+                    value={product.unit}
+                    className="w-[50%] text-center sm:h-[100%] "
+                    onChange={(e) =>
+                      handleQuantityChange(
+                        product._id,
+                        parseInt(e.target.value, 10) || 1
+                      )
+                    }
+                    // Optional: keep value in sync if user types
+                  />
+                  <FaPlus
+                    className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150 "
+                    onClick={() =>
+                      handleQuantityChange(
+                        product._id,
+                        Math.max(1, product.unit + 1)
+                      )
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="DETAILS bg-[#E3E2E2] w-full h-auto sm:w-[100%]  md:w-[70%] md:h-[70%] lg:w-[40%] lg:h-[80%] flex flex-col  justify-between items-stretch sm:gap-2 md:gap-1.5 sm:gap- ">
+            <span className="NAME font-bold md:text-xl sm:text-xs">
+              {product.name}
+            </span>
+            <span className="DESCRIPTION md:flex sm:hidden text-[#746E6E] font-medium text-md">
+              {(() => {
+                const description = product.description;
+                return description.length > 20
+                  ? description.slice(0, 100) + "..."
+                  : description;
+              })()}
+            </span>
+            <div className=" SUB-DETAILS bg-[#E3E2E2] md:h-[30%] sm:-[20%] md:flex-row sm:flex-col md:items-center md:align-middle md:gap-5  flex justify-between">
+              <div className="flex md:gap-3 md:flex-row sm:flex-col bg-[#E3E2E2]">
+                {product.color && (
+                  <span className="COLOR  text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px]  font-medium ">
+                    Color:
+                    <span className="font-semibold ml-1 text-black">
+                      <ColorPicker defaultValue={product.color} disabled />
+                    </span>
+                  </span>
+                )}
+                {product.categoryDetails.size ||
+                product.categoryDetails.dimensions ? (
+                  <span className="SIZE text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px]   ">
+                    Size:
+                    <span className="font-semibold ml-1 text-black">
+                      {product.categoryDetails.size ||
+                        product.categoryDetails.dimensions}
+                    </span>
+                  </span>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="bg-[#E3E2E2]   left-0 flex md:gap-4 sm:gap-1 sm:left-0">
+                <div className="QUANTITY sm:hidden md:flex  bg-white h-full md:w-[52%] sm:w-[70%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 sm:px-1.5">
+                  <FaMinus
+                    className="md:text-[1.5rem] transform active:scale-95 active:shadow-lg transition duration-150"
+                    onClick={() => decrement()}
+                  />
+                  <input
+                    defaultValue={1}
+                    value={qty}
+                    className="w-[50%] text-center h-[1.8rem]"
+                    onChange={(e) => setQty(parseInt(e.target.value, 10) || 1)} // Optional: keep value in sync if user types
+                  />
+                  <FaPlus
+                    className="md:text-[1.5rem] transform active:scale-95 active:shadow-lg transition duration-150 "
+                    onClick={() => increment()}
+                  />
+                </div>
+                <div className="flex md:mt-0 sm:mt-2 sm:gap-2 ">
+                  <div
+                    className="DELETE bg-white drop-shadow-lg  shadow-md rounded-md md:p-1.5 sm:p-[.2rem] justify-center align-middle m-auto  items-center transform active:scale-95 active:shadow-lg transition duration-150 "
+                    onClick={() => onDelete(product._id)}
+                  >
+                    <RiDeleteBin6Line className=" md:text-[1rem] sm:text-[.8rem]" />
+                  </div>
+                  <div
+                    className="LIKE bg-white drop-shadow-lg shadow-md rounded-full md:p-1.5 sm:p-[.2rem] justify-center align-middle  items-center transform active:scale-75 active:shadow-lg transition duration-150"
+                    onClick={() => setLiked(!liked)}
+                  >
+                    <FaHeart
+                      className={`md:text-[1rem] sm:text-[.8rem] ${
+                        liked ? "text-[#992D2D]" : "text-gray-600"
+                      }`}
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="PRICE-SECTION bg-[#E3E2E2] h-full md:p-4 flex flex-col justify-center m-auto align-middle items-center">
-            <div className="OFFER flex gap-1 justify-center align-bottom sm:items-center md:items-end">
-              <strike className="text-[#746E6E]  font-medium sm:text-sm md:text-lg ">
-                SR:930/-
-              </strike>
-              <span className="font-bold   md:text-xl text-[#D00000] ">
-                55%
-              </span>
-            </div>
-            <div
-              className="font-bold md:text-2xl
+        </div>
+        <div className="PRICE-SECTION bg-[#E3E2E2] h-full md:p-4 flex flex-col justify-center m-auto align-middle items-center">
+          <div className="OFFER flex gap-1 justify-center align-bottom sm:items-center md:items-end">
+            <strike className="text-[#746E6E]  font-medium sm:text-sm md:text-lg ">
+              SR:930/-
+            </strike>
+            <span className="font-bold   md:text-xl text-[#D00000] ">55%</span>
+          </div>
+          <div
+            className="font-bold md:text-2xl
            
           "
-            >
-              SR:450/-
-            </div>
-
-            <img
-              src={delivery}
-              alt=""
-              className="md:w-[4rem] md:h-[2.rem] sm:w-[3.5rem] sm:h-[1.8rem]"
-            />
+          >
+            SR:450/-
           </div>
+
+          <img
+            src={delivery}
+            alt=""
+            className="md:w-[4rem] md:h-[2.rem] sm:w-[3.5rem] sm:h-[1.8rem]"
+          />
         </div>
-      ))}
+      </div>
     </div>
   );
 };
