@@ -19,6 +19,7 @@ const translateText = async (text, targetLanguage) => {
 };
 
 export const CartCard = ({ product, onDelete, handleQuantityChange }) => {
+  const [sizes, setSizes] = useState(null);
   const [qty, setQty] = useState(1);
   const increment = () => setQty(qty + 1);
   const decrement = () => setQty(qty > 1 ? qty - 1 : 1);
@@ -194,14 +195,15 @@ export const CartCard = ({ product, onDelete, handleQuantityChange }) => {
             <span className="NAME font-bold md:text-xl sm:text-xs">
               {product.name}
             </span>
-            <span className="DESCRIPTION md:flex sm:hidden text-[#746E6E] font-medium text-md">
-              {(() => {
-                const description = product.description;
-                return description.length > 20
-                  ? description.slice(0, 100) + "..."
-                  : description;
-              })()}
+            <span className="DESCRIPTION md:flex sm:h-[2rem]  text-[#746E6E] font-medium md:text-md sm:text-xs ">
+              {product.description.length > (window.innerWidth < 768 ? 50 : 100)
+                ? product.description.slice(
+                    0,
+                    window.innerWidth < 768 ? 50 : 100
+                  ) + "..."
+                : product.description}
             </span>
+            <span>{}</span>
             <div className=" SUB-DETAILS bg-[#E3E2E2] md:h-[30%] sm:-[20%] md:flex-row sm:flex-col md:items-center md:align-middle md:gap-5  flex justify-between">
               <div className="flex md:gap-3 md:flex-row sm:flex-col bg-[#E3E2E2]">
                 {product.color && (
@@ -211,18 +213,6 @@ export const CartCard = ({ product, onDelete, handleQuantityChange }) => {
                       <ColorPicker defaultValue={product.color} disabled />
                     </span>
                   </span>
-                )}
-                {product.categoryDetails.size ||
-                product.categoryDetails.dimensions ? (
-                  <span className="SIZE text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px]   ">
-                    Size:
-                    <span className="font-semibold ml-1 text-black">
-                      {product.categoryDetails.size ||
-                        product.categoryDetails.dimensions}
-                    </span>
-                  </span>
-                ) : (
-                  ""
                 )}
               </div>
               <div className="bg-[#E3E2E2]   left-0 flex md:gap-4 sm:gap-1 sm:left-0">
@@ -267,7 +257,11 @@ export const CartCard = ({ product, onDelete, handleQuantityChange }) => {
         <div className="PRICE-SECTION bg-[#E3E2E2] h-full md:p-4 flex flex-col justify-center m-auto align-middle items-center">
           <div className="OFFER flex gap-1 justify-center align-bottom sm:items-center md:items-end">
             <strike className="text-[#746E6E]  font-medium sm:text-sm md:text-lg ">
-              SR:930/-
+              SR:
+              {Math.round(
+                product.price + (product.price * product.offer) / 100
+              )}
+              /-
             </strike>
             <span className="font-bold   md:text-xl text-[#D00000] ">55%</span>
           </div>
@@ -276,7 +270,7 @@ export const CartCard = ({ product, onDelete, handleQuantityChange }) => {
            
           "
           >
-            SR:450/-
+            SR: {product.price}/-
           </div>
 
           <img

@@ -185,7 +185,7 @@ const CreateProducts = () => {
     ],
     Footwears: [
       { key: "brand", value: "" },
-      { key: "size", value: "" },
+      { key: "size", value: "".split(",").map((s) => s.trim()) },
       { key: "material", value: "" },
       { key: "type", value: "" },
       { key: "sole type", value: "" },
@@ -193,7 +193,7 @@ const CreateProducts = () => {
     ],
     "Ladies Footwear": [
       { key: "brand", value: "" },
-      { key: "size", value: "" },
+      { key: "size", value: "".split(",").map((s) => s.trim()) },
       { key: "material", value: "" },
       { key: "type", value: "" },
       { key: "heel height", value: "" },
@@ -201,7 +201,7 @@ const CreateProducts = () => {
     ],
     "Gents Footwear": [
       { key: "brand", value: "" },
-      { key: "size", value: "" },
+      { key: "size", value: "".split(",").map((s) => s.trim()) },
       { key: "material", value: "" },
       { key: "type", value: "" },
       { key: "sole material", value: "" },
@@ -209,7 +209,7 @@ const CreateProducts = () => {
     ],
     Garments: [
       { key: "brand", value: "" },
-      { key: "size", value: "" },
+      { key: "size", value: "".split(",").map((s) => s.trim()) },
       { key: "fabric", value: "" },
       { key: "type", value: "" },
       { key: "care instructions", value: "" },
@@ -217,7 +217,7 @@ const CreateProducts = () => {
     ],
     "Ladies Collection": [
       { key: "brand", value: "" },
-      { key: "size", value: "" },
+      { key: "size", value: "".split(",").map((s) => s.trim()) },
       { key: "fabric", value: "" },
       { key: "type", value: "" },
       { key: "pattern", value: "" },
@@ -225,7 +225,7 @@ const CreateProducts = () => {
     ],
     "Gents Collection": [
       { key: "brand", value: "" },
-      { key: "size", value: "" },
+      { key: "size", value: "".split(",").map((s) => s.trim()) },
       { key: "fabric", value: "" },
       { key: "type", value: "" },
       { key: "style", value: "" },
@@ -233,7 +233,7 @@ const CreateProducts = () => {
     ],
     "Kids Collection": [
       { key: "brand", value: "" },
-      { key: "size", value: "" },
+      { key: "size", value: "".split(",").map((s) => s.trim()) },
       { key: "fabric", value: "" },
       { key: "type", value: "" },
       { key: "care instructions", value: "" },
