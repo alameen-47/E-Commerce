@@ -11,11 +11,13 @@ const CartProvider = ({ children }) => {
   }, []);
 
   const addToCart = (item) => {
-    const updatedCart = [...cart, ...item];
+    const existingCart = JSON.parse(localStorage.getItem("CART")) || [];
+    const updatedCart = [...existingCart, ...item];
     setCart(updatedCart);
     localStorage.setItem("CART", JSON.stringify(updatedCart));
     toast.success("Item Added to cart");
   };
+
 
   return (
     <CartContext.Provider value={[cart, setCart, addToCart]}>

@@ -44,6 +44,17 @@ export const CartPage = () => {
   // handleQuantityChange();
   useEffect(() => {
     fetchCart();
+
+    const interval = setInterval(() => {
+      const stored = JSON.parse(localStorage.getItem("CART"));
+      setProducts((prev) => {
+        if (JSON.stringify(prev) !== JSON.stringify(stored)) {
+          return stored;
+        }
+        return prev;
+      });
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
   const cartTotal = () => {
     return products.reduce((total, product) => {
