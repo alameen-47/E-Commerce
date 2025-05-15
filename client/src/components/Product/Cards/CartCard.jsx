@@ -108,8 +108,8 @@ export const CartCard = ({
 
   return (
     <div>
-      <div className="PRODUCT-CARD-CONTAINER  bg-[#E3E2E2]  w-[100%] md:h-[20%] sm:h-[9rem] rounded-lg flex flex-row  justify-between sm:px-1 my-2">
-        <div className="CARD-CONTENT rounded-lg bg-[#E3E2E2] w-auto p-2 flex flex-row  gap-2">
+      <div className="PRODUCT-CARD-CONTAINER  bg-[white] border-2 border-black/10 w-[100%] md:h-[20%] sm:h-[9rem] rounded-lg flex flex-row  justify-between sm:px-1 my-2">
+        <div className="CARD-CONTENT rounded-lg bg-[white] w-auto p-2 flex flex-row  gap-2">
           {/* <Checkbox className="border border-gray-300 p-2 rounded" /> */}
           <div className="absolute">
             <label className=" relative flex ">
@@ -156,9 +156,9 @@ export const CartCard = ({
               )}
             </div>
 
-            <div className=" QUANTITY FOR SMALL SCREEN md:hidden  bg-[#E3E2E2] md:h-[30%]  sm:flex md:flex-row sm:flex-col sm:items-center sm:align-middle md:gap-5 ">
-              <div className=" bg-[#E3E2E2] justify-center align-middle items-center  left-0 flex md:gap-4 sm:gap-1 sm:h-[1.2rem]">
-                <div className="QUANTITY  bg-white h-full md:w-[62%] sm:w-[90%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 ">
+            <div className=" QUANTITY FOR SMALL SCREEN md:hidden  bg-[white] md:h-[30%]  sm:flex md:flex-row sm:flex-col sm:items-center sm:align-middle md:gap-5 ">
+              <div className=" bg-green-300 border-1 border-black justify-center align-middle items-center  left-0 flex md:gap-4 sm:gap-1 sm:h-[1.2rem]">
+                <div className="QUANTITY  bg-white shadow-2xl border-1 border-black h-full md:w-[62%] sm:w-[90%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 ">
                   {product._id && (
                     <FaMinus
                       className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150"
@@ -181,7 +181,7 @@ export const CartCard = ({
             </div>
           </div>
 
-          <div className="DETAILS bg-[#E3E2E2] w-full h-auto sm:w-[100%]  md:w-[70%] md:h-[70%] lg:w-[40%] lg:h-[80%] flex flex-col  justify-between items-stretch sm:gap-2 md:gap-1.5 sm:gap- ">
+          <div className="DETAILS bg-[white] w-full h-auto sm:w-[100%]  md:w-[70%] md:h-[70%] lg:w-[40%] lg:h-[80%] flex flex-col  justify-between items-stretch sm:gap-2 md:gap-1.5 sm:gap- ">
             <span className="NAME font-bold md:text-xl sm:text-xs">
               {product.name}
             </span>
@@ -195,8 +195,8 @@ export const CartCard = ({
                 : product.description}
             </span>
             <span>{}</span>
-            <div className=" SUB-DETAILS bg-[#E3E2E2] md:h-[30%] sm:-[20%] md:flex-row sm:flex-col md:items-center md:align-middle md:gap-5  flex justify-between">
-              <div className="flex md:gap-3 md:flex-row sm:flex-col bg-[#E3E2E2]">
+            <div className=" SUB-DETAILS bg-[white] md:h-[30%] sm:-[20%] md:flex-row sm:flex-col md:items-center md:align-middle md:gap-5  flex justify-between">
+              <div className="flex md:gap-3 md:flex-row sm:flex-col bg-[white]">
                 {product.color && (
                   <span className="COLOR  text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px]  font-medium ">
                     Color:
@@ -206,7 +206,7 @@ export const CartCard = ({
                   </span>
                 )}
               </div>
-              <div className="bg-[#E3E2E2]   left-0 flex md:gap-4 sm:gap-1 sm:left-0">
+              <div className="bg-[white]   left-0 flex md:gap-4 sm:gap-1 sm:left-0">
                 <div className=" LIKE AND DELETE FOR SMALL SCREEN sm:hidden md:flex  bg-white h-full md:w-[52%] sm:w-[70%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 sm:px-1.5 border-2 border-black/25">
                   {product._id && (
                     <FaMinus
@@ -246,7 +246,7 @@ export const CartCard = ({
             </div>
           </div>
         </div>
-        <div className="PRICE-SECTION bg-[#E3E2E2] h-full md:p-4 flex flex-col justify-center m-auto align-middle items-center">
+        <div className="PRICE-SECTION bg-[white] h-full md:p-4 flex flex-col justify-center m-auto align-middle items-center">
           <div className="OFFER flex gap-1 justify-center align-bottom sm:items-center md:items-end">
             <strike className="text-[#746E6E]  font-medium sm:text-sm md:text-lg ">
               SR:

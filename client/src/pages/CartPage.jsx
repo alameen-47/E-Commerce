@@ -9,7 +9,6 @@ export const CartPage = () => {
   const orderSummaryRef = useRef(null);
   const [products, setProducts] = useState([]);
   const [checkedItems, setCheckedItems] = useState({}); // { productId: true/false }
-
   const fetchCart = () => {
     const cartProducts = localStorage.getItem("CART");
     if (cartProducts) {
@@ -58,9 +57,24 @@ export const CartPage = () => {
   }, []);
   const cartTotal = () => {
     return products.reduce((total, product) => {
-      return total + product.price * (product.units || 1), 0;
-    });
+      if (checkedItems[product._id]) {
+        return total + product.price * (product.units || 1);
+      }
+      return total;
+    }, 0);
   };
+  const cartDiscount = () => {
+    return products.reduce((total, product) => {
+      if (checkedItems[product._id]) {
+        const discounted = Math.round(
+          product.price + (product.price * product.offer) / 100
+        );
+        return total + discounted;
+      }
+      return total;
+    }, 0);
+  };
+
   const handleScroll = () => {
     if (orderSummaryRef.current) {
       orderSummaryRef.current.scrollIntoView({
@@ -79,7 +93,7 @@ export const CartPage = () => {
   useEffect(() => {
     const initialChecked = {};
     products.forEach((item) => {
-      initialChecked[item._id] = false;
+      initialChecked[item._id] = true;
     });
     setCheckedItems(initialChecked);
   }, [products]);
@@ -92,12 +106,19 @@ export const CartPage = () => {
     });
     setCheckedItems(newState);
   };
+
   return (
     <Layout>
       <div className="flex  w-auto p-3 md:flex-row gap-3 sm:flex-col">
-        <div className="LEFT md:w-[70%] rounded-lg p-4  bg-[#EFEEEE]/70">
+        <div
+          className="LEFT md:w-[70%] rounded-lg p-4  bg-[#EFEEEE]/70"
+          style={{
+            background:
+              "linear-gradient(185deg, #F5F7FA, #E4E7EB, #BDC3C7, #2C3E50)",
+          }}
+        >
           <div className="HEADING  font-semibold text-2xl flex flex-row justify-between  align-middle items-center mb-3">
-            <span className="mb-0 ">Shopping Cart (5)</span>
+            <span className="mb-0 ">Shopping Cart ({products.length})</span>
             <div className="mb-0 text-sm flex  justify-center align-middle items-center gap-2">
               <input
                 type="checkbox"
@@ -133,9 +154,13 @@ export const CartPage = () => {
         <div
           ref={orderSummaryRef}
           className="RIGHT
- rounded-lg bg-[#EFEEEE]/70 p-4 flex flex-col gap-3 checkout-section  sticky top-4"
+          rounded-lg  p-4 flex flex-col gap-3 checkout-section  sticky top-4"
+          style={{
+            background:
+              "linear-gradient(135deg, #F5F7FA, #E4E7EB, #BDC3C7, #2C3E50)",
+          }}
         >
-          <div className="sticky top-0 z-10">
+          <div className="sticky top-0 z-10 ">
             <span className="mb-0 font-semibold text-xl">Order Summary</span>
             <div className="PROMO_CODE w-full flex flex-col sticky gap-3 ">
               <span className="text-sm font-semibold">Promo Code :</span>
@@ -163,11 +188,13 @@ export const CartPage = () => {
                 <div className=" text-[#746E6E] font-medium flex flex-col gap-2">
                   <div className="flex justify-between">
                     <span className="font-semibold ml-1 text-black">
-                      Subtotal for (2) Items :
+                      Subtotal for (
+                      {Object.values(checkedItems).filter(Boolean).length})
+                      Items :
                     </span>
 
                     <span className="font-semibold ml-1 text-black">
-                      SR:1,300/-
+                      SR:{cartTotal()}/-
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -176,7 +203,7 @@ export const CartPage = () => {
                     </span>
 
                     <span className="font-semibold ml-1 text-[#992D2D]">
-                      -SR:900/-
+                      -SR:{cartDiscount()}/-
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -186,7 +213,7 @@ export const CartPage = () => {
 
                     <div className="gap-2 flex flex-row">
                       <strike className="font-semibold text-[#808080]">
-                        SR:15/-
+                        SR:150/-
                       </strike>
                       <span className="font-semibold text-black">FREE</span>
                     </div>
@@ -200,8 +227,10 @@ export const CartPage = () => {
                   style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)" }}
                 >
                   🎉 Big Win! You’re snagging a (SR:
-                  <span className="text-[1rem] text-[#992D2D]">900/-</span>)
-                  discount on this order!
+                  <span className="text-[1rem] text-[#992D2D]">
+                    {cartDiscount()}/-
+                  </span>
+                  ) discount on this order!
                 </p>
               </div>
               <>
@@ -210,14 +239,14 @@ export const CartPage = () => {
                     Total Amount :
                   </span>
                   <span className="font-bold ml-1 text-lg text-black">
-                    SR:1,300/-
+                    SR:{cartTotal()}/-
                   </span>
                 </div>
               </>
               <button className="CHECKOUT_BUTTON rounded-md bg-black text-white font-bold text-lg p-2 shadow-sm drop-shadow-md transform active:scale-95 sm:hidden md:flex text-center justify-center active:shadow-lg transition duration-150 sm:sticky  sm:bottom-12 sm:left-0 sm:right-0 md:relative sm:mb-1   md:bottom-auto md:left-auto md:right-auto w-[100%]">
                 CHECKOUT{" "}
                 <span className="!font-medium sm:visible md:hidden">
-                  (SR:1,300/-)
+                  (SR:{cartTotal()}/-)
                 </span>
               </button>
             </div>
@@ -226,7 +255,7 @@ export const CartPage = () => {
         <button className=" border-2 border-white CHECKOUT_BUTTON md:hidden rounded-md bg-black text-white font-bold text-lg my-2 p-2 shadow-sm drop-shadow-md transform active:scale-95 active:shadow-lg transition duration-150 sm:sticky  sm:bottom-[3.5rem] sm:left-0 sm:right-0 md:relative sm:my-4   md:bottom-auto md:left-auto md:right-auto w-">
           CHECKOUT{" "}
           <span className="!font-medium sm:visible md:hidden">
-            (SR:1,300/-)
+            (SR:{cartTotal()}/-)
           </span>
         </button>
       </div>
