@@ -18,19 +18,22 @@ const translateText = async (text, targetLanguage) => {
   return data.translatedText;
 };
 
-export const CartCard = ({ product, onDelete, handleQuantityChange }) => {
+export const CartCard = ({
+  isChecked,
+  onCheck,
+  product,
+  onDelete,
+  handleQuantityChange,
+  onToggle,
+}) => {
   const [sizes, setSizes] = useState(null);
-  const [qty, setQty] = useState(1);
-  const increment = () => setQty(qty + 1);
-  const decrement = () => setQty(qty > 1 ? qty - 1 : 1);
-  const [isChecked, setIsChecked] = useState(false);
-  const [checkedProducts, setCheckedProducts] = useState({});
-  const [active, setActive] = useState(true);
+  // const [isChecked, setIsChecked] = useState(false);
   const [liked, setLiked] = useState(false);
   const { i18n } = useTranslation();
-  const [updatedImages, setUpdatedImages] = useState([]);
-  const [images, setImages] = useState([]);
   const [translatedProduct, setTranslatedProduct] = useState(product);
+
+  console.log(product, " ^^^^^^ PRDUCT INSIDE CARD");
+
   // Function to translate all string fields and update image paths
   // const getProduct = async (products) => {
   //   if (!products) {
@@ -113,7 +116,7 @@ export const CartCard = ({ product, onDelete, handleQuantityChange }) => {
               <input
                 type="checkbox"
                 checked={isChecked}
-                onChange={() => setIsChecked(!isChecked)}
+                onChange={onToggle}
                 className=" appearance-none h-5 w-5 bg-[white] rounded-tl-md rounded-br-md border border-[#808080] checked:bg-white"
               />
               {isChecked && (
@@ -153,38 +156,25 @@ export const CartCard = ({ product, onDelete, handleQuantityChange }) => {
               )}
             </div>
 
-            <div className=" SUB-DETAILS md:hidden  bg-[#E3E2E2] md:h-[30%]  sm:flex md:flex-row sm:flex-col sm:items-center sm:align-middle md:gap-5 ">
+            <div className=" QUANTITY FOR SMALL SCREEN md:hidden  bg-[#E3E2E2] md:h-[30%]  sm:flex md:flex-row sm:flex-col sm:items-center sm:align-middle md:gap-5 ">
               <div className=" bg-[#E3E2E2] justify-center align-middle items-center  left-0 flex md:gap-4 sm:gap-1 sm:h-[1.2rem]">
                 <div className="QUANTITY  bg-white h-full md:w-[62%] sm:w-[90%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 ">
-                  <FaMinus
-                    className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150"
-                    onClick={() =>
-                      handleQuantityChange(
-                        product._id,
-                        Math.max(1, product.unit - 1)
-                      )
-                    }
-                  />
+                  {product._id && (
+                    <FaMinus
+                      className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150"
+                      onClick={() => handleQuantityChange(product._id, -1)}
+                    />
+                  )}
                   <input
                     defaultValue={1}
-                    value={product.unit}
+                    value={product.units}
                     className="w-[50%] text-center sm:h-[100%] "
-                    onChange={(e) =>
-                      handleQuantityChange(
-                        product._id,
-                        parseInt(e.target.value, 10) || 1
-                      )
-                    }
+
                     // Optional: keep value in sync if user types
                   />
                   <FaPlus
                     className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150 "
-                    onClick={() =>
-                      handleQuantityChange(
-                        product._id,
-                        Math.max(1, product.unit + 1)
-                      )
-                    }
+                    onClick={() => handleQuantityChange(product._id, +1)}
                   />
                 </div>
               </div>
@@ -216,20 +206,21 @@ export const CartCard = ({ product, onDelete, handleQuantityChange }) => {
                 )}
               </div>
               <div className="bg-[#E3E2E2]   left-0 flex md:gap-4 sm:gap-1 sm:left-0">
-                <div className="QUANTITY sm:hidden md:flex  bg-white h-full md:w-[52%] sm:w-[70%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 sm:px-1.5">
-                  <FaMinus
-                    className="md:text-[1.5rem] transform active:scale-95 active:shadow-lg transition duration-150"
-                    onClick={() => decrement()}
-                  />
+                <div className=" LIKE AND DELETE FOR SMALL SCREEN sm:hidden md:flex  bg-white h-full md:w-[52%] sm:w-[70%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 sm:px-1.5 border-2 border-black/25">
+                  {product._id && (
+                    <FaMinus
+                      className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150"
+                      onClick={() => handleQuantityChange(product._id, -1)}
+                    />
+                  )}
                   <input
                     defaultValue={1}
-                    value={qty}
+                    value={product.units}
                     className="w-[50%] text-center h-[1.8rem]"
-                    onChange={(e) => setQty(parseInt(e.target.value, 10) || 1)} // Optional: keep value in sync if user types
                   />
                   <FaPlus
                     className="md:text-[1.5rem] transform active:scale-95 active:shadow-lg transition duration-150 "
-                    onClick={() => increment()}
+                    onClick={() => handleQuantityChange(product._id, +1)}
                   />
                 </div>
                 <div className="flex md:mt-0 sm:mt-2 sm:gap-2 ">
@@ -244,7 +235,7 @@ export const CartCard = ({ product, onDelete, handleQuantityChange }) => {
                     onClick={() => setLiked(!liked)}
                   >
                     <FaHeart
-                      className={`md:text-[1rem] sm:text-[.8rem] ${
+                      className={`md:text-[1rem] sm:text-[.8rem] bottom-0 ${
                         liked ? "text-[#992D2D]" : "text-gray-600"
                       }`}
                     />
@@ -267,10 +258,9 @@ export const CartCard = ({ product, onDelete, handleQuantityChange }) => {
           </div>
           <div
             className="font-bold md:text-2xl
-           
           "
           >
-            SR: {product.price}/-
+            SR: {product.price * product.units}/-
           </div>
 
           <img

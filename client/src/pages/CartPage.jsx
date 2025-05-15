@@ -3,10 +3,12 @@ import Layout from "../components/Layout/Layout";
 import { Checkbox, Image, Input } from "antd";
 import { CartCard } from "../components/Product/Cards/CartCard.jsx";
 import { ProductHistory } from "../components/ProductHistory.jsx";
+import { preconnect } from "react-dom";
 
 export const CartPage = () => {
   const orderSummaryRef = useRef(null);
   const [products, setProducts] = useState([]);
+  const [checkedItems, setCheckedItems] = useState({}); // { productId: true/false }
 
   const fetchCart = () => {
     const cartProducts = localStorage.getItem("CART");
@@ -18,21 +20,36 @@ export const CartPage = () => {
     }
   };
   const handleDelete = (_id) => {
-    setProducts((prevProducts) => prevProducts.filter((p) => p._id !== _id));
+    setProducts((prevProduct) => {
+      const updatedProduct = prevProduct.filter((p) => p._id !== _id);
+      localStorage.setItem("CART", JSON.stringify(updatedProduct));
+      return updatedProduct;
+    });
   };
 
-  const handleQuantityChange = (_id, newQuantity) => {
-    setProducts((prevCart) =>
-      prevCart.map((product) =>
-        product._id === _id ? { ...product, quantity: newQuantity } : product
-      )
-    );
+  const handleQuantityChange = (_id, change) => {
+    setProducts((prev) => {
+      const newCart = prev.map((item) => {
+        if (item._id === _id) {
+          let unit = (item.units || 1) + change;
+          return { ...item, units: unit < 1 ? 1 : unit };
+        }
+        return item;
+      });
+      console.log(newCart, "newCart -==-==-= INSIDE CARD");
+      localStorage.setItem("CART", JSON.stringify(newCart));
+      return newCart;
+    });
   };
+  // handleQuantityChange();
   useEffect(() => {
-    handleQuantityChange();
     fetchCart();
   }, []);
-
+  const cartTotal = () => {
+    return products.reduce((total, product) => {
+      return total + product.price * (product.units || 1), 0;
+    });
+  };
   const handleScroll = () => {
     if (orderSummaryRef.current) {
       orderSummaryRef.current.scrollIntoView({
@@ -41,6 +58,29 @@ export const CartPage = () => {
       });
     }
   };
+  const handleCheck = (productId) => {
+    setCheckedItems((prev) => ({
+      ...prev,
+      [productId]: !prev[productId],
+    }));
+  };
+
+  useEffect(() => {
+    const initialChecked = {};
+    products.forEach((item) => {
+      initialChecked[item._id] = false;
+    });
+    setCheckedItems(initialChecked);
+  }, [products]);
+
+  const isAllSelected = Object.values(checkedItems).every(Boolean);
+  const handleSelectAll = () => {
+    const newState = {};
+    products.forEach((item) => {
+      newState[item._id] = !isAllSelected;
+    });
+    setCheckedItems(newState);
+  };
   return (
     <Layout>
       <div className="flex  w-auto p-3 md:flex-row gap-3 sm:flex-col">
@@ -48,7 +88,13 @@ export const CartPage = () => {
           <div className="HEADING  font-semibold text-2xl flex flex-row justify-between  align-middle items-center mb-3">
             <span className="mb-0 ">Shopping Cart (5)</span>
             <div className="mb-0 text-sm flex  justify-center align-middle items-center gap-2">
-              <input type="checkbox" className="w-5 h-4" />
+              <input
+                type="checkbox"
+                value={""}
+                checked={isAllSelected}
+                onChange={handleSelectAll}
+                className="w-5 h-4"
+              />
               <div>Select All</div>
             </div>
           </div>
@@ -59,6 +105,15 @@ export const CartPage = () => {
                     key={product._id}
                     product={product}
                     onDelete={handleDelete}
+                    isChecked={!!checkedItems[product._id]}
+                    onCheck={() => handleCheck(product._id)}
+                    onToggle={() =>
+                      setCheckedItems((prev) => ({
+                        ...prev,
+                        [product._id]: !prev[product._id],
+                      }))
+                    }
+                    handleQuantityChange={handleQuantityChange}
                   />
                 </div>
               ))
