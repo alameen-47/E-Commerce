@@ -157,8 +157,8 @@ export const CartCard = ({
             </div>
 
             <div className=" QUANTITY FOR SMALL SCREEN md:hidden  bg-[white] md:h-[30%]  sm:flex md:flex-row sm:flex-col sm:items-center sm:align-middle md:gap-5 ">
-              <div className=" bg-green-300 border-1 border-black justify-center align-middle items-center  left-0 flex md:gap-4 sm:gap-1 sm:h-[1.2rem]">
-                <div className="QUANTITY  bg-white shadow-2xl border-1 border-black h-full md:w-[62%] sm:w-[90%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 ">
+              <div className="  border-1 border-black justify-center align-middle items-center  left-0 flex md:gap-4 sm:gap-1 sm:h-[1.2rem]">
+                <div className="QUANTITY  bg-white shadow-2xl border-1 border-black h-full md:w-[62%] sm:w-[90%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 active:shadow-lg  ">
                   {product._id && (
                     <FaMinus
                       className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150"
@@ -232,7 +232,7 @@ export const CartCard = ({
                     <RiDeleteBin6Line className=" md:text-[1rem] sm:text-[.8rem]" />
                   </div>
                   <div
-                    className="LIKE bg-white drop-shadow-lg shadow-md rounded-full md:p-1.5 sm:p-[.2rem] justify-center align-middle  items-center transform active:scale-75 active:shadow-lg transition duration-150"
+                    className="LIKE bg-white drop-shadow-lg shadow-md rounded-full md:p-2  sm:p-[.2rem] justify-center align-middle  items-center transform active:scale-75 active:shadow-lg transition duration-150 flex "
                     onClick={() => setLiked(!liked)}
                   >
                     <FaHeart
@@ -255,7 +255,9 @@ export const CartCard = ({
               )}
               /-
             </strike>
-            <span className="font-bold   md:text-xl text-[#D00000] ">55%</span>
+            <span className="font-bold   md:text-xl text-[#D00000] ">
+              {product.offer}%
+            </span>
           </div>
           <div
             className="font-bold md:text-2xl

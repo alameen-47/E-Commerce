@@ -18,6 +18,7 @@ export const CartPage = () => {
       setProducts([]);
     }
   };
+
   const handleDelete = (_id) => {
     setProducts((prevProduct) => {
       const updatedProduct = prevProduct.filter((p) => p._id !== _id);
@@ -243,21 +244,26 @@ export const CartPage = () => {
                   </span>
                 </div>
               </>
-              <button className="CHECKOUT_BUTTON rounded-md bg-black text-white font-bold text-lg p-2 shadow-sm drop-shadow-md transform active:scale-95 sm:hidden md:flex text-center justify-center active:shadow-lg transition duration-150 sm:sticky  sm:bottom-12 sm:left-0 sm:right-0 md:relative sm:mb-1   md:bottom-auto md:left-auto md:right-auto w-[100%]">
-                CHECKOUT{" "}
-                <span className="!font-medium sm:visible md:hidden">
-                  (SR:{cartTotal()}/-)
-                </span>
-              </button>
+
+              <>
+                <button className="CHECKOUT_BUTTON rounded-md bg-black text-white font-bold text-lg p-2 shadow-sm drop-shadow-md transform active:scale-95 sm:hidden md:flex text-center justify-center active:shadow-lg transition duration-150 sm:sticky  sm:bottom-12 sm:left-0 sm:right-0 md:relative sm:mb-1   md:bottom-auto md:left-auto md:right-auto w-[100%]">
+                  CHECKOUT{" "}
+                  <span className="!font-medium sm:visible md:hidden">
+                    (SR:{cartTotal()}/-)
+                  </span>
+                </button>
+              </>
             </div>
           </div>
         </div>
-        <button className=" border-2 border-white CHECKOUT_BUTTON md:hidden rounded-md bg-black text-white font-bold text-lg my-2 p-2 shadow-sm drop-shadow-md transform active:scale-95 active:shadow-lg transition duration-150 sm:sticky  sm:bottom-[3.5rem] sm:left-0 sm:right-0 md:relative sm:my-4   md:bottom-auto md:left-auto md:right-auto w-">
-          CHECKOUT{" "}
-          <span className="!font-medium sm:visible md:hidden">
-            (SR:{cartTotal()}/-)
-          </span>
-        </button>
+        {Object.values(checkedItems).some((value) => value === true) && (
+          <button className=" border-2 border-white CHECKOUT_BUTTON md:hidden rounded-md bg-black text-white font-bold text-lg my-2 p-2 shadow-sm drop-shadow-md transform active:scale-95 active:shadow-lg transition duration-150 sm:sticky  sm:bottom-[3.5rem] sm:left-0 sm:right-0 md:relative sm:my-4   md:bottom-auto md:left-auto md:right-auto w-">
+            CHECKOUT{" "}
+            <span className="!font-medium sm:visible md:hidden">
+              (SR:{cartTotal()}/-)
+            </span>
+          </button>
+        )}
       </div>
       <ProductHistory />
     </Layout>
