@@ -4,15 +4,44 @@ const orderSchema = new mongoose.Schema(
   {
     products: [
       {
-        type: mongoose.ObjectId,
-        ref: "Products",
+        product: {
+          type: mongoose.ObjectId,
+          ref: "Products",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
       },
     ],
-    payment: {},
     buyer: {
       type: mongoose.ObjectId,
       ref: "users",
+      required: true,
     },
+    shippingAddress: {
+      address: { type: String, required: true },
+      city: { type: String, required: true },
+      postalCode: { type: String, required: true },
+      country: { type: String, required: true },
+    },
+    payment: {
+      method: {
+        type: string,
+      },
+      paymentResult: {
+        id: String,
+        status: String,
+        update_time: String,
+        email_address: String,
+      },
+    },
+
     status: {
       type: String,
       default: "Not Processed",
@@ -24,6 +53,7 @@ const orderSchema = new mongoose.Schema(
         "Cancelled",
       ],
     },
+    deliveredAt: Date,
   },
   { timestamps: true }
 );

@@ -285,38 +285,6 @@ export const getSingleProductController = async (req, res) => {
   }
 };
 
-// export const productImageController = async (req, res) => {
-
-//   //get image
-//   try {
-//     const { pid, index } = req.params;
-//     // Find the product by ID and select the image field
-//     const product = await productModel.findById(req.params.pid).select("image");
-
-//     if (product && product.image.length > 0) {
-//       // Send each image in the response
-//       // Assuming that `product.image` is an array of image objects
-//       const image = product.image[0]; // Select the first image (modify if necessary)
-
-//       res.setHeader("Content-Type", image.contentType);
-//       return res.status(200).send(image.data); // Send the image data directly
-//     } else {
-//       return res.status(404).send({
-//         success: false,
-//         message: "No images found for this product",
-//       });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send({
-//       success: false,
-//       message: "Error while getting image",
-//       error,
-//     });
-//   }
-// };
-//Delete Controller
-
 export const deleteProductController = async (req, res) => {
   try {
     await productModel.findByIdAndDelete(req.params.pid);
@@ -1082,3 +1050,12 @@ export const braintreePaymentsController = async (req, res) => {
     console.log(error);
   }
 };
+
+// export const OrderController = async (req,res) => {
+// try {
+//   const slug= req.params.slug|| req.body.slug
+//   const productId=req.params.slug||
+// } catch (error) {
+  
+// }
+// };
