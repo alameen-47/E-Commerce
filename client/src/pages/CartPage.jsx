@@ -11,15 +11,16 @@ export const CartPage = () => {
   const navigate = useNavigate();
   const orderSummaryRef = useRef(null);
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [checkedItems, setCheckedItems] = useState({}); // { productId: true/false }
   const fetchCart = () => {
     setLoading(false);
     const cartProducts = localStorage.getItem("CART");
     if (cartProducts) {
       const cartArray = JSON.parse(cartProducts);
-      setProducts(cartArray);
       setLoading(true);
+
+      setProducts(cartArray);
     } else {
       setProducts([]);
       setLoading(false);
@@ -126,17 +127,17 @@ export const CartPage = () => {
   return (
     <>
       <Layout>
-        {!loading ? (
+        {loading && products && products.length <= 0 ? (
           <div className="flex flex-col items-center justify-center text-center py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-white to-grey-300 rounded-2xl shadow-md">
             <img
               src={emptyCart} // Use a relevant image path
               alt="Empty Cart"
-              className="w-52  h-auto mb-6"
+              className="w-52  h-auto mb-6 animate-pulse duration-700"
             />
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
+            <h2 className="md:text-3xl sm:text-2xl font-bold text-gray-800 mb-4">
               Your cart is feeling lonely!
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 mb-8">
+            <p className="text-lg md:text-xl text-gray-600 mb-8">
               Looks like you haven’t added anything yet. Let’s fix that.
             </p>
             <Link to="/">
