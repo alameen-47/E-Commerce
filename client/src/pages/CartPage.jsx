@@ -31,13 +31,13 @@ export const CartPage = () => {
       const orderPayload = {
         products: selectedItems.map((item) => ({
           product: item._id,
-          quantity: item._units,
+          units: item.units,
           price: item.price,
         })),
         shippingAddress: {
           address: "Balele",
           city: "balele",
-          poastalCode: "571219",
+          postalCode: "571219",
           country: "India",
         },
         payment: {
