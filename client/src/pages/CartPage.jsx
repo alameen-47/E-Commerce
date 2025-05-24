@@ -83,7 +83,7 @@ export const CartPage = () => {
           const discounted = Math.round(
             product.price + (product.price * product.offer) / 100
           );
-          return total + discounted;
+          return total + discounted * product.units;
         }
         return total;
       }, 0)
@@ -157,8 +157,7 @@ export const CartPage = () => {
             >
               <div className="HEADING  font-semibold text-2xl flex flex-row justify-between  align-middle items-center mb-3">
                 <span className="mb-0 ">
-                  Shopping Cart
-                  {products && products?.length}
+                  Shopping Cart ( {products && products?.length} )
                 </span>
                 <div className="mb-0 text-sm flex  justify-center align-middle items-center gap-2">
                   <input

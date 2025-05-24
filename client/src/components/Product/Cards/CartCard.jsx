@@ -263,7 +263,7 @@ export const CartCard = ({
             className="font-bold md:text-2xl
           "
           >
-            SR: {product.price * product.units}/-
+            SR: {product.price}/-
           </div>
 
           <img
