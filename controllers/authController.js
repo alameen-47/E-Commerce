@@ -283,45 +283,6 @@ export const verifyOtpController = async (req, res) => {
   }
 };
 
-// //update profile
-// export const updateProfileController = async (req, res) => {
-//   try {
-//     const { name, email, password, address, phone, zipCode } = req.body;
-//     const user = await userModel.findById(req.user._id);
-//     //password
-//     if (!password || password.length < 6) {
-//       return res.status(400).json({
-//         error: "Password is required and length should be 6 character",
-//       });
-//     }
-//     const hashedPassword = password ? await hashPassword(password) : undefined;
-//     const updatedUser = await userModel.findByIdAndUpdate(
-//       req.user._id,
-//       {
-//         name: name || user.name,
-//         password: hashedPassword || user.password,
-//         phone: phone || user.phone,
-//         email: email || user.email,
-//         address: address || user.address,
-//         zipCode: zipCode || user.zipCode,
-//       },
-//       { new: true }
-//     );
-//     res.status(201).send({
-//       success: true,
-//       message: t("Profile Updated Succesfully"),
-//       updatedUser,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send({
-//       success: false,
-//       message: t("Failed to Update Profile"),
-//       error,
-//     });
-//   }
-// };
-
 //orders
 export const getOrdersController = async (req, res) => {
   try {

@@ -6,6 +6,7 @@ import { ProductHistory } from "../components/ProductHistory.jsx";
 import { preconnect } from "react-dom";
 import emptyCart from "../assets/icons/empty-cart.png";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const CartPage = () => {
   const navigate = useNavigate();
@@ -13,6 +14,51 @@ export const CartPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [checkedItems, setCheckedItems] = useState({}); // { productId: true/false }
+
+  const checkout = async () => {
+    try {
+      const selectedProductIds = Object.keys(checkedItems).filter(
+        (id) => checkedItems[id] === true
+      );
+      const selectedItems = products.filter((item) =>
+        selectedProductIds.includes(item._id)
+      );
+      if (selectedItems.length === 0) {
+        alert("Please select products to Checkout");
+        return;
+      }
+
+      const orderPayload = {
+        products: selectedItems.map((item) => ({
+          product: item._id,
+          quantity: item._units,
+          price: item.price,
+        })),
+        shippingAddress: {
+          address: "Balele",
+          city: "balele",
+          poastalCode: "571219",
+          country: "India",
+        },
+        payment: {
+          method: "COD", // or Stripe/PayPal if implemented
+        },
+      };
+
+      const { data } = await axios.post(
+        "/api/v1/orders/create-order",
+        orderPayload
+      );
+
+      alert("Order placed successfully!");
+
+      console.log(data);
+    } catch (error) {
+      console.error("Checkout Error: ", error.response?.data || error.message);
+      alert("Checkout failed");
+    }
+  };
+
   const fetchCart = () => {
     setLoading(false);
     const cartProducts = localStorage.getItem("CART");
@@ -290,7 +336,10 @@ export const CartPage = () => {
                     </>
 
                     <>
-                      <button className="CHECKOUT_BUTTON rounded-md bg-black text-white font-bold text-lg p-2 shadow-sm drop-shadow-md transform active:scale-95 sm:hidden md:flex text-center justify-center active:shadow-lg transition duration-150 sm:sticky  sm:bottom-12 sm:left-0 sm:right-0 md:relative sm:mb-1   md:bottom-auto md:left-auto md:right-auto w-[100%]">
+                      <button
+                        className="CHECKOUT_BUTTON rounded-md bg-black text-white font-bold text-lg p-2 shadow-sm drop-shadow-md transform active:scale-95 sm:hidden md:flex text-center justify-center active:shadow-lg transition duration-150 sm:sticky  sm:bottom-12 sm:left-0 sm:right-0 md:relative sm:mb-1   md:bottom-auto md:left-auto md:right-auto w-[100%]"
+                        onClick={checkout}
+                      >
                         CHECKOUT{" "}
                         <span className="!font-medium sm:visible md:hidden">
                           (SR:{cartTotal()}/-)
@@ -302,7 +351,10 @@ export const CartPage = () => {
               )}
             </div>
             {Object.values(checkedItems).some((value) => value === true) && (
-              <button className=" border-2 border-white CHECKOUT_BUTTON md:hidden rounded-md bg-black text-white font-bold text-lg my-2 p-2 shadow-sm drop-shadow-md transform active:scale-95 active:shadow-lg transition duration-150 sm:sticky  sm:bottom-[3.5rem] sm:left-0 sm:right-0 md:relative sm:my-4   md:bottom-auto md:left-auto md:right-auto w-">
+              <button
+                className=" border-2 border-white CHECKOUT_BUTTON md:hidden rounded-md bg-black text-white font-bold text-lg my-2 p-2 shadow-sm drop-shadow-md transform active:scale-95 active:shadow-lg transition duration-150 sm:sticky  sm:bottom-[3.5rem] sm:left-0 sm:right-0 md:relative sm:my-4   md:bottom-auto md:left-auto md:right-auto"
+                onClick={checkout}
+              >
                 CHECKOUT{" "}
                 <span className="!font-medium sm:visible md:hidden">
                   (SR:{cartTotal()}/-)

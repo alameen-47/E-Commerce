@@ -130,7 +130,7 @@ export const CartCard = ({
           <div className=" flex flex-col gap-1">
             <div>
               {!product?.images || product.images.length === 0 ? (
-                <div className="IMAGE skeleton md:px-2 object-contain transition-transform flex justify-center align-middle items-center duration-300 ease-in-out md:w-[17rem] md:h-[12rem]  sm:h-[5rem] sm:w-[6rem] bg-black/10"></div>
+                <div className="IMAGE skeleton md:px-2 object-contain rounded-xl transition-transform flex justify-center align-middle items-center duration-300 ease-in-out md:w-[17rem] md:h-[12rem]  sm:h-[5rem] sm:w-[6rem] bg-black/10"></div>
               ) : (
                 product.images
                   ?.flatMap((imageObj) =>
