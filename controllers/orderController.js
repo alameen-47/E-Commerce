@@ -23,6 +23,7 @@ export const createOrderController = async (req, res) => {
 
 export const getUserOrderController = async (req, res) => {
   try {
+    console.log("User ID:", req.user);
     const orders = await orderModel
       .find({ buyer: req.user._id })
       .populate("products.product", "name price images")
@@ -45,7 +46,7 @@ export const getUserOrderController = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to fetch order",
-      error,
+      error: error.message,
     });
   }
 };

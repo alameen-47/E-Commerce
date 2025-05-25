@@ -12,6 +12,6 @@ const router = express.Router();
 router.post("/create-order", requireSignIn, createOrderController);
 
 // GET ALL ADMIN ORDER ROUTE
-router.post("/get-order", requireSignIn, getUserOrderController);
+router.get("/get-order", requireSignIn, getUserOrderController);
 
 export default router;
