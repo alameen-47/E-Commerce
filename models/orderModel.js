@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { type } from "os";
 
 const orderSchema = new mongoose.Schema(
   {
@@ -11,11 +12,18 @@ const orderSchema = new mongoose.Schema(
         },
         units: {
           type: Number,
+          default: 1,
           required: true,
         },
         price: {
           type: Number,
           required: true,
+        },
+        size: {
+          type: String,
+        },
+        color: {
+          type: String,
         },
       },
     ],

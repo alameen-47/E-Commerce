@@ -1,5 +1,5 @@
 import React from "react";
-import orderModel from "../models/orderModel.js";
+import orderModel from "../\models/orderModel.js";
 
 export const createOrderController = async (req, res) => {
   try {
@@ -19,4 +19,12 @@ export const createOrderController = async (req, res) => {
     console.error("Error creating order:", error); // 👈 Add this
     res.status(500).json({ error: "Error Creating Order" });
   }
+};
+
+export const getOrderController = async (req, res) => {
+  try {
+    const order = await orderModel
+      .find({ buyer: req.user._id })
+      .populate("p");
+  } catch (error) {}
 };

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { type } from "os";
 
 // Define translation schema for multi-language support
 const translationSchema = new mongoose.Schema({
@@ -108,6 +109,10 @@ const productSchema = new mongoose.Schema(
       default: false,
     },
     combo: {
+      type: Boolean,
+      default: false,
+    },
+    outOfStock: {
       type: Boolean,
       default: false,
     },

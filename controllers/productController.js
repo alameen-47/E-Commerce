@@ -175,7 +175,6 @@ export const getAllProductController = async (req, res) => {
     const products = await productModel
       .find({})
       .populate("category")
-      // .select("-image")
       .sort({ createdAt: -1 });
 
     if (products && products.length > 0) {
@@ -1056,6 +1055,6 @@ export const braintreePaymentsController = async (req, res) => {
 //   const slug= req.params.slug|| req.body.slug
 //   const productId=req.params.slug||
 // } catch (error) {
-  
+
 // }
 // };
