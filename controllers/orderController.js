@@ -1,5 +1,5 @@
 import React from "react";
-import orderModel from "../\models/orderModel.js";
+import orderModel from "../models/orderModel.js";
 
 export const createOrderController = async (req, res) => {
   try {
@@ -21,10 +21,51 @@ export const createOrderController = async (req, res) => {
   }
 };
 
-export const getOrderController = async (req, res) => {
+export const getUserOrderController = async (req, res) => {
   try {
-    const order = await orderModel
+    const orders = await orderModel
       .find({ buyer: req.user._id })
-      .populate("p");
-  } catch (error) {}
+      .populate("products.product", "name price images")
+      .sort({ createdAt: -1 });
+
+    if (!orders) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found or not authorized",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "User orders fetched successfully",
+      orders,
+    });
+  } catch (error) {
+    console.error("Error fetching user order: ", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch order",
+      error,
+    });
+  }
+};
+
+export const getAllOrdersController = async (req, res) => {
+  try {
+    const orders = await orderModel
+      .find({})
+      .populate("products.product", "name price")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      message: "All orders fetched successfully",
+      orders,
+    });
+  } catch (error) {
+    console.error("Error fetching all orders: ", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to fetch all orders", error });
+  }
 };

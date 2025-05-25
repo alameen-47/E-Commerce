@@ -15,24 +15,21 @@ import returned from "../../../../src/assets/icons/Return.png";
 import approved from "../../../../src/assets/icons/Approval.png";
 import orderPlaced from "../../../../src/assets/icons/Ordered.png";
 const Orders = () => {
-  const storedCart = JSON.parse(localStorage.getItem("CART")) || [];
-  const [cart, setCart] = useState(storedCart);
+  // const storedCart = JSON.parse(localStorage.getItem("CART")) || [];
+  // const [cart, setCart] = useState(storedCart);
   const [orders, setOrders] = useState([]);
   const [auth, setAuth] = useAuth("");
+
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("/api/v1/auth/orders");
-      setOrders(data);
+      const { data } = await axios.get("/api/v1/orders/get-order");
+      console.log(data, "DATAAAAAAAAAAAAAAAAAAAAA");
+      setOrders(data.orders);
     } catch (error) {
       console.log(error);
     }
   };
-
-  //total price
-  // const totalcheckoutPrice = () => {
-  //   const totalcheckout = 0;
-  //   return (totalcheckout += units.price * units.units + 10);
-  // };
+  console.log(")))))))))))", orders, "((((((((((((");
 
   //cancel order
   const cancelOrder = async (id) => {
@@ -52,8 +49,11 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    if (auth?.token) getOrders();
-  }, [auth?.token]);
+    getOrders();
+  }, []);
+  // useEffect(() => {
+  //   if (auth?.token) getOrders();
+  // }, [auth?.token]);
 
   return (
     <Layout title={"Your Orders"}>
