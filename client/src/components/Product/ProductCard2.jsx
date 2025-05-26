@@ -12,6 +12,7 @@ export const ProductCard2 = ({ product }) => {
       >
         <div className="aspect-h-1 aspect-w-2  overflow-hidden rounded-lg bg-white xl:aspect-h-8 xl:aspect-w-7 justify-center items-center align-middle flex ">
           <ImageCarousel product={product} />
+          console.log(" "+  <ImageCarousel product={product} />);
         </div>
         <h3 className="md:mt-4 sm:mb-1 lg mb-2 text-sm text-gray-900">
           {product.name}
