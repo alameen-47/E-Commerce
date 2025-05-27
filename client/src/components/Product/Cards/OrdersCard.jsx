@@ -6,8 +6,11 @@ import returned from "../../../../src/assets/icons/Return.png";
 import approved from "../../../../src/assets/icons/Approval.png";
 import orderPlaced from "../../../../src/assets/icons/Ordered.png";
 import { ImageCarousel } from "../ImageCarousel";
+import { useNavigate } from "react-router-dom";
 
 const OrdersCard = ({ orders }) => {
+  const navigate = useNavigate();
+
   const statusIcons = {
     placed: orderPlaced,
     approved: approved,
@@ -20,9 +23,12 @@ const OrdersCard = ({ orders }) => {
     <>
       {orders.map((order) => (
         <div key={order._id} className=" CARD-CONTAINER w-[95%] mb-2">
-          <span className="border-3 border-black w-screen h-3"></span>
+          <div className=" h-1 rounded-lg my-2 bg-black/40"></div>
           {order.products.map((item, index) => (
             <div
+              onClick={() =>
+                navigate(`/product/${item?.product.slug}/${item?.product._id}`)
+              }
               key={index}
               className="CARD. bg-[#D9D9D9]  flex  align-middle justify-between  items-center w-full max-h-[12rem] md:min-h-[8rem]  rounded-lg  md:py-4  sm:px-4 md:px-6 gap-2 sm:py-1"
             >

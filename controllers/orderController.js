@@ -26,7 +26,7 @@ export const getUserOrderController = async (req, res) => {
     console.log("User ID:", req.user);
     const orders = await orderModel
       .find({ buyer: req.user._id })
-      .populate("products.product", "name price images")
+      .populate("products.product", "name price images slug category")
       .sort({ createdAt: -1 });
 
     if (!orders) {
