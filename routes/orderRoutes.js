@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createOrderController,
+  getAllOrdersController,
   getUserOrderController,
 } from "../controllers/orderController.js";
 import formidable from "express-formidable";
@@ -14,4 +15,7 @@ router.post("/create-order", requireSignIn, createOrderController);
 // GET ALL ADMIN ORDER ROUTE
 router.get("/get-order", requireSignIn, getUserOrderController);
 
-export default router
+//all orders
+router.get("/all-orders", requireSignIn, isAdmin, getAllOrdersController);
+
+export default router;

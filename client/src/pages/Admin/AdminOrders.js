@@ -20,12 +20,13 @@ const AdminOrders = () => {
   const [auth, setAuth] = useAuth();
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("/api/v1/auth/all-orders");
-      setOrders(data);
+      const { data } = await axios.get("/api/v1/orders/all-orders");
+      setOrders(data.orders);
     } catch (error) {
       console.log(error);
     }
   };
+  console.log("----------", orders, "============");
   useEffect(() => {
     if (auth?.token) getOrders();
   }, [auth?.token]);

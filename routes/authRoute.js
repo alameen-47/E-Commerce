@@ -4,15 +4,12 @@ import {
   loginController,
   forgotPasswordController,
   updateProfileController,
-  getOrdersController,
-  getAllOrdersController,
-  orderStatusController,
-  cancelOrderController,
   verifyOtpController,
   getAllUsers,
   updateAddressController,
 } from "../controllers/authController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authmiddleware.js";
+import { getAllOrdersController } from "../controllers/orderController.js";
 // import translateText from "../services/translateText.js";
 
 //router object
@@ -71,22 +68,6 @@ router.put(
   (req, res) => {
     res.status(200).send({ ok: true });
   }
-);
-//orders
-router.get("/orders", requireSignIn, getOrdersController);
-
-//all orders
-router.get("/all-orders", requireSignIn, isAdmin, getAllOrdersController);
-
-//cancel orders
-router.delete("/orders/cancel/:id", requireSignIn, cancelOrderController);
-
-// orders status update
-router.put(
-  "/orders-status/:orderId",
-  requireSignIn,
-  isAdmin,
-  orderStatusController
 );
 
 export default router;
