@@ -499,9 +499,9 @@ const ProductDetails = () => {
                   filteredImages.map((image, index) => (
                     <div
                       key={index}
-                      className={` carousel-item  relative   h-[20rem] ${
+                      className={` carousel-item  relative   h-auto ${
                         index === currentSlide ? "flex !important" : "hidden"
-                      } object-contain`}
+                      } object-contain justify-center`}
                       style={{ height: "20rem" }} // Explicit height for the container
                     >
                       <Image
@@ -509,7 +509,7 @@ const ProductDetails = () => {
                           mask: null, // Disable overlay mask
                         }}
                         src={`data:${image.contentType};base64,${image.data}`}
-                        className="max-w-[400px]  h-full inline-block object-cover p-6 " // Ensure image scales without overflowing
+                        className="max-w-full  max-h-full  object-contain p-6 " // Ensure image scales without overflowing
                         alt=""
                       />
                     </div>

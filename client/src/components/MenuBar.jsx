@@ -11,7 +11,7 @@ import { FaAddressCard, FaUser } from "react-icons/fa";
 import { RiLogoutBoxRFill } from "react-icons/ri";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
-
+// import { isAdmin } from "../../../middlewares/authmiddleware.js";
 export const MenuBar = () => {
   const [auth, setAuth] = useAuth();
   const handleLogout = () => {
@@ -88,15 +88,17 @@ export const MenuBar = () => {
           <span className="text-[.6rem]">Home</span>
         </button>
       </NavLink>
-      <NavLink
-        to="/dashboard/user/liked-products"
-        className="flex flex-col items-center focus:scale-95  focus:bg-[#D9D9D9]/20  px-2 rounded-lg"
-      >
-        <button>
-          <img className="w-7 h-auto " src={wishlist} alt="" />
-          <span className="text-[.6rem]">Liked</span>
-        </button>
-      </NavLink>
+      {/* {/* {!isAdmin && ( */}
+        <NavLink
+          to="/dashboard/user/liked-products"
+          className="flex flex-col items-center focus:scale-95  focus:bg-[#D9D9D9]/20  px-2 rounded-lg"
+        >
+          <button>
+            <img className="w-7 h-auto " src={wishlist} alt="" />
+            <span className="text-[.6rem]">Liked</span>
+          </button>
+        </NavLink>
+      {/* )} */} 
 
       <Dropdown
         className="flex flex-col items-center focus:scale-95  focus:bg-[#D9D9D9]/20  px-2 rounded-lg"

@@ -40,7 +40,10 @@ export const ProductCarousel = ({ products }) => {
         {/* Use a wrapper div for the carousel items */}
 
         {products.slice(0, visibleProducts).map((p, index) => (
-          <div key={index} className="carousel-item  sm:1/2 md:w-1/5 ">
+          <div
+            key={index}
+            className="carousel-item  sm:1/2 h-auto sm:object-contain md:w-1/5 "
+          >
             <ProductCard1 products={p} />
           </div>
         ))}
