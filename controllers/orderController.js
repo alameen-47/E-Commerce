@@ -71,3 +71,21 @@ export const getAllOrdersController = async (req, res) => {
       .json({ success: false, message: "Failed to fetch all orders", error });
   }
 };
+
+export const updateOrderContoller = async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+  try {
+    const updateOrder = await orderModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    });
+    if (!updateOrder) {
+      return res.status(404).json({ message: "Order not found " });
+    }
+    res.status(200).json(updateOrder);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server Error", error });
+  }
+};

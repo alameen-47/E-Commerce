@@ -35,7 +35,7 @@ const AdminOrders = () => {
 
   const handleChange = async (orderId, value) => {
     try {
-      await axios.put(`/api/v1/auth/orders-status/${orderId}`, {
+      await axios.put(`/api/v1/orders/orders-status/${orderId}`, {
         status: value,
       });
       getOrders();
