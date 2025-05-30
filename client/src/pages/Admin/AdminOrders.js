@@ -15,6 +15,7 @@ const AdminOrders = () => {
     "Shipped",
     "Delivered",
     "Cancelled",
+    "Returned",
   ]);
   const [orders, setOrders] = useState([]);
   const [auth] = useAuth();
@@ -42,20 +43,21 @@ const AdminOrders = () => {
       console.log(error);
     }
   };
+  console.log("{{{{{{{{{{{{{{{{{", orders, "}}}}}}}}}}}}}}}}");
 
   return (
     <Layout title="All Orders">
       <div className="flex lg:flex-row sm:flex-col lg:gap-10">
         <AdminMenu />
 
-        <div className="bg-slate-300 w-full h-screen overflow-y-scroll shadow rounded-lg border px-4 py-6">
-          <h2 className="text-2xl font-bold mb-4">Your Orders</h2>
+        <div className=" w-full h-screen overflow-y-scroll shadow rounded-lg border px-4 py-6">
+          <h2 className="text-2xl font-bold mb-4">All Orders</h2>
 
           {orders?.map((o, i) => (
             <div
               key={o._id}
               tabIndex={0}
-              className="collapse collapse-arrow bg-white border border-base-300 rounded-box mb-4"
+              className="collapse collapse-arrow bg-white border border-base-300 rounded-box mb-4 shadow-xl"
             >
               {/* Order Header */}
               <div className="collapse-title font-medium flex flex-col lg:flex-row justify-between gap-2 text-sm lg:text-base">
@@ -76,11 +78,15 @@ const AdminOrders = () => {
                   </Select>
                 </div>
                 <div>
-                  <strong>Buyer:</strong> {o?.name}
+                  <strong>Buyer:</strong> {o?.buyer.name}
                 </div>
                 <div>
                   <strong>Ordered:</strong> {moment(o?.createdAt).fromNow()}
                 </div>
+              </div>
+
+              {/* Product Details */}
+              <div className="collapse-content text-sm">
                 <div>
                   <strong>Payment:</strong>{" "}
                   {o?.payment?.success ? "Success" : "Failed"}
@@ -88,10 +94,6 @@ const AdminOrders = () => {
                 <div>
                   <strong>Qty:</strong> {o?.products?.length}
                 </div>
-              </div>
-
-              {/* Product Details */}
-              <div className="collapse-content text-sm">
                 {o?.products?.map((units) => {
                   const imageList =
                     units?.product?.images?.flatMap((imageObj) =>
@@ -111,7 +113,7 @@ const AdminOrders = () => {
                   return (
                     <div
                       key={units._id}
-                      className="flex flex-col md:flex-row items-start gap-4 border-b py-4"
+                      className="flex flex-col md:flex-row items-start gap-4 border-b py-4 sm:justify-start sm:"
                     >
                       {imageList
                         .filter((img) => img.src)
@@ -130,11 +132,16 @@ const AdminOrders = () => {
                         ))}
 
                       <div className="flex flex-col">
-                        <h3 className="font-bold text-base">{units.name}</h3>
-                        <p className="text-gray-600 text-sm">
-                          {units.description?.substring(0, 100)}
+                        <p className="font-bold text-base">
+                          Name: {units?.product?.name}
                         </p>
-                        <p className="font-semibold mt-1">SAR: {units.price}</p>
+                        <p className="font-bold text-base">
+                          Size: {units?.product?.size}
+                        </p>
+                        <p className="font-bold text-base">
+                          Color: {units?.product?.color}
+                        </p>
+                        <p className="font-semibold ">SAR: {units.price}</p>
                       </div>
                     </div>
                   );
