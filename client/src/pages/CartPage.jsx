@@ -149,7 +149,7 @@ export const CartPage = () => {
       });
     }
   };
-  
+
   const handleCheck = (productId) => {
     setCheckedItems((prev) => ({
       ...prev,

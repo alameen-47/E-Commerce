@@ -711,7 +711,8 @@ const ProductDetails = () => {
                             ...products,
                             categoryDetails: {
                               ...products.categoryDetails,
-                              size: itemSize, // Include size from state
+                              selectedSize: itemSize, // Include size from state
+                              size: sizes, // Include size from state
                             },
                             color: selectedColor, // Include color from state
                             units: itemQuantity, // Include quantity from state

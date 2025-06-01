@@ -212,24 +212,31 @@ export const CartCard = ({
             <div className=" SUB-DETAILS bg-[white] md:h-[30%] sm:-[20%] md:flex-row sm:flex-col md:items-center md:align-middle md:gap-5  flex justify-between">
               <div className="flex md:gap-3 md:flex-row sm:flex-col bg-[white]">
                 {product.color && (
-                  <span className="COLOR  text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px]  font-medium ">
+                  <div className="text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px] font-medium">
                     Color:
-                    <span className="font-semibold ml-1 text-black">
-                      <ColorPicker defaultValue={product.color} disabled />
+                    <span className="font-semibold ml-1 text-black inline-flex items-center">
+                      <div
+                        className={`w-4 h-4  border-2 rounded-md border-black/50 bg-[${product?.color}] ml-1`}
+                      />
                     </span>
-                  </span>
+                  </div>
                 )}
-              </div>
-              <div>
-                <Select
-                  onClick={(e) => e.stopPropagation()}
-                  // labelInValue
-                  defaultValue={t("productDetails.Select")}
-                  className=" border-1 border-solid "
-                  style={{ border: "#0000" }}
-                  onChange={(value) => +value}
-                  options={sizes}
-                />
+                {product.categoryDetails.selectedSize && (
+                  <div className="text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px] font-medium">
+                    Color:
+                    <span className="font-semibold ml-1 text-black inline-flex items-center">
+                      <Select
+                        onClick={(e) => e.stopPropagation()}
+                        // labelInValue
+                        defaultValue={product.categoryDetails.selectedSize}
+                        className=" border-1 border-solid "
+                        style={{ border: "#0000" }}
+                        onChange={(value) => +value}
+                        options={product.categoryDetails.size}
+                      />
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="bg-[white]   left-0 flex md:gap-4 sm:gap-1 sm:left-0">
                 <div className=" LIKE AND DELETE FOR SMALL SCREEN sm:hidden md:flex  bg-white h-full md:w-[52%] sm:w-[70%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 sm:px-1.5 border-2 border-black/25">
