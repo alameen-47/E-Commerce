@@ -1,7 +1,7 @@
 import React from "react";
 import shipped from "../../../../src/assets/icons/Shipped.png";
 import delivered from "../../../../src/assets/icons/Delivered Box.png";
-import cancel from "../../../../src/assets/icons/Cancel.png";
+import cancelled from "../../../../src/assets/icons/Cancel.png";
 import returned from "../../../../src/assets/icons/Return.png";
 import approved from "../../../../src/assets/icons/Approval.png";
 import orderPlaced from "../../../../src/assets/icons/Ordered.png";
@@ -12,11 +12,11 @@ const OrdersCard = ({ orders }) => {
   const navigate = useNavigate();
 
   const statusIcons = {
-    placed: orderPlaced,
+    orderPlaced: orderPlaced,
     approved: approved,
     shipped: shipped,
     delivered: delivered,
-    cancelled: cancel,
+    cancelled: cancelled,
     returned: returned,
   };
   return (
@@ -106,7 +106,7 @@ const OrdersCard = ({ orders }) => {
                     {order.status}
                   </span>
                   <img
-                    src={statusIcons[order.status] || orderPlaced}
+                    src={statusIcons[order.status]}
                     className="md:w-6 sm:w-3 h-auto "
                     alt=""
                   />

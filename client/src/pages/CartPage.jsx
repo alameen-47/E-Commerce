@@ -51,6 +51,8 @@ export const CartPage = () => {
       );
 
       alert("Order placed successfully!");
+      const removeItems = localStorage.removeItem("CART");
+      setProducts(removeItems);
 
       console.log(data);
     } catch (error) {
