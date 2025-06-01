@@ -65,7 +65,7 @@ const OrdersCard = ({ orders }) => {
                       </div>
                     ))
                 )}
-                <div className="PRODUCT-NAME-DESCRIPTION flex md:pl-5 sm:pl-2 flex-col md:w-[320px] md:max-w-[320px] sm:max-w-[150px]">
+                <div className="PRODUCT-NAME-DESCRIPTION truncate flex md:pl-5 sm:pl-2 flex-col md:w-[320px] md:max-w-[320px] sm:max-w-[150px]">
                   <h1 className="font-semibold mb-0 text-md  lg:text-lg ">
                     {item.product.name}
                   </h1>

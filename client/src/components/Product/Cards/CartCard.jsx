@@ -1,4 +1,4 @@
-import { Checkbox } from "antd";
+import { Checkbox, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaHeart, FaMinus, FaPlus } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -9,6 +9,8 @@ import { useTranslation } from "react-i18next";
 import { ImageCarousel } from "../ImageCarousel";
 import { ColorPicker } from "antd";
 import { Skeleton } from "antd";
+import { useNavigate } from "react-router-dom";
+import { t } from "i18next";
 
 const translateText = async (text, targetLanguage) => {
   const { data } = await axios.post("/api/v1/translate", {
@@ -33,6 +35,8 @@ export const CartCard = ({
   const [translatedProduct, setTranslatedProduct] = useState(product);
 
   console.log(product, " ^^^^^^ PRDUCT INSIDE CARD");
+
+  const navigate = useNavigate();
 
   // Function to translate all string fields and update image paths
   // const getProduct = async (products) => {
@@ -108,7 +112,10 @@ export const CartCard = ({
 
   return (
     <div>
-      <div className="PRODUCT-CARD-CONTAINER  bg-[white] border-2 border-black/10 w-[100%] md:h-[20%] sm:h-[9rem] rounded-lg flex flex-row  justify-between sm:px-1 my-2">
+      <div
+        onClick={() => navigate(`/product/${product?.slug}/${product?._id}`)}
+        className="PRODUCT-CARD-CONTAINER  bg-[white] border-2 border-black/10 w-[100%] md:h-[20%] sm:h-[9rem] rounded-lg flex flex-row  justify-between sm:px-1 my-2"
+      >
         <div className="CARD-CONTENT rounded-lg bg-[white] w-auto p-2 flex flex-row  gap-2">
           {/* <Checkbox className="border border-gray-300 p-2 rounded" /> */}
           <div className="absolute">
@@ -162,7 +169,10 @@ export const CartCard = ({
                   {product._id && (
                     <FaMinus
                       className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150"
-                      onClick={() => handleQuantityChange(product._id, -1)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleQuantityChange(product._id, -1);
+                      }}
                     />
                   )}
                   <input
@@ -174,7 +184,11 @@ export const CartCard = ({
                   />
                   <FaPlus
                     className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150 "
-                    onClick={() => handleQuantityChange(product._id, +1)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      handleQuantityChange(product._id, +1);
+                    }}
                   />
                 </div>
               </div>
@@ -185,12 +199,12 @@ export const CartCard = ({
             <span className="NAME font-bold md:text-xl sm:text-xs">
               {product.name}
             </span>
-            <span className="DESCRIPTION md:flex sm:h-[2rem]  text-[#746E6E] font-medium md:text-md sm:text-xs ">
+            <span className=" DESCRIPTION md:flex sm:h-[2rem]  text-[#746E6E] font-medium md:text-md sm:text-xs ">
               {product?.description &&
-              product.description.length > (window.innerWidth < 768 ? 50 : 100)
+              product.description.length > (window.innerWidth > 750 ? 70 : 100)
                 ? product.description.slice(
                     0,
-                    window.innerWidth < 768 ? 50 : 100
+                    window.innerWidth < 600 ? 40 : 50
                   ) + "..."
                 : product.description}
             </span>
@@ -206,12 +220,27 @@ export const CartCard = ({
                   </span>
                 )}
               </div>
+              <div>
+                <Select
+                  onClick={(e) => e.stopPropagation()}
+                  // labelInValue
+                  defaultValue={t("productDetails.Select")}
+                  className=" border-1 border-solid "
+                  style={{ border: "#0000" }}
+                  onChange={(value) => +value}
+                  options={sizes}
+                />
+              </div>
               <div className="bg-[white]   left-0 flex md:gap-4 sm:gap-1 sm:left-0">
                 <div className=" LIKE AND DELETE FOR SMALL SCREEN sm:hidden md:flex  bg-white h-full md:w-[52%] sm:w-[70%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 sm:px-1.5 border-2 border-black/25">
                   {product._id && (
                     <FaMinus
                       className="md:text-[1.5rem] sm:text-[.8rem] transform active:scale-95 active:shadow-lg transition duration-150"
-                      onClick={() => handleQuantityChange(product._id, -1)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+
+                        handleQuantityChange(product._id, -1);
+                      }}
                     />
                   )}
                   <input
@@ -221,19 +250,31 @@ export const CartCard = ({
                   />
                   <FaPlus
                     className="md:text-[1.5rem] transform active:scale-95 active:shadow-lg transition duration-150 "
-                    onClick={() => handleQuantityChange(product._id, +1)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      handleQuantityChange(product._id, +1);
+                    }}
                   />
                 </div>
                 <div className="flex md:mt-0 sm:mt-2 sm:gap-2 ">
                   <div
                     className="DELETE bg-white drop-shadow-lg  shadow-md rounded-md md:p-1.5 sm:p-[.2rem] justify-center align-middle m-auto  items-center transform active:scale-95 active:shadow-lg transition duration-150 "
-                    onClick={() => onDelete(product._id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      onDelete(product._id);
+                    }}
                   >
                     <RiDeleteBin6Line className=" md:text-[1rem] sm:text-[.8rem]" />
                   </div>
                   <div
                     className="LIKE bg-white drop-shadow-lg shadow-md rounded-full md:p-2  sm:p-[.2rem] justify-center align-middle  items-center transform active:scale-75 active:shadow-lg transition duration-150 flex "
-                    onClick={() => setLiked(!liked)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      setLiked(!liked);
+                    }}
                   >
                     <FaHeart
                       className={`md:text-[1rem] sm:text-[.8rem] bottom-0 ${

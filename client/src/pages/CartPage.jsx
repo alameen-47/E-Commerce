@@ -7,6 +7,7 @@ import { preconnect } from "react-dom";
 import emptyCart from "../assets/icons/empty-cart.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export const CartPage = () => {
   const navigate = useNavigate();
@@ -50,14 +51,14 @@ export const CartPage = () => {
         orderPayload
       );
 
-      alert("Order placed successfully!");
+      toast.success("Order Placed Successfully");
       const removeItems = localStorage.removeItem("CART");
       setProducts(removeItems);
 
       console.log(data);
     } catch (error) {
       console.error("Checkout Error: ", error.response?.data || error.message);
-      alert("Checkout failed");
+      toast.error("Checkout failed");
     }
   };
 
@@ -112,6 +113,7 @@ export const CartPage = () => {
     }, 2000);
     return () => clearInterval(interval);
   }, []);
+
   const cartTotal = () => {
     return (
       products &&
@@ -123,6 +125,7 @@ export const CartPage = () => {
       }, 0)
     );
   };
+
   const cartDiscount = () => {
     return (
       products &&
@@ -146,6 +149,7 @@ export const CartPage = () => {
       });
     }
   };
+  
   const handleCheck = (productId) => {
     setCheckedItems((prev) => ({
       ...prev,
@@ -198,10 +202,10 @@ export const CartPage = () => {
           <div className="flex  w-auto p-3 md:flex-row gap-3 sm:flex-col">
             <div
               className="LEFT md:w-[70%] rounded-lg p-4  bg-[#EFEEEE]/70"
-              style={{
-                background:
-                  "linear-gradient(185deg, #F5F7FA, #E4E7EB, #BDC3C7, #2C3E50)",
-              }}
+              // style={{
+              //   background:
+              //     "linear-gradient(185deg, #F5F7FA, #E4E7EB, #BDC3C7, #2C3E50)",
+              // }}
             >
               <div className="HEADING  font-semibold text-2xl flex flex-row justify-between  align-middle items-center mb-3">
                 <span className="mb-0 ">

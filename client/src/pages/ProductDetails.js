@@ -317,7 +317,9 @@ const ProductDetails = () => {
       return;
     }
   };
-
+  console.log(selectedColor, "??????????");
+  console.log(itemSize, "???999--------9????");
+  console.log(itemQuantity, "?????*********?????");
   return (
     <Layout>
       <div className="md:m-4 sm:mb-3 flex flex-col gap-7">
@@ -707,8 +709,11 @@ const ProductDetails = () => {
                         addToCart([
                           {
                             ...products,
-                            size: itemSize, // Include size from state
-                            color: itemColor, // Include color from state
+                            categoryDetails: {
+                              ...products.categoryDetails,
+                              size: itemSize, // Include size from state
+                            },
+                            color: selectedColor, // Include color from state
                             units: itemQuantity, // Include quantity from state
                           },
                         ]);
