@@ -59,6 +59,7 @@ const ProductDetails = () => {
   const [itemSize, setItemSize] = useState(null);
   const [itemColor, setItemColor] = useState(null);
   const [itemQuantity, setItemQuantity] = useState(1);
+  const [liked, setLiked] = useState(false);
 
   const translateProductFields = async (product) => {
     const translatedProduct = { ...product };
@@ -491,11 +492,20 @@ const ProductDetails = () => {
               </div>
               <div className="IMAGE CAROUSEL FOR SMALL SCREEN bg-white !important text-white carousel  md:hidden  sm:min-h-[15rem]  group m-auto   ">
                 <div
-                  className="absolute bg-gray-200 right-4 mt-4  flex justify-center items-center align-middle p-2 rounded-full drop-shadow-md shadow-md "
-                  onClick={() => handleLike(translatedProduct)}
+                  className="absolute bg-gray-200 right-4 mt-4  flex justify-center items-center align-middle p-2 rounded-full drop-shadow-md shadow-md transform active:scale-110
+ active:shadow-lg transition duration-150 
+"
+                  onClick={() => {
+                    handleLike(translatedProduct);
+                    setLiked(!liked);
+                  }}
                   style={{ zIndex: "9999" }}
                 >
-                  <FaHeart style={{ color: "black" }} />
+                  <FaHeart
+                    className={`md:text-[1rem] sm:text-[.8rem] bottom-0  ${
+                      liked ? "text-[#992D2D]" : "text-gray-800"
+                    }`}
+                  />
                 </div>
                 {filteredImages.length &&
                   filteredImages.map((image, index) => (
@@ -705,10 +715,14 @@ const ProductDetails = () => {
                     <button
                       onClick={(e) => {
                         e.stopPropagation(); // Prevent the parent onClick from firing
-
+                        const selectedImageSet =
+                          products.images.find(
+                            (img) => img.colors === selectedColor
+                          )?.imageSet || [];
                         addToCart([
                           {
                             ...products,
+                            images: selectedImageSet,
                             categoryDetails: {
                               ...products.categoryDetails,
                               selectedSize: itemSize, // Include size from state

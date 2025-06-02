@@ -119,7 +119,13 @@ export const CartCard = ({
         <div className="CARD-CONTENT rounded-lg bg-[white] w-auto p-2 flex flex-row  gap-2">
           {/* <Checkbox className="border border-gray-300 p-2 rounded" /> */}
           <div className="absolute">
-            <label className=" relative flex ">
+            <label
+              className=" relative flex "
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              onMouseDown={(e) => e.stopPropagation()}
+            >
               <input
                 type="checkbox"
                 checked={isChecked}
@@ -136,27 +142,20 @@ export const CartCard = ({
 
           <div className=" flex flex-col gap-1">
             <div>
-              {!product?.images || product.images.length === 0 ? (
+              {!product?.images || product?.images.length === 0 ? (
                 <div className="IMAGE skeleton md:px-2 object-contain rounded-xl transition-transform flex justify-center align-middle items-center duration-300 ease-in-out md:w-[17rem] md:h-[12rem]  sm:h-[5rem] sm:w-[6rem] bg-black/10"></div>
               ) : (
                 product.images
-                  ?.flatMap((imageObj) =>
-                    imageObj.imageSet.map((img) => ({
-                      ...img,
-                      src: img.data
-                        ? `data:${img.contentType};base64,${img.data}`
-                        : null, // Create base64 image source
-                    }))
-                  )
-                  .filter((image) => image.src) // Keep only images with a valid `src`
+                  .filter((image) => image.data) // Keep only images with a valid `src`
                   .slice(0, 1) // Take the first valid image
                   .map((image, index) => (
                     <div key={index} className="rounded-lg p-3 bg-white">
                       <img
-                        src={image.src}
+                        key={index}
+                        src={`data:${image.contentType};base64,${image.data}`}
+                        alt={`product-${index}`}
                         className="md:px-2 object-contain transition-transform flex justify-center align-middle items-center duration-300 ease-in-out md:w-[15rem] md:h-[10rem]  sm:h-[5rem] sm:w-[6rem]"
                         loading="lazy"
-                        alt="Product"
                       />
                     </div>
                   ))
@@ -199,7 +198,7 @@ export const CartCard = ({
             <span className="NAME font-bold md:text-xl sm:text-xs">
               {product.name}
             </span>
-            <span className=" DESCRIPTION md:flex sm:h-[2rem]  text-[#746E6E] font-medium md:text-md sm:text-xs ">
+            <span className=" DESCRIPTION sm:hidden md:flex sm:h-[2rem]  text-[#746E6E] font-medium md:text-md sm:text-xs ">
               {product?.description &&
               product.description.length > (window.innerWidth > 750 ? 70 : 100)
                 ? product.description.slice(
@@ -210,27 +209,31 @@ export const CartCard = ({
             </span>
             <span>{}</span>
             <div className=" SUB-DETAILS bg-[white] md:h-[30%] sm:-[20%] md:flex-row sm:flex-col md:items-center md:align-middle md:gap-5  flex justify-between">
-              <div className="flex md:gap-3 md:flex-row sm:flex-col bg-[white]">
+              <div className="flex md:gap-3 md:flex-row gap-2 sm:flex-col bg-[white]">
                 {product.color && (
-                  <div className="text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px] font-medium">
+                  <div className="text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px] font-medium flex flex-row md:justify-center md:align-middle md:items-center">
                     Color:
                     <span className="font-semibold ml-1 text-black inline-flex items-center">
                       <div
-                        className={`w-4 h-4  border-2 rounded-md border-black/50 bg-[${product?.color}] ml-1`}
+                        style={{ backgroundColor: product.color }}
+                        className={`w-4 h-4  border-2 rounded-md border-black/50  ml-1`}
                       />
                     </span>
                   </div>
                 )}
-                {product.categoryDetails.selectedSize && (
-                  <div className="text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px] font-medium">
-                    Color:
+                {product?.categoryDetails?.selectedSize && (
+                  <div className="text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px] font-medium flex flex-row md:justify-center align-middle items-center">
+                    Size:
                     <span className="font-semibold ml-1 text-black inline-flex items-center">
                       <Select
+                        style={{
+                          fontSize: "16px", // 👈 reduce font size
+                          height: "19px", // optional: tweak height if needed
+                        }}
                         onClick={(e) => e.stopPropagation()}
                         // labelInValue
                         defaultValue={product.categoryDetails.selectedSize}
-                        className=" border-1 border-solid "
-                        style={{ border: "#0000" }}
+                        className=" border-1 border-solid  sm:h-11"
                         onChange={(value) => +value}
                         options={product.categoryDetails.size}
                       />
