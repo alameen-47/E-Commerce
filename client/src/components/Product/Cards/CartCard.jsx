@@ -28,16 +28,33 @@ export const CartCard = ({
   handleQuantityChange,
   onToggle,
 }) => {
-  const [sizes, setSizes] = useState(null);
+  const [sizes, setSizes] = useState("");
   // const [isChecked, setIsChecked] = useState(false);
   const [liked, setLiked] = useState(false);
   const { i18n } = useTranslation();
   const [translatedProduct, setTranslatedProduct] = useState(product);
 
   console.log(product, " ^^^^^^ PRDUCT INSIDE CARD");
+  console.log(sizes, " ^^^^^^--------------");
 
   const navigate = useNavigate();
-
+  useEffect(() => {
+    for (let key in product) {
+      // If the key is 'categoryDetails' (an object), translate both keys and values
+      if (key === "categoryDetails" && typeof product[key] === "object") {
+        // Check if the key is 'size' to extract sizes as an array
+        if (product[key].hasOwnProperty("size")) {
+          let sizeArray = product[key]["size"].split(","); // Assuming sizes are comma-separated
+          // Convert sizes into the desired options format for Ant Design
+          const sizeOptions = sizeArray?.map((size, index) => ({
+            value: size.trim(), // Use size as the value
+            // Label can include the size and a dynamic number
+          }));
+          setSizes(sizeOptions);
+        }
+      }
+    }
+  }, []);
   // Function to translate all string fields and update image paths
   // const getProduct = async (products) => {
   //   if (!products) {
@@ -146,13 +163,14 @@ export const CartCard = ({
                 <div className="IMAGE skeleton md:px-2 object-contain rounded-xl transition-transform flex justify-center align-middle items-center duration-300 ease-in-out md:w-[17rem] md:h-[12rem]  sm:h-[5rem] sm:w-[6rem] bg-black/10"></div>
               ) : (
                 product.images
+
                   .filter((image) => image.data) // Keep only images with a valid `src`
                   .slice(0, 1) // Take the first valid image
                   .map((image, index) => (
                     <div key={index} className="rounded-lg p-3 bg-white">
                       <img
                         key={index}
-                        src={`data:${image.contentType};base64,${image.data}`}
+                        src={`data:${image?.contentType};base64,${image?.data}`}
                         alt={`product-${index}`}
                         className="md:px-2 object-contain transition-transform flex justify-center align-middle items-center duration-300 ease-in-out md:w-[15rem] md:h-[10rem]  sm:h-[5rem] sm:w-[6rem]"
                         loading="lazy"
@@ -161,7 +179,15 @@ export const CartCard = ({
                   ))
               )}
             </div>
-
+            <div>
+              {product?.images?.[0]?.imageSet?.[0] && (
+                <img
+                  className="md:px-2 object-contain transition-transform flex justify-center align-middle items-center duration-300 ease-in-out md:w-[15rem] md:h-[10rem]  sm:h-[5rem] sm:w-[6rem]"
+                  src={`data:${product?.images[0]?.imageSet[0]?.contentType};base64,${product?.images[0]?.imageSet[0]?.data}`}
+                  alt=""
+                />
+              )}
+            </div>
             <div className=" QUANTITY FOR SMALL SCREEN md:hidden  bg-[white] md:h-[30%]  sm:flex md:flex-row sm:flex-col sm:items-center sm:align-middle md:gap-5 ">
               <div className="  border-1 border-black justify-center align-middle items-center  left-0 flex md:gap-4 sm:gap-1 sm:h-[1.2rem]">
                 <div className="QUANTITY  bg-white shadow-2xl border-1 border-black h-full md:w-[62%] sm:w-[90%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 active:shadow-lg  ">
@@ -221,25 +247,28 @@ export const CartCard = ({
                     </span>
                   </div>
                 )}
-                {product?.categoryDetails?.selectedSize && (
-                  <div className="text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px] font-medium flex flex-row md:justify-center align-middle items-center">
-                    Size:
-                    <span className="font-semibold ml-1 text-black inline-flex items-center">
-                      <Select
-                        style={{
-                          fontSize: "16px", // 👈 reduce font size
-                          height: "19px", // optional: tweak height if needed
-                        }}
-                        onClick={(e) => e.stopPropagation()}
-                        // labelInValue
-                        defaultValue={product.categoryDetails.selectedSize}
-                        className=" border-1 border-solid  sm:h-11"
-                        onChange={(value) => +value}
-                        options={product.categoryDetails.size}
-                      />
-                    </span>
-                  </div>
-                )}
+                {product?.categoryDetails?.selectedSize ||
+                  (product?.categoryDetails?.size?.length > 0 && (
+                    <div className="text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px] font-medium flex flex-row md:justify-center align-middle items-center">
+                      Size:
+                      <span className="font-semibold ml-1 text-black inline-flex items-center">
+                        <Select
+                          style={{
+                            fontSize: "16px", // 👈 reduce font size
+                            height: "19px", // optional: tweak height if needed
+                          }}
+                          onClick={(e) => e.stopPropagation()}
+                          // labelInValue
+                          defaultValue={`${
+                            product?.categoryDetails?.selectedSize || "size"
+                          }`}
+                          className=" border-1 border-solid  sm:h-11"
+                          onChange={(value) => +value}
+                          options={sizes}
+                        />
+                      </span>
+                    </div>
+                  ))}
               </div>
               <div className="bg-[white]   left-0 flex md:gap-4 sm:gap-1 sm:left-0">
                 <div className=" LIKE AND DELETE FOR SMALL SCREEN sm:hidden md:flex  bg-white h-full md:w-[52%] sm:w-[70%] rounded-badge  flex flex-row justify-center items-center align-middle md:gap-3 md:px-1.5 sm:px-1.5 border-2 border-black/25">

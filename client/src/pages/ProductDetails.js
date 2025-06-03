@@ -23,6 +23,7 @@ import { ProductCarousel } from "../components/Product/ProductCarousel.jsx";
 import CelebrationBadge from "../components/AnimationEffects/ConfettiEffect.jsx";
 import { Sparkle } from "../components/Product/Sparkle.jsx";
 import { FaHeart } from "react-icons/fa";
+import { size } from "lodash";
 
 // Translation function
 const translateText = async (text, targetLanguage) => {
@@ -60,7 +61,7 @@ const ProductDetails = () => {
   const [itemColor, setItemColor] = useState(null);
   const [itemQuantity, setItemQuantity] = useState(1);
   const [liked, setLiked] = useState(false);
-
+  console.log(sizes, ">>>>>>>>>>>>>>>>>>>>>");
   const translateProductFields = async (product) => {
     const translatedProduct = { ...product };
     // Loop through each key in the product
