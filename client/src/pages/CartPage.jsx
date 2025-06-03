@@ -34,9 +34,7 @@ export const CartPage = () => {
           product: item._id,
           units: item.units,
           price: item.price,
-          // categoryDetails: {
-          //   size: item.categoryDetails.selectedSize,
-          // },
+          size: item.categoryDetails?.selectedSize,
           color: item.color,
         })),
         shippingAddress: {

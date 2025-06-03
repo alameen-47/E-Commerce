@@ -74,11 +74,17 @@ const OrdersCard = ({ orders }) => {
                   </p>
                   <div className="PRODUCT-DETAILS flex flex-col items-start justify-center mt-1 md:hidden sm:gap-1">
                     <p className="text-gray-600 sm:text-xs md:text-sm mb-0">
-                      Size: {item.product.size}
+                      Size: {item?.size}
                     </p>
-                    <p className="text-gray-600 sm:text-xs md:text-sm mb-0">
-                      Color: {item.product.color}
-                    </p>
+                    <div className="text-gray-600 sm:text-xs leading-0 md:text-[14px] font-medium flex flex-row md:justify-center md:align-middle md:items-center">
+                      Color:
+                      <span className="font-semibold ml-1 text-black inline-flex items-center">
+                        <div
+                          style={{ backgroundColor: item.color }}
+                          className={`w-4 h-4  border-2 rounded-md border-black/50  ml-1`}
+                        />
+                      </span>
+                    </div>
                     <p className="text-gray-600 sm:text-xs md:text-sm mb-0">
                       Quantity: {item.units}
                     </p>

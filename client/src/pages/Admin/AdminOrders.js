@@ -78,7 +78,8 @@ const AdminOrders = () => {
                   </Select>
                 </div>
                 <div>
-                  <strong>Buyer:</strong> {o?.buyer.name}
+                  <strong>Buyer:</strong>
+                  {o?.buyer.name ? o?.buyer.name : o?.buyer.email}
                 </div>
                 <div>
                   <strong>Ordered:</strong> {moment(o?.createdAt).fromNow()}
@@ -136,12 +137,18 @@ const AdminOrders = () => {
                           Name: {units?.product?.name}
                         </p>
                         <p className="font-bold text-base">
-                          Size: {units?.product?.size}
+                          Size: {units?.size}
                         </p>
-                        <p className="font-bold text-base">
-                          Color: {units?.product?.color}
-                        </p>
-                        <p className="font-semibold ">SAR: {units.price}</p>
+                        <div className="text-black font-bold text-base flex-row            items-center text-center  flex">
+                          Color:
+                          <div
+                            style={{ backgroundColor: units.color }}
+                            className={`w-4 h-4  border-2 rounded-md border-black/50  ml-1`}
+                          />
+                        </div>
+                        <div className="text-black font-bold text-base flex-row            items-center text-center  flex">
+                          Price: {units.price}
+                        </div>
                       </div>
                     </div>
                   );
