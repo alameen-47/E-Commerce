@@ -254,6 +254,11 @@ export const CartCard = ({
                     </span>
                   </div>
                 )}
+                {product?.categoryDetails?.selectedSize && (
+                  <div className="text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px] font-medium flex flex-row md:justify-center align-middle items-center">
+                    Size:{" "}
+                  </div>
+                )}
                 {product?.categoryDetails?.selectedSize ||
                   (product?.categoryDetails?.size?.length > 0 && (
                     <div className="text-[#746E6E] sm:text-[10px] leading-0 md:text-[14px] font-medium flex flex-row md:justify-center align-middle items-center">
