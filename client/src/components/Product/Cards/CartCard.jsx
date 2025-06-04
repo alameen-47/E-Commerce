@@ -43,18 +43,25 @@ export const CartCard = ({
       // If the key is 'categoryDetails' (an object), translate both keys and values
       if (key === "categoryDetails" && typeof product[key] === "object") {
         // Check if the key is 'size' to extract sizes as an array
-        if (product[key].hasOwnProperty("size")) {
-          let sizeArray = product[key]["size"].split(","); // Assuming sizes are comma-separated
-          // Convert sizes into the desired options format for Ant Design
-          const sizeOptions = sizeArray?.map((size, index) => ({
-            value: size.trim(), // Use size as the value
-            // Label can include the size and a dynamic number
+        const sizeData = product[key]?.size;
+        if (typeof sizeData === "string") {
+          const sizeArray = sizeData.split(",");
+          const sizeOptions = sizeArray.map((size, index) => ({
+            value: size.trim(),
           }));
           setSizes(sizeOptions);
+        } else if (Array.isArray(sizeData)) {
+          const sizeOptions = sizeData.map((size) => ({
+            value: size.trim?.() || size,
+          }));
+          setSizes(sizeOptions);
+        } else {
+          console.warn("Unsupported size format: ", sizeData);
         }
       }
     }
-  }, []);
+  }, [product]);
+
   // Function to translate all string fields and update image paths
   // const getProduct = async (products) => {
   //   if (!products) {
