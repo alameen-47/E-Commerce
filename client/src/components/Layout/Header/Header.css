@@ -22,13 +22,6 @@
   align-items: center;
 }
 
-.rawad-mall_navbar-links img {
-  display: flex;
-  top: 1.25rem;
-  width: 6.25rem;
-  height: 1.25rem;
-}
-
 .rawad-mall_navbar-links_container {
   display: flex;
   flex-direction: row;

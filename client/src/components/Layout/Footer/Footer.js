@@ -43,11 +43,15 @@ const Footer = () => {
       <div className=" flex flex-row flex-wrap justify-center  lg:gap-7 xl:gap-28 md:flex-auto  sm:gap-8 sm:h-94 sm:flex ">
         <div className="mb-6">
           <div className="flex flex-col ">
-            <img
-              src={logo}
-              className="w-24 h-auto mb-4  dark:text-gray-900 sm:h-4"
-              alt="Logo"
-            />
+            <div className="p-0  h-auto">
+              <Link to="/">
+                <img
+                  className="transform active:scale-75 active:shadow-md active:shadow-slate-100 duration-75 object-contain w-32 sm:w-20 md:w-24 h-auto md:pr-4"
+                  src={logo}
+                  alt="RAWAD MALL"
+                />
+              </Link>
+            </div>
             <ul className="space-y-1 text-xs">
               <li>
                 <p>{t("footer.Rawad Mall, Al Sulaymi")}</p>

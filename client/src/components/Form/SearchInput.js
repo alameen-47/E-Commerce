@@ -36,7 +36,7 @@ const SearchInput = () => {
   return (
     <div>
       <form className="d-flex" role="search" onSubmit={handleSubmit}>
-        <div className=" flex px-1 bg-white lg:md:h-11 sm:h-8 sm:lg:px-2 lg:rounded-lg sm:rounded-md rounded-xl ">
+        <div className=" flex px-1 bg-white lg:md:h-11  sm:h-8 sm:lg:px-2 lg:rounded-lg sm:rounded-md rounded-xl ">
           <input
             className=" focus:outline-none rounded-xl bg-white w-10 lg:w-72 sm:w-24 font-semibold sm:text-xs text-xs md:lg:xl:text-base text-black "
             type="search"

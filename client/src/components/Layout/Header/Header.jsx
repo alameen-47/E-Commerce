@@ -61,15 +61,21 @@ function Header() {
 
   return (
     <div>
-      <div className=" rawad-mall_navbar w-full">
-        <div className="rawad-mall_navbar-links p-0 left-0 right-0 sm:gap-2 lg:gap-24">
-          <div className="rawad-mall_navbar-links_logo p-0 w-20 h-14">
-            <img src={logo} alt="RAWAD MALL" />
+      <div className="bg-black h-[10%]  flex flex-row md:justify-center text-center align-middle items-center w-full py-[1%] sm:justify-center sm:gap-[5%]">
+        <div className=" flex flex-row text-center justify-center gap-3">
+          <div className="p-0  h-auto">
+            <Link to="/">
+              <img
+                className="transform active:scale-75 active:shadow-md active:shadow-slate-100 duration-75 object-contain w-32 sm:w-20 md:w-24 h-auto md:pr-4 sm:px-3"
+                src={logo}
+                alt="RAWAD MALL"
+              />
+            </Link>
           </div>
-          <div>
+          <div className="flex justify-center align-middle items-center m-auto">
             <LanguageSwitcher />
           </div>
-          <div className="rawad-mall_navbar-links_container">
+          <div className="rawad-mall_navbar-links_container text-center flex flex-row m-auto justify-center items-center align-middle">
             <Link to="/">
               <p className="hover:text-gray-400 font-bold">
                 {t("header.Home")}
