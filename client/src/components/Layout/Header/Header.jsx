@@ -107,7 +107,10 @@ function Header() {
           <SearchInput />
 
           {!auth.user ? (
-            <button className="inline-flex items-center justify-center w-full p-1 text-sm font-medium text-white bg-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 gap-1  ">
+            <button
+              onClick={() => setDropDown(true)}
+              className="inline-flex items-center justify-center w-full p-1 text-sm font-medium text-white bg-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 gap-1  "
+            >
               <Link to="/register">
                 <img
                   className="sm:w-5 !important"
@@ -118,15 +121,14 @@ function Header() {
             </button>
           ) : (
             <div
-              onClick={() =>
+              onClick={() => {
+                setDropDown(true);
                 navigate(
                   `/dashboard/${
                     auth?.user?.role === 1 ? "admin" : "user/edit-profile"
                   }`
-                )
-              }
-              onMouseEnter={() => setDropDown(true)}
-              // onMouseLeave={() => setDropDown(false)}
+                );
+              }}
               className="dropdown"
             >
               <img
@@ -135,13 +137,7 @@ function Header() {
                 alt="*"
               />
               {dropDown && (
-                <div
-                  onMouseEnter={() => setDropDown(true)}
-                  onMouseLeave={() => setDropDown(false)} // Hide dropdown when not hovered
-                  className="absolute left-0 mt-2 origin-top-left bg-black divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 text-center lg:w-[200px] sm:w-[120px] focus:outline-none z-50 px-3 py-3"
-                >
-                  {auth?.user.name}
-
+                <div className="absolute hidden left-0 mt-2 origin-top-left bg-black divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 text-center lg:w-[200px] sm:w-[120px] focus:outline-none z-50 px-3 py-3">
                   <div className=" flex flex-row py-[7%] ">
                     <NavLink
                       to={`/dashboard/${
@@ -168,9 +164,12 @@ function Header() {
           )}
 
           <NavLink to={"/cart"} key="cart-link">
-            <div className="flex flex-col">
+            <div className="flex flex-col ">
               <img className="mt-3" src={cartimg} alt="cart" />
-              <div className="cart-count"> {cart ? cart.length : 0}</div>
+              <div className="cart-count sm:absolute sm:left-3 md:left-5 md:bottom-5">
+                {" "}
+                {cart ? cart.length : 0}
+              </div>
             </div>
           </NavLink>
         </div>
