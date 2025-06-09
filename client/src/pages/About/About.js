@@ -55,7 +55,7 @@ const About = () => {
           </div>
         </div>
         <div className="THIRD p-3 bg-black flex justify-center align-middle items-center ">
-          <div className=" flex flex-row">
+          <div className=" flex flex-row justify-center align-middle">
             <div className=" flex flex-col  justify-center align-middle ">
               <h1 className="font-extrabold text-white lg:text-4xl">
                 Secure & Private
