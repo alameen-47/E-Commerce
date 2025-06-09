@@ -6,6 +6,8 @@ import cart from "../../assets/icons/icons8-shopping-cart-48.png";
 import truck from "../../assets/icons/delivery_truck.png";
 import secure from "../../assets/icons/secure_data.png";
 import support from "../../assets/icons/customer_support.png";
+import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 const About = () => {
   return (
     <Layout title={"About-Us"}>
@@ -27,13 +29,15 @@ const About = () => {
                 Everything You Need
               </h3>
             </div>
-            <div className="sm:mt-2 md:mt-0 shop-now flex flex-row xl:p-3 p-1  bg-black rounded-lg justify-center  gap-1 lg:w-[50%] w-[80%] cursor-pointer transform active:scale-95 shadow-lg ">
-              <button className="text-white lg:p-1 lg:text-xl sm:text-sm ">
-                SHOP NOW
-              </button>
-              <span className="lg:w-1 w-[2%] bg-white rounded-lg  "></span>
-              <img className="lg:w-[20%] w-[10%]" src={cart} alt="" />
-            </div>
+            <NavLink to={`/`}>
+              <div className="sm:mt-2 md:mt-0 shop-now flex flex-row xl:p-3 p-1  bg-black rounded-lg justify-center  gap-1 lg:w-[50%] w-[80%] cursor-pointer transform active:scale-95 shadow-lg ">
+                <button className="text-white lg:p-1 lg:text-xl sm:text-sm ">
+                  SHOP NOW
+                </button>
+                <span className="lg:w-1 w-[2%] bg-white rounded-lg  "></span>
+                <img className="lg:w-[20%] w-[10%]" src={cart} alt="" />
+              </div>
+            </NavLink>
           </div>
           <div></div>
           <div className="w-screen h-auto">
