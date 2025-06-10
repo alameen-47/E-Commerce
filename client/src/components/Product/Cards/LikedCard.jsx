@@ -74,7 +74,7 @@ export const LikedCard = ({ product, onRemove }) => {
 
   return (
     <>
-      <div className="md:p-3.5 sm:p-3  h-[20rem]  w-full bg-[#D9D9D9] rounded-lg drop-shadow-md shadow-xl">
+      <div className="md:p-3.5 sm:p-3 lg:h-auto sm:h-[20rem]  w-full bg-[#D9D9D9] rounded-lg drop-shadow-md shadow-xl">
         <>
           <div className=" md:h-[60%] sm:h-[] bg-white rounded-lg">
             <ImageCarousel
