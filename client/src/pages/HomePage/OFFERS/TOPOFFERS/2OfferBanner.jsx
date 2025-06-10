@@ -4,7 +4,7 @@ import { Paper, Typography } from "@mui/material";
 
 const items = [
   {
-    name: "Offer 1",
+    name: "SUPER A",
     description: "This is the first offer",
     image:
       "https://i.pinimg.com/736x/65/66/77/65667746c8d6bab69017f26cb6202df7.jpg",
@@ -33,10 +33,10 @@ const OfferBanner2 = () => {
               alt={item.name}
               className="w-full h-32 lg:h-[175px] object-cover"
             />
-            <Typography variant="h4" component="h2">
+            {/* <Typography variant="h4" component="h2">
               {item.name}
-            </Typography>
-            <Typography>{item.description}</Typography>
+            </Typography> */}
+            {/* <Typography>{item.description}</Typography> */}
           </Paper>
         ))}
       </Carousel>

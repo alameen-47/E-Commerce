@@ -33,10 +33,10 @@ const OfferBanner4 = () => {
               alt={item.name}
               className="w-full h-32 lg:h-[350px]  object-cover"
             />
-            <Typography variant="h4" component="h2">
+            {/* <Typography variant="h4" component="h2">
               {item.name}
-            </Typography>
-            <Typography>{item.description}</Typography>
+            </Typography> */}
+            {/* <Typography>{item.description}</Typography> */}
           </Paper>
         ))}
       </Carousel>

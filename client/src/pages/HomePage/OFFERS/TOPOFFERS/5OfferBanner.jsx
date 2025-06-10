@@ -25,19 +25,15 @@ const items = [
 
 const OfferBanner5 = () => {
   return (
-    <div className=" w-full   shadow-2xl  hover:scale-105">
+    <div className="w-full lg:h-[10rem]  shadow-2xl hover:scale-105 overflow-hidden">
       <Carousel animation="fade" interval={2200} indicators={false}>
         {items.map((item, index) => (
           <Paper key={index}>
             <img
               src={item.image}
               alt={item.name}
-              className="w-full h-32 lg:h-[95px] object-fit"
+              className="w-full h-full  object-fit"
             />
-            <Typography variant="h4" component="h2">
-              {item.name}
-            </Typography>
-            <Typography>{item.description}</Typography>
           </Paper>
         ))}
       </Carousel>
