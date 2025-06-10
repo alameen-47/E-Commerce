@@ -169,7 +169,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Map Components */}
+        {/* Map Components
         <div className="w-full flex flex-col sm:flex-row sm:space-x-6 gap-6 sm:gap-0 justify-center">
           <div className="flex-1 min-w-[280px] h-48 sm:h-56">
             <MapComponent
@@ -184,7 +184,7 @@ const Footer = () => {
               locations={locations}
             />
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Footer bottom */}
