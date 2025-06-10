@@ -9,6 +9,7 @@ import wp from "../../../assets/icons/icons8-whatsapp-50.png";
 import { Link } from "react-router-dom";
 import MapComponent from "../../MapComponent";
 import { t } from "i18next";
+
 const Footer = () => {
   const [locations, setLocations] = useState([
     {
@@ -38,72 +39,90 @@ const Footer = () => {
       )
     );
   };
+
   return (
-    <footer className="footer w-full flex flex-col justify-center items-center p-4 divide-y dark:bg-black dark:text-gray-100 2xl:flex 2xl:flex-col 2xl:items-center ">
-      <div className=" flex flex-row flex-wrap justify-center  lg:gap-7 xl:gap-28 md:flex-auto  sm:gap-8 sm:h-94 sm:flex ">
-        <div className="mb-6">
-          <div className="flex flex-col ">
-            <div className="p-0  h-auto">
-              <Link to="/">
-                <img
-                  className="transform active:scale-75 active:shadow-md active:shadow-slate-100 duration-75 object-contain w-32 sm:w-20 md:w-24 h-auto md:pr-4"
-                  src={logo}
-                  alt="RAWAD MALL"
-                />
-              </Link>
-            </div>
-            <ul className="space-y-1 text-xs">
-              <li>
-                <p>{t("footer.Rawad Mall, Al Sulaymi")}</p>
-              </li>
-              <li>
-                <p>+966 546 236 589</p>
-              </li>
-              <li>
-                <p>info@rawadmall.com</p>
-              </li>
-              <li>
-                <p>{t("footer.Visit Our Store")}</p>
-              </li>
-            </ul>
-          </div>
+    <footer className="footer w-full flex flex-col justify-center items-center p-4 divide-y dark:bg-black dark:text-gray-100 2xl:flex 2xl:flex-col 2xl:items-center">
+      <div className="flex flex-wrap justify-center gap-8 lg:gap-12 xl:gap-20 w-full max-w-7xl px-4 md:px-8">
+        {/* Logo & Contact */}
+        <div className="flex flex-col mb-6 w-full sm:w-auto sm:min-w-[200px] md:min-w-[220px]">
+          <Link to="/" className="mb-4 self-start">
+            <img
+              className="object-contain w-32 sm:w-20 md:w-24 h-auto md:pr-4 active:scale-75 active:shadow-md active:shadow-slate-100 duration-75"
+              src={logo}
+              alt="RAWAD MALL"
+            />
+          </Link>
+          <ul className="space-y-1 text-xs">
+            <li>
+              <p>{t("footer.Rawad Mall, Al Sulaymi")}</p>
+            </li>
+            <li>
+              <p>+966 546 236 589</p>
+            </li>
+            <li>
+              <p>info@rawadmall.com</p>
+            </li>
+            <li>
+              <p>{t("footer.Visit Our Store")}</p>
+            </li>
+          </ul>
         </div>
-        <div className="mb-6">
-          <h3 className="text-lg font-bold tracking-wider uppercase dark:text-gray-50">
+
+        {/* Useful Links */}
+        <div className="mb-6 w-40 sm:w-44 md:w-48">
+          <h3 className="text-lg font-bold tracking-wider uppercase dark:text-gray-50 mb-3">
             {t("footer.USEFUL LINKS")}
           </h3>
           <ul className="space-y-1">
             <li>
-              <Link to={""}>{t("footer.Home")}</Link>
+              <Link to={""} className="hover:underline">
+                {t("footer.Home")}
+              </Link>
             </li>
             <li>
-              <Link to={""}>{t("footer.Products")}</Link>
+              <Link to={""} className="hover:underline">
+                {t("footer.Products")}
+              </Link>
             </li>
             <li>
-              <Link to={""}>{t("footer.Categories")}</Link>
+              <Link to={""} className="hover:underline">
+                {t("footer.Categories")}
+              </Link>
             </li>
             <li>
-              <Link to={""}>{t("footer.Contact Us")}</Link>
+              <Link to={""} className="hover:underline">
+                {t("footer.Contact Us")}
+              </Link>
             </li>
           </ul>
         </div>
-        <div className="mb-6">
-          <h3 className="text-lg font-bold tracking-wider uppercase dark:text-gray-50">
+
+        {/* Products */}
+        <div className="mb-6 w-40 sm:w-44 md:w-48">
+          <h3 className="text-lg font-bold tracking-wider uppercase dark:text-gray-50 mb-3">
             {t("footer.Products")}
           </h3>
           <ul className="space-y-1">
             <li>
-              <Link to={""}>{t("footer.Furnitures")}</Link>
+              <Link to={""} className="hover:underline">
+                {t("footer.Furnitures")}
+              </Link>
             </li>
             <li>
-              <Link to={""}>{t("footer.Electronics")}</Link>
+              <Link to={""} className="hover:underline">
+                {t("footer.Electronics")}
+              </Link>
             </li>
             <li>
-              <Link to={""}>{t("footer.Toys")}</Link>
+              <Link to={""} className="hover:underline">
+                {t("footer.Toys")}
+              </Link>
             </li>
           </ul>
         </div>
-        <div>
+
+        {/* Social Media */}
+        <div className="mb-6 w-full sm:w-auto max-w-xs">
           <div className="text-lg font-bold uppercase dark:text-gray-50 mb-2">
             {t("footer.STAY IN TOUCH")}
             <br />
@@ -111,180 +130,68 @@ const Footer = () => {
               {t("footer.Checkout our social media")}
             </span>
           </div>
-          <div className="flex justify-start space-x-3">
+          <div className="flex space-x-4 mt-1">
             <Link title="facebook" className="flex items-center p-1">
               <img
                 src={fb}
-                className="w-5 h-5 fill-current hover:opacity-75"
+                className="w-5 h-5 hover:opacity-75"
                 alt="Facebook"
               />
             </Link>
             <Link title="instagram" className="flex items-center p-1">
               <img
                 src={ig}
-                className="w-5 h-5 fill-current hover:opacity-75"
+                className="w-5 h-5 hover:opacity-75"
                 alt="Instagram"
               />
             </Link>
             <Link title="Whatsapp" className="flex items-center p-1">
               <img
                 src={wp}
-                className="w-5 h-5 fill-current hover:opacity-75"
+                className="w-5 h-5 hover:opacity-75"
                 alt="WhatsApp"
               />
             </Link>
             <Link title="twitterX" className="flex items-center p-1">
               <img
                 src={twitterX}
-                className="w-5 h-5 fill-current hover:opacity-75"
+                className="w-5 h-5 hover:opacity-75"
                 alt="Twitter"
               />
             </Link>
             <Link title="youtube" className="flex items-center p-1">
               <img
                 src={yt}
-                className="w-5 h-5 fill-current hover:opacity-75"
+                className="w-5 h-5 hover:opacity-75"
                 alt="YouTube"
               />
             </Link>
           </div>
         </div>
 
-        {/* <MapComponent
-          onSelectLocation={handleLocationSelect}
-          latitude={26.295750914238287}
-          longitude={41.35964185639376}
-        /> */}
-        <MapComponent
-          onSelectLocation={handleSelectLocation}
-          locations={locations}
-        />
+        {/* Map Components */}
+        <div className="w-full flex flex-col sm:flex-row sm:space-x-6 gap-6 sm:gap-0 justify-center">
+          <div className="flex-1 min-w-[280px] h-48 sm:h-56">
+            <MapComponent
+              onSelectLocation={handleSelectLocation}
+              latitude={26.295750914238287}
+              longitude={41.35964185639376}
+            />
+          </div>
+          <div className="flex-1 min-w-[280px] h-48 sm:h-56">
+            <MapComponent
+              onSelectLocation={handleSelectLocation}
+              locations={locations}
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="py-6 text-sm text-center dark:text-gray-400">
+      {/* Footer bottom */}
+      <div className="py-6 text-sm text-center flex justify-center align-middle items-center dark:text-gray-400 w-full max-w-7xl px-4 md:px-8">
         &copy; 2023 Rawad Co. All rights reserved.
       </div>
     </footer>
-
-    // <footer className="flex flex-wrap  flex-col w-[100dvw]  px-20 divide-y dark:bg-black dark:text-gray-100 ">
-    //   <div className=" flex flex-wrap justify-around py-10 mx-auto space-y-8 md:flex-col lg:flex-row lg:space-y-0">
-    //     <div className=" flex-[1 0 10rem] ml-24 space-y-3 ">
-    //       <div className="pt-2 flex-row items-center justify-center align-middle m-auto">
-    //         <img
-    //           src={logo}
-    //           fill="currentColor"
-    //           className=" dark:text-gray-900"
-    //           alt=""
-    //         />
-    //         <ul className="space-y-1 my-4 text-xs">
-    //           <li>
-    //             <p>Rawad Mall,Al Sulaymi</p>
-    //           </li>
-    //           <li>
-    //             <p>+966 546 236 589</p>
-    //           </li>
-    //           <li>
-    //             <p>info@rawadmall.com</p>
-    //           </li>
-    //           <li>
-    //             <p>Visit Our Store</p>
-    //           </li>
-    //         </ul>
-    //       </div>
-    //     </div>
-    //     <div className=" grid grid-cols-2 text-sm gap-x-3 gap-y-8 lg:w-2/3 sm:grid-cols-3">
-    //       <div className="space-y-3">
-    //         <h3 className="text-lg font-bold tracki uppercase dark:text-gray-50">
-    //           Useful links
-    //         </h3>
-    //         <ul className="space-y-1">
-    //           <li>
-    //             <Link to={""}>Home</Link>
-    //           </li>
-    //           <li>
-    //             <Link to={""}>Products</Link>
-    //           </li>
-    //           <li>
-    //             <Link to={""}>Categories</Link>
-    //           </li>
-    //           <li>
-    //             <Link to={""}>Contact Us</Link>
-    //           </li>
-    //         </ul>
-    //       </div>
-    //       <div className="space-y-3">
-    //         <h3 className="text-lg font-bold tracki uppercase dark:text-gray-50">
-    //           Products
-    //         </h3>
-    //         <ul className="space-y-1">
-    //           <li>
-    //             <Link to={""}>Furnitures</Link>
-    //           </li>
-    //           <li>
-    //             <Link to={""}>Electronics</Link>
-    //           </li>
-    //           <li>
-    //             <Link to={""}>Carpets</Link>
-    //           </li>
-    //         </ul>
-    //       </div>
-
-    //       <div className="space-y-3">
-    //         <div className=" text-lg font-bold  uppercase dark:text-gray-50">
-    //           Stay in Touch<br></br>
-    //           <span className="lowercase font-normal  text-xs">
-    //             Checkout our social media{" "}
-    //           </span>
-    //         </div>
-    //         <div className="flex justify-start space-x-3">
-    //           <Link title="facebook" className="flex items-center p-1">
-    //             <img
-    //               src={fb}
-    //               fill="currentColor"
-    //               className="w-5 h-5 fill-current hover:opacity-75"
-    //               alt=""
-    //             />
-    //           </Link>
-    //           <Link title="instagram" className="flex items-center p-1">
-    //             <img
-    //               src={ig}
-    //               fill="currentColor"
-    //               className="w-5 h-5 fill-current hover:opacity-75"
-    //               alt=""
-    //             />
-    //           </Link>
-    //           <Link title="Whatsapp" className="flex items-center p-1">
-    //             <img
-    //               src={wp}
-    //               fill="currentColor"
-    //               className="w-5 h-5 fill-current hover:opacity-75"
-    //               alt=""
-    //             />
-    //           </Link>
-    //           <Link title="twitterX" className="flex items-center p-1">
-    //             <img
-    //               src={twitterX}
-    //               fill="currentColor"
-    //               className="w-5 h-5 fill-current hover:opacity-75"
-    //               alt=""
-    //             />
-    //           </Link>
-    //           <Link title="youtube" className="flex items-center p-1">
-    //             <img
-    //               src={yt}
-    //               fill="currentColor"
-    //               className="w-5 h-5 fill-current hover:opacity-75"
-    //               alt=""
-    //             />
-    //           </Link>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <div className="py-6 text-sm text-center dark:text-gray-400">
-    //     © 2023 Rawad Co. All rights reserved.
-    //   </div>
-    // </footer>
   );
 };
 
