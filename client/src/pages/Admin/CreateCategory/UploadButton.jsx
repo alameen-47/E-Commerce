@@ -1,6 +1,5 @@
 import React from "react";
 import { Upload } from "antd";
-import ImgCrop from "antd-img-crop";
 
 const UploadButton = ({ fileType, setIcons, setImages, setBanners }) => {
   const handleFileChange = (info) => {

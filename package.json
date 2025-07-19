@@ -13,6 +13,7 @@
     "vite": "vite --open",
     "start": "node server.js",
     "server": "nodemon server.js",
+    "build": "react-scripts build",
     "client": "npm start --prefix ./client",
     "dev": "concurrently \"npm run start\" \"npm run client\""
   },
@@ -57,6 +58,7 @@
     "react-dom": "^18.2.0",
     "react-loading-skeleton": "^3.4.0",
     "react-medium-image-zoom": "^5.2.10",
+    "react-scripts": "^5.0.1",
     "react-slick": "^0.30.2",
     "sharp": "^0.33.5",
     "slick-carousel": "^1.8.1",

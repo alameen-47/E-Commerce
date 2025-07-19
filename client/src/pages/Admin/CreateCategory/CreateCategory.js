@@ -7,7 +7,6 @@ import axios from "axios";
 import CategoryForm from "../../../components/Form/CategoryForm.js";
 import { message, Modal, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
-import ImgCrop from "antd-img-crop";
 
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
