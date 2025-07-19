@@ -17,7 +17,6 @@ import {
 } from "antd";
 
 import { useNavigate } from "react-router-dom";
-import slugify from "slugify";
 import { runes } from "runes2";
 
 const { Option } = Select;
@@ -396,7 +395,7 @@ const CreateProducts = () => {
     try {
       const productData = new FormData();
       productData.append("name", name);
-      productData.append("slug", slugify(name));
+      productData.append("slug", name);
       productData.append("description", description);
       productData.append("price", price);
       productData.append("offer", offer);
