@@ -5,7 +5,6 @@ import p3 from "./noun-add-product-3848212.png";
 import p4 from "./noun-products-2804214.png";
 import p5 from "./icons8-users-90.png";
 import p6 from "./order-delivery.png";
-import "flowbite";
 
 import { Link, NavLink } from "react-router-dom";
 
