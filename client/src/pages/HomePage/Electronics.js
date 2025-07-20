@@ -48,15 +48,16 @@ const Electronics = () => {
         )}
 
         <div className="md:mx-3 mt-5 justify-center align-middle grid lg:grid-cols-7 md:grid-cols-4 sm:grid-cols-2  xs:grid-cols-2 sm:mx-0 gap-2">
-          {products?.map((p) => (
-            <div
-              className=" flex lg:flex-col sm:flex-row 
+          {Array.isArray(products) &&
+            products?.map((p) => (
+              <div
+                className=" flex lg:flex-col sm:flex-row 
         lg:aspect-[2/3] "
-              key={p._id}
-            >
-              <ProductCard1 products={p} />
-            </div>
-          ))}
+                key={p._id}
+              >
+                <ProductCard1 products={p} />
+              </div>
+            ))}
         </div>
       </div>
     </div>
