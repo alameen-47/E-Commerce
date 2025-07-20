@@ -43,7 +43,9 @@ const Electronics = () => {
         </div>
       </div>
       <div className="flex justify-center align-middle ">
-        {products.length < 1 && <p>{t("common.No Products Found")}</p>}
+        {Array.isArray(products) && products.length < 1 && (
+          <p>{t("common.No Products Found")}</p>
+        )}
 
         <div className="md:mx-3 mt-5 justify-center align-middle grid lg:grid-cols-7 md:grid-cols-4 sm:grid-cols-2  xs:grid-cols-2 sm:mx-0 gap-2">
           {products?.map((p) => (
