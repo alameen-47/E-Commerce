@@ -12,7 +12,7 @@ import ForgotPassword from "./pages/auth/ForgotPassword/ForgotPassword.js";
 import AdminRoute from "./components/Routes/AdminRoute.js";
 import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard.js";
 import CreateCategory from "./pages/Admin/CreateCategory/CreateCategory.js";
-import CreateProducts from "./pages/Admin/CreateProucts/CreateProducts.js";
+import CreateProducts from "./pages/Admin/CreateProducts/CreateProducts.js";
 import Users from "./pages/Admin/Users/Users.js";
 import "./App.css";
 import Orders from "./pages/user/Orders/Orders.js";
