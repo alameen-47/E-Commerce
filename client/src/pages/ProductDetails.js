@@ -20,10 +20,8 @@ import { useSearch } from "../context/search.js";
 import { useTranslation } from "react-i18next";
 import { ProductHistory } from "../components/ProductHistory.jsx";
 import { ProductCarousel } from "../components/Product/ProductCarousel.jsx";
-import CelebrationBadge from "../components/AnimationEffects/ConfettiEffect.jsx";
-import { Sparkle } from "../components/Product/Sparkle.jsx";
+
 import { FaHeart } from "react-icons/fa";
-import { size } from "lodash";
 
 // Translation function
 const translateText = async (text, targetLanguage) => {
