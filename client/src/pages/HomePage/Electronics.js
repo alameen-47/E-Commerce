@@ -13,7 +13,11 @@ const Electronics = () => {
       const { data } = await axios.get("/api/v1/product/electronics");
       console.log("Electronics data", data);
 
-      setProducts(data.products);
+      if (Array.isArray(data.products)) {
+        setProducts(data.products);
+      } else {
+        setProducts([]);
+      }
     } catch (error) {
       console.log(error);
     }
