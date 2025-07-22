@@ -53,6 +53,7 @@ app.use(
 app.use(
   cors({
     origin: ["https://e-commerce-hm2omtz75-alameens-projects.vercel.app"],
+    methods: ["POST", "GET", "PUT"],
     credentials: true,
   })
 );
