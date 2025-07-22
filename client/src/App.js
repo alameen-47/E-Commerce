@@ -38,7 +38,7 @@ import { Coupons, MyCoupons } from "./pages/user/MyCoupons.jsx";
 import { LikedProducts } from "./pages/LikedProducts.jsx";
 
 function App() {
-  //configure env
+  //configure  env
 
   const { i18n } = useTranslation();
   useEffect(() => {
