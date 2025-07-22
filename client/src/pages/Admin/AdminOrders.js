@@ -6,6 +6,7 @@ import Layout from "../../components/Layout/Layout";
 import { useAuth } from "../../context/auth";
 import moment from "moment";
 import { Select } from "antd";
+import { API_BASE_URL } from "../../utilities/api";
 const { Option } = Select;
 
 const AdminOrders = () => {
@@ -22,7 +23,9 @@ const AdminOrders = () => {
 
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("/api/v1/orders/all-orders");
+      const { data } = await axios.get(
+        `${API_BASE_URL}/api/v1/orders/all-orders`
+      );
       setOrders(data.orders);
     } catch (error) {
       console.log(error);

@@ -6,6 +6,7 @@ import axios from "axios";
 import { t } from "i18next";
 import Skeleton from "react-loading-skeleton";
 import { ProductCard1 } from "../../components/Product/ProductCard1.jsx";
+import { API_BASE_URL } from "../../utilities/api.js";
 
 const ProductsList = ({ start, end }) => {
   const [cart, setCart] = useCart([]);
@@ -24,7 +25,9 @@ const ProductsList = ({ start, end }) => {
   //get all category
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/all-category");
+      const { data } = await axios.get(
+        `${API_BASE_URL}/api/v1/category/all-category`
+      );
       if (data?.success) {
         setCategories(data?.categories);
       }
@@ -42,7 +45,9 @@ const ProductsList = ({ start, end }) => {
   const getProductController = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/v1/product/get-product`);
+      const { data } = await axios.get(
+        `${API_BASE_URL}/api/v1/product/get-product`
+      );
       setLoading(false);
       // Limit the products to the specified range
       setProducts(data.products.slice(start, end));

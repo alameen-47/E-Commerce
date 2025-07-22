@@ -5,6 +5,7 @@ import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { API_BASE_URL } from "../../utilities/api";
 
 const CategorySlider = () => {
   const [categories, setCategories] = useState([]);
@@ -22,7 +23,7 @@ const CategorySlider = () => {
 
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/all-category");
+      const { data } = await axios.get(`${API_BASE_URL}/api/v1/category/all-category`);
       console.log("Data:", data);
       if (data?.success) {
         const translatedCategories = await Promise.all(

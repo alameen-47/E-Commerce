@@ -7,6 +7,7 @@ import axios from "axios";
 import CategoryForm from "../../../components/Form/CategoryForm.js";
 import { message, Modal, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../../utilities/api.js";
 
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -66,7 +67,9 @@ const CreateCategory = () => {
   //get all categories
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/all-category");
+      const { data } = await axios.get(
+        `${API_BASE_URL}/api/v1/category/all-category`
+      );
       if (data?.success) {
         setCategories(data?.categories);
       }

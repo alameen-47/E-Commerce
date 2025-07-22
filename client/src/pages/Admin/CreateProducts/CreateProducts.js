@@ -18,6 +18,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { runes } from "runes2";
+import { API_BASE_URL } from "../../../utilities/api";
 
 const { Option } = Select;
 
@@ -143,7 +144,9 @@ const CreateProducts = () => {
   // Get all categories
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/all-category");
+      const { data } = await axios.get(
+        `${API_BASE_URL}/api/v1/category/all-category`
+      );
       if (data?.success) {
         setCategories(data?.categories);
       }

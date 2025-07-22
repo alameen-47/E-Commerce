@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { API_BASE_URL } from "../utilities/api";
 
 export default function useCategory() {
   const [categories, setCategories] = useState([]);
@@ -18,7 +19,7 @@ export default function useCategory() {
   //get categories
   const getCategories = async () => {
     try {
-      let { data } = await axios.get("/api/v1/category/all-category");
+      let { data } = await axios.get(`${API_BASE_URL}/api/v1/category/all-category`);
       const translatedCategories = await Promise.all(
         data.categories.map(async (category) => {
           const translatedName = await translateText(

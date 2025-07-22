@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { Skeleton } from "@mui/material";
 import i18n from "../../i18n/index.js";
 import { ProductCard1 } from "../../components/Product/ProductCard1.jsx";
+import { API_BASE_URL } from "../../utilities/api.js";
 
 const Furnitures = () => {
   const [cart, setCart] = useCart([]);
@@ -32,7 +33,7 @@ const Furnitures = () => {
   // Get all products from the server
   const getFurnitures = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/furnitures");
+      const { data } = await axios.get(`${API_BASE_URL}/api/v1/product/furnitures`);
       if (data.products.length > 0) {
         const translatedProducts = await Promise.all(
           data.products.map(async (product) => {

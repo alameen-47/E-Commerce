@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { t } from "i18next";
 import { ProductCard1 } from "../../components/Product/ProductCard1.jsx";
+import { API_BASE_URL } from "../../utilities/api.js";
 
 const Electronics = () => {
   const [products, setProducts] = useState([]);
@@ -10,7 +11,9 @@ const Electronics = () => {
   // Get all products from the server
   const getElectronics = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/electronics");
+      const { data } = await axios.get(
+        `${API_BASE_URL}/api/v1/product/electronics`
+      );
       console.log("Electronics data", data);
 
       if (Array.isArray(data.products)) {

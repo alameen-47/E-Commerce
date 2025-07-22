@@ -4,6 +4,7 @@ import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { API_BASE_URL } from "../utilities/api";
 
 const Categories = () => {
   // const categories = useCategory();
@@ -22,7 +23,7 @@ const Categories = () => {
   //get all category
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/all-category");
+      const { data } = await axios.get(`${API_BASE_URL}/api/v1/category/all-category`);
       if (data?.success) {
         const translatedCategories = await Promise.all(
           data.categories.map(async (category) => {

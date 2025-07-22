@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { ImageCarousel } from "../../../components/Product/ImageCarousel";
 import { ProductCard2 } from "../../../components/Product/ProductCard2";
+import { API_BASE_URL } from "../../../utilities/api";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -14,7 +15,9 @@ const Products = () => {
   // Get all products
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/get-product");
+      const { data } = await axios.get(
+        `${API_BASE_URL}/api/v1/product/get-product`
+      );
       setProducts(data.products);
     } catch (error) {
       console.log(error);

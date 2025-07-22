@@ -15,6 +15,7 @@ import { Offers } from "../../components/Offers.jsx";
 import { Button, Drawer } from "antd";
 import { FaFilter } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
+import { API_BASE_URL } from "../../utilities/api.js";
 
 const AllProducts = () => {
   const [cart] = useCart();
@@ -67,7 +68,9 @@ const AllProducts = () => {
   //get all category
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/all-category");
+      const { data } = await axios.get(
+        `${API_BASE_URL}/api/v1/category/all-category`
+      );
       if (data?.success) {
         const translatedCategories = await Promise.all(
           data.categories.map(async (category) => {
@@ -94,7 +97,9 @@ const AllProducts = () => {
 
     setLoading(true);
     try {
-      const { data } = await axios.get(`/api/v1/product/get-product`);
+      const { data } = await axios.get(
+        `${API_BASE_URL}/api/v1/product/get-product`
+      );
       // setLoading(false);
       const totalLength = data.length;
       console.log(typeof data.products, "DATA.PRODUCT VALUES", data.products);

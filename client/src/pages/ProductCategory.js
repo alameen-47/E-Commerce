@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useCart } from "../context/cart";
 import { toast } from "react-hot-toast";
 import { t } from "i18next";
+import { API_BASE_URL } from "../utilities/api";
 
 const ProductCategory = () => {
   const [page, setPage] = useState(1);
@@ -24,7 +25,7 @@ const ProductCategory = () => {
   const getProductsByCategory = async () => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/product-category/${params.slug}`
+        `${API_BASE_URL}/api/v1/product/product-category/${params.slug}`
       );
       setProducts(data?.products);
       setCategory(data?.category);

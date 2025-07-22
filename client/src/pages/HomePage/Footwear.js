@@ -3,6 +3,7 @@ import fimage from "./posters/Screenshot 2024-02-15 164700.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { t } from "i18next";
+import { API_BASE_URL } from "../../utilities/api";
 
 const Footwear = () => {
   const [gentsFootwear, setGentsFootwear] = useState([]);
@@ -12,7 +13,9 @@ const Footwear = () => {
 
   const fetchFootwear = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/footwear");
+      const { data } = await axios.get(
+        `${API_BASE_URL}/api/v1/product/footwear`
+      );
       console.log(data);
       if (data.success) {
         setGentsFootwear(data.gentsFootwear);

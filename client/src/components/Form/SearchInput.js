@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import search from "../../assets/icons/search icon.png";
 import { t } from "i18next";
+import { API_BASE_URL } from "../../utilities/api";
 const SearchInput = () => {
   const [values, setValues] = useSearch();
   const [keyWord, setKeyWord] = useState();
@@ -12,7 +13,7 @@ const SearchInput = () => {
     e.preventDefault();
     try {
       const { data } = await axios.get(
-        `/api/v1/product/search/${values.keyword}`
+        `${API_BASE_URL}/api/v1/product/search/${values.keyword}`
       );
       setValues({ ...values, results: data });
       setKeyWord(values.keyword);

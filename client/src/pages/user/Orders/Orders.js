@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { t } from "i18next";
 import { UserMenu } from "../../../components/Layout/UserMenu";
 import OrdersCard from "../../../components/Product/Cards/OrdersCard";
+import { API_BASE_URL } from "../../../utilities/api";
 
 const Orders = () => {
   // const storedCart = JSON.parse(localStorage.getItem("CART")) || [];
@@ -18,7 +19,9 @@ const Orders = () => {
 
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("/api/v1/orders/get-order");
+      const { data } = await axios.get(
+        `${API_BASE_URL}/api/v1/orders/get-order`
+      );
       console.log(data, "DATAAAAAAAAAAAAAAAAAAAAA");
       setOrders(data.orders);
     } catch (error) {

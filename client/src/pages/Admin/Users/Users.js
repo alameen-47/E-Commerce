@@ -3,6 +3,7 @@ import "./Users.css";
 import Layout from "../../../components/Layout/Layout";
 import AdminMenu from "../../../components/Layout/AdminMenu/AdminMenu";
 import axios from "axios";
+import { API_BASE_URL } from "../../../utilities/api";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -10,7 +11,9 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("/api/v1/auth/all-users");
+        const response = await axios.get(
+          `${API_BASE_URL}/api/v1/auth/all-users`
+        );
         setUsers(response.data);
       } catch (error) {
         console.log("Error fetching all Users", error);

@@ -22,6 +22,7 @@ import { ProductHistory } from "../components/ProductHistory.jsx";
 import { ProductCarousel } from "../components/Product/ProductCarousel.jsx";
 
 import { FaHeart } from "react-icons/fa";
+import { API_BASE_URL } from "../utilities/api.js";
 
 // Translation function
 const translateText = async (text, targetLanguage) => {
@@ -196,7 +197,7 @@ const ProductDetails = () => {
     const getProduct = async () => {
       try {
         const { data } = await axios.get(
-          `/api/v1/product/get-product/${params.slug}/${params.pid}`
+          `${API_BASE_URL}/api/v1/product/get-product/${params.slug}/${params.pid}`
         );
         console.log(data, "+++++++++++++DATA OF SINGLE PRODUCTS++++++++++++++");
 
@@ -268,7 +269,7 @@ const ProductDetails = () => {
   const getSameCategory = async (pid, cid) => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/related-product/${pid}/${cid}`
+        `${API_BASE_URL}/api/v1/product/related-product/${pid}/${cid}`
       );
       setSameCategoryProducts(data?.products);
     } catch (error) {
@@ -280,7 +281,7 @@ const ProductDetails = () => {
   const getSimilarProducts = async (pname, cid) => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/similar-product/${pname}/${cid}`
+        `${API_BASE_URL}/api/v1/product/similar-product/${pname}/${cid}`
       );
       setSimilarProducts(data?.products);
     } catch (error) {

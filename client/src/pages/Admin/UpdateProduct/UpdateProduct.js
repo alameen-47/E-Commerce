@@ -19,6 +19,7 @@ import { runes } from "runes2";
 
 import { useNavigate, useParams } from "react-router-dom";
 import slugify from "slugify";
+import { API_BASE_URL } from "../../../utilities/api";
 
 const { Option } = Select;
 
@@ -76,7 +77,7 @@ const UpdateProduct = () => {
   const getSingleProduct = async () => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/get-product/${params.slug}/${params.pid}`
+        `${API_BASE_URL}/api/v1/product/get-product/${params.slug}/${params.pid}`
       );
       console.log(typeof data.product, "UPDATE VALUES", data.product);
       setFetchedProductDetails(data.product);
@@ -141,7 +142,9 @@ const UpdateProduct = () => {
   // Get all categories
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/all-category");
+      const { data } = await axios.get(
+        `${API_BASE_URL}/api/v1/category/all-category`
+      );
       if (data?.success) {
         setCategories(data?.categories);
       }
