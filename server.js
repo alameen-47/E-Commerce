@@ -52,7 +52,7 @@ app.use(
 //middleware
 app.use(
   cors({
-    origin: ["https://e-commerce-hm2omtz75-alameens-projects.vercel.app"],
+    origin: ["https://e-commerce-pi-peach.vercel.app"],
     methods: ["POST", "GET", "PUT"],
     credentials: true,
   })
