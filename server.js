@@ -52,7 +52,7 @@ app.use(
 //middleware
 app.use(
   cors({
-    origin: ["https://e-commerce-pi-peach.vercel.app"],
+    origin: ["https://e-commerce.ametronyx.com"],
     methods: ["POST", "GET", "PUT"],
     credentials: true,
   })
