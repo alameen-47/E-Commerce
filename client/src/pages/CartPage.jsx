@@ -8,6 +8,7 @@ import emptyCart from "../assets/icons/empty-cart.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../utilities/api.js";
 
 export const CartPage = () => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ export const CartPage = () => {
       };
 
       const { data } = await axios.post(
-        "/api/v1/orders/create-order",
+        `${API_BASE_URL}/api/v1/orders/create-order`,
         orderPayload
       );
 

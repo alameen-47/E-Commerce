@@ -189,11 +189,14 @@ const AllProducts = () => {
   //get filtered products
   const filterProduct = async () => {
     try {
-      const { data } = await axios.post("/api/v1/product/product-filters", {
-        checked,
-        radio,
-        radioOffer,
-      });
+      const { data } = await axios.post(
+        `${API_BASE_URL}/api/v1/product/product-filters`,
+        {
+          checked,
+          radio,
+          radioOffer,
+        }
+      );
       const translatedProducts = await Promise.all(
         data.products.map(async (product) => {
           const translatedName = await translateText(

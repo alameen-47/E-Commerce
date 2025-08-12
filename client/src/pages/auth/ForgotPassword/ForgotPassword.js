@@ -9,6 +9,7 @@ import "./ForgotPassword.css";
 import { t } from "i18next";
 import { Flex, Input, Typography } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import { API_BASE_URL } from "../../../utilities/api";
 const ForgotPassword = () => {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
@@ -26,9 +27,12 @@ const ForgotPassword = () => {
     console.log("handleSendOtp called");
 
     try {
-      const res = await axios.post("/api/v1/auth/forgot-password", {
-        email,
-      });
+      const res = await axios.post(
+        `${API_BASE_URL}/api/v1/auth/forgot-password`,
+        {
+          email,
+        }
+      );
 
       if (res && res.data.success) {
         toast.success("OTP has been sent to the Email");
@@ -44,11 +48,14 @@ const ForgotPassword = () => {
   const handleResetPassword = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/reset-password", {
-        email,
-        otp,
-        newPassword,
-      });
+      const res = await axios.post(
+        `${API_BASE_URL}/api/v1/auth/reset-password`,
+        {
+          email,
+          otp,
+          newPassword,
+        }
+      );
       if (res && res.data.success) {
         toast.success("Password Changed Successfully");
         navigate("/signin");

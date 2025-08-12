@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { t } from "i18next";
 import { UserMenu } from "../../../components/Layout/UserMenu";
+import { API_BASE_URL } from "../../../utilities/api";
 const Profile = () => {
   //context
   const [auth, setAuth] = useAuth();
@@ -33,12 +34,15 @@ const Profile = () => {
       return;
     }
     try {
-      const { data } = await axios.put("/api/v1/auth/update-profile", {
-        name,
-        email,
-        password,
-        phone,
-      });
+      const { data } = await axios.put(
+        `${API_BASE_URL}/api/v1/auth/update-profile`,
+        {
+          name,
+          email,
+          password,
+          phone,
+        }
+      );
       if (!password) {
         toast.error("Password is required!!! ");
       }

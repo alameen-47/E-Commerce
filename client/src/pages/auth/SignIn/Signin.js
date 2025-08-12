@@ -8,6 +8,7 @@ import "./Signin.css";
 import { useAuth } from "../../../context/auth";
 import { t } from "i18next";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import { API_BASE_URL } from "../../../utilities/api";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +23,7 @@ const Signin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/signin", {
+      const res = await axios.post(`${API_BASE_URL}/api/v1/auth/signin`, {
         email,
         password,
       });

@@ -445,7 +445,7 @@ const CreateProducts = () => {
       }
 
       const { data } = await axios.post(
-        "/api/v1/product/create-product",
+        `${API_BASE_URL}/api/v1/product/create-product`,
         productData
       );
       if (data?.success) {

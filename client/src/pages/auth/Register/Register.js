@@ -8,6 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { t } from "i18next";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import { API_BASE_URL } from "../../../utilities/api";
 
 const Register = () => {
   // const [name, setName] = useState("");
@@ -24,7 +25,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/register", {
+      const res = await axios.post(`${API_BASE_URL}/api/v1/auth/register`, {
         // name,
         email,
         password,

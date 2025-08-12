@@ -46,7 +46,7 @@ const CreateCategory = () => {
       categoryData.append("images", images);
 
       const { data } = await axios.post(
-        "/api/v1/category/create-category",
+        `${API_BASE_URL}/api/v1/category/create-category`,
         categoryData
       );
       if (data?.success) {

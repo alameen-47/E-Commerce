@@ -5,6 +5,7 @@ import { t } from "i18next";
 import axios from "axios";
 import { useAuth } from "../../../context/auth";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../../../utilities/api";
 
 export const EditAddress = () => {
   const [auth, setAuth] = useAuth();
@@ -27,12 +28,15 @@ export const EditAddress = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.put("/api/v1/auth/update-address", {
-        street,
-        city,
-        province,
-        zipCode,
-      });
+      const { data } = await axios.put(
+        `${API_BASE_URL}/api/v1/auth/update-address`,
+        {
+          street,
+          city,
+          province,
+          zipCode,
+        }
+      );
       setAuth(data);
       let ls = localStorage.getItem("auth");
       ls = JSON.parse(ls);
